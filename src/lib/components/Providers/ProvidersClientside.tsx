@@ -6,6 +6,8 @@ import { useAuth, useAuthStore } from "@/lib/auth/use-auth";
 import { createQueryClient } from "@/lib/get-query-client";
 import { ThemeProvider, ThemeProviderProps } from "@/lib/theme/ThemeProvider";
 import { ApolloProvider } from "@apollo/client/react";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider, useSession } from "next-auth/react";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -70,7 +72,11 @@ export function ProvidersClientside(props: ProvidersClientsideProps) {
     <AuthProvider initialIsAuthenticated={props.isAuthenticated}>
       <SessionProvider refetchOnWindowFocus={false}>
         <SessionProviderChild>
-          <ThemeProvider {...props.ThemeProviderProps}>{props.children}</ThemeProvider>
+          <ThemeProvider {...props.ThemeProviderProps}>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              {props.children}
+            </LocalizationProvider>
+          </ThemeProvider>
         </SessionProviderChild>
       </SessionProvider>
     </AuthProvider>

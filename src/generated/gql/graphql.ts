@@ -14,10 +14,12 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  _int8: { input: any; output: any; }
+  _text: { input: any; output: any; }
   bigint: { input: any; output: any; }
   date: { input: any; output: any; }
+  float8: { input: any; output: any; }
   timestamp: { input: any; output: any; }
-  timestamptz: { input: any; output: any; }
   uuid: { input: any; output: any; }
 };
 
@@ -93,209 +95,10 @@ export type Bigint_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['bigint']['input']>>;
 };
 
-export type Cohort_Analysis_Hasura_Args = {
+export type Cohort_Analysis_Args = {
   end_date?: InputMaybe<Scalars['date']['input']>;
   start_date?: InputMaybe<Scalars['date']['input']>;
-  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
-};
-
-/** columns and relationships of "cohort_analysis_virtual" */
-export type Cohort_Analysis_Virtual = {
-  __typename?: 'cohort_analysis_virtual';
-  join_date?: Maybe<Scalars['date']['output']>;
-  joined_count?: Maybe<Scalars['bigint']['output']>;
-  left_count?: Maybe<Scalars['bigint']['output']>;
-  left_date?: Maybe<Scalars['date']['output']>;
-};
-
-export type Cohort_Analysis_Virtual_Aggregate = {
-  __typename?: 'cohort_analysis_virtual_aggregate';
-  aggregate?: Maybe<Cohort_Analysis_Virtual_Aggregate_Fields>;
-  nodes: Array<Cohort_Analysis_Virtual>;
-};
-
-/** aggregate fields of "cohort_analysis_virtual" */
-export type Cohort_Analysis_Virtual_Aggregate_Fields = {
-  __typename?: 'cohort_analysis_virtual_aggregate_fields';
-  avg?: Maybe<Cohort_Analysis_Virtual_Avg_Fields>;
-  count: Scalars['Int']['output'];
-  max?: Maybe<Cohort_Analysis_Virtual_Max_Fields>;
-  min?: Maybe<Cohort_Analysis_Virtual_Min_Fields>;
-  stddev?: Maybe<Cohort_Analysis_Virtual_Stddev_Fields>;
-  stddev_pop?: Maybe<Cohort_Analysis_Virtual_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Cohort_Analysis_Virtual_Stddev_Samp_Fields>;
-  sum?: Maybe<Cohort_Analysis_Virtual_Sum_Fields>;
-  var_pop?: Maybe<Cohort_Analysis_Virtual_Var_Pop_Fields>;
-  var_samp?: Maybe<Cohort_Analysis_Virtual_Var_Samp_Fields>;
-  variance?: Maybe<Cohort_Analysis_Virtual_Variance_Fields>;
-};
-
-
-/** aggregate fields of "cohort_analysis_virtual" */
-export type Cohort_Analysis_Virtual_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Cohort_Analysis_Virtual_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** aggregate avg on columns */
-export type Cohort_Analysis_Virtual_Avg_Fields = {
-  __typename?: 'cohort_analysis_virtual_avg_fields';
-  joined_count?: Maybe<Scalars['Float']['output']>;
-  left_count?: Maybe<Scalars['Float']['output']>;
-};
-
-/** Boolean expression to filter rows from the table "cohort_analysis_virtual". All fields are combined with a logical 'AND'. */
-export type Cohort_Analysis_Virtual_Bool_Exp = {
-  _and?: InputMaybe<Array<Cohort_Analysis_Virtual_Bool_Exp>>;
-  _not?: InputMaybe<Cohort_Analysis_Virtual_Bool_Exp>;
-  _or?: InputMaybe<Array<Cohort_Analysis_Virtual_Bool_Exp>>;
-  join_date?: InputMaybe<Date_Comparison_Exp>;
-  joined_count?: InputMaybe<Bigint_Comparison_Exp>;
-  left_count?: InputMaybe<Bigint_Comparison_Exp>;
-  left_date?: InputMaybe<Date_Comparison_Exp>;
-};
-
-/** input type for incrementing numeric columns in table "cohort_analysis_virtual" */
-export type Cohort_Analysis_Virtual_Inc_Input = {
-  joined_count?: InputMaybe<Scalars['bigint']['input']>;
-  left_count?: InputMaybe<Scalars['bigint']['input']>;
-};
-
-/** input type for inserting data into table "cohort_analysis_virtual" */
-export type Cohort_Analysis_Virtual_Insert_Input = {
-  join_date?: InputMaybe<Scalars['date']['input']>;
-  joined_count?: InputMaybe<Scalars['bigint']['input']>;
-  left_count?: InputMaybe<Scalars['bigint']['input']>;
-  left_date?: InputMaybe<Scalars['date']['input']>;
-};
-
-/** aggregate max on columns */
-export type Cohort_Analysis_Virtual_Max_Fields = {
-  __typename?: 'cohort_analysis_virtual_max_fields';
-  join_date?: Maybe<Scalars['date']['output']>;
-  joined_count?: Maybe<Scalars['bigint']['output']>;
-  left_count?: Maybe<Scalars['bigint']['output']>;
-  left_date?: Maybe<Scalars['date']['output']>;
-};
-
-/** aggregate min on columns */
-export type Cohort_Analysis_Virtual_Min_Fields = {
-  __typename?: 'cohort_analysis_virtual_min_fields';
-  join_date?: Maybe<Scalars['date']['output']>;
-  joined_count?: Maybe<Scalars['bigint']['output']>;
-  left_count?: Maybe<Scalars['bigint']['output']>;
-  left_date?: Maybe<Scalars['date']['output']>;
-};
-
-/** response of any mutation on the table "cohort_analysis_virtual" */
-export type Cohort_Analysis_Virtual_Mutation_Response = {
-  __typename?: 'cohort_analysis_virtual_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Cohort_Analysis_Virtual>;
-};
-
-/** Ordering options when selecting data from "cohort_analysis_virtual". */
-export type Cohort_Analysis_Virtual_Order_By = {
-  join_date?: InputMaybe<Order_By>;
-  joined_count?: InputMaybe<Order_By>;
-  left_count?: InputMaybe<Order_By>;
-  left_date?: InputMaybe<Order_By>;
-};
-
-/** select columns of table "cohort_analysis_virtual" */
-export enum Cohort_Analysis_Virtual_Select_Column {
-  /** column name */
-  join_date = 'join_date',
-  /** column name */
-  joined_count = 'joined_count',
-  /** column name */
-  left_count = 'left_count',
-  /** column name */
-  left_date = 'left_date'
-}
-
-/** input type for updating data in table "cohort_analysis_virtual" */
-export type Cohort_Analysis_Virtual_Set_Input = {
-  join_date?: InputMaybe<Scalars['date']['input']>;
-  joined_count?: InputMaybe<Scalars['bigint']['input']>;
-  left_count?: InputMaybe<Scalars['bigint']['input']>;
-  left_date?: InputMaybe<Scalars['date']['input']>;
-};
-
-/** aggregate stddev on columns */
-export type Cohort_Analysis_Virtual_Stddev_Fields = {
-  __typename?: 'cohort_analysis_virtual_stddev_fields';
-  joined_count?: Maybe<Scalars['Float']['output']>;
-  left_count?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Cohort_Analysis_Virtual_Stddev_Pop_Fields = {
-  __typename?: 'cohort_analysis_virtual_stddev_pop_fields';
-  joined_count?: Maybe<Scalars['Float']['output']>;
-  left_count?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Cohort_Analysis_Virtual_Stddev_Samp_Fields = {
-  __typename?: 'cohort_analysis_virtual_stddev_samp_fields';
-  joined_count?: Maybe<Scalars['Float']['output']>;
-  left_count?: Maybe<Scalars['Float']['output']>;
-};
-
-/** Streaming cursor of the table "cohort_analysis_virtual" */
-export type Cohort_Analysis_Virtual_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Cohort_Analysis_Virtual_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Cohort_Analysis_Virtual_Stream_Cursor_Value_Input = {
-  join_date?: InputMaybe<Scalars['date']['input']>;
-  joined_count?: InputMaybe<Scalars['bigint']['input']>;
-  left_count?: InputMaybe<Scalars['bigint']['input']>;
-  left_date?: InputMaybe<Scalars['date']['input']>;
-};
-
-/** aggregate sum on columns */
-export type Cohort_Analysis_Virtual_Sum_Fields = {
-  __typename?: 'cohort_analysis_virtual_sum_fields';
-  joined_count?: Maybe<Scalars['bigint']['output']>;
-  left_count?: Maybe<Scalars['bigint']['output']>;
-};
-
-export type Cohort_Analysis_Virtual_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Cohort_Analysis_Virtual_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Cohort_Analysis_Virtual_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Cohort_Analysis_Virtual_Bool_Exp;
-};
-
-/** aggregate var_pop on columns */
-export type Cohort_Analysis_Virtual_Var_Pop_Fields = {
-  __typename?: 'cohort_analysis_virtual_var_pop_fields';
-  joined_count?: Maybe<Scalars['Float']['output']>;
-  left_count?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate var_samp on columns */
-export type Cohort_Analysis_Virtual_Var_Samp_Fields = {
-  __typename?: 'cohort_analysis_virtual_var_samp_fields';
-  joined_count?: Maybe<Scalars['Float']['output']>;
-  left_count?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate variance on columns */
-export type Cohort_Analysis_Virtual_Variance_Fields = {
-  __typename?: 'cohort_analysis_virtual_variance_fields';
-  joined_count?: Maybe<Scalars['Float']['output']>;
-  left_count?: Maybe<Scalars['Float']['output']>;
+  tg_channel_ids?: InputMaybe<Scalars['_int8']['input']>;
 };
 
 /** ordering argument of a cursor */
@@ -319,188 +122,947 @@ export type Date_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['date']['input']>>;
 };
 
-export type Hourly_User_Signups_Args = {
-  end_date?: InputMaybe<Scalars['timestamp']['input']>;
-  start_date?: InputMaybe<Scalars['timestamp']['input']>;
+/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
+export type Float8_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['float8']['input']>;
+  _gt?: InputMaybe<Scalars['float8']['input']>;
+  _gte?: InputMaybe<Scalars['float8']['input']>;
+  _in?: InputMaybe<Array<Scalars['float8']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['float8']['input']>;
+  _lte?: InputMaybe<Scalars['float8']['input']>;
+  _neq?: InputMaybe<Scalars['float8']['input']>;
+  _nin?: InputMaybe<Array<Scalars['float8']['input']>>;
 };
 
-/** columns and relationships of "hourly_user_signups_virtual" */
-export type Hourly_User_Signups_Virtual = {
-  __typename?: 'hourly_user_signups_virtual';
-  hour?: Maybe<Scalars['timestamp']['output']>;
-  signup_count?: Maybe<Scalars['bigint']['output']>;
+/** columns and relationships of "fn_cohort_analysis" */
+export type Fn_Cohort_Analysis = {
+  __typename?: 'fn_cohort_analysis';
+  join_date?: Maybe<Scalars['date']['output']>;
+  joined_count?: Maybe<Scalars['bigint']['output']>;
+  left_count?: Maybe<Scalars['bigint']['output']>;
+  left_date?: Maybe<Scalars['date']['output']>;
 };
 
-export type Hourly_User_Signups_Virtual_Aggregate = {
-  __typename?: 'hourly_user_signups_virtual_aggregate';
-  aggregate?: Maybe<Hourly_User_Signups_Virtual_Aggregate_Fields>;
-  nodes: Array<Hourly_User_Signups_Virtual>;
+export type Fn_Cohort_Analysis_Aggregate = {
+  __typename?: 'fn_cohort_analysis_aggregate';
+  aggregate?: Maybe<Fn_Cohort_Analysis_Aggregate_Fields>;
+  nodes: Array<Fn_Cohort_Analysis>;
 };
 
-/** aggregate fields of "hourly_user_signups_virtual" */
-export type Hourly_User_Signups_Virtual_Aggregate_Fields = {
-  __typename?: 'hourly_user_signups_virtual_aggregate_fields';
-  avg?: Maybe<Hourly_User_Signups_Virtual_Avg_Fields>;
+/** aggregate fields of "fn_cohort_analysis" */
+export type Fn_Cohort_Analysis_Aggregate_Fields = {
+  __typename?: 'fn_cohort_analysis_aggregate_fields';
+  avg?: Maybe<Fn_Cohort_Analysis_Avg_Fields>;
   count: Scalars['Int']['output'];
-  max?: Maybe<Hourly_User_Signups_Virtual_Max_Fields>;
-  min?: Maybe<Hourly_User_Signups_Virtual_Min_Fields>;
-  stddev?: Maybe<Hourly_User_Signups_Virtual_Stddev_Fields>;
-  stddev_pop?: Maybe<Hourly_User_Signups_Virtual_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Hourly_User_Signups_Virtual_Stddev_Samp_Fields>;
-  sum?: Maybe<Hourly_User_Signups_Virtual_Sum_Fields>;
-  var_pop?: Maybe<Hourly_User_Signups_Virtual_Var_Pop_Fields>;
-  var_samp?: Maybe<Hourly_User_Signups_Virtual_Var_Samp_Fields>;
-  variance?: Maybe<Hourly_User_Signups_Virtual_Variance_Fields>;
+  max?: Maybe<Fn_Cohort_Analysis_Max_Fields>;
+  min?: Maybe<Fn_Cohort_Analysis_Min_Fields>;
+  stddev?: Maybe<Fn_Cohort_Analysis_Stddev_Fields>;
+  stddev_pop?: Maybe<Fn_Cohort_Analysis_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Fn_Cohort_Analysis_Stddev_Samp_Fields>;
+  sum?: Maybe<Fn_Cohort_Analysis_Sum_Fields>;
+  var_pop?: Maybe<Fn_Cohort_Analysis_Var_Pop_Fields>;
+  var_samp?: Maybe<Fn_Cohort_Analysis_Var_Samp_Fields>;
+  variance?: Maybe<Fn_Cohort_Analysis_Variance_Fields>;
 };
 
 
-/** aggregate fields of "hourly_user_signups_virtual" */
-export type Hourly_User_Signups_Virtual_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Hourly_User_Signups_Virtual_Select_Column>>;
+/** aggregate fields of "fn_cohort_analysis" */
+export type Fn_Cohort_Analysis_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Fn_Cohort_Analysis_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** aggregate avg on columns */
-export type Hourly_User_Signups_Virtual_Avg_Fields = {
-  __typename?: 'hourly_user_signups_virtual_avg_fields';
-  signup_count?: Maybe<Scalars['Float']['output']>;
+export type Fn_Cohort_Analysis_Avg_Fields = {
+  __typename?: 'fn_cohort_analysis_avg_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
 };
 
-/** Boolean expression to filter rows from the table "hourly_user_signups_virtual". All fields are combined with a logical 'AND'. */
-export type Hourly_User_Signups_Virtual_Bool_Exp = {
-  _and?: InputMaybe<Array<Hourly_User_Signups_Virtual_Bool_Exp>>;
-  _not?: InputMaybe<Hourly_User_Signups_Virtual_Bool_Exp>;
-  _or?: InputMaybe<Array<Hourly_User_Signups_Virtual_Bool_Exp>>;
-  hour?: InputMaybe<Timestamp_Comparison_Exp>;
-  signup_count?: InputMaybe<Bigint_Comparison_Exp>;
+/** Boolean expression to filter rows from the table "fn_cohort_analysis". All fields are combined with a logical 'AND'. */
+export type Fn_Cohort_Analysis_Bool_Exp = {
+  _and?: InputMaybe<Array<Fn_Cohort_Analysis_Bool_Exp>>;
+  _not?: InputMaybe<Fn_Cohort_Analysis_Bool_Exp>;
+  _or?: InputMaybe<Array<Fn_Cohort_Analysis_Bool_Exp>>;
+  join_date?: InputMaybe<Date_Comparison_Exp>;
+  joined_count?: InputMaybe<Bigint_Comparison_Exp>;
+  left_count?: InputMaybe<Bigint_Comparison_Exp>;
+  left_date?: InputMaybe<Date_Comparison_Exp>;
 };
 
-/** input type for incrementing numeric columns in table "hourly_user_signups_virtual" */
-export type Hourly_User_Signups_Virtual_Inc_Input = {
-  signup_count?: InputMaybe<Scalars['bigint']['input']>;
+/** input type for incrementing numeric columns in table "fn_cohort_analysis" */
+export type Fn_Cohort_Analysis_Inc_Input = {
+  joined_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_count?: InputMaybe<Scalars['bigint']['input']>;
 };
 
-/** input type for inserting data into table "hourly_user_signups_virtual" */
-export type Hourly_User_Signups_Virtual_Insert_Input = {
-  hour?: InputMaybe<Scalars['timestamp']['input']>;
-  signup_count?: InputMaybe<Scalars['bigint']['input']>;
+/** input type for inserting data into table "fn_cohort_analysis" */
+export type Fn_Cohort_Analysis_Insert_Input = {
+  join_date?: InputMaybe<Scalars['date']['input']>;
+  joined_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_date?: InputMaybe<Scalars['date']['input']>;
 };
 
 /** aggregate max on columns */
-export type Hourly_User_Signups_Virtual_Max_Fields = {
-  __typename?: 'hourly_user_signups_virtual_max_fields';
-  hour?: Maybe<Scalars['timestamp']['output']>;
-  signup_count?: Maybe<Scalars['bigint']['output']>;
+export type Fn_Cohort_Analysis_Max_Fields = {
+  __typename?: 'fn_cohort_analysis_max_fields';
+  join_date?: Maybe<Scalars['date']['output']>;
+  joined_count?: Maybe<Scalars['bigint']['output']>;
+  left_count?: Maybe<Scalars['bigint']['output']>;
+  left_date?: Maybe<Scalars['date']['output']>;
 };
 
 /** aggregate min on columns */
-export type Hourly_User_Signups_Virtual_Min_Fields = {
-  __typename?: 'hourly_user_signups_virtual_min_fields';
-  hour?: Maybe<Scalars['timestamp']['output']>;
-  signup_count?: Maybe<Scalars['bigint']['output']>;
+export type Fn_Cohort_Analysis_Min_Fields = {
+  __typename?: 'fn_cohort_analysis_min_fields';
+  join_date?: Maybe<Scalars['date']['output']>;
+  joined_count?: Maybe<Scalars['bigint']['output']>;
+  left_count?: Maybe<Scalars['bigint']['output']>;
+  left_date?: Maybe<Scalars['date']['output']>;
 };
 
-/** response of any mutation on the table "hourly_user_signups_virtual" */
-export type Hourly_User_Signups_Virtual_Mutation_Response = {
-  __typename?: 'hourly_user_signups_virtual_mutation_response';
+/** response of any mutation on the table "fn_cohort_analysis" */
+export type Fn_Cohort_Analysis_Mutation_Response = {
+  __typename?: 'fn_cohort_analysis_mutation_response';
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
-  returning: Array<Hourly_User_Signups_Virtual>;
+  returning: Array<Fn_Cohort_Analysis>;
 };
 
-/** Ordering options when selecting data from "hourly_user_signups_virtual". */
-export type Hourly_User_Signups_Virtual_Order_By = {
-  hour?: InputMaybe<Order_By>;
-  signup_count?: InputMaybe<Order_By>;
+/** Ordering options when selecting data from "fn_cohort_analysis". */
+export type Fn_Cohort_Analysis_Order_By = {
+  join_date?: InputMaybe<Order_By>;
+  joined_count?: InputMaybe<Order_By>;
+  left_count?: InputMaybe<Order_By>;
+  left_date?: InputMaybe<Order_By>;
 };
 
-/** select columns of table "hourly_user_signups_virtual" */
-export enum Hourly_User_Signups_Virtual_Select_Column {
+/** select columns of table "fn_cohort_analysis" */
+export enum Fn_Cohort_Analysis_Select_Column {
   /** column name */
-  hour = 'hour',
+  join_date = 'join_date',
   /** column name */
-  signup_count = 'signup_count'
+  joined_count = 'joined_count',
+  /** column name */
+  left_count = 'left_count',
+  /** column name */
+  left_date = 'left_date'
 }
 
-/** input type for updating data in table "hourly_user_signups_virtual" */
-export type Hourly_User_Signups_Virtual_Set_Input = {
-  hour?: InputMaybe<Scalars['timestamp']['input']>;
-  signup_count?: InputMaybe<Scalars['bigint']['input']>;
+/** input type for updating data in table "fn_cohort_analysis" */
+export type Fn_Cohort_Analysis_Set_Input = {
+  join_date?: InputMaybe<Scalars['date']['input']>;
+  joined_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_date?: InputMaybe<Scalars['date']['input']>;
 };
 
 /** aggregate stddev on columns */
-export type Hourly_User_Signups_Virtual_Stddev_Fields = {
-  __typename?: 'hourly_user_signups_virtual_stddev_fields';
-  signup_count?: Maybe<Scalars['Float']['output']>;
+export type Fn_Cohort_Analysis_Stddev_Fields = {
+  __typename?: 'fn_cohort_analysis_stddev_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_pop on columns */
-export type Hourly_User_Signups_Virtual_Stddev_Pop_Fields = {
-  __typename?: 'hourly_user_signups_virtual_stddev_pop_fields';
-  signup_count?: Maybe<Scalars['Float']['output']>;
+export type Fn_Cohort_Analysis_Stddev_Pop_Fields = {
+  __typename?: 'fn_cohort_analysis_stddev_pop_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_samp on columns */
-export type Hourly_User_Signups_Virtual_Stddev_Samp_Fields = {
-  __typename?: 'hourly_user_signups_virtual_stddev_samp_fields';
-  signup_count?: Maybe<Scalars['Float']['output']>;
+export type Fn_Cohort_Analysis_Stddev_Samp_Fields = {
+  __typename?: 'fn_cohort_analysis_stddev_samp_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
 };
 
-/** Streaming cursor of the table "hourly_user_signups_virtual" */
-export type Hourly_User_Signups_Virtual_Stream_Cursor_Input = {
+/** Streaming cursor of the table "fn_cohort_analysis" */
+export type Fn_Cohort_Analysis_Stream_Cursor_Input = {
   /** Stream column input with initial value */
-  initial_value: Hourly_User_Signups_Virtual_Stream_Cursor_Value_Input;
+  initial_value: Fn_Cohort_Analysis_Stream_Cursor_Value_Input;
   /** cursor ordering */
   ordering?: InputMaybe<Cursor_Ordering>;
 };
 
 /** Initial value of the column from where the streaming should start */
-export type Hourly_User_Signups_Virtual_Stream_Cursor_Value_Input = {
-  hour?: InputMaybe<Scalars['timestamp']['input']>;
-  signup_count?: InputMaybe<Scalars['bigint']['input']>;
+export type Fn_Cohort_Analysis_Stream_Cursor_Value_Input = {
+  join_date?: InputMaybe<Scalars['date']['input']>;
+  joined_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_date?: InputMaybe<Scalars['date']['input']>;
 };
 
 /** aggregate sum on columns */
-export type Hourly_User_Signups_Virtual_Sum_Fields = {
-  __typename?: 'hourly_user_signups_virtual_sum_fields';
-  signup_count?: Maybe<Scalars['bigint']['output']>;
+export type Fn_Cohort_Analysis_Sum_Fields = {
+  __typename?: 'fn_cohort_analysis_sum_fields';
+  joined_count?: Maybe<Scalars['bigint']['output']>;
+  left_count?: Maybe<Scalars['bigint']['output']>;
 };
 
-export type Hourly_User_Signups_Virtual_Updates = {
+export type Fn_Cohort_Analysis_Updates = {
   /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Hourly_User_Signups_Virtual_Inc_Input>;
+  _inc?: InputMaybe<Fn_Cohort_Analysis_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Hourly_User_Signups_Virtual_Set_Input>;
+  _set?: InputMaybe<Fn_Cohort_Analysis_Set_Input>;
   /** filter the rows which have to be updated */
-  where: Hourly_User_Signups_Virtual_Bool_Exp;
+  where: Fn_Cohort_Analysis_Bool_Exp;
 };
 
 /** aggregate var_pop on columns */
-export type Hourly_User_Signups_Virtual_Var_Pop_Fields = {
-  __typename?: 'hourly_user_signups_virtual_var_pop_fields';
-  signup_count?: Maybe<Scalars['Float']['output']>;
+export type Fn_Cohort_Analysis_Var_Pop_Fields = {
+  __typename?: 'fn_cohort_analysis_var_pop_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate var_samp on columns */
-export type Hourly_User_Signups_Virtual_Var_Samp_Fields = {
-  __typename?: 'hourly_user_signups_virtual_var_samp_fields';
-  signup_count?: Maybe<Scalars['Float']['output']>;
+export type Fn_Cohort_Analysis_Var_Samp_Fields = {
+  __typename?: 'fn_cohort_analysis_var_samp_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate variance on columns */
-export type Hourly_User_Signups_Virtual_Variance_Fields = {
-  __typename?: 'hourly_user_signups_virtual_variance_fields';
-  signup_count?: Maybe<Scalars['Float']['output']>;
+export type Fn_Cohort_Analysis_Variance_Fields = {
+  __typename?: 'fn_cohort_analysis_variance_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "fn_get_avg_user_lifecycle" */
+export type Fn_Get_Avg_User_Lifecycle = {
+  __typename?: 'fn_get_avg_user_lifecycle';
+  avg_lifecycle_days?: Maybe<Scalars['float8']['output']>;
+};
+
+/** aggregated selection of "fn_get_avg_user_lifecycle" */
+export type Fn_Get_Avg_User_Lifecycle_Aggregate = {
+  __typename?: 'fn_get_avg_user_lifecycle_aggregate';
+  aggregate?: Maybe<Fn_Get_Avg_User_Lifecycle_Aggregate_Fields>;
+  nodes: Array<Fn_Get_Avg_User_Lifecycle>;
+};
+
+/** aggregate fields of "fn_get_avg_user_lifecycle" */
+export type Fn_Get_Avg_User_Lifecycle_Aggregate_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_aggregate_fields';
+  avg?: Maybe<Fn_Get_Avg_User_Lifecycle_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Fn_Get_Avg_User_Lifecycle_Max_Fields>;
+  min?: Maybe<Fn_Get_Avg_User_Lifecycle_Min_Fields>;
+  stddev?: Maybe<Fn_Get_Avg_User_Lifecycle_Stddev_Fields>;
+  stddev_pop?: Maybe<Fn_Get_Avg_User_Lifecycle_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Fn_Get_Avg_User_Lifecycle_Stddev_Samp_Fields>;
+  sum?: Maybe<Fn_Get_Avg_User_Lifecycle_Sum_Fields>;
+  var_pop?: Maybe<Fn_Get_Avg_User_Lifecycle_Var_Pop_Fields>;
+  var_samp?: Maybe<Fn_Get_Avg_User_Lifecycle_Var_Samp_Fields>;
+  variance?: Maybe<Fn_Get_Avg_User_Lifecycle_Variance_Fields>;
+};
+
+
+/** aggregate fields of "fn_get_avg_user_lifecycle" */
+export type Fn_Get_Avg_User_Lifecycle_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Fn_Get_Avg_User_Lifecycle_Avg_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_avg_fields';
+  avg_lifecycle_days?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "fn_get_avg_user_lifecycle". All fields are combined with a logical 'AND'. */
+export type Fn_Get_Avg_User_Lifecycle_Bool_Exp = {
+  _and?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Bool_Exp>>;
+  _not?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
+  _or?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Bool_Exp>>;
+  avg_lifecycle_days?: InputMaybe<Float8_Comparison_Exp>;
+};
+
+/** input type for incrementing numeric columns in table "fn_get_avg_user_lifecycle" */
+export type Fn_Get_Avg_User_Lifecycle_Inc_Input = {
+  avg_lifecycle_days?: InputMaybe<Scalars['float8']['input']>;
+};
+
+/** input type for inserting data into table "fn_get_avg_user_lifecycle" */
+export type Fn_Get_Avg_User_Lifecycle_Insert_Input = {
+  avg_lifecycle_days?: InputMaybe<Scalars['float8']['input']>;
+};
+
+/** aggregate max on columns */
+export type Fn_Get_Avg_User_Lifecycle_Max_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_max_fields';
+  avg_lifecycle_days?: Maybe<Scalars['float8']['output']>;
+};
+
+/** aggregate min on columns */
+export type Fn_Get_Avg_User_Lifecycle_Min_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_min_fields';
+  avg_lifecycle_days?: Maybe<Scalars['float8']['output']>;
+};
+
+/** response of any mutation on the table "fn_get_avg_user_lifecycle" */
+export type Fn_Get_Avg_User_Lifecycle_Mutation_Response = {
+  __typename?: 'fn_get_avg_user_lifecycle_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Fn_Get_Avg_User_Lifecycle>;
+};
+
+/** Ordering options when selecting data from "fn_get_avg_user_lifecycle". */
+export type Fn_Get_Avg_User_Lifecycle_Order_By = {
+  avg_lifecycle_days?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "fn_get_avg_user_lifecycle" */
+export enum Fn_Get_Avg_User_Lifecycle_Select_Column {
+  /** column name */
+  avg_lifecycle_days = 'avg_lifecycle_days'
+}
+
+/** input type for updating data in table "fn_get_avg_user_lifecycle" */
+export type Fn_Get_Avg_User_Lifecycle_Set_Input = {
+  avg_lifecycle_days?: InputMaybe<Scalars['float8']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Fn_Get_Avg_User_Lifecycle_Stddev_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_stddev_fields';
+  avg_lifecycle_days?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Fn_Get_Avg_User_Lifecycle_Stddev_Pop_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_stddev_pop_fields';
+  avg_lifecycle_days?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Fn_Get_Avg_User_Lifecycle_Stddev_Samp_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_stddev_samp_fields';
+  avg_lifecycle_days?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "fn_get_avg_user_lifecycle" */
+export type Fn_Get_Avg_User_Lifecycle_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Fn_Get_Avg_User_Lifecycle_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Fn_Get_Avg_User_Lifecycle_Stream_Cursor_Value_Input = {
+  avg_lifecycle_days?: InputMaybe<Scalars['float8']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Fn_Get_Avg_User_Lifecycle_Sum_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_sum_fields';
+  avg_lifecycle_days?: Maybe<Scalars['float8']['output']>;
+};
+
+export type Fn_Get_Avg_User_Lifecycle_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Fn_Get_Avg_User_Lifecycle_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Fn_Get_Avg_User_Lifecycle_Var_Pop_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_var_pop_fields';
+  avg_lifecycle_days?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Fn_Get_Avg_User_Lifecycle_Var_Samp_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_var_samp_fields';
+  avg_lifecycle_days?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Fn_Get_Avg_User_Lifecycle_Variance_Fields = {
+  __typename?: 'fn_get_avg_user_lifecycle_variance_fields';
+  avg_lifecycle_days?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "fn_unsubscribes_by_links" */
+export type Fn_Unsubscribes_By_Links = {
+  __typename?: 'fn_unsubscribes_by_links';
+  invite_link?: Maybe<Scalars['String']['output']>;
+  joined_count?: Maybe<Scalars['bigint']['output']>;
+  left_count?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** aggregated selection of "fn_unsubscribes_by_links" */
+export type Fn_Unsubscribes_By_Links_Aggregate = {
+  __typename?: 'fn_unsubscribes_by_links_aggregate';
+  aggregate?: Maybe<Fn_Unsubscribes_By_Links_Aggregate_Fields>;
+  nodes: Array<Fn_Unsubscribes_By_Links>;
+};
+
+/** aggregate fields of "fn_unsubscribes_by_links" */
+export type Fn_Unsubscribes_By_Links_Aggregate_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_aggregate_fields';
+  avg?: Maybe<Fn_Unsubscribes_By_Links_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Fn_Unsubscribes_By_Links_Max_Fields>;
+  min?: Maybe<Fn_Unsubscribes_By_Links_Min_Fields>;
+  stddev?: Maybe<Fn_Unsubscribes_By_Links_Stddev_Fields>;
+  stddev_pop?: Maybe<Fn_Unsubscribes_By_Links_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Fn_Unsubscribes_By_Links_Stddev_Samp_Fields>;
+  sum?: Maybe<Fn_Unsubscribes_By_Links_Sum_Fields>;
+  var_pop?: Maybe<Fn_Unsubscribes_By_Links_Var_Pop_Fields>;
+  var_samp?: Maybe<Fn_Unsubscribes_By_Links_Var_Samp_Fields>;
+  variance?: Maybe<Fn_Unsubscribes_By_Links_Variance_Fields>;
+};
+
+
+/** aggregate fields of "fn_unsubscribes_by_links" */
+export type Fn_Unsubscribes_By_Links_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Fn_Unsubscribes_By_Links_Avg_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_avg_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "fn_unsubscribes_by_links". All fields are combined with a logical 'AND'. */
+export type Fn_Unsubscribes_By_Links_Bool_Exp = {
+  _and?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Bool_Exp>>;
+  _not?: InputMaybe<Fn_Unsubscribes_By_Links_Bool_Exp>;
+  _or?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Bool_Exp>>;
+  invite_link?: InputMaybe<String_Comparison_Exp>;
+  joined_count?: InputMaybe<Bigint_Comparison_Exp>;
+  left_count?: InputMaybe<Bigint_Comparison_Exp>;
+};
+
+/** input type for incrementing numeric columns in table "fn_unsubscribes_by_links" */
+export type Fn_Unsubscribes_By_Links_Inc_Input = {
+  joined_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_count?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** input type for inserting data into table "fn_unsubscribes_by_links" */
+export type Fn_Unsubscribes_By_Links_Insert_Input = {
+  invite_link?: InputMaybe<Scalars['String']['input']>;
+  joined_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_count?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** aggregate max on columns */
+export type Fn_Unsubscribes_By_Links_Max_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_max_fields';
+  invite_link?: Maybe<Scalars['String']['output']>;
+  joined_count?: Maybe<Scalars['bigint']['output']>;
+  left_count?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** aggregate min on columns */
+export type Fn_Unsubscribes_By_Links_Min_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_min_fields';
+  invite_link?: Maybe<Scalars['String']['output']>;
+  joined_count?: Maybe<Scalars['bigint']['output']>;
+  left_count?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** response of any mutation on the table "fn_unsubscribes_by_links" */
+export type Fn_Unsubscribes_By_Links_Mutation_Response = {
+  __typename?: 'fn_unsubscribes_by_links_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Fn_Unsubscribes_By_Links>;
+};
+
+/** Ordering options when selecting data from "fn_unsubscribes_by_links". */
+export type Fn_Unsubscribes_By_Links_Order_By = {
+  invite_link?: InputMaybe<Order_By>;
+  joined_count?: InputMaybe<Order_By>;
+  left_count?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "fn_unsubscribes_by_links" */
+export enum Fn_Unsubscribes_By_Links_Select_Column {
+  /** column name */
+  invite_link = 'invite_link',
+  /** column name */
+  joined_count = 'joined_count',
+  /** column name */
+  left_count = 'left_count'
+}
+
+/** input type for updating data in table "fn_unsubscribes_by_links" */
+export type Fn_Unsubscribes_By_Links_Set_Input = {
+  invite_link?: InputMaybe<Scalars['String']['input']>;
+  joined_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_count?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Fn_Unsubscribes_By_Links_Stddev_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_stddev_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Fn_Unsubscribes_By_Links_Stddev_Pop_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_stddev_pop_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Fn_Unsubscribes_By_Links_Stddev_Samp_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_stddev_samp_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "fn_unsubscribes_by_links" */
+export type Fn_Unsubscribes_By_Links_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Fn_Unsubscribes_By_Links_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Fn_Unsubscribes_By_Links_Stream_Cursor_Value_Input = {
+  invite_link?: InputMaybe<Scalars['String']['input']>;
+  joined_count?: InputMaybe<Scalars['bigint']['input']>;
+  left_count?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Fn_Unsubscribes_By_Links_Sum_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_sum_fields';
+  joined_count?: Maybe<Scalars['bigint']['output']>;
+  left_count?: Maybe<Scalars['bigint']['output']>;
+};
+
+export type Fn_Unsubscribes_By_Links_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Fn_Unsubscribes_By_Links_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Fn_Unsubscribes_By_Links_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Fn_Unsubscribes_By_Links_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Fn_Unsubscribes_By_Links_Var_Pop_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_var_pop_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Fn_Unsubscribes_By_Links_Var_Samp_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_var_samp_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Fn_Unsubscribes_By_Links_Variance_Fields = {
+  __typename?: 'fn_unsubscribes_by_links_variance_fields';
+  joined_count?: Maybe<Scalars['Float']['output']>;
+  left_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "fn_unsubscribes_by_periods" */
+export type Fn_Unsubscribes_By_Periods = {
+  __typename?: 'fn_unsubscribes_by_periods';
+  count?: Maybe<Scalars['Int']['output']>;
+  interval_label?: Maybe<Scalars['String']['output']>;
+  percentage?: Maybe<Scalars['float8']['output']>;
+};
+
+/** aggregated selection of "fn_unsubscribes_by_periods" */
+export type Fn_Unsubscribes_By_Periods_Aggregate = {
+  __typename?: 'fn_unsubscribes_by_periods_aggregate';
+  aggregate?: Maybe<Fn_Unsubscribes_By_Periods_Aggregate_Fields>;
+  nodes: Array<Fn_Unsubscribes_By_Periods>;
+};
+
+/** aggregate fields of "fn_unsubscribes_by_periods" */
+export type Fn_Unsubscribes_By_Periods_Aggregate_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_aggregate_fields';
+  avg?: Maybe<Fn_Unsubscribes_By_Periods_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Fn_Unsubscribes_By_Periods_Max_Fields>;
+  min?: Maybe<Fn_Unsubscribes_By_Periods_Min_Fields>;
+  stddev?: Maybe<Fn_Unsubscribes_By_Periods_Stddev_Fields>;
+  stddev_pop?: Maybe<Fn_Unsubscribes_By_Periods_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Fn_Unsubscribes_By_Periods_Stddev_Samp_Fields>;
+  sum?: Maybe<Fn_Unsubscribes_By_Periods_Sum_Fields>;
+  var_pop?: Maybe<Fn_Unsubscribes_By_Periods_Var_Pop_Fields>;
+  var_samp?: Maybe<Fn_Unsubscribes_By_Periods_Var_Samp_Fields>;
+  variance?: Maybe<Fn_Unsubscribes_By_Periods_Variance_Fields>;
+};
+
+
+/** aggregate fields of "fn_unsubscribes_by_periods" */
+export type Fn_Unsubscribes_By_Periods_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Fn_Unsubscribes_By_Periods_Avg_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_avg_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+  percentage?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "fn_unsubscribes_by_periods". All fields are combined with a logical 'AND'. */
+export type Fn_Unsubscribes_By_Periods_Bool_Exp = {
+  _and?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Bool_Exp>>;
+  _not?: InputMaybe<Fn_Unsubscribes_By_Periods_Bool_Exp>;
+  _or?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Bool_Exp>>;
+  count?: InputMaybe<Int_Comparison_Exp>;
+  interval_label?: InputMaybe<String_Comparison_Exp>;
+  percentage?: InputMaybe<Float8_Comparison_Exp>;
+};
+
+/** input type for incrementing numeric columns in table "fn_unsubscribes_by_periods" */
+export type Fn_Unsubscribes_By_Periods_Inc_Input = {
+  count?: InputMaybe<Scalars['Int']['input']>;
+  percentage?: InputMaybe<Scalars['float8']['input']>;
+};
+
+/** input type for inserting data into table "fn_unsubscribes_by_periods" */
+export type Fn_Unsubscribes_By_Periods_Insert_Input = {
+  count?: InputMaybe<Scalars['Int']['input']>;
+  interval_label?: InputMaybe<Scalars['String']['input']>;
+  percentage?: InputMaybe<Scalars['float8']['input']>;
+};
+
+/** aggregate max on columns */
+export type Fn_Unsubscribes_By_Periods_Max_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_max_fields';
+  count?: Maybe<Scalars['Int']['output']>;
+  interval_label?: Maybe<Scalars['String']['output']>;
+  percentage?: Maybe<Scalars['float8']['output']>;
+};
+
+/** aggregate min on columns */
+export type Fn_Unsubscribes_By_Periods_Min_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_min_fields';
+  count?: Maybe<Scalars['Int']['output']>;
+  interval_label?: Maybe<Scalars['String']['output']>;
+  percentage?: Maybe<Scalars['float8']['output']>;
+};
+
+/** response of any mutation on the table "fn_unsubscribes_by_periods" */
+export type Fn_Unsubscribes_By_Periods_Mutation_Response = {
+  __typename?: 'fn_unsubscribes_by_periods_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Fn_Unsubscribes_By_Periods>;
+};
+
+/** Ordering options when selecting data from "fn_unsubscribes_by_periods". */
+export type Fn_Unsubscribes_By_Periods_Order_By = {
+  count?: InputMaybe<Order_By>;
+  interval_label?: InputMaybe<Order_By>;
+  percentage?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "fn_unsubscribes_by_periods" */
+export enum Fn_Unsubscribes_By_Periods_Select_Column {
+  /** column name */
+  count = 'count',
+  /** column name */
+  interval_label = 'interval_label',
+  /** column name */
+  percentage = 'percentage'
+}
+
+/** input type for updating data in table "fn_unsubscribes_by_periods" */
+export type Fn_Unsubscribes_By_Periods_Set_Input = {
+  count?: InputMaybe<Scalars['Int']['input']>;
+  interval_label?: InputMaybe<Scalars['String']['input']>;
+  percentage?: InputMaybe<Scalars['float8']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Fn_Unsubscribes_By_Periods_Stddev_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_stddev_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+  percentage?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Fn_Unsubscribes_By_Periods_Stddev_Pop_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_stddev_pop_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+  percentage?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Fn_Unsubscribes_By_Periods_Stddev_Samp_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_stddev_samp_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+  percentage?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "fn_unsubscribes_by_periods" */
+export type Fn_Unsubscribes_By_Periods_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Fn_Unsubscribes_By_Periods_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Fn_Unsubscribes_By_Periods_Stream_Cursor_Value_Input = {
+  count?: InputMaybe<Scalars['Int']['input']>;
+  interval_label?: InputMaybe<Scalars['String']['input']>;
+  percentage?: InputMaybe<Scalars['float8']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Fn_Unsubscribes_By_Periods_Sum_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_sum_fields';
+  count?: Maybe<Scalars['Int']['output']>;
+  percentage?: Maybe<Scalars['float8']['output']>;
+};
+
+export type Fn_Unsubscribes_By_Periods_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Fn_Unsubscribes_By_Periods_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Fn_Unsubscribes_By_Periods_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Fn_Unsubscribes_By_Periods_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Fn_Unsubscribes_By_Periods_Var_Pop_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_var_pop_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+  percentage?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Fn_Unsubscribes_By_Periods_Var_Samp_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_var_samp_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+  percentage?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Fn_Unsubscribes_By_Periods_Variance_Fields = {
+  __typename?: 'fn_unsubscribes_by_periods_variance_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+  percentage?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "fn_users_by_period" */
+export type Fn_Users_By_Period = {
+  __typename?: 'fn_users_by_period';
+  count?: Maybe<Scalars['bigint']['output']>;
+  time_bucket?: Maybe<Scalars['timestamp']['output']>;
+};
+
+/** aggregated selection of "fn_users_by_period" */
+export type Fn_Users_By_Period_Aggregate = {
+  __typename?: 'fn_users_by_period_aggregate';
+  aggregate?: Maybe<Fn_Users_By_Period_Aggregate_Fields>;
+  nodes: Array<Fn_Users_By_Period>;
+};
+
+/** aggregate fields of "fn_users_by_period" */
+export type Fn_Users_By_Period_Aggregate_Fields = {
+  __typename?: 'fn_users_by_period_aggregate_fields';
+  avg?: Maybe<Fn_Users_By_Period_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Fn_Users_By_Period_Max_Fields>;
+  min?: Maybe<Fn_Users_By_Period_Min_Fields>;
+  stddev?: Maybe<Fn_Users_By_Period_Stddev_Fields>;
+  stddev_pop?: Maybe<Fn_Users_By_Period_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Fn_Users_By_Period_Stddev_Samp_Fields>;
+  sum?: Maybe<Fn_Users_By_Period_Sum_Fields>;
+  var_pop?: Maybe<Fn_Users_By_Period_Var_Pop_Fields>;
+  var_samp?: Maybe<Fn_Users_By_Period_Var_Samp_Fields>;
+  variance?: Maybe<Fn_Users_By_Period_Variance_Fields>;
+};
+
+
+/** aggregate fields of "fn_users_by_period" */
+export type Fn_Users_By_Period_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Fn_Users_By_Period_Avg_Fields = {
+  __typename?: 'fn_users_by_period_avg_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "fn_users_by_period". All fields are combined with a logical 'AND'. */
+export type Fn_Users_By_Period_Bool_Exp = {
+  _and?: InputMaybe<Array<Fn_Users_By_Period_Bool_Exp>>;
+  _not?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+  _or?: InputMaybe<Array<Fn_Users_By_Period_Bool_Exp>>;
+  count?: InputMaybe<Bigint_Comparison_Exp>;
+  time_bucket?: InputMaybe<Timestamp_Comparison_Exp>;
+};
+
+/** input type for incrementing numeric columns in table "fn_users_by_period" */
+export type Fn_Users_By_Period_Inc_Input = {
+  count?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** input type for inserting data into table "fn_users_by_period" */
+export type Fn_Users_By_Period_Insert_Input = {
+  count?: InputMaybe<Scalars['bigint']['input']>;
+  time_bucket?: InputMaybe<Scalars['timestamp']['input']>;
+};
+
+/** aggregate max on columns */
+export type Fn_Users_By_Period_Max_Fields = {
+  __typename?: 'fn_users_by_period_max_fields';
+  count?: Maybe<Scalars['bigint']['output']>;
+  time_bucket?: Maybe<Scalars['timestamp']['output']>;
+};
+
+/** aggregate min on columns */
+export type Fn_Users_By_Period_Min_Fields = {
+  __typename?: 'fn_users_by_period_min_fields';
+  count?: Maybe<Scalars['bigint']['output']>;
+  time_bucket?: Maybe<Scalars['timestamp']['output']>;
+};
+
+/** response of any mutation on the table "fn_users_by_period" */
+export type Fn_Users_By_Period_Mutation_Response = {
+  __typename?: 'fn_users_by_period_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Fn_Users_By_Period>;
+};
+
+/** Ordering options when selecting data from "fn_users_by_period". */
+export type Fn_Users_By_Period_Order_By = {
+  count?: InputMaybe<Order_By>;
+  time_bucket?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "fn_users_by_period" */
+export enum Fn_Users_By_Period_Select_Column {
+  /** column name */
+  count = 'count',
+  /** column name */
+  time_bucket = 'time_bucket'
+}
+
+/** input type for updating data in table "fn_users_by_period" */
+export type Fn_Users_By_Period_Set_Input = {
+  count?: InputMaybe<Scalars['bigint']['input']>;
+  time_bucket?: InputMaybe<Scalars['timestamp']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Fn_Users_By_Period_Stddev_Fields = {
+  __typename?: 'fn_users_by_period_stddev_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Fn_Users_By_Period_Stddev_Pop_Fields = {
+  __typename?: 'fn_users_by_period_stddev_pop_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Fn_Users_By_Period_Stddev_Samp_Fields = {
+  __typename?: 'fn_users_by_period_stddev_samp_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "fn_users_by_period" */
+export type Fn_Users_By_Period_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Fn_Users_By_Period_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Fn_Users_By_Period_Stream_Cursor_Value_Input = {
+  count?: InputMaybe<Scalars['bigint']['input']>;
+  time_bucket?: InputMaybe<Scalars['timestamp']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Fn_Users_By_Period_Sum_Fields = {
+  __typename?: 'fn_users_by_period_sum_fields';
+  count?: Maybe<Scalars['bigint']['output']>;
+};
+
+export type Fn_Users_By_Period_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Fn_Users_By_Period_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Fn_Users_By_Period_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Fn_Users_By_Period_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Fn_Users_By_Period_Var_Pop_Fields = {
+  __typename?: 'fn_users_by_period_var_pop_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Fn_Users_By_Period_Var_Samp_Fields = {
+  __typename?: 'fn_users_by_period_var_samp_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Fn_Users_By_Period_Variance_Fields = {
+  __typename?: 'fn_users_by_period_variance_fields';
+  count?: Maybe<Scalars['Float']['output']>;
+};
+
+export type Get_Avg_User_Lifecycle_Args = {
+  tg_channel_ids?: InputMaybe<Scalars['_int8']['input']>;
 };
 
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
-  /** delete data from the table: "cohort_analysis_virtual" */
-  delete_cohort_analysis_virtual?: Maybe<Cohort_Analysis_Virtual_Mutation_Response>;
-  /** delete data from the table: "hourly_user_signups_virtual" */
-  delete_hourly_user_signups_virtual?: Maybe<Hourly_User_Signups_Virtual_Mutation_Response>;
+  /** delete data from the table: "fn_cohort_analysis" */
+  delete_fn_cohort_analysis?: Maybe<Fn_Cohort_Analysis_Mutation_Response>;
+  /** delete data from the table: "fn_get_avg_user_lifecycle" */
+  delete_fn_get_avg_user_lifecycle?: Maybe<Fn_Get_Avg_User_Lifecycle_Mutation_Response>;
+  /** delete data from the table: "fn_unsubscribes_by_links" */
+  delete_fn_unsubscribes_by_links?: Maybe<Fn_Unsubscribes_By_Links_Mutation_Response>;
+  /** delete data from the table: "fn_unsubscribes_by_periods" */
+  delete_fn_unsubscribes_by_periods?: Maybe<Fn_Unsubscribes_By_Periods_Mutation_Response>;
+  /** delete data from the table: "fn_users_by_period" */
+  delete_fn_users_by_period?: Maybe<Fn_Users_By_Period_Mutation_Response>;
   /** delete data from the table: "stat_post" */
   delete_stat_post?: Maybe<Stat_Post_Mutation_Response>;
   /** delete single row from the table: "stat_post" */
@@ -513,6 +1075,10 @@ export type Mutation_Root = {
   delete_stat_user?: Maybe<Stat_User_Mutation_Response>;
   /** delete single row from the table: "stat_user" */
   delete_stat_user_by_pk?: Maybe<Stat_User>;
+  /** delete data from the table: "tg_invite_link_group" */
+  delete_tg_invite_link_group?: Maybe<Tg_Invite_Link_Group_Mutation_Response>;
+  /** delete single row from the table: "tg_invite_link_group" */
+  delete_tg_invite_link_group_by_pk?: Maybe<Tg_Invite_Link_Group>;
   /** delete data from the table: "user" */
   delete_user?: Maybe<User_Mutation_Response>;
   /** delete single row from the table: "user" */
@@ -521,14 +1087,30 @@ export type Mutation_Root = {
   delete_user_tg_channel?: Maybe<User_Tg_Channel_Mutation_Response>;
   /** delete single row from the table: "user_tg_channel" */
   delete_user_tg_channel_by_pk?: Maybe<User_Tg_Channel>;
-  /** insert data into the table: "cohort_analysis_virtual" */
-  insert_cohort_analysis_virtual?: Maybe<Cohort_Analysis_Virtual_Mutation_Response>;
-  /** insert a single row into the table: "cohort_analysis_virtual" */
-  insert_cohort_analysis_virtual_one?: Maybe<Cohort_Analysis_Virtual>;
-  /** insert data into the table: "hourly_user_signups_virtual" */
-  insert_hourly_user_signups_virtual?: Maybe<Hourly_User_Signups_Virtual_Mutation_Response>;
-  /** insert a single row into the table: "hourly_user_signups_virtual" */
-  insert_hourly_user_signups_virtual_one?: Maybe<Hourly_User_Signups_Virtual>;
+  /** delete data from the table: "user_tg_invite_link" */
+  delete_user_tg_invite_link?: Maybe<User_Tg_Invite_Link_Mutation_Response>;
+  /** delete single row from the table: "user_tg_invite_link" */
+  delete_user_tg_invite_link_by_pk?: Maybe<User_Tg_Invite_Link>;
+  /** insert data into the table: "fn_cohort_analysis" */
+  insert_fn_cohort_analysis?: Maybe<Fn_Cohort_Analysis_Mutation_Response>;
+  /** insert a single row into the table: "fn_cohort_analysis" */
+  insert_fn_cohort_analysis_one?: Maybe<Fn_Cohort_Analysis>;
+  /** insert data into the table: "fn_get_avg_user_lifecycle" */
+  insert_fn_get_avg_user_lifecycle?: Maybe<Fn_Get_Avg_User_Lifecycle_Mutation_Response>;
+  /** insert a single row into the table: "fn_get_avg_user_lifecycle" */
+  insert_fn_get_avg_user_lifecycle_one?: Maybe<Fn_Get_Avg_User_Lifecycle>;
+  /** insert data into the table: "fn_unsubscribes_by_links" */
+  insert_fn_unsubscribes_by_links?: Maybe<Fn_Unsubscribes_By_Links_Mutation_Response>;
+  /** insert a single row into the table: "fn_unsubscribes_by_links" */
+  insert_fn_unsubscribes_by_links_one?: Maybe<Fn_Unsubscribes_By_Links>;
+  /** insert data into the table: "fn_unsubscribes_by_periods" */
+  insert_fn_unsubscribes_by_periods?: Maybe<Fn_Unsubscribes_By_Periods_Mutation_Response>;
+  /** insert a single row into the table: "fn_unsubscribes_by_periods" */
+  insert_fn_unsubscribes_by_periods_one?: Maybe<Fn_Unsubscribes_By_Periods>;
+  /** insert data into the table: "fn_users_by_period" */
+  insert_fn_users_by_period?: Maybe<Fn_Users_By_Period_Mutation_Response>;
+  /** insert a single row into the table: "fn_users_by_period" */
+  insert_fn_users_by_period_one?: Maybe<Fn_Users_By_Period>;
   /** insert data into the table: "stat_post" */
   insert_stat_post?: Maybe<Stat_Post_Mutation_Response>;
   /** insert a single row into the table: "stat_post" */
@@ -541,6 +1123,10 @@ export type Mutation_Root = {
   insert_stat_user?: Maybe<Stat_User_Mutation_Response>;
   /** insert a single row into the table: "stat_user" */
   insert_stat_user_one?: Maybe<Stat_User>;
+  /** insert data into the table: "tg_invite_link_group" */
+  insert_tg_invite_link_group?: Maybe<Tg_Invite_Link_Group_Mutation_Response>;
+  /** insert a single row into the table: "tg_invite_link_group" */
+  insert_tg_invite_link_group_one?: Maybe<Tg_Invite_Link_Group>;
   /** insert data into the table: "user" */
   insert_user?: Maybe<User_Mutation_Response>;
   /** insert a single row into the table: "user" */
@@ -549,14 +1135,30 @@ export type Mutation_Root = {
   insert_user_tg_channel?: Maybe<User_Tg_Channel_Mutation_Response>;
   /** insert a single row into the table: "user_tg_channel" */
   insert_user_tg_channel_one?: Maybe<User_Tg_Channel>;
-  /** update data of the table: "cohort_analysis_virtual" */
-  update_cohort_analysis_virtual?: Maybe<Cohort_Analysis_Virtual_Mutation_Response>;
-  /** update multiples rows of table: "cohort_analysis_virtual" */
-  update_cohort_analysis_virtual_many?: Maybe<Array<Maybe<Cohort_Analysis_Virtual_Mutation_Response>>>;
-  /** update data of the table: "hourly_user_signups_virtual" */
-  update_hourly_user_signups_virtual?: Maybe<Hourly_User_Signups_Virtual_Mutation_Response>;
-  /** update multiples rows of table: "hourly_user_signups_virtual" */
-  update_hourly_user_signups_virtual_many?: Maybe<Array<Maybe<Hourly_User_Signups_Virtual_Mutation_Response>>>;
+  /** insert data into the table: "user_tg_invite_link" */
+  insert_user_tg_invite_link?: Maybe<User_Tg_Invite_Link_Mutation_Response>;
+  /** insert a single row into the table: "user_tg_invite_link" */
+  insert_user_tg_invite_link_one?: Maybe<User_Tg_Invite_Link>;
+  /** update data of the table: "fn_cohort_analysis" */
+  update_fn_cohort_analysis?: Maybe<Fn_Cohort_Analysis_Mutation_Response>;
+  /** update multiples rows of table: "fn_cohort_analysis" */
+  update_fn_cohort_analysis_many?: Maybe<Array<Maybe<Fn_Cohort_Analysis_Mutation_Response>>>;
+  /** update data of the table: "fn_get_avg_user_lifecycle" */
+  update_fn_get_avg_user_lifecycle?: Maybe<Fn_Get_Avg_User_Lifecycle_Mutation_Response>;
+  /** update multiples rows of table: "fn_get_avg_user_lifecycle" */
+  update_fn_get_avg_user_lifecycle_many?: Maybe<Array<Maybe<Fn_Get_Avg_User_Lifecycle_Mutation_Response>>>;
+  /** update data of the table: "fn_unsubscribes_by_links" */
+  update_fn_unsubscribes_by_links?: Maybe<Fn_Unsubscribes_By_Links_Mutation_Response>;
+  /** update multiples rows of table: "fn_unsubscribes_by_links" */
+  update_fn_unsubscribes_by_links_many?: Maybe<Array<Maybe<Fn_Unsubscribes_By_Links_Mutation_Response>>>;
+  /** update data of the table: "fn_unsubscribes_by_periods" */
+  update_fn_unsubscribes_by_periods?: Maybe<Fn_Unsubscribes_By_Periods_Mutation_Response>;
+  /** update multiples rows of table: "fn_unsubscribes_by_periods" */
+  update_fn_unsubscribes_by_periods_many?: Maybe<Array<Maybe<Fn_Unsubscribes_By_Periods_Mutation_Response>>>;
+  /** update data of the table: "fn_users_by_period" */
+  update_fn_users_by_period?: Maybe<Fn_Users_By_Period_Mutation_Response>;
+  /** update multiples rows of table: "fn_users_by_period" */
+  update_fn_users_by_period_many?: Maybe<Array<Maybe<Fn_Users_By_Period_Mutation_Response>>>;
   /** update data of the table: "stat_post" */
   update_stat_post?: Maybe<Stat_Post_Mutation_Response>;
   /** update single row of the table: "stat_post" */
@@ -575,6 +1177,12 @@ export type Mutation_Root = {
   update_stat_user_by_pk?: Maybe<Stat_User>;
   /** update multiples rows of table: "stat_user" */
   update_stat_user_many?: Maybe<Array<Maybe<Stat_User_Mutation_Response>>>;
+  /** update data of the table: "tg_invite_link_group" */
+  update_tg_invite_link_group?: Maybe<Tg_Invite_Link_Group_Mutation_Response>;
+  /** update single row of the table: "tg_invite_link_group" */
+  update_tg_invite_link_group_by_pk?: Maybe<Tg_Invite_Link_Group>;
+  /** update multiples rows of table: "tg_invite_link_group" */
+  update_tg_invite_link_group_many?: Maybe<Array<Maybe<Tg_Invite_Link_Group_Mutation_Response>>>;
   /** update data of the table: "user" */
   update_user?: Maybe<User_Mutation_Response>;
   /** update single row of the table: "user" */
@@ -587,18 +1195,42 @@ export type Mutation_Root = {
   update_user_tg_channel_by_pk?: Maybe<User_Tg_Channel>;
   /** update multiples rows of table: "user_tg_channel" */
   update_user_tg_channel_many?: Maybe<Array<Maybe<User_Tg_Channel_Mutation_Response>>>;
+  /** update data of the table: "user_tg_invite_link" */
+  update_user_tg_invite_link?: Maybe<User_Tg_Invite_Link_Mutation_Response>;
+  /** update single row of the table: "user_tg_invite_link" */
+  update_user_tg_invite_link_by_pk?: Maybe<User_Tg_Invite_Link>;
+  /** update multiples rows of table: "user_tg_invite_link" */
+  update_user_tg_invite_link_many?: Maybe<Array<Maybe<User_Tg_Invite_Link_Mutation_Response>>>;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Cohort_Analysis_VirtualArgs = {
-  where: Cohort_Analysis_Virtual_Bool_Exp;
+export type Mutation_RootDelete_Fn_Cohort_AnalysisArgs = {
+  where: Fn_Cohort_Analysis_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Hourly_User_Signups_VirtualArgs = {
-  where: Hourly_User_Signups_Virtual_Bool_Exp;
+export type Mutation_RootDelete_Fn_Get_Avg_User_LifecycleArgs = {
+  where: Fn_Get_Avg_User_Lifecycle_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Fn_Unsubscribes_By_LinksArgs = {
+  where: Fn_Unsubscribes_By_Links_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Fn_Unsubscribes_By_PeriodsArgs = {
+  where: Fn_Unsubscribes_By_Periods_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Fn_Users_By_PeriodArgs = {
+  where: Fn_Users_By_Period_Bool_Exp;
 };
 
 
@@ -639,6 +1271,18 @@ export type Mutation_RootDelete_Stat_User_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Tg_Invite_Link_GroupArgs = {
+  where: Tg_Invite_Link_Group_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Tg_Invite_Link_Group_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_UserArgs = {
   where: User_Bool_Exp;
 };
@@ -664,26 +1308,74 @@ export type Mutation_RootDelete_User_Tg_Channel_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Cohort_Analysis_VirtualArgs = {
-  objects: Array<Cohort_Analysis_Virtual_Insert_Input>;
+export type Mutation_RootDelete_User_Tg_Invite_LinkArgs = {
+  where: User_Tg_Invite_Link_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Cohort_Analysis_Virtual_OneArgs = {
-  object: Cohort_Analysis_Virtual_Insert_Input;
+export type Mutation_RootDelete_User_Tg_Invite_Link_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Hourly_User_Signups_VirtualArgs = {
-  objects: Array<Hourly_User_Signups_Virtual_Insert_Input>;
+export type Mutation_RootInsert_Fn_Cohort_AnalysisArgs = {
+  objects: Array<Fn_Cohort_Analysis_Insert_Input>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Hourly_User_Signups_Virtual_OneArgs = {
-  object: Hourly_User_Signups_Virtual_Insert_Input;
+export type Mutation_RootInsert_Fn_Cohort_Analysis_OneArgs = {
+  object: Fn_Cohort_Analysis_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Fn_Get_Avg_User_LifecycleArgs = {
+  objects: Array<Fn_Get_Avg_User_Lifecycle_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Fn_Get_Avg_User_Lifecycle_OneArgs = {
+  object: Fn_Get_Avg_User_Lifecycle_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Fn_Unsubscribes_By_LinksArgs = {
+  objects: Array<Fn_Unsubscribes_By_Links_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Fn_Unsubscribes_By_Links_OneArgs = {
+  object: Fn_Unsubscribes_By_Links_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Fn_Unsubscribes_By_PeriodsArgs = {
+  objects: Array<Fn_Unsubscribes_By_Periods_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Fn_Unsubscribes_By_Periods_OneArgs = {
+  object: Fn_Unsubscribes_By_Periods_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Fn_Users_By_PeriodArgs = {
+  objects: Array<Fn_Users_By_Period_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Fn_Users_By_Period_OneArgs = {
+  object: Fn_Users_By_Period_Insert_Input;
 };
 
 
@@ -730,6 +1422,20 @@ export type Mutation_RootInsert_Stat_User_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Tg_Invite_Link_GroupArgs = {
+  objects: Array<Tg_Invite_Link_Group_Insert_Input>;
+  on_conflict?: InputMaybe<Tg_Invite_Link_Group_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Tg_Invite_Link_Group_OneArgs = {
+  object: Tg_Invite_Link_Group_Insert_Input;
+  on_conflict?: InputMaybe<Tg_Invite_Link_Group_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_UserArgs = {
   objects: Array<User_Insert_Input>;
   on_conflict?: InputMaybe<User_On_Conflict>;
@@ -758,30 +1464,86 @@ export type Mutation_RootInsert_User_Tg_Channel_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Cohort_Analysis_VirtualArgs = {
-  _inc?: InputMaybe<Cohort_Analysis_Virtual_Inc_Input>;
-  _set?: InputMaybe<Cohort_Analysis_Virtual_Set_Input>;
-  where: Cohort_Analysis_Virtual_Bool_Exp;
+export type Mutation_RootInsert_User_Tg_Invite_LinkArgs = {
+  objects: Array<User_Tg_Invite_Link_Insert_Input>;
+  on_conflict?: InputMaybe<User_Tg_Invite_Link_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Cohort_Analysis_Virtual_ManyArgs = {
-  updates: Array<Cohort_Analysis_Virtual_Updates>;
+export type Mutation_RootInsert_User_Tg_Invite_Link_OneArgs = {
+  object: User_Tg_Invite_Link_Insert_Input;
+  on_conflict?: InputMaybe<User_Tg_Invite_Link_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Hourly_User_Signups_VirtualArgs = {
-  _inc?: InputMaybe<Hourly_User_Signups_Virtual_Inc_Input>;
-  _set?: InputMaybe<Hourly_User_Signups_Virtual_Set_Input>;
-  where: Hourly_User_Signups_Virtual_Bool_Exp;
+export type Mutation_RootUpdate_Fn_Cohort_AnalysisArgs = {
+  _inc?: InputMaybe<Fn_Cohort_Analysis_Inc_Input>;
+  _set?: InputMaybe<Fn_Cohort_Analysis_Set_Input>;
+  where: Fn_Cohort_Analysis_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Hourly_User_Signups_Virtual_ManyArgs = {
-  updates: Array<Hourly_User_Signups_Virtual_Updates>;
+export type Mutation_RootUpdate_Fn_Cohort_Analysis_ManyArgs = {
+  updates: Array<Fn_Cohort_Analysis_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Fn_Get_Avg_User_LifecycleArgs = {
+  _inc?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Inc_Input>;
+  _set?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Set_Input>;
+  where: Fn_Get_Avg_User_Lifecycle_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Fn_Get_Avg_User_Lifecycle_ManyArgs = {
+  updates: Array<Fn_Get_Avg_User_Lifecycle_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Fn_Unsubscribes_By_LinksArgs = {
+  _inc?: InputMaybe<Fn_Unsubscribes_By_Links_Inc_Input>;
+  _set?: InputMaybe<Fn_Unsubscribes_By_Links_Set_Input>;
+  where: Fn_Unsubscribes_By_Links_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Fn_Unsubscribes_By_Links_ManyArgs = {
+  updates: Array<Fn_Unsubscribes_By_Links_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Fn_Unsubscribes_By_PeriodsArgs = {
+  _inc?: InputMaybe<Fn_Unsubscribes_By_Periods_Inc_Input>;
+  _set?: InputMaybe<Fn_Unsubscribes_By_Periods_Set_Input>;
+  where: Fn_Unsubscribes_By_Periods_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Fn_Unsubscribes_By_Periods_ManyArgs = {
+  updates: Array<Fn_Unsubscribes_By_Periods_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Fn_Users_By_PeriodArgs = {
+  _inc?: InputMaybe<Fn_Users_By_Period_Inc_Input>;
+  _set?: InputMaybe<Fn_Users_By_Period_Set_Input>;
+  where: Fn_Users_By_Period_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Fn_Users_By_Period_ManyArgs = {
+  updates: Array<Fn_Users_By_Period_Updates>;
 };
 
 
@@ -852,6 +1614,28 @@ export type Mutation_RootUpdate_Stat_User_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Tg_Invite_Link_GroupArgs = {
+  _inc?: InputMaybe<Tg_Invite_Link_Group_Inc_Input>;
+  _set?: InputMaybe<Tg_Invite_Link_Group_Set_Input>;
+  where: Tg_Invite_Link_Group_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Tg_Invite_Link_Group_By_PkArgs = {
+  _inc?: InputMaybe<Tg_Invite_Link_Group_Inc_Input>;
+  _set?: InputMaybe<Tg_Invite_Link_Group_Set_Input>;
+  pk_columns: Tg_Invite_Link_Group_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Tg_Invite_Link_Group_ManyArgs = {
+  updates: Array<Tg_Invite_Link_Group_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_UserArgs = {
   _set?: InputMaybe<User_Set_Input>;
   where: User_Bool_Exp;
@@ -892,6 +1676,28 @@ export type Mutation_RootUpdate_User_Tg_Channel_ManyArgs = {
   updates: Array<User_Tg_Channel_Updates>;
 };
 
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Tg_Invite_LinkArgs = {
+  _inc?: InputMaybe<User_Tg_Invite_Link_Inc_Input>;
+  _set?: InputMaybe<User_Tg_Invite_Link_Set_Input>;
+  where: User_Tg_Invite_Link_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Tg_Invite_Link_By_PkArgs = {
+  _inc?: InputMaybe<User_Tg_Invite_Link_Inc_Input>;
+  _set?: InputMaybe<User_Tg_Invite_Link_Set_Input>;
+  pk_columns: User_Tg_Invite_Link_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Tg_Invite_Link_ManyArgs = {
+  updates: Array<User_Tg_Invite_Link_Updates>;
+};
+
 /** column ordering options */
 export enum Order_By {
   /** in ascending order, nulls last */
@@ -910,22 +1716,34 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
-  /** execute function "cohort_analysis_hasura" which returns "cohort_analysis_virtual" */
-  cohort_analysis_hasura: Array<Cohort_Analysis_Virtual>;
-  /** execute function "cohort_analysis_hasura" and query aggregates on result of table type "cohort_analysis_virtual" */
-  cohort_analysis_hasura_aggregate: Cohort_Analysis_Virtual_Aggregate;
-  /** fetch data from the table: "cohort_analysis_virtual" */
-  cohort_analysis_virtual: Array<Cohort_Analysis_Virtual>;
-  /** fetch aggregated fields from the table: "cohort_analysis_virtual" */
-  cohort_analysis_virtual_aggregate: Cohort_Analysis_Virtual_Aggregate;
-  /** execute function "hourly_user_signups" which returns "hourly_user_signups_virtual" */
-  hourly_user_signups: Array<Hourly_User_Signups_Virtual>;
-  /** execute function "hourly_user_signups" and query aggregates on result of table type "hourly_user_signups_virtual" */
-  hourly_user_signups_aggregate: Hourly_User_Signups_Virtual_Aggregate;
-  /** fetch data from the table: "hourly_user_signups_virtual" */
-  hourly_user_signups_virtual: Array<Hourly_User_Signups_Virtual>;
-  /** fetch aggregated fields from the table: "hourly_user_signups_virtual" */
-  hourly_user_signups_virtual_aggregate: Hourly_User_Signups_Virtual_Aggregate;
+  /** execute function "cohort_analysis" which returns "fn_cohort_analysis" */
+  cohort_analysis: Array<Fn_Cohort_Analysis>;
+  /** execute function "cohort_analysis" and query aggregates on result of table type "fn_cohort_analysis" */
+  cohort_analysis_aggregate: Fn_Cohort_Analysis_Aggregate;
+  /** fetch data from the table: "fn_cohort_analysis" */
+  fn_cohort_analysis: Array<Fn_Cohort_Analysis>;
+  /** fetch aggregated fields from the table: "fn_cohort_analysis" */
+  fn_cohort_analysis_aggregate: Fn_Cohort_Analysis_Aggregate;
+  /** fetch data from the table: "fn_get_avg_user_lifecycle" */
+  fn_get_avg_user_lifecycle: Array<Fn_Get_Avg_User_Lifecycle>;
+  /** fetch aggregated fields from the table: "fn_get_avg_user_lifecycle" */
+  fn_get_avg_user_lifecycle_aggregate: Fn_Get_Avg_User_Lifecycle_Aggregate;
+  /** fetch data from the table: "fn_unsubscribes_by_links" */
+  fn_unsubscribes_by_links: Array<Fn_Unsubscribes_By_Links>;
+  /** fetch aggregated fields from the table: "fn_unsubscribes_by_links" */
+  fn_unsubscribes_by_links_aggregate: Fn_Unsubscribes_By_Links_Aggregate;
+  /** fetch data from the table: "fn_unsubscribes_by_periods" */
+  fn_unsubscribes_by_periods: Array<Fn_Unsubscribes_By_Periods>;
+  /** fetch aggregated fields from the table: "fn_unsubscribes_by_periods" */
+  fn_unsubscribes_by_periods_aggregate: Fn_Unsubscribes_By_Periods_Aggregate;
+  /** fetch data from the table: "fn_users_by_period" */
+  fn_users_by_period: Array<Fn_Users_By_Period>;
+  /** fetch aggregated fields from the table: "fn_users_by_period" */
+  fn_users_by_period_aggregate: Fn_Users_By_Period_Aggregate;
+  /** execute function "get_avg_user_lifecycle" which returns "fn_get_avg_user_lifecycle" */
+  get_avg_user_lifecycle: Array<Fn_Get_Avg_User_Lifecycle>;
+  /** execute function "get_avg_user_lifecycle" and query aggregates on result of table type "fn_get_avg_user_lifecycle" */
+  get_avg_user_lifecycle_aggregate: Fn_Get_Avg_User_Lifecycle_Aggregate;
   /** fetch data from the table: "stat_post" */
   stat_post: Array<Stat_Post>;
   /** fetch aggregated fields from the table: "stat_post" */
@@ -944,94 +1762,176 @@ export type Query_Root = {
   stat_user_aggregate: Stat_User_Aggregate;
   /** fetch data from the table: "stat_user" using primary key columns */
   stat_user_by_pk?: Maybe<Stat_User>;
+  /** fetch data from the table: "tg_invite_link_group" */
+  tg_invite_link_group: Array<Tg_Invite_Link_Group>;
+  /** fetch aggregated fields from the table: "tg_invite_link_group" */
+  tg_invite_link_group_aggregate: Tg_Invite_Link_Group_Aggregate;
+  /** fetch data from the table: "tg_invite_link_group" using primary key columns */
+  tg_invite_link_group_by_pk?: Maybe<Tg_Invite_Link_Group>;
+  /** execute function "unsubscribes_by_links" which returns "fn_unsubscribes_by_links" */
+  unsubscribes_by_links: Array<Fn_Unsubscribes_By_Links>;
+  /** execute function "unsubscribes_by_links" and query aggregates on result of table type "fn_unsubscribes_by_links" */
+  unsubscribes_by_links_aggregate: Fn_Unsubscribes_By_Links_Aggregate;
+  /** execute function "unsubscribes_by_periods" which returns "fn_unsubscribes_by_periods" */
+  unsubscribes_by_periods: Array<Fn_Unsubscribes_By_Periods>;
+  /** execute function "unsubscribes_by_periods" and query aggregates on result of table type "fn_unsubscribes_by_periods" */
+  unsubscribes_by_periods_aggregate: Fn_Unsubscribes_By_Periods_Aggregate;
   /** fetch data from the table: "user" */
   user: Array<User>;
   /** fetch aggregated fields from the table: "user" */
   user_aggregate: User_Aggregate;
   /** fetch data from the table: "user" using primary key columns */
   user_by_pk?: Maybe<User>;
+  /** execute function "user_signups_by_period" which returns "fn_users_by_period" */
+  user_signups_by_period: Array<Fn_Users_By_Period>;
+  /** execute function "user_signups_by_period" and query aggregates on result of table type "fn_users_by_period" */
+  user_signups_by_period_aggregate: Fn_Users_By_Period_Aggregate;
   /** fetch data from the table: "user_tg_channel" */
   user_tg_channel: Array<User_Tg_Channel>;
   /** fetch aggregated fields from the table: "user_tg_channel" */
   user_tg_channel_aggregate: User_Tg_Channel_Aggregate;
   /** fetch data from the table: "user_tg_channel" using primary key columns */
   user_tg_channel_by_pk?: Maybe<User_Tg_Channel>;
+  /** fetch data from the table: "user_tg_invite_link" */
+  user_tg_invite_link: Array<User_Tg_Invite_Link>;
+  /** fetch aggregated fields from the table: "user_tg_invite_link" */
+  user_tg_invite_link_aggregate: User_Tg_Invite_Link_Aggregate;
+  /** fetch data from the table: "user_tg_invite_link" using primary key columns */
+  user_tg_invite_link_by_pk?: Maybe<User_Tg_Invite_Link>;
+  /** execute function "user_unsubscribes_by_period" which returns "fn_users_by_period" */
+  user_unsubscribes_by_period: Array<Fn_Users_By_Period>;
+  /** execute function "user_unsubscribes_by_period" and query aggregates on result of table type "fn_users_by_period" */
+  user_unsubscribes_by_period_aggregate: Fn_Users_By_Period_Aggregate;
 };
 
 
-export type Query_RootCohort_Analysis_HasuraArgs = {
-  args: Cohort_Analysis_Hasura_Args;
-  distinct_on?: InputMaybe<Array<Cohort_Analysis_Virtual_Select_Column>>;
+export type Query_RootCohort_AnalysisArgs = {
+  args: Cohort_Analysis_Args;
+  distinct_on?: InputMaybe<Array<Fn_Cohort_Analysis_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Cohort_Analysis_Virtual_Order_By>>;
-  where?: InputMaybe<Cohort_Analysis_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Cohort_Analysis_Order_By>>;
+  where?: InputMaybe<Fn_Cohort_Analysis_Bool_Exp>;
 };
 
 
-export type Query_RootCohort_Analysis_Hasura_AggregateArgs = {
-  args: Cohort_Analysis_Hasura_Args;
-  distinct_on?: InputMaybe<Array<Cohort_Analysis_Virtual_Select_Column>>;
+export type Query_RootCohort_Analysis_AggregateArgs = {
+  args: Cohort_Analysis_Args;
+  distinct_on?: InputMaybe<Array<Fn_Cohort_Analysis_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Cohort_Analysis_Virtual_Order_By>>;
-  where?: InputMaybe<Cohort_Analysis_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Cohort_Analysis_Order_By>>;
+  where?: InputMaybe<Fn_Cohort_Analysis_Bool_Exp>;
 };
 
 
-export type Query_RootCohort_Analysis_VirtualArgs = {
-  distinct_on?: InputMaybe<Array<Cohort_Analysis_Virtual_Select_Column>>;
+export type Query_RootFn_Cohort_AnalysisArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Cohort_Analysis_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Cohort_Analysis_Virtual_Order_By>>;
-  where?: InputMaybe<Cohort_Analysis_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Cohort_Analysis_Order_By>>;
+  where?: InputMaybe<Fn_Cohort_Analysis_Bool_Exp>;
 };
 
 
-export type Query_RootCohort_Analysis_Virtual_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Cohort_Analysis_Virtual_Select_Column>>;
+export type Query_RootFn_Cohort_Analysis_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Cohort_Analysis_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Cohort_Analysis_Virtual_Order_By>>;
-  where?: InputMaybe<Cohort_Analysis_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Cohort_Analysis_Order_By>>;
+  where?: InputMaybe<Fn_Cohort_Analysis_Bool_Exp>;
 };
 
 
-export type Query_RootHourly_User_SignupsArgs = {
-  args: Hourly_User_Signups_Args;
-  distinct_on?: InputMaybe<Array<Hourly_User_Signups_Virtual_Select_Column>>;
+export type Query_RootFn_Get_Avg_User_LifecycleArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Hourly_User_Signups_Virtual_Order_By>>;
-  where?: InputMaybe<Hourly_User_Signups_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Order_By>>;
+  where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
 };
 
 
-export type Query_RootHourly_User_Signups_AggregateArgs = {
-  args: Hourly_User_Signups_Args;
-  distinct_on?: InputMaybe<Array<Hourly_User_Signups_Virtual_Select_Column>>;
+export type Query_RootFn_Get_Avg_User_Lifecycle_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Hourly_User_Signups_Virtual_Order_By>>;
-  where?: InputMaybe<Hourly_User_Signups_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Order_By>>;
+  where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
 };
 
 
-export type Query_RootHourly_User_Signups_VirtualArgs = {
-  distinct_on?: InputMaybe<Array<Hourly_User_Signups_Virtual_Select_Column>>;
+export type Query_RootFn_Unsubscribes_By_LinksArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Hourly_User_Signups_Virtual_Order_By>>;
-  where?: InputMaybe<Hourly_User_Signups_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Links_Bool_Exp>;
 };
 
 
-export type Query_RootHourly_User_Signups_Virtual_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Hourly_User_Signups_Virtual_Select_Column>>;
+export type Query_RootFn_Unsubscribes_By_Links_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Hourly_User_Signups_Virtual_Order_By>>;
-  where?: InputMaybe<Hourly_User_Signups_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Links_Bool_Exp>;
+};
+
+
+export type Query_RootFn_Unsubscribes_By_PeriodsArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Periods_Bool_Exp>;
+};
+
+
+export type Query_RootFn_Unsubscribes_By_Periods_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Periods_Bool_Exp>;
+};
+
+
+export type Query_RootFn_Users_By_PeriodArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+
+export type Query_RootFn_Users_By_Period_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+
+export type Query_RootGet_Avg_User_LifecycleArgs = {
+  args: Get_Avg_User_Lifecycle_Args;
+  distinct_on?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Order_By>>;
+  where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
+};
+
+
+export type Query_RootGet_Avg_User_Lifecycle_AggregateArgs = {
+  args: Get_Avg_User_Lifecycle_Args;
+  distinct_on?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Order_By>>;
+  where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
 };
 
 
@@ -1104,6 +2004,69 @@ export type Query_RootStat_User_By_PkArgs = {
 };
 
 
+export type Query_RootTg_Invite_Link_GroupArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Invite_Link_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Invite_Link_Group_Order_By>>;
+  where?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+};
+
+
+export type Query_RootTg_Invite_Link_Group_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Invite_Link_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Invite_Link_Group_Order_By>>;
+  where?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+};
+
+
+export type Query_RootTg_Invite_Link_Group_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
+};
+
+
+export type Query_RootUnsubscribes_By_LinksArgs = {
+  args: Unsubscribes_By_Links_Args;
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Links_Bool_Exp>;
+};
+
+
+export type Query_RootUnsubscribes_By_Links_AggregateArgs = {
+  args: Unsubscribes_By_Links_Args;
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Links_Bool_Exp>;
+};
+
+
+export type Query_RootUnsubscribes_By_PeriodsArgs = {
+  args: Unsubscribes_By_Periods_Args;
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Periods_Bool_Exp>;
+};
+
+
+export type Query_RootUnsubscribes_By_Periods_AggregateArgs = {
+  args: Unsubscribes_By_Periods_Args;
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Periods_Bool_Exp>;
+};
+
+
 export type Query_RootUserArgs = {
   distinct_on?: InputMaybe<Array<User_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1124,6 +2087,26 @@ export type Query_RootUser_AggregateArgs = {
 
 export type Query_RootUser_By_PkArgs = {
   id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootUser_Signups_By_PeriodArgs = {
+  args: User_Signups_By_Period_Args;
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Signups_By_Period_AggregateArgs = {
+  args: User_Signups_By_Period_Args;
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
 };
 
 
@@ -1150,28 +2133,71 @@ export type Query_RootUser_Tg_Channel_By_PkArgs = {
   user_id: Scalars['uuid']['input'];
 };
 
+
+export type Query_RootUser_Tg_Invite_LinkArgs = {
+  distinct_on?: InputMaybe<Array<User_Tg_Invite_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Tg_Invite_Link_Order_By>>;
+  where?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Tg_Invite_Link_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Tg_Invite_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Tg_Invite_Link_Order_By>>;
+  where?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Tg_Invite_Link_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
+};
+
+
+export type Query_RootUser_Unsubscribes_By_PeriodArgs = {
+  args: User_Unsubscribes_By_Period_Args;
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Unsubscribes_By_Period_AggregateArgs = {
+  args: User_Unsubscribes_By_Period_Args;
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
 /** columns and relationships of "stat_post" */
 export type Stat_Post = {
   __typename?: 'stat_post';
-  comments_channels_count?: Maybe<Scalars['Int']['output']>;
-  comments_messages_count?: Maybe<Scalars['Int']['output']>;
-  comments_messages_count_1h?: Maybe<Scalars['Int']['output']>;
-  comments_messages_count_24h?: Maybe<Scalars['Int']['output']>;
-  comments_users_count?: Maybe<Scalars['Int']['output']>;
-  forwards?: Maybe<Scalars['Int']['output']>;
-  link?: Maybe<Scalars['String']['output']>;
-  media?: Maybe<Scalars['String']['output']>;
-  message?: Maybe<Scalars['String']['output']>;
+  comments_channels_count: Scalars['Int']['output'];
+  comments_messages_count: Scalars['Int']['output'];
+  comments_messages_count_1h: Scalars['Int']['output'];
+  comments_messages_count_24h: Scalars['Int']['output'];
+  comments_users_count: Scalars['Int']['output'];
+  forwards: Scalars['Int']['output'];
+  link: Scalars['String']['output'];
+  media: Scalars['String']['output'];
+  message: Scalars['String']['output'];
   pk: Scalars['bigint']['output'];
-  reaction_24h?: Maybe<Scalars['Int']['output']>;
-  reactions_1h?: Maybe<Scalars['Int']['output']>;
-  tg_channel_id?: Maybe<Scalars['bigint']['output']>;
-  tg_post_id?: Maybe<Scalars['bigint']['output']>;
-  timestamp?: Maybe<Scalars['timestamp']['output']>;
-  total_reactions_count?: Maybe<Scalars['Int']['output']>;
-  view_24h?: Maybe<Scalars['Int']['output']>;
-  views?: Maybe<Scalars['Int']['output']>;
-  views_1h?: Maybe<Scalars['Int']['output']>;
+  reaction_24h: Scalars['Int']['output'];
+  reactions_1h: Scalars['Int']['output'];
+  tg_channel_id: Scalars['bigint']['output'];
+  tg_post_id: Scalars['bigint']['output'];
+  timestamp: Scalars['timestamp']['output'];
+  total_reactions_count: Scalars['Int']['output'];
+  view_24h: Scalars['Int']['output'];
+  views: Scalars['Int']['output'];
+  views_1h: Scalars['Int']['output'];
 };
 
 /** aggregated selection of "stat_post" */
@@ -1681,12 +2707,12 @@ export type Stat_Post_Variance_Fields = {
 export type Stat_Reaction = {
   __typename?: 'stat_reaction';
   pk: Scalars['bigint']['output'];
-  reaction_count?: Maybe<Scalars['Int']['output']>;
-  reaction_emoticon?: Maybe<Scalars['String']['output']>;
-  reaction_emoticon_code?: Maybe<Scalars['Int']['output']>;
-  tg_channel_id?: Maybe<Scalars['bigint']['output']>;
-  tg_post_id?: Maybe<Scalars['bigint']['output']>;
-  timestamp?: Maybe<Scalars['timestamp']['output']>;
+  reaction_count: Scalars['Int']['output'];
+  reaction_emoticon: Scalars['String']['output'];
+  reaction_emoticon_code: Scalars['Int']['output'];
+  tg_channel_id: Scalars['bigint']['output'];
+  tg_post_id: Scalars['bigint']['output'];
+  timestamp: Scalars['timestamp']['output'];
 };
 
 /** aggregated selection of "stat_reaction" */
@@ -1983,9 +3009,9 @@ export type Stat_User = {
   pk: Scalars['bigint']['output'];
   premium?: Maybe<Scalars['Boolean']['output']>;
   scam?: Maybe<Scalars['Boolean']['output']>;
-  tg_channel_id?: Maybe<Scalars['bigint']['output']>;
-  tg_user_id?: Maybe<Scalars['bigint']['output']>;
-  timestamp?: Maybe<Scalars['timestamp']['output']>;
+  tg_channel_id: Scalars['bigint']['output'];
+  tg_user_id: Scalars['bigint']['output'];
+  timestamp: Scalars['timestamp']['output'];
   username?: Maybe<Scalars['String']['output']>;
   verified?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -2053,9 +3079,7 @@ export type Stat_User_Bool_Exp = {
 /** unique or primary key constraints on table "stat_user" */
 export enum Stat_User_Constraint {
   /** unique or primary key constraint on columns "pk" */
-  stat_user_pkey = 'stat_user_pkey',
-  /** unique or primary key constraint on columns "tg_channel_id", "tg_user_id" */
-  stat_user_tg_user_id_tg_channel_id_key = 'stat_user_tg_user_id_tg_channel_id_key'
+  stat_user_pkey = 'stat_user_pkey'
 }
 
 /** input type for incrementing numeric columns in table "stat_user" */
@@ -2337,26 +3361,44 @@ export type Stat_User_Variance_Fields = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
-  /** execute function "cohort_analysis_hasura" which returns "cohort_analysis_virtual" */
-  cohort_analysis_hasura: Array<Cohort_Analysis_Virtual>;
-  /** execute function "cohort_analysis_hasura" and query aggregates on result of table type "cohort_analysis_virtual" */
-  cohort_analysis_hasura_aggregate: Cohort_Analysis_Virtual_Aggregate;
-  /** fetch data from the table: "cohort_analysis_virtual" */
-  cohort_analysis_virtual: Array<Cohort_Analysis_Virtual>;
-  /** fetch aggregated fields from the table: "cohort_analysis_virtual" */
-  cohort_analysis_virtual_aggregate: Cohort_Analysis_Virtual_Aggregate;
-  /** fetch data from the table in a streaming manner: "cohort_analysis_virtual" */
-  cohort_analysis_virtual_stream: Array<Cohort_Analysis_Virtual>;
-  /** execute function "hourly_user_signups" which returns "hourly_user_signups_virtual" */
-  hourly_user_signups: Array<Hourly_User_Signups_Virtual>;
-  /** execute function "hourly_user_signups" and query aggregates on result of table type "hourly_user_signups_virtual" */
-  hourly_user_signups_aggregate: Hourly_User_Signups_Virtual_Aggregate;
-  /** fetch data from the table: "hourly_user_signups_virtual" */
-  hourly_user_signups_virtual: Array<Hourly_User_Signups_Virtual>;
-  /** fetch aggregated fields from the table: "hourly_user_signups_virtual" */
-  hourly_user_signups_virtual_aggregate: Hourly_User_Signups_Virtual_Aggregate;
-  /** fetch data from the table in a streaming manner: "hourly_user_signups_virtual" */
-  hourly_user_signups_virtual_stream: Array<Hourly_User_Signups_Virtual>;
+  /** execute function "cohort_analysis" which returns "fn_cohort_analysis" */
+  cohort_analysis: Array<Fn_Cohort_Analysis>;
+  /** execute function "cohort_analysis" and query aggregates on result of table type "fn_cohort_analysis" */
+  cohort_analysis_aggregate: Fn_Cohort_Analysis_Aggregate;
+  /** fetch data from the table: "fn_cohort_analysis" */
+  fn_cohort_analysis: Array<Fn_Cohort_Analysis>;
+  /** fetch aggregated fields from the table: "fn_cohort_analysis" */
+  fn_cohort_analysis_aggregate: Fn_Cohort_Analysis_Aggregate;
+  /** fetch data from the table in a streaming manner: "fn_cohort_analysis" */
+  fn_cohort_analysis_stream: Array<Fn_Cohort_Analysis>;
+  /** fetch data from the table: "fn_get_avg_user_lifecycle" */
+  fn_get_avg_user_lifecycle: Array<Fn_Get_Avg_User_Lifecycle>;
+  /** fetch aggregated fields from the table: "fn_get_avg_user_lifecycle" */
+  fn_get_avg_user_lifecycle_aggregate: Fn_Get_Avg_User_Lifecycle_Aggregate;
+  /** fetch data from the table in a streaming manner: "fn_get_avg_user_lifecycle" */
+  fn_get_avg_user_lifecycle_stream: Array<Fn_Get_Avg_User_Lifecycle>;
+  /** fetch data from the table: "fn_unsubscribes_by_links" */
+  fn_unsubscribes_by_links: Array<Fn_Unsubscribes_By_Links>;
+  /** fetch aggregated fields from the table: "fn_unsubscribes_by_links" */
+  fn_unsubscribes_by_links_aggregate: Fn_Unsubscribes_By_Links_Aggregate;
+  /** fetch data from the table in a streaming manner: "fn_unsubscribes_by_links" */
+  fn_unsubscribes_by_links_stream: Array<Fn_Unsubscribes_By_Links>;
+  /** fetch data from the table: "fn_unsubscribes_by_periods" */
+  fn_unsubscribes_by_periods: Array<Fn_Unsubscribes_By_Periods>;
+  /** fetch aggregated fields from the table: "fn_unsubscribes_by_periods" */
+  fn_unsubscribes_by_periods_aggregate: Fn_Unsubscribes_By_Periods_Aggregate;
+  /** fetch data from the table in a streaming manner: "fn_unsubscribes_by_periods" */
+  fn_unsubscribes_by_periods_stream: Array<Fn_Unsubscribes_By_Periods>;
+  /** fetch data from the table: "fn_users_by_period" */
+  fn_users_by_period: Array<Fn_Users_By_Period>;
+  /** fetch aggregated fields from the table: "fn_users_by_period" */
+  fn_users_by_period_aggregate: Fn_Users_By_Period_Aggregate;
+  /** fetch data from the table in a streaming manner: "fn_users_by_period" */
+  fn_users_by_period_stream: Array<Fn_Users_By_Period>;
+  /** execute function "get_avg_user_lifecycle" which returns "fn_get_avg_user_lifecycle" */
+  get_avg_user_lifecycle: Array<Fn_Get_Avg_User_Lifecycle>;
+  /** execute function "get_avg_user_lifecycle" and query aggregates on result of table type "fn_get_avg_user_lifecycle" */
+  get_avg_user_lifecycle_aggregate: Fn_Get_Avg_User_Lifecycle_Aggregate;
   /** fetch data from the table: "stat_post" */
   stat_post: Array<Stat_Post>;
   /** fetch aggregated fields from the table: "stat_post" */
@@ -2381,12 +3423,32 @@ export type Subscription_Root = {
   stat_user_by_pk?: Maybe<Stat_User>;
   /** fetch data from the table in a streaming manner: "stat_user" */
   stat_user_stream: Array<Stat_User>;
+  /** fetch data from the table: "tg_invite_link_group" */
+  tg_invite_link_group: Array<Tg_Invite_Link_Group>;
+  /** fetch aggregated fields from the table: "tg_invite_link_group" */
+  tg_invite_link_group_aggregate: Tg_Invite_Link_Group_Aggregate;
+  /** fetch data from the table: "tg_invite_link_group" using primary key columns */
+  tg_invite_link_group_by_pk?: Maybe<Tg_Invite_Link_Group>;
+  /** fetch data from the table in a streaming manner: "tg_invite_link_group" */
+  tg_invite_link_group_stream: Array<Tg_Invite_Link_Group>;
+  /** execute function "unsubscribes_by_links" which returns "fn_unsubscribes_by_links" */
+  unsubscribes_by_links: Array<Fn_Unsubscribes_By_Links>;
+  /** execute function "unsubscribes_by_links" and query aggregates on result of table type "fn_unsubscribes_by_links" */
+  unsubscribes_by_links_aggregate: Fn_Unsubscribes_By_Links_Aggregate;
+  /** execute function "unsubscribes_by_periods" which returns "fn_unsubscribes_by_periods" */
+  unsubscribes_by_periods: Array<Fn_Unsubscribes_By_Periods>;
+  /** execute function "unsubscribes_by_periods" and query aggregates on result of table type "fn_unsubscribes_by_periods" */
+  unsubscribes_by_periods_aggregate: Fn_Unsubscribes_By_Periods_Aggregate;
   /** fetch data from the table: "user" */
   user: Array<User>;
   /** fetch aggregated fields from the table: "user" */
   user_aggregate: User_Aggregate;
   /** fetch data from the table: "user" using primary key columns */
   user_by_pk?: Maybe<User>;
+  /** execute function "user_signups_by_period" which returns "fn_users_by_period" */
+  user_signups_by_period: Array<Fn_Users_By_Period>;
+  /** execute function "user_signups_by_period" and query aggregates on result of table type "fn_users_by_period" */
+  user_signups_by_period_aggregate: Fn_Users_By_Period_Aggregate;
   /** fetch data from the table in a streaming manner: "user" */
   user_stream: Array<User>;
   /** fetch data from the table: "user_tg_channel" */
@@ -2397,96 +3459,183 @@ export type Subscription_Root = {
   user_tg_channel_by_pk?: Maybe<User_Tg_Channel>;
   /** fetch data from the table in a streaming manner: "user_tg_channel" */
   user_tg_channel_stream: Array<User_Tg_Channel>;
+  /** fetch data from the table: "user_tg_invite_link" */
+  user_tg_invite_link: Array<User_Tg_Invite_Link>;
+  /** fetch aggregated fields from the table: "user_tg_invite_link" */
+  user_tg_invite_link_aggregate: User_Tg_Invite_Link_Aggregate;
+  /** fetch data from the table: "user_tg_invite_link" using primary key columns */
+  user_tg_invite_link_by_pk?: Maybe<User_Tg_Invite_Link>;
+  /** fetch data from the table in a streaming manner: "user_tg_invite_link" */
+  user_tg_invite_link_stream: Array<User_Tg_Invite_Link>;
+  /** execute function "user_unsubscribes_by_period" which returns "fn_users_by_period" */
+  user_unsubscribes_by_period: Array<Fn_Users_By_Period>;
+  /** execute function "user_unsubscribes_by_period" and query aggregates on result of table type "fn_users_by_period" */
+  user_unsubscribes_by_period_aggregate: Fn_Users_By_Period_Aggregate;
 };
 
 
-export type Subscription_RootCohort_Analysis_HasuraArgs = {
-  args: Cohort_Analysis_Hasura_Args;
-  distinct_on?: InputMaybe<Array<Cohort_Analysis_Virtual_Select_Column>>;
+export type Subscription_RootCohort_AnalysisArgs = {
+  args: Cohort_Analysis_Args;
+  distinct_on?: InputMaybe<Array<Fn_Cohort_Analysis_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Cohort_Analysis_Virtual_Order_By>>;
-  where?: InputMaybe<Cohort_Analysis_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Cohort_Analysis_Order_By>>;
+  where?: InputMaybe<Fn_Cohort_Analysis_Bool_Exp>;
 };
 
 
-export type Subscription_RootCohort_Analysis_Hasura_AggregateArgs = {
-  args: Cohort_Analysis_Hasura_Args;
-  distinct_on?: InputMaybe<Array<Cohort_Analysis_Virtual_Select_Column>>;
+export type Subscription_RootCohort_Analysis_AggregateArgs = {
+  args: Cohort_Analysis_Args;
+  distinct_on?: InputMaybe<Array<Fn_Cohort_Analysis_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Cohort_Analysis_Virtual_Order_By>>;
-  where?: InputMaybe<Cohort_Analysis_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Cohort_Analysis_Order_By>>;
+  where?: InputMaybe<Fn_Cohort_Analysis_Bool_Exp>;
 };
 
 
-export type Subscription_RootCohort_Analysis_VirtualArgs = {
-  distinct_on?: InputMaybe<Array<Cohort_Analysis_Virtual_Select_Column>>;
+export type Subscription_RootFn_Cohort_AnalysisArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Cohort_Analysis_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Cohort_Analysis_Virtual_Order_By>>;
-  where?: InputMaybe<Cohort_Analysis_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Cohort_Analysis_Order_By>>;
+  where?: InputMaybe<Fn_Cohort_Analysis_Bool_Exp>;
 };
 
 
-export type Subscription_RootCohort_Analysis_Virtual_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Cohort_Analysis_Virtual_Select_Column>>;
+export type Subscription_RootFn_Cohort_Analysis_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Cohort_Analysis_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Cohort_Analysis_Virtual_Order_By>>;
-  where?: InputMaybe<Cohort_Analysis_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Cohort_Analysis_Order_By>>;
+  where?: InputMaybe<Fn_Cohort_Analysis_Bool_Exp>;
 };
 
 
-export type Subscription_RootCohort_Analysis_Virtual_StreamArgs = {
+export type Subscription_RootFn_Cohort_Analysis_StreamArgs = {
   batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Cohort_Analysis_Virtual_Stream_Cursor_Input>>;
-  where?: InputMaybe<Cohort_Analysis_Virtual_Bool_Exp>;
+  cursor: Array<InputMaybe<Fn_Cohort_Analysis_Stream_Cursor_Input>>;
+  where?: InputMaybe<Fn_Cohort_Analysis_Bool_Exp>;
 };
 
 
-export type Subscription_RootHourly_User_SignupsArgs = {
-  args: Hourly_User_Signups_Args;
-  distinct_on?: InputMaybe<Array<Hourly_User_Signups_Virtual_Select_Column>>;
+export type Subscription_RootFn_Get_Avg_User_LifecycleArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Hourly_User_Signups_Virtual_Order_By>>;
-  where?: InputMaybe<Hourly_User_Signups_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Order_By>>;
+  where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
 };
 
 
-export type Subscription_RootHourly_User_Signups_AggregateArgs = {
-  args: Hourly_User_Signups_Args;
-  distinct_on?: InputMaybe<Array<Hourly_User_Signups_Virtual_Select_Column>>;
+export type Subscription_RootFn_Get_Avg_User_Lifecycle_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Hourly_User_Signups_Virtual_Order_By>>;
-  where?: InputMaybe<Hourly_User_Signups_Virtual_Bool_Exp>;
+  order_by?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Order_By>>;
+  where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
 };
 
 
-export type Subscription_RootHourly_User_Signups_VirtualArgs = {
-  distinct_on?: InputMaybe<Array<Hourly_User_Signups_Virtual_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Hourly_User_Signups_Virtual_Order_By>>;
-  where?: InputMaybe<Hourly_User_Signups_Virtual_Bool_Exp>;
-};
-
-
-export type Subscription_RootHourly_User_Signups_Virtual_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Hourly_User_Signups_Virtual_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Hourly_User_Signups_Virtual_Order_By>>;
-  where?: InputMaybe<Hourly_User_Signups_Virtual_Bool_Exp>;
-};
-
-
-export type Subscription_RootHourly_User_Signups_Virtual_StreamArgs = {
+export type Subscription_RootFn_Get_Avg_User_Lifecycle_StreamArgs = {
   batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Hourly_User_Signups_Virtual_Stream_Cursor_Input>>;
-  where?: InputMaybe<Hourly_User_Signups_Virtual_Bool_Exp>;
+  cursor: Array<InputMaybe<Fn_Get_Avg_User_Lifecycle_Stream_Cursor_Input>>;
+  where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
+};
+
+
+export type Subscription_RootFn_Unsubscribes_By_LinksArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Links_Bool_Exp>;
+};
+
+
+export type Subscription_RootFn_Unsubscribes_By_Links_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Links_Bool_Exp>;
+};
+
+
+export type Subscription_RootFn_Unsubscribes_By_Links_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Fn_Unsubscribes_By_Links_Stream_Cursor_Input>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Links_Bool_Exp>;
+};
+
+
+export type Subscription_RootFn_Unsubscribes_By_PeriodsArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Periods_Bool_Exp>;
+};
+
+
+export type Subscription_RootFn_Unsubscribes_By_Periods_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Periods_Bool_Exp>;
+};
+
+
+export type Subscription_RootFn_Unsubscribes_By_Periods_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Fn_Unsubscribes_By_Periods_Stream_Cursor_Input>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Periods_Bool_Exp>;
+};
+
+
+export type Subscription_RootFn_Users_By_PeriodArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+
+export type Subscription_RootFn_Users_By_Period_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+
+export type Subscription_RootFn_Users_By_Period_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Fn_Users_By_Period_Stream_Cursor_Input>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+
+export type Subscription_RootGet_Avg_User_LifecycleArgs = {
+  args: Get_Avg_User_Lifecycle_Args;
+  distinct_on?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Order_By>>;
+  where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
+};
+
+
+export type Subscription_RootGet_Avg_User_Lifecycle_AggregateArgs = {
+  args: Get_Avg_User_Lifecycle_Args;
+  distinct_on?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Order_By>>;
+  where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
 };
 
 
@@ -2580,6 +3729,76 @@ export type Subscription_RootStat_User_StreamArgs = {
 };
 
 
+export type Subscription_RootTg_Invite_Link_GroupArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Invite_Link_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Invite_Link_Group_Order_By>>;
+  where?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+};
+
+
+export type Subscription_RootTg_Invite_Link_Group_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Invite_Link_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Invite_Link_Group_Order_By>>;
+  where?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+};
+
+
+export type Subscription_RootTg_Invite_Link_Group_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
+};
+
+
+export type Subscription_RootTg_Invite_Link_Group_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Tg_Invite_Link_Group_Stream_Cursor_Input>>;
+  where?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+};
+
+
+export type Subscription_RootUnsubscribes_By_LinksArgs = {
+  args: Unsubscribes_By_Links_Args;
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Links_Bool_Exp>;
+};
+
+
+export type Subscription_RootUnsubscribes_By_Links_AggregateArgs = {
+  args: Unsubscribes_By_Links_Args;
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Links_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Links_Bool_Exp>;
+};
+
+
+export type Subscription_RootUnsubscribes_By_PeriodsArgs = {
+  args: Unsubscribes_By_Periods_Args;
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Periods_Bool_Exp>;
+};
+
+
+export type Subscription_RootUnsubscribes_By_Periods_AggregateArgs = {
+  args: Unsubscribes_By_Periods_Args;
+  distinct_on?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Unsubscribes_By_Periods_Order_By>>;
+  where?: InputMaybe<Fn_Unsubscribes_By_Periods_Bool_Exp>;
+};
+
+
 export type Subscription_RootUserArgs = {
   distinct_on?: InputMaybe<Array<User_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2600,6 +3819,26 @@ export type Subscription_RootUser_AggregateArgs = {
 
 export type Subscription_RootUser_By_PkArgs = {
   id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootUser_Signups_By_PeriodArgs = {
+  args: User_Signups_By_Period_Args;
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Signups_By_Period_AggregateArgs = {
+  args: User_Signups_By_Period_Args;
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
 };
 
 
@@ -2640,6 +3879,288 @@ export type Subscription_RootUser_Tg_Channel_StreamArgs = {
   where?: InputMaybe<User_Tg_Channel_Bool_Exp>;
 };
 
+
+export type Subscription_RootUser_Tg_Invite_LinkArgs = {
+  distinct_on?: InputMaybe<Array<User_Tg_Invite_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Tg_Invite_Link_Order_By>>;
+  where?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Tg_Invite_Link_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Tg_Invite_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Tg_Invite_Link_Order_By>>;
+  where?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Tg_Invite_Link_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
+};
+
+
+export type Subscription_RootUser_Tg_Invite_Link_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<User_Tg_Invite_Link_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Unsubscribes_By_PeriodArgs = {
+  args: User_Unsubscribes_By_Period_Args;
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Unsubscribes_By_Period_AggregateArgs = {
+  args: User_Unsubscribes_By_Period_Args;
+  distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
+  where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+/** columns and relationships of "tg_invite_link_group" */
+export type Tg_Invite_Link_Group = {
+  __typename?: 'tg_invite_link_group';
+  group_name: Scalars['String']['output'];
+  pk: Scalars['bigint']['output'];
+  /** An array relationship */
+  user_tg_invite_links: Array<User_Tg_Invite_Link>;
+  /** An aggregate relationship */
+  user_tg_invite_links_aggregate: User_Tg_Invite_Link_Aggregate;
+};
+
+
+/** columns and relationships of "tg_invite_link_group" */
+export type Tg_Invite_Link_GroupUser_Tg_Invite_LinksArgs = {
+  distinct_on?: InputMaybe<Array<User_Tg_Invite_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Tg_Invite_Link_Order_By>>;
+  where?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+};
+
+
+/** columns and relationships of "tg_invite_link_group" */
+export type Tg_Invite_Link_GroupUser_Tg_Invite_Links_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Tg_Invite_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Tg_Invite_Link_Order_By>>;
+  where?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+};
+
+/** aggregated selection of "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Aggregate = {
+  __typename?: 'tg_invite_link_group_aggregate';
+  aggregate?: Maybe<Tg_Invite_Link_Group_Aggregate_Fields>;
+  nodes: Array<Tg_Invite_Link_Group>;
+};
+
+/** aggregate fields of "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Aggregate_Fields = {
+  __typename?: 'tg_invite_link_group_aggregate_fields';
+  avg?: Maybe<Tg_Invite_Link_Group_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Tg_Invite_Link_Group_Max_Fields>;
+  min?: Maybe<Tg_Invite_Link_Group_Min_Fields>;
+  stddev?: Maybe<Tg_Invite_Link_Group_Stddev_Fields>;
+  stddev_pop?: Maybe<Tg_Invite_Link_Group_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Tg_Invite_Link_Group_Stddev_Samp_Fields>;
+  sum?: Maybe<Tg_Invite_Link_Group_Sum_Fields>;
+  var_pop?: Maybe<Tg_Invite_Link_Group_Var_Pop_Fields>;
+  var_samp?: Maybe<Tg_Invite_Link_Group_Var_Samp_Fields>;
+  variance?: Maybe<Tg_Invite_Link_Group_Variance_Fields>;
+};
+
+
+/** aggregate fields of "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Tg_Invite_Link_Group_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Tg_Invite_Link_Group_Avg_Fields = {
+  __typename?: 'tg_invite_link_group_avg_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "tg_invite_link_group". All fields are combined with a logical 'AND'. */
+export type Tg_Invite_Link_Group_Bool_Exp = {
+  _and?: InputMaybe<Array<Tg_Invite_Link_Group_Bool_Exp>>;
+  _not?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+  _or?: InputMaybe<Array<Tg_Invite_Link_Group_Bool_Exp>>;
+  group_name?: InputMaybe<String_Comparison_Exp>;
+  pk?: InputMaybe<Bigint_Comparison_Exp>;
+  user_tg_invite_links?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+  user_tg_invite_links_aggregate?: InputMaybe<User_Tg_Invite_Link_Aggregate_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "tg_invite_link_group" */
+export enum Tg_Invite_Link_Group_Constraint {
+  /** unique or primary key constraint on columns "pk" */
+  tg_invite_link_group_pkey = 'tg_invite_link_group_pkey'
+}
+
+/** input type for incrementing numeric columns in table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Inc_Input = {
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** input type for inserting data into table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Insert_Input = {
+  group_name?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  user_tg_invite_links?: InputMaybe<User_Tg_Invite_Link_Arr_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Tg_Invite_Link_Group_Max_Fields = {
+  __typename?: 'tg_invite_link_group_max_fields';
+  group_name?: Maybe<Scalars['String']['output']>;
+  pk?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** aggregate min on columns */
+export type Tg_Invite_Link_Group_Min_Fields = {
+  __typename?: 'tg_invite_link_group_min_fields';
+  group_name?: Maybe<Scalars['String']['output']>;
+  pk?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** response of any mutation on the table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Mutation_Response = {
+  __typename?: 'tg_invite_link_group_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Tg_Invite_Link_Group>;
+};
+
+/** input type for inserting object relation for remote table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Obj_Rel_Insert_Input = {
+  data: Tg_Invite_Link_Group_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Tg_Invite_Link_Group_On_Conflict>;
+};
+
+/** on_conflict condition type for table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_On_Conflict = {
+  constraint: Tg_Invite_Link_Group_Constraint;
+  update_columns?: Array<Tg_Invite_Link_Group_Update_Column>;
+  where?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "tg_invite_link_group". */
+export type Tg_Invite_Link_Group_Order_By = {
+  group_name?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  user_tg_invite_links_aggregate?: InputMaybe<User_Tg_Invite_Link_Aggregate_Order_By>;
+};
+
+/** primary key columns input for table: tg_invite_link_group */
+export type Tg_Invite_Link_Group_Pk_Columns_Input = {
+  pk: Scalars['bigint']['input'];
+};
+
+/** select columns of table "tg_invite_link_group" */
+export enum Tg_Invite_Link_Group_Select_Column {
+  /** column name */
+  group_name = 'group_name',
+  /** column name */
+  pk = 'pk'
+}
+
+/** input type for updating data in table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Set_Input = {
+  group_name?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Tg_Invite_Link_Group_Stddev_Fields = {
+  __typename?: 'tg_invite_link_group_stddev_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Tg_Invite_Link_Group_Stddev_Pop_Fields = {
+  __typename?: 'tg_invite_link_group_stddev_pop_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Tg_Invite_Link_Group_Stddev_Samp_Fields = {
+  __typename?: 'tg_invite_link_group_stddev_samp_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Tg_Invite_Link_Group_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Tg_Invite_Link_Group_Stream_Cursor_Value_Input = {
+  group_name?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Tg_Invite_Link_Group_Sum_Fields = {
+  __typename?: 'tg_invite_link_group_sum_fields';
+  pk?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** update columns of table "tg_invite_link_group" */
+export enum Tg_Invite_Link_Group_Update_Column {
+  /** column name */
+  group_name = 'group_name',
+  /** column name */
+  pk = 'pk'
+}
+
+export type Tg_Invite_Link_Group_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Tg_Invite_Link_Group_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Tg_Invite_Link_Group_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Tg_Invite_Link_Group_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Tg_Invite_Link_Group_Var_Pop_Fields = {
+  __typename?: 'tg_invite_link_group_var_pop_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Tg_Invite_Link_Group_Var_Samp_Fields = {
+  __typename?: 'tg_invite_link_group_var_samp_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Tg_Invite_Link_Group_Variance_Fields = {
+  __typename?: 'tg_invite_link_group_variance_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
 export type Timestamp_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['timestamp']['input']>;
@@ -2653,24 +4174,72 @@ export type Timestamp_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['timestamp']['input']>>;
 };
 
-/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
-export type Timestamptz_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['timestamptz']['input']>;
-  _gt?: InputMaybe<Scalars['timestamptz']['input']>;
-  _gte?: InputMaybe<Scalars['timestamptz']['input']>;
-  _in?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
-  _lt?: InputMaybe<Scalars['timestamptz']['input']>;
-  _lte?: InputMaybe<Scalars['timestamptz']['input']>;
-  _neq?: InputMaybe<Scalars['timestamptz']['input']>;
-  _nin?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
+export type Unsubscribes_By_Links_Args = {
+  end_date?: InputMaybe<Scalars['timestamp']['input']>;
+  link_array?: InputMaybe<Scalars['_text']['input']>;
+  start_date?: InputMaybe<Scalars['timestamp']['input']>;
+  tg_channel_ids?: InputMaybe<Scalars['_int8']['input']>;
+};
+
+export type Unsubscribes_By_Periods_Args = {
+  end_date?: InputMaybe<Scalars['timestamp']['input']>;
+  start_date?: InputMaybe<Scalars['timestamp']['input']>;
+  tg_channel_ids?: InputMaybe<Scalars['_int8']['input']>;
 };
 
 /** columns and relationships of "user" */
 export type User = {
   __typename?: 'user';
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  created_at: Scalars['timestamp']['output'];
   id: Scalars['uuid']['output'];
+  /** An array relationship */
+  user_tg_channels: Array<User_Tg_Channel>;
+  /** An aggregate relationship */
+  user_tg_channels_aggregate: User_Tg_Channel_Aggregate;
+  /** An array relationship */
+  user_tg_invite_links: Array<User_Tg_Invite_Link>;
+  /** An aggregate relationship */
+  user_tg_invite_links_aggregate: User_Tg_Invite_Link_Aggregate;
+};
+
+
+/** columns and relationships of "user" */
+export type UserUser_Tg_ChannelsArgs = {
+  distinct_on?: InputMaybe<Array<User_Tg_Channel_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Tg_Channel_Order_By>>;
+  where?: InputMaybe<User_Tg_Channel_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserUser_Tg_Channels_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Tg_Channel_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Tg_Channel_Order_By>>;
+  where?: InputMaybe<User_Tg_Channel_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserUser_Tg_Invite_LinksArgs = {
+  distinct_on?: InputMaybe<Array<User_Tg_Invite_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Tg_Invite_Link_Order_By>>;
+  where?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserUser_Tg_Invite_Links_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Tg_Invite_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<User_Tg_Invite_Link_Order_By>>;
+  where?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
 };
 
 /** aggregated selection of "user" */
@@ -2700,33 +4269,41 @@ export type User_Bool_Exp = {
   _and?: InputMaybe<Array<User_Bool_Exp>>;
   _not?: InputMaybe<User_Bool_Exp>;
   _or?: InputMaybe<Array<User_Bool_Exp>>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  user_tg_channels?: InputMaybe<User_Tg_Channel_Bool_Exp>;
+  user_tg_channels_aggregate?: InputMaybe<User_Tg_Channel_Aggregate_Bool_Exp>;
+  user_tg_invite_links?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+  user_tg_invite_links_aggregate?: InputMaybe<User_Tg_Invite_Link_Aggregate_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "user" */
 export enum User_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  user_id_key = 'user_id_key',
   /** unique or primary key constraint on columns "id" */
   user_pkey = 'user_pkey'
 }
 
 /** input type for inserting data into table "user" */
 export type User_Insert_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  user_tg_channels?: InputMaybe<User_Tg_Channel_Arr_Rel_Insert_Input>;
+  user_tg_invite_links?: InputMaybe<User_Tg_Invite_Link_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
 export type User_Max_Fields = {
   __typename?: 'user_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** aggregate min on columns */
 export type User_Min_Fields = {
   __typename?: 'user_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  created_at?: Maybe<Scalars['timestamp']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
 };
 
@@ -2737,6 +4314,13 @@ export type User_Mutation_Response = {
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<User>;
+};
+
+/** input type for inserting object relation for remote table "user" */
+export type User_Obj_Rel_Insert_Input = {
+  data: User_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_On_Conflict>;
 };
 
 /** on_conflict condition type for table "user" */
@@ -2750,6 +4334,8 @@ export type User_On_Conflict = {
 export type User_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  user_tg_channels_aggregate?: InputMaybe<User_Tg_Channel_Aggregate_Order_By>;
+  user_tg_invite_links_aggregate?: InputMaybe<User_Tg_Invite_Link_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: user */
@@ -2767,8 +4353,15 @@ export enum User_Select_Column {
 
 /** input type for updating data in table "user" */
 export type User_Set_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+export type User_Signups_By_Period_Args = {
+  end_date?: InputMaybe<Scalars['timestamp']['input']>;
+  start_date?: InputMaybe<Scalars['timestamp']['input']>;
+  tg_channel_ids?: InputMaybe<Scalars['_int8']['input']>;
+  time_period?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Streaming cursor of the table "user" */
@@ -2781,7 +4374,7 @@ export type User_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type User_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
@@ -2789,6 +4382,8 @@ export type User_Stream_Cursor_Value_Input = {
 export type User_Tg_Channel = {
   __typename?: 'user_tg_channel';
   tg_channel_id: Scalars['bigint']['output'];
+  /** An object relationship */
+  user: User;
   user_id: Scalars['uuid']['output'];
 };
 
@@ -2797,6 +4392,17 @@ export type User_Tg_Channel_Aggregate = {
   __typename?: 'user_tg_channel_aggregate';
   aggregate?: Maybe<User_Tg_Channel_Aggregate_Fields>;
   nodes: Array<User_Tg_Channel>;
+};
+
+export type User_Tg_Channel_Aggregate_Bool_Exp = {
+  count?: InputMaybe<User_Tg_Channel_Aggregate_Bool_Exp_Count>;
+};
+
+export type User_Tg_Channel_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<User_Tg_Channel_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<User_Tg_Channel_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "user_tg_channel" */
@@ -2822,10 +4428,37 @@ export type User_Tg_Channel_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "user_tg_channel" */
+export type User_Tg_Channel_Aggregate_Order_By = {
+  avg?: InputMaybe<User_Tg_Channel_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Tg_Channel_Max_Order_By>;
+  min?: InputMaybe<User_Tg_Channel_Min_Order_By>;
+  stddev?: InputMaybe<User_Tg_Channel_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<User_Tg_Channel_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<User_Tg_Channel_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<User_Tg_Channel_Sum_Order_By>;
+  var_pop?: InputMaybe<User_Tg_Channel_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<User_Tg_Channel_Var_Samp_Order_By>;
+  variance?: InputMaybe<User_Tg_Channel_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_tg_channel" */
+export type User_Tg_Channel_Arr_Rel_Insert_Input = {
+  data: Array<User_Tg_Channel_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Tg_Channel_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type User_Tg_Channel_Avg_Fields = {
   __typename?: 'user_tg_channel_avg_fields';
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "user_tg_channel" */
+export type User_Tg_Channel_Avg_Order_By = {
+  tg_channel_id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "user_tg_channel". All fields are combined with a logical 'AND'. */
@@ -2834,6 +4467,7 @@ export type User_Tg_Channel_Bool_Exp = {
   _not?: InputMaybe<User_Tg_Channel_Bool_Exp>;
   _or?: InputMaybe<Array<User_Tg_Channel_Bool_Exp>>;
   tg_channel_id?: InputMaybe<Bigint_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
@@ -2851,6 +4485,7 @@ export type User_Tg_Channel_Inc_Input = {
 /** input type for inserting data into table "user_tg_channel" */
 export type User_Tg_Channel_Insert_Input = {
   tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
@@ -2861,11 +4496,23 @@ export type User_Tg_Channel_Max_Fields = {
   user_id?: Maybe<Scalars['uuid']['output']>;
 };
 
+/** order by max() on columns of table "user_tg_channel" */
+export type User_Tg_Channel_Max_Order_By = {
+  tg_channel_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type User_Tg_Channel_Min_Fields = {
   __typename?: 'user_tg_channel_min_fields';
   tg_channel_id?: Maybe<Scalars['bigint']['output']>;
   user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "user_tg_channel" */
+export type User_Tg_Channel_Min_Order_By = {
+  tg_channel_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "user_tg_channel" */
@@ -2887,6 +4534,7 @@ export type User_Tg_Channel_On_Conflict = {
 /** Ordering options when selecting data from "user_tg_channel". */
 export type User_Tg_Channel_Order_By = {
   tg_channel_id?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -2916,16 +4564,31 @@ export type User_Tg_Channel_Stddev_Fields = {
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "user_tg_channel" */
+export type User_Tg_Channel_Stddev_Order_By = {
+  tg_channel_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type User_Tg_Channel_Stddev_Pop_Fields = {
   __typename?: 'user_tg_channel_stddev_pop_fields';
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_pop() on columns of table "user_tg_channel" */
+export type User_Tg_Channel_Stddev_Pop_Order_By = {
+  tg_channel_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type User_Tg_Channel_Stddev_Samp_Fields = {
   __typename?: 'user_tg_channel_stddev_samp_fields';
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "user_tg_channel" */
+export type User_Tg_Channel_Stddev_Samp_Order_By = {
+  tg_channel_id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "user_tg_channel" */
@@ -2946,6 +4609,11 @@ export type User_Tg_Channel_Stream_Cursor_Value_Input = {
 export type User_Tg_Channel_Sum_Fields = {
   __typename?: 'user_tg_channel_sum_fields';
   tg_channel_id?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** order by sum() on columns of table "user_tg_channel" */
+export type User_Tg_Channel_Sum_Order_By = {
+  tg_channel_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "user_tg_channel" */
@@ -2971,16 +4639,375 @@ export type User_Tg_Channel_Var_Pop_Fields = {
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_pop() on columns of table "user_tg_channel" */
+export type User_Tg_Channel_Var_Pop_Order_By = {
+  tg_channel_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type User_Tg_Channel_Var_Samp_Fields = {
   __typename?: 'user_tg_channel_var_samp_fields';
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_samp() on columns of table "user_tg_channel" */
+export type User_Tg_Channel_Var_Samp_Order_By = {
+  tg_channel_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type User_Tg_Channel_Variance_Fields = {
   __typename?: 'user_tg_channel_variance_fields';
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "user_tg_channel" */
+export type User_Tg_Channel_Variance_Order_By = {
+  tg_channel_id?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "user_tg_invite_link" */
+export type User_Tg_Invite_Link = {
+  __typename?: 'user_tg_invite_link';
+  group_id: Scalars['bigint']['output'];
+  pk: Scalars['bigint']['output'];
+  tg_invite_link: Scalars['String']['output'];
+  /** An object relationship */
+  tg_invite_link_group: Tg_Invite_Link_Group;
+  /** An object relationship */
+  user: User;
+  user_id: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Aggregate = {
+  __typename?: 'user_tg_invite_link_aggregate';
+  aggregate?: Maybe<User_Tg_Invite_Link_Aggregate_Fields>;
+  nodes: Array<User_Tg_Invite_Link>;
+};
+
+export type User_Tg_Invite_Link_Aggregate_Bool_Exp = {
+  count?: InputMaybe<User_Tg_Invite_Link_Aggregate_Bool_Exp_Count>;
+};
+
+export type User_Tg_Invite_Link_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<User_Tg_Invite_Link_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Aggregate_Fields = {
+  __typename?: 'user_tg_invite_link_aggregate_fields';
+  avg?: Maybe<User_Tg_Invite_Link_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<User_Tg_Invite_Link_Max_Fields>;
+  min?: Maybe<User_Tg_Invite_Link_Min_Fields>;
+  stddev?: Maybe<User_Tg_Invite_Link_Stddev_Fields>;
+  stddev_pop?: Maybe<User_Tg_Invite_Link_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<User_Tg_Invite_Link_Stddev_Samp_Fields>;
+  sum?: Maybe<User_Tg_Invite_Link_Sum_Fields>;
+  var_pop?: Maybe<User_Tg_Invite_Link_Var_Pop_Fields>;
+  var_samp?: Maybe<User_Tg_Invite_Link_Var_Samp_Fields>;
+  variance?: Maybe<User_Tg_Invite_Link_Variance_Fields>;
+};
+
+
+/** aggregate fields of "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Tg_Invite_Link_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Aggregate_Order_By = {
+  avg?: InputMaybe<User_Tg_Invite_Link_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Tg_Invite_Link_Max_Order_By>;
+  min?: InputMaybe<User_Tg_Invite_Link_Min_Order_By>;
+  stddev?: InputMaybe<User_Tg_Invite_Link_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<User_Tg_Invite_Link_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<User_Tg_Invite_Link_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<User_Tg_Invite_Link_Sum_Order_By>;
+  var_pop?: InputMaybe<User_Tg_Invite_Link_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<User_Tg_Invite_Link_Var_Samp_Order_By>;
+  variance?: InputMaybe<User_Tg_Invite_Link_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Arr_Rel_Insert_Input = {
+  data: Array<User_Tg_Invite_Link_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Tg_Invite_Link_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type User_Tg_Invite_Link_Avg_Fields = {
+  __typename?: 'user_tg_invite_link_avg_fields';
+  group_id?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Avg_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "user_tg_invite_link". All fields are combined with a logical 'AND'. */
+export type User_Tg_Invite_Link_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Tg_Invite_Link_Bool_Exp>>;
+  _not?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Tg_Invite_Link_Bool_Exp>>;
+  group_id?: InputMaybe<Bigint_Comparison_Exp>;
+  pk?: InputMaybe<Bigint_Comparison_Exp>;
+  tg_invite_link?: InputMaybe<String_Comparison_Exp>;
+  tg_invite_link_group?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_tg_invite_link" */
+export enum User_Tg_Invite_Link_Constraint {
+  /** unique or primary key constraint on columns "pk" */
+  user_tg_invite_link_pkey = 'user_tg_invite_link_pkey'
+}
+
+/** input type for incrementing numeric columns in table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Inc_Input = {
+  group_id?: InputMaybe<Scalars['bigint']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** input type for inserting data into table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Insert_Input = {
+  group_id?: InputMaybe<Scalars['bigint']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  tg_invite_link?: InputMaybe<Scalars['String']['input']>;
+  tg_invite_link_group?: InputMaybe<Tg_Invite_Link_Group_Obj_Rel_Insert_Input>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type User_Tg_Invite_Link_Max_Fields = {
+  __typename?: 'user_tg_invite_link_max_fields';
+  group_id?: Maybe<Scalars['bigint']['output']>;
+  pk?: Maybe<Scalars['bigint']['output']>;
+  tg_invite_link?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Max_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  tg_invite_link?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type User_Tg_Invite_Link_Min_Fields = {
+  __typename?: 'user_tg_invite_link_min_fields';
+  group_id?: Maybe<Scalars['bigint']['output']>;
+  pk?: Maybe<Scalars['bigint']['output']>;
+  tg_invite_link?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Min_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  tg_invite_link?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Mutation_Response = {
+  __typename?: 'user_tg_invite_link_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Tg_Invite_Link>;
+};
+
+/** on_conflict condition type for table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_On_Conflict = {
+  constraint: User_Tg_Invite_Link_Constraint;
+  update_columns?: Array<User_Tg_Invite_Link_Update_Column>;
+  where?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_tg_invite_link". */
+export type User_Tg_Invite_Link_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  tg_invite_link?: InputMaybe<Order_By>;
+  tg_invite_link_group?: InputMaybe<Tg_Invite_Link_Group_Order_By>;
+  user?: InputMaybe<User_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_tg_invite_link */
+export type User_Tg_Invite_Link_Pk_Columns_Input = {
+  pk: Scalars['bigint']['input'];
+};
+
+/** select columns of table "user_tg_invite_link" */
+export enum User_Tg_Invite_Link_Select_Column {
+  /** column name */
+  group_id = 'group_id',
+  /** column name */
+  pk = 'pk',
+  /** column name */
+  tg_invite_link = 'tg_invite_link',
+  /** column name */
+  user_id = 'user_id'
+}
+
+/** input type for updating data in table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Set_Input = {
+  group_id?: InputMaybe<Scalars['bigint']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  tg_invite_link?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type User_Tg_Invite_Link_Stddev_Fields = {
+  __typename?: 'user_tg_invite_link_stddev_fields';
+  group_id?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Stddev_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type User_Tg_Invite_Link_Stddev_Pop_Fields = {
+  __typename?: 'user_tg_invite_link_stddev_pop_fields';
+  group_id?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Stddev_Pop_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type User_Tg_Invite_Link_Stddev_Samp_Fields = {
+  __typename?: 'user_tg_invite_link_stddev_samp_fields';
+  group_id?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Stddev_Samp_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Tg_Invite_Link_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Tg_Invite_Link_Stream_Cursor_Value_Input = {
+  group_id?: InputMaybe<Scalars['bigint']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  tg_invite_link?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate sum on columns */
+export type User_Tg_Invite_Link_Sum_Fields = {
+  __typename?: 'user_tg_invite_link_sum_fields';
+  group_id?: Maybe<Scalars['bigint']['output']>;
+  pk?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** order by sum() on columns of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Sum_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "user_tg_invite_link" */
+export enum User_Tg_Invite_Link_Update_Column {
+  /** column name */
+  group_id = 'group_id',
+  /** column name */
+  pk = 'pk',
+  /** column name */
+  tg_invite_link = 'tg_invite_link',
+  /** column name */
+  user_id = 'user_id'
+}
+
+export type User_Tg_Invite_Link_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<User_Tg_Invite_Link_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Tg_Invite_Link_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: User_Tg_Invite_Link_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type User_Tg_Invite_Link_Var_Pop_Fields = {
+  __typename?: 'user_tg_invite_link_var_pop_fields';
+  group_id?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Var_Pop_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type User_Tg_Invite_Link_Var_Samp_Fields = {
+  __typename?: 'user_tg_invite_link_var_samp_fields';
+  group_id?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Var_Samp_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type User_Tg_Invite_Link_Variance_Fields = {
+  __typename?: 'user_tg_invite_link_variance_fields';
+  group_id?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "user_tg_invite_link" */
+export type User_Tg_Invite_Link_Variance_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+};
+
+export type User_Unsubscribes_By_Period_Args = {
+  end_date?: InputMaybe<Scalars['timestamp']['input']>;
+  start_date?: InputMaybe<Scalars['timestamp']['input']>;
+  tg_channel_ids?: InputMaybe<Scalars['_int8']['input']>;
+  time_period?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** update columns of table "user" */
@@ -3011,43 +5038,114 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
 
+export type ErAvgQueryVariables = Exact<{
+  from_date: Scalars['timestamp']['input'];
+  to_date: Scalars['timestamp']['input'];
+  tg_channel_ids?: InputMaybe<Array<Scalars['bigint']['input']> | Scalars['bigint']['input']>;
+}>;
+
+
+export type ErAvgQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, stat_post_aggregate: { __typename?: 'stat_post_aggregate', aggregate?: { __typename?: 'stat_post_aggregate_fields', sum?: { __typename?: 'stat_post_sum_fields', views?: number | null } | null } | null } };
+
+export type AvgUserLifecycleQueryVariables = Exact<{
+  tg_channel_ids: Scalars['_int8']['input'];
+}>;
+
+
+export type AvgUserLifecycleQuery = { __typename?: 'query_root', get_avg_user_lifecycle: Array<{ __typename?: 'fn_get_avg_user_lifecycle', avg_lifecycle_days?: any | null }> };
+
 export type CohortAnalysisQueryVariables = Exact<{
   end_date: Scalars['date']['input'];
   start_date: Scalars['date']['input'];
-  tg_channel_id: Scalars['bigint']['input'];
+  tg_channel_ids: Scalars['_int8']['input'];
 }>;
 
 
-export type CohortAnalysisQuery = { __typename?: 'query_root', cohort_analysis_hasura: Array<{ __typename?: 'cohort_analysis_virtual', join_date?: any | null, left_date?: any | null, joined_count?: any | null, left_count?: any | null }> };
+export type CohortAnalysisQuery = { __typename?: 'query_root', cohort_analysis: Array<{ __typename?: 'fn_cohort_analysis', join_date?: any | null, left_date?: any | null, joined_count?: any | null, left_count?: any | null }> };
 
-export type InviteLinkStatsQueryVariables = Exact<{
-  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
-  invite_links: Array<Scalars['String']['input']> | Scalars['String']['input'];
-  date_from?: InputMaybe<Scalars['timestamp']['input']>;
-  date_to?: InputMaybe<Scalars['timestamp']['input']>;
+export type Er24QueryVariables = Exact<{
+  tg_channel_ids: Array<Scalars['bigint']['input']> | Scalars['bigint']['input'];
+  date: Scalars['timestamp']['input'];
 }>;
 
 
-export type InviteLinkStatsQuery = { __typename?: 'query_root', unsubscribes: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, subscribes: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null } };
+export type Er24Query = { __typename?: 'query_root', stat_post_aggregate: { __typename?: 'stat_post_aggregate', aggregate?: { __typename?: 'stat_post_aggregate_fields', sum?: { __typename?: 'stat_post_sum_fields', view_24h?: number | null } | null } | null } };
 
-export type InviteLinksDictQueryVariables = Exact<{
-  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
+export type SubscribesUsersByLinksAggregatesQueryVariables = Exact<{
+  tg_channel_ids?: InputMaybe<Array<Scalars['bigint']['input']> | Scalars['bigint']['input']>;
+  start_date: Scalars['timestamp']['input'];
+  end_date: Scalars['timestamp']['input'];
 }>;
 
 
-export type InviteLinksDictQuery = { __typename?: 'query_root', stat_user: Array<{ __typename?: 'stat_user', invite_link?: string | null }> };
+export type SubscribesUsersByLinksAggregatesQuery = { __typename?: 'query_root', without_link: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, with_link: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null } };
 
-export type SubscriptionsCountQueryVariables = Exact<{
-  tg_channel_id: Scalars['bigint']['input'];
-  from_date: Scalars['timestamp']['input'];
-  to_date: Scalars['timestamp']['input'];
+export type SignupsByPeriod1QueryVariables = Exact<{
+  end_date: Scalars['timestamp']['input'];
+  start_date: Scalars['timestamp']['input'];
+  time_period: Scalars['String']['input'];
+  tg_channel_ids: Scalars['_int8']['input'];
 }>;
 
 
-export type SubscriptionsCountQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null } };
+export type SignupsByPeriod1Query = { __typename?: 'query_root', user_signups_by_period: Array<{ __typename?: 'fn_users_by_period', count?: any | null, time_bucket?: any | null }> };
+
+export type UnsubscribesByPeriodQueryVariables = Exact<{
+  end_date: Scalars['timestamp']['input'];
+  start_date: Scalars['timestamp']['input'];
+  time_period: Scalars['String']['input'];
+  tg_channel_ids: Scalars['_int8']['input'];
+}>;
+
+
+export type UnsubscribesByPeriodQuery = { __typename?: 'query_root', user_unsubscribes_by_period: Array<{ __typename?: 'fn_users_by_period', count?: any | null, time_bucket?: any | null }> };
+
+export type SignupsByPeriodQueryVariables = Exact<{
+  end_date: Scalars['timestamp']['input'];
+  start_date: Scalars['timestamp']['input'];
+  time_period: Scalars['String']['input'];
+  tg_channel_ids: Scalars['_int8']['input'];
+}>;
+
+
+export type SignupsByPeriodQuery = { __typename?: 'query_root', user_signups_by_period: Array<{ __typename?: 'fn_users_by_period', count?: any | null, time_bucket?: any | null }> };
+
+export type TotalSubscribersQueryVariables = Exact<{
+  tg_channel_id?: InputMaybe<Array<Scalars['bigint']['input']> | Scalars['bigint']['input']>;
+}>;
+
+
+export type TotalSubscribersQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null } };
+
+export type UnsubscribesByPeriodsQueryVariables = Exact<{
+  start_date: Scalars['timestamp']['input'];
+  end_date: Scalars['timestamp']['input'];
+  tg_channel_ids: Scalars['_int8']['input'];
+}>;
+
+
+export type UnsubscribesByPeriodsQuery = { __typename?: 'query_root', unsubscribes_by_periods: Array<{ __typename?: 'fn_unsubscribes_by_periods', interval_label?: string | null, count?: number | null, percentage?: any | null }> };
+
+export type UnsubscribesUsersByLinksAggregatesQueryVariables = Exact<{
+  tg_channel_ids?: InputMaybe<Array<Scalars['bigint']['input']> | Scalars['bigint']['input']>;
+  start_date: Scalars['timestamp']['input'];
+  end_date: Scalars['timestamp']['input'];
+}>;
+
+
+export type UnsubscribesUsersByLinksAggregatesQuery = { __typename?: 'query_root', without_link: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, with_link: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null } };
+
+export type SubcribesUnsubscribesPieAggregatesQueryVariables = Exact<{
+  tg_channel_ids?: InputMaybe<Array<Scalars['bigint']['input']> | Scalars['bigint']['input']>;
+  start_date: Scalars['timestamp']['input'];
+  end_date: Scalars['timestamp']['input'];
+}>;
+
+
+export type SubcribesUnsubscribesPieAggregatesQuery = { __typename?: 'query_root', subscribes: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, unsubscribes: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null } };
 
 export type UnsubscriptionsCountQueryVariables = Exact<{
-  tg_channel_id: Scalars['bigint']['input'];
+  tg_channel_id?: InputMaybe<Array<Scalars['bigint']['input']> | Scalars['bigint']['input']>;
   from_date: Scalars['timestamp']['input'];
   to_date: Scalars['timestamp']['input'];
 }>;
@@ -3055,28 +5153,27 @@ export type UnsubscriptionsCountQueryVariables = Exact<{
 
 export type UnsubscriptionsCountQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null } };
 
-export type UsersWithLinkCountsQueryVariables = Exact<{
-  tg_channel_id: Scalars['bigint']['input'];
-  start_date: Scalars['timestamp']['input'];
-  end_date: Scalars['timestamp']['input'];
+export type UnsubscriptionRateQueryVariables = Exact<{
+  from_date: Scalars['timestamp']['input'];
+  to_date: Scalars['timestamp']['input'];
+  tg_channel_ids?: InputMaybe<Array<Scalars['bigint']['input']> | Scalars['bigint']['input']>;
 }>;
 
 
-export type UsersWithLinkCountsQuery = { __typename?: 'query_root', without_link: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, with_link: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null } };
-
-export type HourlyUserSignupsQueryVariables = Exact<{
-  start_date: Scalars['timestamp']['input'];
-  end_date: Scalars['timestamp']['input'];
-}>;
+export type UnsubscriptionRateQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, stat_post_aggregate: { __typename?: 'stat_post_aggregate', aggregate?: { __typename?: 'stat_post_aggregate_fields', sum?: { __typename?: 'stat_post_sum_fields', views?: number | null } | null } | null } };
 
 
-export type HourlyUserSignupsQuery = { __typename?: 'query_root', hourly_user_signups: Array<{ __typename?: 'hourly_user_signups_virtual', signup_count?: any | null, hour?: any | null }> };
-
-
-export const CohortAnalysisDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CohortAnalysis"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cohort_analysis_hasura"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"join_date"}},{"kind":"Field","name":{"kind":"Name","value":"left_date"}},{"kind":"Field","name":{"kind":"Name","value":"joined_count"}},{"kind":"Field","name":{"kind":"Name","value":"left_count"}}]}}]}}]} as unknown as DocumentNode<CohortAnalysisQuery, CohortAnalysisQueryVariables>;
-export const InviteLinkStatsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"InviteLinkStats"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"invite_links"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"date_from"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"date_to"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"unsubscribes"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"invite_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"invite_links"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date_from"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date_to"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"subscribes"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"invite_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"invite_links"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date_from"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date_to"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<InviteLinkStatsQuery, InviteLinkStatsQueryVariables>;
-export const InviteLinksDictDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"InviteLinksDict"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"distinct_on"},"value":{"kind":"EnumValue","value":"invite_link"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"invite_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"invite_link"}}]}}]}}]} as unknown as DocumentNode<InviteLinksDictQuery, InviteLinksDictQueryVariables>;
-export const SubscriptionsCountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubscriptionsCount"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}}]}}]} as unknown as DocumentNode<SubscriptionsCountQuery, SubscriptionsCountQueryVariables>;
-export const UnsubscriptionsCountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscriptionsCount"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}}]}}]} as unknown as DocumentNode<UnsubscriptionsCountQuery, UnsubscriptionsCountQueryVariables>;
-export const UsersWithLinkCountsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UsersWithLinkCounts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"without_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"with_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<UsersWithLinkCountsQuery, UsersWithLinkCountsQueryVariables>;
-export const HourlyUserSignupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"HourlyUserSignups"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hourly_user_signups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signup_count"}},{"kind":"Field","name":{"kind":"Name","value":"hour"}}]}}]}}]} as unknown as DocumentNode<HourlyUserSignupsQuery, HourlyUserSignupsQueryVariables>;
+export const ErAvgDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ERAvg"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ErAvgQuery, ErAvgQueryVariables>;
+export const AvgUserLifecycleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AvgUserLifecycle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"get_avg_user_lifecycle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avg_lifecycle_days"}}]}}]}}]} as unknown as DocumentNode<AvgUserLifecycleQuery, AvgUserLifecycleQueryVariables>;
+export const CohortAnalysisDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CohortAnalysis"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cohort_analysis"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"join_date"}},{"kind":"Field","name":{"kind":"Name","value":"left_date"}},{"kind":"Field","name":{"kind":"Name","value":"joined_count"}},{"kind":"Field","name":{"kind":"Name","value":"left_count"}}]}}]}}]} as unknown as DocumentNode<CohortAnalysisQuery, CohortAnalysisQueryVariables>;
+export const Er24Document = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ER24"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_post_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"view_24h"}}]}}]}}]}}]}}]} as unknown as DocumentNode<Er24Query, Er24QueryVariables>;
+export const SubscribesUsersByLinksAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubscribesUsersByLinksAggregates"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"without_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"with_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<SubscribesUsersByLinksAggregatesQuery, SubscribesUsersByLinksAggregatesQueryVariables>;
+export const SignupsByPeriod1Document = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SignupsByPeriod1"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_signups_by_period"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"time_period"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"time_bucket"}}]}}]}}]} as unknown as DocumentNode<SignupsByPeriod1Query, SignupsByPeriod1QueryVariables>;
+export const UnsubscribesByPeriodDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscribesByPeriod"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_unsubscribes_by_period"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"time_period"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"time_bucket"}}]}}]}}]} as unknown as DocumentNode<UnsubscribesByPeriodQuery, UnsubscribesByPeriodQueryVariables>;
+export const SignupsByPeriodDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SignupsByPeriod"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_signups_by_period"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"time_period"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"time_bucket"}}]}}]}}]} as unknown as DocumentNode<SignupsByPeriodQuery, SignupsByPeriodQueryVariables>;
+export const TotalSubscribersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TotalSubscribers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}}]}}]} as unknown as DocumentNode<TotalSubscribersQuery, TotalSubscribersQueryVariables>;
+export const UnsubscribesByPeriodsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscribesByPeriods"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unsubscribes_by_periods"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"interval_label"}},{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"percentage"}}]}}]}}]} as unknown as DocumentNode<UnsubscribesByPeriodsQuery, UnsubscribesByPeriodsQueryVariables>;
+export const UnsubscribesUsersByLinksAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscribesUsersByLinksAggregates"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"without_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"with_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<UnsubscribesUsersByLinksAggregatesQuery, UnsubscribesUsersByLinksAggregatesQueryVariables>;
+export const SubcribesUnsubscribesPieAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubcribesUnsubscribesPieAggregates"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"subscribes"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unsubscribes"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<SubcribesUnsubscribesPieAggregatesQuery, SubcribesUnsubscribesPieAggregatesQueryVariables>;
+export const UnsubscriptionsCountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscriptionsCount"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}}]}}]} as unknown as DocumentNode<UnsubscriptionsCountQuery, UnsubscriptionsCountQueryVariables>;
+export const UnsubscriptionRateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscriptionRate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UnsubscriptionRateQuery, UnsubscriptionRateQueryVariables>;

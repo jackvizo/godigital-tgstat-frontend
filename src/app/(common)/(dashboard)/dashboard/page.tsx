@@ -1,11 +1,12 @@
 import Box from "@mui/material/Box/index";
 import { ClientContainer } from "./client-container";
+import Typography from "@mui/material/Typography/index";
 
 export interface PageProps { }
 
 export default function Page(props: PageProps) {
   return <Box>
-    Здесь будет дашборд
+    <Typography variant="h4" gutterBottom>Дашборд</Typography>
     <ClientContainer />
   </Box>;
 }

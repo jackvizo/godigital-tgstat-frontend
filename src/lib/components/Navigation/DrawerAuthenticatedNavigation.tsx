@@ -7,6 +7,7 @@ import { MenuItemDashboard } from "./MenuItems/MenuItemDashboard";
 import { ProfileMenuItemDashboard } from "./MenuItems/ProfileMenuItemDashboard";
 import { ProfileMenuItemSignOut } from "./MenuItems/ProfileMenuItemSignOut";
 import { ThemeToggler } from "./MenuItems/ThemeToggler";
+import { MenuItemUnsubscribes } from "./MenuItems/MenuItemUnsubscribes";
 
 export interface DrawerAuthenticatedNavigationProps {
   onMenuItemClick?: () => void;
@@ -23,6 +24,7 @@ export function DrawerAuthenticatedNavigation(props: DrawerAuthenticatedNavigati
       </Box>
       <Divider />
       <MenuItemDashboard MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} />
+      <MenuItemUnsubscribes MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} />
       <ProfileMenuItemSignOut MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} />
     </>
   );
