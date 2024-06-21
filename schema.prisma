@@ -9,17 +9,41 @@ datasource db {
 }
 
 model user {
-  id              String            @id @unique @db.Uuid
-  created_at      DateTime          @default(now())
-  user_tg_channel user_tg_channel[]
+  id                   String                 @id @unique @db.Uuid
+  created_at           DateTime               @default(now())
+  user_tg_channel      user_tg_channel[]
+  user_tg_invite_link  user_tg_invite_link[]
+  tg_invite_link_group tg_invite_link_group[]
 }
 
 model user_tg_channel {
   user_id       String @db.Uuid
   tg_channel_id BigInt
-  user          user   @relation(fields: [user_id], references: [id])
+
+  user user @relation(fields: [user_id], references: [id])
 
   @@id([user_id, tg_channel_id])
+}
+
+model user_tg_invite_link {
+  pk             BigInt  @id @default(autoincrement())
+  user_id        String  @db.Uuid
+  tg_invite_link String
+  label          String?
+
+  group_id BigInt
+
+  user                 user                 @relation(fields: [user_id], references: [id])
+  tg_invite_link_group tg_invite_link_group @relation(fields: [group_id], references: [pk])
+}
+
+model tg_invite_link_group {
+  pk         BigInt @id @default(autoincrement())
+  group_name String
+  user_id    String @db.Uuid
+
+  user                user                  @relation(fields: [user_id], references: [id])
+  user_tg_invite_link user_tg_invite_link[]
 }
 
 model stat_user {
@@ -92,7 +116,6 @@ model config__tg_bot_session_pool {
   config__tg_channel    config__tg_channel? @relation(fields: [config__tg_channel_pk], references: [pk])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model fn_cohort_analysis {
   join_date    DateTime? @db.Date
   left_date    DateTime? @db.Date
@@ -102,14 +125,12 @@ model fn_cohort_analysis {
   @@ignore
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model fn_get_avg_user_lifecycle {
   avg_lifecycle_days Float?
 
   @@ignore
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model fn_unsubscribes_by_links {
   invite_link  String?
   joined_count BigInt?
@@ -118,7 +139,6 @@ model fn_unsubscribes_by_links {
   @@ignore
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model fn_unsubscribes_by_periods {
   interval_label String?
   count          Int?
@@ -127,7 +147,6 @@ model fn_unsubscribes_by_periods {
   @@ignore
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model fn_users_by_period {
   time_bucket DateTime? @db.Timestamp(6)
   count       BigInt?

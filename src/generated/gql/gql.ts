@@ -13,6 +13,13 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  query GetGroups($user_id: uuid!) {\n    tg_invite_link_group(where: { user_id: { _eq: $user_id } }) {\n      pk\n      group_name\n      user_tg_invite_links {\n        pk\n        tg_invite_link\n        label\n      }\n    }\n  }\n": types.GetGroupsDocument,
+    "\n  mutation CreateGroup($group_name: String!, $user_id: uuid!) {\n    insert_tg_invite_link_group_one(object: { group_name: $group_name, user_id: $user_id }) {\n      pk\n      group_name\n    }\n  }\n": types.CreateGroupDocument,
+    "\n  mutation UpdateGroupName($pk: bigint!, $group_name: String!) {\n    update_tg_invite_link_group_by_pk(pk_columns: { pk: $pk }, _set: { group_name: $group_name }) {\n      pk\n      group_name\n    }\n  }\n": types.UpdateGroupNameDocument,
+    "\n  mutation DeleteGroup($pk: bigint!) {\n    delete_tg_invite_link_group_by_pk(pk: $pk) {\n      pk\n    }\n  }\n": types.DeleteGroupDocument,
+    "\n  mutation CreateInviteLink($tg_invite_link: String!, $label: String!, $group_id: bigint!, $user_id: uuid!) {\n    insert_user_tg_invite_link_one(\n      object: { tg_invite_link: $tg_invite_link, label: $label, group_id: $group_id, user_id: $user_id }\n    ) {\n      pk\n      tg_invite_link\n      label\n    }\n  }\n": types.CreateInviteLinkDocument,
+    "\n  mutation UpdateInviteLink($pk: bigint!, $tg_invite_link: String!, $label: String!) {\n    update_user_tg_invite_link_by_pk(\n      pk_columns: { pk: $pk }\n      _set: { tg_invite_link: $tg_invite_link, label: $label }\n    ) {\n      pk\n      tg_invite_link\n      label\n    }\n  }\n": types.UpdateInviteLinkDocument,
+    "\n  mutation DeleteInviteLink($pk: bigint!) {\n    delete_user_tg_invite_link_by_pk(pk: $pk) {\n      pk\n    }\n  }\n": types.DeleteInviteLinkDocument,
     "\n  query ERAvg($from_date: timestamp!, $to_date: timestamp!, $tg_channel_ids: [bigint!]) {\n    stat_user_aggregate(\n      where: { joined_at: { _gte: $from_date, _lte: $to_date }, tg_channel_id: { _in: $tg_channel_ids } }\n    ) {\n      aggregate {\n        count(columns: pk)\n      }\n    }\n    stat_post_aggregate(where: { timestamp: { _gte: $from_date, _lte: $to_date } }) {\n      aggregate {\n        sum {\n          views\n        }\n      }\n    }\n  }\n": types.ErAvgDocument,
     "\n  query AvgUserLifecycle($tg_channel_ids: _int8!) {\n    get_avg_user_lifecycle(args: { tg_channel_ids: $tg_channel_ids }) {\n      avg_lifecycle_days\n    }\n  }\n": types.AvgUserLifecycleDocument,
     "\n  query CohortAnalysis($end_date: date!, $start_date: date!, $tg_channel_ids: _int8!) {\n    cohort_analysis(args: { start_date: $start_date, end_date: $end_date, tg_channel_ids: $tg_channel_ids }) {\n      join_date\n      left_date\n      joined_count\n      left_count\n    }\n  }\n": types.CohortAnalysisDocument,
@@ -43,6 +50,34 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetGroups($user_id: uuid!) {\n    tg_invite_link_group(where: { user_id: { _eq: $user_id } }) {\n      pk\n      group_name\n      user_tg_invite_links {\n        pk\n        tg_invite_link\n        label\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetGroups($user_id: uuid!) {\n    tg_invite_link_group(where: { user_id: { _eq: $user_id } }) {\n      pk\n      group_name\n      user_tg_invite_links {\n        pk\n        tg_invite_link\n        label\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateGroup($group_name: String!, $user_id: uuid!) {\n    insert_tg_invite_link_group_one(object: { group_name: $group_name, user_id: $user_id }) {\n      pk\n      group_name\n    }\n  }\n"): (typeof documents)["\n  mutation CreateGroup($group_name: String!, $user_id: uuid!) {\n    insert_tg_invite_link_group_one(object: { group_name: $group_name, user_id: $user_id }) {\n      pk\n      group_name\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateGroupName($pk: bigint!, $group_name: String!) {\n    update_tg_invite_link_group_by_pk(pk_columns: { pk: $pk }, _set: { group_name: $group_name }) {\n      pk\n      group_name\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateGroupName($pk: bigint!, $group_name: String!) {\n    update_tg_invite_link_group_by_pk(pk_columns: { pk: $pk }, _set: { group_name: $group_name }) {\n      pk\n      group_name\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation DeleteGroup($pk: bigint!) {\n    delete_tg_invite_link_group_by_pk(pk: $pk) {\n      pk\n    }\n  }\n"): (typeof documents)["\n  mutation DeleteGroup($pk: bigint!) {\n    delete_tg_invite_link_group_by_pk(pk: $pk) {\n      pk\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateInviteLink($tg_invite_link: String!, $label: String!, $group_id: bigint!, $user_id: uuid!) {\n    insert_user_tg_invite_link_one(\n      object: { tg_invite_link: $tg_invite_link, label: $label, group_id: $group_id, user_id: $user_id }\n    ) {\n      pk\n      tg_invite_link\n      label\n    }\n  }\n"): (typeof documents)["\n  mutation CreateInviteLink($tg_invite_link: String!, $label: String!, $group_id: bigint!, $user_id: uuid!) {\n    insert_user_tg_invite_link_one(\n      object: { tg_invite_link: $tg_invite_link, label: $label, group_id: $group_id, user_id: $user_id }\n    ) {\n      pk\n      tg_invite_link\n      label\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateInviteLink($pk: bigint!, $tg_invite_link: String!, $label: String!) {\n    update_user_tg_invite_link_by_pk(\n      pk_columns: { pk: $pk }\n      _set: { tg_invite_link: $tg_invite_link, label: $label }\n    ) {\n      pk\n      tg_invite_link\n      label\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateInviteLink($pk: bigint!, $tg_invite_link: String!, $label: String!) {\n    update_user_tg_invite_link_by_pk(\n      pk_columns: { pk: $pk }\n      _set: { tg_invite_link: $tg_invite_link, label: $label }\n    ) {\n      pk\n      tg_invite_link\n      label\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation DeleteInviteLink($pk: bigint!) {\n    delete_user_tg_invite_link_by_pk(pk: $pk) {\n      pk\n    }\n  }\n"): (typeof documents)["\n  mutation DeleteInviteLink($pk: bigint!) {\n    delete_user_tg_invite_link_by_pk(pk: $pk) {\n      pk\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

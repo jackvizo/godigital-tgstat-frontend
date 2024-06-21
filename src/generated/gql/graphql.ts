@@ -3934,6 +3934,9 @@ export type Tg_Invite_Link_Group = {
   __typename?: 'tg_invite_link_group';
   group_name: Scalars['String']['output'];
   pk: Scalars['bigint']['output'];
+  /** An object relationship */
+  user: User;
+  user_id: Scalars['uuid']['output'];
   /** An array relationship */
   user_tg_invite_links: Array<User_Tg_Invite_Link>;
   /** An aggregate relationship */
@@ -3967,6 +3970,17 @@ export type Tg_Invite_Link_Group_Aggregate = {
   nodes: Array<Tg_Invite_Link_Group>;
 };
 
+export type Tg_Invite_Link_Group_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Tg_Invite_Link_Group_Aggregate_Bool_Exp_Count>;
+};
+
+export type Tg_Invite_Link_Group_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Tg_Invite_Link_Group_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "tg_invite_link_group" */
 export type Tg_Invite_Link_Group_Aggregate_Fields = {
   __typename?: 'tg_invite_link_group_aggregate_fields';
@@ -3990,10 +4004,37 @@ export type Tg_Invite_Link_Group_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Aggregate_Order_By = {
+  avg?: InputMaybe<Tg_Invite_Link_Group_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Tg_Invite_Link_Group_Max_Order_By>;
+  min?: InputMaybe<Tg_Invite_Link_Group_Min_Order_By>;
+  stddev?: InputMaybe<Tg_Invite_Link_Group_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Tg_Invite_Link_Group_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Tg_Invite_Link_Group_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Tg_Invite_Link_Group_Sum_Order_By>;
+  var_pop?: InputMaybe<Tg_Invite_Link_Group_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Tg_Invite_Link_Group_Var_Samp_Order_By>;
+  variance?: InputMaybe<Tg_Invite_Link_Group_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Arr_Rel_Insert_Input = {
+  data: Array<Tg_Invite_Link_Group_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Tg_Invite_Link_Group_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Tg_Invite_Link_Group_Avg_Fields = {
   __typename?: 'tg_invite_link_group_avg_fields';
   pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Avg_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "tg_invite_link_group". All fields are combined with a logical 'AND'. */
@@ -4003,6 +4044,8 @@ export type Tg_Invite_Link_Group_Bool_Exp = {
   _or?: InputMaybe<Array<Tg_Invite_Link_Group_Bool_Exp>>;
   group_name?: InputMaybe<String_Comparison_Exp>;
   pk?: InputMaybe<Bigint_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
   user_tg_invite_links?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
   user_tg_invite_links_aggregate?: InputMaybe<User_Tg_Invite_Link_Aggregate_Bool_Exp>;
 };
@@ -4022,6 +4065,8 @@ export type Tg_Invite_Link_Group_Inc_Input = {
 export type Tg_Invite_Link_Group_Insert_Input = {
   group_name?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
   user_tg_invite_links?: InputMaybe<User_Tg_Invite_Link_Arr_Rel_Insert_Input>;
 };
 
@@ -4030,6 +4075,14 @@ export type Tg_Invite_Link_Group_Max_Fields = {
   __typename?: 'tg_invite_link_group_max_fields';
   group_name?: Maybe<Scalars['String']['output']>;
   pk?: Maybe<Scalars['bigint']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Max_Order_By = {
+  group_name?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -4037,6 +4090,14 @@ export type Tg_Invite_Link_Group_Min_Fields = {
   __typename?: 'tg_invite_link_group_min_fields';
   group_name?: Maybe<Scalars['String']['output']>;
   pk?: Maybe<Scalars['bigint']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Min_Order_By = {
+  group_name?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "tg_invite_link_group" */
@@ -4066,6 +4127,8 @@ export type Tg_Invite_Link_Group_On_Conflict = {
 export type Tg_Invite_Link_Group_Order_By = {
   group_name?: InputMaybe<Order_By>;
   pk?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
+  user_id?: InputMaybe<Order_By>;
   user_tg_invite_links_aggregate?: InputMaybe<User_Tg_Invite_Link_Aggregate_Order_By>;
 };
 
@@ -4079,13 +4142,16 @@ export enum Tg_Invite_Link_Group_Select_Column {
   /** column name */
   group_name = 'group_name',
   /** column name */
-  pk = 'pk'
+  pk = 'pk',
+  /** column name */
+  user_id = 'user_id'
 }
 
 /** input type for updating data in table "tg_invite_link_group" */
 export type Tg_Invite_Link_Group_Set_Input = {
   group_name?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate stddev on columns */
@@ -4094,16 +4160,31 @@ export type Tg_Invite_Link_Group_Stddev_Fields = {
   pk?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Stddev_Order_By = {
+  pk?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type Tg_Invite_Link_Group_Stddev_Pop_Fields = {
   __typename?: 'tg_invite_link_group_stddev_pop_fields';
   pk?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_pop() on columns of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Stddev_Pop_Order_By = {
+  pk?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type Tg_Invite_Link_Group_Stddev_Samp_Fields = {
   __typename?: 'tg_invite_link_group_stddev_samp_fields';
   pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Stddev_Samp_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "tg_invite_link_group" */
@@ -4118,6 +4199,7 @@ export type Tg_Invite_Link_Group_Stream_Cursor_Input = {
 export type Tg_Invite_Link_Group_Stream_Cursor_Value_Input = {
   group_name?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate sum on columns */
@@ -4126,12 +4208,19 @@ export type Tg_Invite_Link_Group_Sum_Fields = {
   pk?: Maybe<Scalars['bigint']['output']>;
 };
 
+/** order by sum() on columns of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Sum_Order_By = {
+  pk?: InputMaybe<Order_By>;
+};
+
 /** update columns of table "tg_invite_link_group" */
 export enum Tg_Invite_Link_Group_Update_Column {
   /** column name */
   group_name = 'group_name',
   /** column name */
-  pk = 'pk'
+  pk = 'pk',
+  /** column name */
+  user_id = 'user_id'
 }
 
 export type Tg_Invite_Link_Group_Updates = {
@@ -4149,16 +4238,31 @@ export type Tg_Invite_Link_Group_Var_Pop_Fields = {
   pk?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_pop() on columns of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Var_Pop_Order_By = {
+  pk?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type Tg_Invite_Link_Group_Var_Samp_Fields = {
   __typename?: 'tg_invite_link_group_var_samp_fields';
   pk?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_samp() on columns of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Var_Samp_Order_By = {
+  pk?: InputMaybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type Tg_Invite_Link_Group_Variance_Fields = {
   __typename?: 'tg_invite_link_group_variance_fields';
   pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "tg_invite_link_group" */
+export type Tg_Invite_Link_Group_Variance_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
@@ -4193,6 +4297,10 @@ export type User = {
   created_at: Scalars['timestamp']['output'];
   id: Scalars['uuid']['output'];
   /** An array relationship */
+  tg_invite_link_groups: Array<Tg_Invite_Link_Group>;
+  /** An aggregate relationship */
+  tg_invite_link_groups_aggregate: Tg_Invite_Link_Group_Aggregate;
+  /** An array relationship */
   user_tg_channels: Array<User_Tg_Channel>;
   /** An aggregate relationship */
   user_tg_channels_aggregate: User_Tg_Channel_Aggregate;
@@ -4200,6 +4308,26 @@ export type User = {
   user_tg_invite_links: Array<User_Tg_Invite_Link>;
   /** An aggregate relationship */
   user_tg_invite_links_aggregate: User_Tg_Invite_Link_Aggregate;
+};
+
+
+/** columns and relationships of "user" */
+export type UserTg_Invite_Link_GroupsArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Invite_Link_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Invite_Link_Group_Order_By>>;
+  where?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserTg_Invite_Link_Groups_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Invite_Link_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Invite_Link_Group_Order_By>>;
+  where?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
 };
 
 
@@ -4271,6 +4399,8 @@ export type User_Bool_Exp = {
   _or?: InputMaybe<Array<User_Bool_Exp>>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  tg_invite_link_groups?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
+  tg_invite_link_groups_aggregate?: InputMaybe<Tg_Invite_Link_Group_Aggregate_Bool_Exp>;
   user_tg_channels?: InputMaybe<User_Tg_Channel_Bool_Exp>;
   user_tg_channels_aggregate?: InputMaybe<User_Tg_Channel_Aggregate_Bool_Exp>;
   user_tg_invite_links?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
@@ -4289,6 +4419,7 @@ export enum User_Constraint {
 export type User_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  tg_invite_link_groups?: InputMaybe<Tg_Invite_Link_Group_Arr_Rel_Insert_Input>;
   user_tg_channels?: InputMaybe<User_Tg_Channel_Arr_Rel_Insert_Input>;
   user_tg_invite_links?: InputMaybe<User_Tg_Invite_Link_Arr_Rel_Insert_Input>;
 };
@@ -4334,6 +4465,7 @@ export type User_On_Conflict = {
 export type User_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  tg_invite_link_groups_aggregate?: InputMaybe<Tg_Invite_Link_Group_Aggregate_Order_By>;
   user_tg_channels_aggregate?: InputMaybe<User_Tg_Channel_Aggregate_Order_By>;
   user_tg_invite_links_aggregate?: InputMaybe<User_Tg_Invite_Link_Aggregate_Order_By>;
 };
@@ -4670,6 +4802,7 @@ export type User_Tg_Channel_Variance_Order_By = {
 export type User_Tg_Invite_Link = {
   __typename?: 'user_tg_invite_link';
   group_id: Scalars['bigint']['output'];
+  label?: Maybe<Scalars['String']['output']>;
   pk: Scalars['bigint']['output'];
   tg_invite_link: Scalars['String']['output'];
   /** An object relationship */
@@ -4761,6 +4894,7 @@ export type User_Tg_Invite_Link_Bool_Exp = {
   _not?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
   _or?: InputMaybe<Array<User_Tg_Invite_Link_Bool_Exp>>;
   group_id?: InputMaybe<Bigint_Comparison_Exp>;
+  label?: InputMaybe<String_Comparison_Exp>;
   pk?: InputMaybe<Bigint_Comparison_Exp>;
   tg_invite_link?: InputMaybe<String_Comparison_Exp>;
   tg_invite_link_group?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
@@ -4783,6 +4917,7 @@ export type User_Tg_Invite_Link_Inc_Input = {
 /** input type for inserting data into table "user_tg_invite_link" */
 export type User_Tg_Invite_Link_Insert_Input = {
   group_id?: InputMaybe<Scalars['bigint']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
   tg_invite_link?: InputMaybe<Scalars['String']['input']>;
   tg_invite_link_group?: InputMaybe<Tg_Invite_Link_Group_Obj_Rel_Insert_Input>;
@@ -4794,6 +4929,7 @@ export type User_Tg_Invite_Link_Insert_Input = {
 export type User_Tg_Invite_Link_Max_Fields = {
   __typename?: 'user_tg_invite_link_max_fields';
   group_id?: Maybe<Scalars['bigint']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
   pk?: Maybe<Scalars['bigint']['output']>;
   tg_invite_link?: Maybe<Scalars['String']['output']>;
   user_id?: Maybe<Scalars['uuid']['output']>;
@@ -4802,6 +4938,7 @@ export type User_Tg_Invite_Link_Max_Fields = {
 /** order by max() on columns of table "user_tg_invite_link" */
 export type User_Tg_Invite_Link_Max_Order_By = {
   group_id?: InputMaybe<Order_By>;
+  label?: InputMaybe<Order_By>;
   pk?: InputMaybe<Order_By>;
   tg_invite_link?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -4811,6 +4948,7 @@ export type User_Tg_Invite_Link_Max_Order_By = {
 export type User_Tg_Invite_Link_Min_Fields = {
   __typename?: 'user_tg_invite_link_min_fields';
   group_id?: Maybe<Scalars['bigint']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
   pk?: Maybe<Scalars['bigint']['output']>;
   tg_invite_link?: Maybe<Scalars['String']['output']>;
   user_id?: Maybe<Scalars['uuid']['output']>;
@@ -4819,6 +4957,7 @@ export type User_Tg_Invite_Link_Min_Fields = {
 /** order by min() on columns of table "user_tg_invite_link" */
 export type User_Tg_Invite_Link_Min_Order_By = {
   group_id?: InputMaybe<Order_By>;
+  label?: InputMaybe<Order_By>;
   pk?: InputMaybe<Order_By>;
   tg_invite_link?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -4843,6 +4982,7 @@ export type User_Tg_Invite_Link_On_Conflict = {
 /** Ordering options when selecting data from "user_tg_invite_link". */
 export type User_Tg_Invite_Link_Order_By = {
   group_id?: InputMaybe<Order_By>;
+  label?: InputMaybe<Order_By>;
   pk?: InputMaybe<Order_By>;
   tg_invite_link?: InputMaybe<Order_By>;
   tg_invite_link_group?: InputMaybe<Tg_Invite_Link_Group_Order_By>;
@@ -4860,6 +5000,8 @@ export enum User_Tg_Invite_Link_Select_Column {
   /** column name */
   group_id = 'group_id',
   /** column name */
+  label = 'label',
+  /** column name */
   pk = 'pk',
   /** column name */
   tg_invite_link = 'tg_invite_link',
@@ -4870,6 +5012,7 @@ export enum User_Tg_Invite_Link_Select_Column {
 /** input type for updating data in table "user_tg_invite_link" */
 export type User_Tg_Invite_Link_Set_Input = {
   group_id?: InputMaybe<Scalars['bigint']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
   tg_invite_link?: InputMaybe<Scalars['String']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
@@ -4925,6 +5068,7 @@ export type User_Tg_Invite_Link_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type User_Tg_Invite_Link_Stream_Cursor_Value_Input = {
   group_id?: InputMaybe<Scalars['bigint']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
   tg_invite_link?: InputMaybe<Scalars['String']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
@@ -4947,6 +5091,8 @@ export type User_Tg_Invite_Link_Sum_Order_By = {
 export enum User_Tg_Invite_Link_Update_Column {
   /** column name */
   group_id = 'group_id',
+  /** column name */
+  label = 'label',
   /** column name */
   pk = 'pk',
   /** column name */
@@ -5037,6 +5183,62 @@ export type Uuid_Comparison_Exp = {
   _neq?: InputMaybe<Scalars['uuid']['input']>;
   _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
+
+export type GetGroupsQueryVariables = Exact<{
+  user_id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetGroupsQuery = { __typename?: 'query_root', tg_invite_link_group: Array<{ __typename?: 'tg_invite_link_group', pk: any, group_name: string, user_tg_invite_links: Array<{ __typename?: 'user_tg_invite_link', pk: any, tg_invite_link: string, label?: string | null }> }> };
+
+export type CreateGroupMutationVariables = Exact<{
+  group_name: Scalars['String']['input'];
+  user_id: Scalars['uuid']['input'];
+}>;
+
+
+export type CreateGroupMutation = { __typename?: 'mutation_root', insert_tg_invite_link_group_one?: { __typename?: 'tg_invite_link_group', pk: any, group_name: string } | null };
+
+export type UpdateGroupNameMutationVariables = Exact<{
+  pk: Scalars['bigint']['input'];
+  group_name: Scalars['String']['input'];
+}>;
+
+
+export type UpdateGroupNameMutation = { __typename?: 'mutation_root', update_tg_invite_link_group_by_pk?: { __typename?: 'tg_invite_link_group', pk: any, group_name: string } | null };
+
+export type DeleteGroupMutationVariables = Exact<{
+  pk: Scalars['bigint']['input'];
+}>;
+
+
+export type DeleteGroupMutation = { __typename?: 'mutation_root', delete_tg_invite_link_group_by_pk?: { __typename?: 'tg_invite_link_group', pk: any } | null };
+
+export type CreateInviteLinkMutationVariables = Exact<{
+  tg_invite_link: Scalars['String']['input'];
+  label: Scalars['String']['input'];
+  group_id: Scalars['bigint']['input'];
+  user_id: Scalars['uuid']['input'];
+}>;
+
+
+export type CreateInviteLinkMutation = { __typename?: 'mutation_root', insert_user_tg_invite_link_one?: { __typename?: 'user_tg_invite_link', pk: any, tg_invite_link: string, label?: string | null } | null };
+
+export type UpdateInviteLinkMutationVariables = Exact<{
+  pk: Scalars['bigint']['input'];
+  tg_invite_link: Scalars['String']['input'];
+  label: Scalars['String']['input'];
+}>;
+
+
+export type UpdateInviteLinkMutation = { __typename?: 'mutation_root', update_user_tg_invite_link_by_pk?: { __typename?: 'user_tg_invite_link', pk: any, tg_invite_link: string, label?: string | null } | null };
+
+export type DeleteInviteLinkMutationVariables = Exact<{
+  pk: Scalars['bigint']['input'];
+}>;
+
+
+export type DeleteInviteLinkMutation = { __typename?: 'mutation_root', delete_user_tg_invite_link_by_pk?: { __typename?: 'user_tg_invite_link', pk: any } | null };
 
 export type ErAvgQueryVariables = Exact<{
   from_date: Scalars['timestamp']['input'];
@@ -5163,6 +5365,13 @@ export type UnsubscriptionRateQueryVariables = Exact<{
 export type UnsubscriptionRateQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, stat_post_aggregate: { __typename?: 'stat_post_aggregate', aggregate?: { __typename?: 'stat_post_aggregate_fields', sum?: { __typename?: 'stat_post_sum_fields', views?: number | null } | null } | null } };
 
 
+export const GetGroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGroups"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tg_invite_link_group"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"group_name"}},{"kind":"Field","name":{"kind":"Name","value":"user_tg_invite_links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"tg_invite_link"}},{"kind":"Field","name":{"kind":"Name","value":"label"}}]}}]}}]}}]} as unknown as DocumentNode<GetGroupsQuery, GetGroupsQueryVariables>;
+export const CreateGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"group_name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_tg_invite_link_group_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"group_name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"group_name"}}]}}]}}]} as unknown as DocumentNode<CreateGroupMutation, CreateGroupMutationVariables>;
+export const UpdateGroupNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroupName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pk"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"group_name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_tg_invite_link_group_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"pk"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pk"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"group_name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"group_name"}}]}}]}}]} as unknown as DocumentNode<UpdateGroupNameMutation, UpdateGroupNameMutationVariables>;
+export const DeleteGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pk"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_tg_invite_link_group_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pk"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}}]}}]}}]} as unknown as DocumentNode<DeleteGroupMutation, DeleteGroupMutationVariables>;
+export const CreateInviteLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateInviteLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_invite_link"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"label"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"group_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_user_tg_invite_link_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_invite_link"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_invite_link"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"label"},"value":{"kind":"Variable","name":{"kind":"Name","value":"label"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"group_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"tg_invite_link"}},{"kind":"Field","name":{"kind":"Name","value":"label"}}]}}]}}]} as unknown as DocumentNode<CreateInviteLinkMutation, CreateInviteLinkMutationVariables>;
+export const UpdateInviteLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateInviteLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pk"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_invite_link"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"label"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_user_tg_invite_link_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"pk"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pk"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_invite_link"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_invite_link"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"label"},"value":{"kind":"Variable","name":{"kind":"Name","value":"label"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"tg_invite_link"}},{"kind":"Field","name":{"kind":"Name","value":"label"}}]}}]}}]} as unknown as DocumentNode<UpdateInviteLinkMutation, UpdateInviteLinkMutationVariables>;
+export const DeleteInviteLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteInviteLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pk"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_user_tg_invite_link_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pk"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}}]}}]}}]} as unknown as DocumentNode<DeleteInviteLinkMutation, DeleteInviteLinkMutationVariables>;
 export const ErAvgDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ERAvg"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ErAvgQuery, ErAvgQueryVariables>;
 export const AvgUserLifecycleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AvgUserLifecycle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"get_avg_user_lifecycle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avg_lifecycle_days"}}]}}]}}]} as unknown as DocumentNode<AvgUserLifecycleQuery, AvgUserLifecycleQueryVariables>;
 export const CohortAnalysisDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CohortAnalysis"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cohort_analysis"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"join_date"}},{"kind":"Field","name":{"kind":"Name","value":"left_date"}},{"kind":"Field","name":{"kind":"Name","value":"joined_count"}},{"kind":"Field","name":{"kind":"Name","value":"left_count"}}]}}]}}]} as unknown as DocumentNode<CohortAnalysisQuery, CohortAnalysisQueryVariables>;

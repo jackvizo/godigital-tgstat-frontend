@@ -54,6 +54,7 @@ const handler = NextAuth({
     session: async ({ session, token }) => {
       session.accessToken = (token.accessToken || "") as string;
       session.roles = (token.roles || []) as string[];
+      session.userId = token.sub;
       return session;
     },
   },

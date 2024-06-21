@@ -5,6 +5,8 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { periods, useDashboardFilters } from "./useDashboardFilters";
 import { TimeUnit } from 'chart.js';
 import { InviteLinkPickerModal } from '@/lib/components/InviteLinkPickerModal/InviteLinkPickerModal';
+import { useInviteLinkPickerLogic } from '../InviteLinkPicker/useInviteLinkPickerLogic';
+import { WidgetWrapper } from '../WidgetWrapper/WidgetWrapper';
 
 export interface DashboardFiltersProps extends ReturnType<typeof useDashboardFilters> {
   isDatePickerHidden?: boolean
@@ -12,6 +14,8 @@ export interface DashboardFiltersProps extends ReturnType<typeof useDashboardFil
 }
 
 export function DashboardFilters(props: DashboardFiltersProps) {
+  const inviteLinkPickerLogic = useInviteLinkPickerLogic();
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, minWidth: 'auto' }}>
       {!props.isDatePickerHidden ? (
@@ -41,8 +45,13 @@ export function DashboardFilters(props: DashboardFiltersProps) {
           </Button>
         ))}
       </ButtonGroup>
-      <InviteLinkPickerModal />
+      <WidgetWrapper
+        query={inviteLinkPickerLogic.getGroupsQuery}
+        minWidth={100}
+      // minHeight={200}
+      >
+        <InviteLinkPickerModal {...inviteLinkPickerLogic} />
+      </WidgetWrapper>
     </Box>
-
   )
 }
