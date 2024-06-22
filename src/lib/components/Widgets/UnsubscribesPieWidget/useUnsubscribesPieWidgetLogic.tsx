@@ -1,8 +1,9 @@
-// src/lib/components/Widgets/UnsubscribesBySourceWidget/useUnsubscribesPieWidgetLogic.tsx
 import { graphql } from '@/generated/gql';
 import { useQuery } from '@apollo/client';
+import { DashboardFilters } from '@/lib/components/DashboardFilters/useDashboardFiltersLogic';
+import { useAuth } from '@/lib/auth/use-auth';
 
-const AGGREGATES_QUERY = graphql(`
+const SUBSCRIBES_UNSUBSCRIBES_PIE_AGGREGATES_QUERY = graphql(`
 query SubcribesUnsubscribesPieAggregates($tg_channel_ids: [bigint!], $start_date: timestamp!, $end_date: timestamp!) {
   subscribes: stat_user_aggregate(
     where: {
@@ -27,24 +28,31 @@ query SubcribesUnsubscribesPieAggregates($tg_channel_ids: [bigint!], $start_date
 }
 `);
 
-export interface useUnsubscribesPieWidgetLogicProps {
-  tgChannelIds: number[];
-  fromDate: Date;
-  toDate: Date;
+export interface useUnsubscribesPieWidgetLogicProps extends DashboardFilters {
 }
 
-export function useUnsubscribesPieWidgetLogic({ tgChannelIds, fromDate, toDate }: useUnsubscribesPieWidgetLogicProps) {
-  const { loading, error, data } = useQuery(AGGREGATES_QUERY, {
+export function useUnsubscribesPieWidgetLogic(props: useUnsubscribesPieWidgetLogicProps) {
+  const auth = useAuth();
+  const subscribesUnsubscribesPieAggregatesQuery = useQuery(SUBSCRIBES_UNSUBSCRIBES_PIE_AGGREGATES_QUERY, {
+    skip: !auth.session?.data?.accessToken,
     variables: {
-      end_date: toDate,
-      start_date: fromDate,
-      tg_channel_ids: tgChannelIds
+      end_date: props.endDate,
+      start_date: props.startDate,
+      tg_channel_ids: props.tgChannelIds
     },
   });
 
+  const subscribesCount = subscribesUnsubscribesPieAggregatesQuery?.data?.subscribes?.aggregate?.count ?? 0
+  const unsubscribesCount = subscribesUnsubscribesPieAggregatesQuery?.data?.unsubscribes?.aggregate?.count ?? 0
+  const total = subscribesCount + unsubscribesCount;
+  const subscribesPercent = (total > 0 ? subscribesCount / total : 0) * 100
+  const unsubscribesPercent = (total > 0 ? unsubscribesCount / total : 0) * 100
+
   return {
-    loading,
-    error,
-    data
+    subscribesUnsubscribesPieAggregatesQuery,
+    subscribesCount,
+    unsubscribesCount,
+    subscribesPercent,
+    unsubscribesPercent,
   };
 }

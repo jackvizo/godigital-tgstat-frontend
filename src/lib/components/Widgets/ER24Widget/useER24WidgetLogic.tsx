@@ -1,7 +1,7 @@
-// src/lib/components/Widgets/ER24Widget/useER24WidgetLogic.tsx
 import { graphql } from '@/generated/gql';
 import { useQuery } from '@apollo/client';
-import moment from 'moment';
+import { DashboardFilters } from '@/lib/components/DashboardFilters/useDashboardFiltersLogic';
+import { useAuth } from '@/lib/auth/use-auth';
 
 const ER24_QUERY = graphql(`
   query ER24($tg_channel_ids: [bigint!]!, $date: timestamp!) {
@@ -15,22 +15,21 @@ const ER24_QUERY = graphql(`
   }
 `);
 
-export interface UseER24WidgetLogicProps {
-  tgChannelIds: number[];
-  date: Date;
+export interface UseER24WidgetLogicProps extends DashboardFilters {
 }
 
-export function useER24WidgetLogic({ tgChannelIds, date }: UseER24WidgetLogicProps) {
-  const { loading, error, data } = useQuery(ER24_QUERY, {
+export function useER24WidgetLogic(props: UseER24WidgetLogicProps) {
+  const auth = useAuth();
+  const er24Query = useQuery(ER24_QUERY, {
+    skip: !auth?.session?.data?.accessToken,
     variables: {
-      tg_channel_ids: tgChannelIds,
-      date: moment(date).format('YYYY-MM-DDTHH:mm:ssZ')
+      tg_channel_ids: props.tgChannelIds,
+      date: props.startDate
     },
   });
 
   return {
-    loading,
-    error,
-    data: data?.stat_post_aggregate?.aggregate?.sum?.view_24h ?? 0,
+    er24Query,
+    er24Percent: er24Query?.data?.stat_post_aggregate?.aggregate?.sum?.view_24h ?? 0
   };
 }

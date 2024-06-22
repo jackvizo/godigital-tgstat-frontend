@@ -1,7 +1,7 @@
-// src/lib/components/Widgets/TotalSubscribersWidget/useTotalSubscribersWidgetLogic.tsx
 import { graphql } from "@/generated/gql";
 import { useAuth } from "@/lib/auth/use-auth";
 import { useQuery } from "@apollo/client";
+import { DashboardFilters } from "@/lib/components/DashboardFilters/useDashboardFiltersLogic";
 
 const TOTAL_SUBSCRIBERS_QUERY = graphql(`
   query TotalSubscribers($tg_channel_id: [bigint!]) {
@@ -13,22 +13,19 @@ const TOTAL_SUBSCRIBERS_QUERY = graphql(`
   }
 `);
 
-export interface UseTotalSubscribersWidgetLogicProps {
-  tgChannelIds: number[];
-}
+export interface UseTotalSubscribersWidgetLogicProps extends DashboardFilters {}
 
-export function useTotalSubscribersWidgetLogic({ tgChannelIds }: UseTotalSubscribersWidgetLogicProps) {
+export function useTotalSubscribersWidgetLogic(props: UseTotalSubscribersWidgetLogicProps) {
   const auth = useAuth();
-  const { loading, error, data } = useQuery(TOTAL_SUBSCRIBERS_QUERY, {
+  const totalSubscribersQuery = useQuery(TOTAL_SUBSCRIBERS_QUERY, {
     skip: !auth?.session?.data?.accessToken,
     variables: {
-      tg_channel_id: tgChannelIds,
+      tg_channel_id: props.tgChannelIds,
     },
   });
 
   return {
-    loading,
-    error,
-    data: data ? data?.stat_user_aggregate.aggregate?.count : null,
+    totalSubscribersQuery,
+    totalSubscribersAmount: totalSubscribersQuery?.data?.stat_user_aggregate?.aggregate?.count ?? 0,
   };
 }

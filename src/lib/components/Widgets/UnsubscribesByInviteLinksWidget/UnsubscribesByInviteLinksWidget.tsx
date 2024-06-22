@@ -1,24 +1,24 @@
 import { Card, CardContent, Typography, useTheme } from '@mui/material';
 import { Doughnut } from 'react-chartjs-2';
 
-export interface UnsubscribesPieWidgetProps {
-  subscribesCount: number;
-  unsubscribesCount: number;
-  subscribesPercent: number;
-  unsubscribesPercent: number;
+export interface UnsubscribesByInviteLinksWidgetProps {
+  withLinkPercent: number;
+  withoutLinkPercent: number;
+  withLinkCount: number;
+  withoutLinkCount: number;
 }
 
-export function UnsubscribesPieWidget(props: UnsubscribesPieWidgetProps) {
-  const labelSubscribesPercent = `Подписалось: ${props.subscribesPercent.toFixed(2)}%`;
-  const labelUnsubscribesPercent = `Отписалось: ${props.unsubscribesPercent.toFixed(2)}%`;
+export function UnsubscribesByInviteLinksWidget(props: UnsubscribesByInviteLinksWidgetProps) {
+  const labelWithLinkPercent = `Пришли по ссылке: ${props.withLinkPercent.toFixed(2)}%`;
+  const labelWithoutLinkPercent = `Пришли без ссылки: ${props.withoutLinkPercent.toFixed(2)}%`;
 
   const theme = useTheme()
 
   const chartData = {
-    labels: [labelSubscribesPercent, labelUnsubscribesPercent],
+    labels: [labelWithLinkPercent, labelWithoutLinkPercent],
     datasets: [
       {
-        data: [props.subscribesPercent, props.unsubscribesPercent],
+        data: [props.withLinkCount, props.withoutLinkCount],
         backgroundColor: [theme.palette.primary.main, theme.palette.secondary.main],
       },
     ],
@@ -27,7 +27,7 @@ export function UnsubscribesPieWidget(props: UnsubscribesPieWidgetProps) {
   return (
     <Card>
       <CardContent>
-        <Typography variant="subtitle2" gutterBottom>Отписки</Typography>
+        <Typography variant="subtitle2" gutterBottom>Отписалось</Typography>
         <Doughnut data={chartData} options={{
           plugins: {
             legend: {

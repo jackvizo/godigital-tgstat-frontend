@@ -12,7 +12,7 @@ export function AppBarUnauthenticatedNavigation(_props: AppBarUnauthenticatedNav
     <>
       <ThemeToggler />
       <MenuItemDashboard />
-      <MenuItemUnsubscribes />
+      {/* <MenuItemUnsubscribes /> */}
       <SignInButton />
     </>
   );

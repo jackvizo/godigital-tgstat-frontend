@@ -2,7 +2,7 @@
 
 import { hexToRgba, proSidebarMenuItemStyles, proSidebarThemes } from "@/lib/theme/pro-sidebar-theme";
 import { useDarkMode } from "@/lib/theme/theme";
-import { Dashboard, Logout } from "@mui/icons-material";
+import { Dashboard, Logout, Unsubscribe } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -11,6 +11,7 @@ import { Menu, Sidebar } from "react-pro-sidebar";
 import { ProfileMenuItemSignOut } from "../MenuItems/ProfileMenuItemSignOut";
 import { setProfileMenuCollapsedServerAction } from "./set-profile-menu-collapsed-server-action";
 import { ProfileMenuItemDashboard } from "../MenuItems/ProfileMenuItemDashboard";
+import { ProfileMenuItemUnsubscribe } from "../MenuItems/ProfileMenuItemUnsubscribe";
 
 export interface ProfileMenuProps {
   isInitialProfileMenuCollapsed: boolean;
@@ -42,6 +43,7 @@ export function ProfileMenu(props: ProfileMenuProps) {
       >
         <Menu menuItemStyles={proSidebarMenuItemStyles(isDarkMode ? "dark" : "light")}>
           <ProfileMenuItemDashboard isRpsMenuItem RpsMenuItemProps={{ icon: <Dashboard /> }} />
+          <ProfileMenuItemUnsubscribe isRpsMenuItem RpsMenuItemProps={{ icon: <Unsubscribe /> }} />
           <ProfileMenuItemSignOut isRpsMenuItem RpsMenuItemProps={{ icon: <Logout /> }} />
         </Menu>
       </Sidebar>

@@ -1,57 +1,37 @@
 'use client'
 
-import { Box, Button, ButtonGroup } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import { periods, useDashboardFilters } from "./useDashboardFilters";
-import { TimeUnit } from 'chart.js';
-import { InviteLinkPickerModal } from '@/lib/components/InviteLinkPickerModal/InviteLinkPickerModal';
-import { useInviteLinkPickerLogic } from '../InviteLinkPicker/useInviteLinkPickerLogic';
-import { WidgetWrapper } from '../WidgetWrapper/WidgetWrapper';
+import { InviteLinkPicker } from '@/lib/components/InviteLinkPicker/InviteLinkPicker';
+import { ModalWrapper } from '@/lib/components/ModalWrapper/ModalWrapper';
+import { TgChannelsPicker } from '@/lib/components/TgChannelsPicker/TgChannelsPicker';
+import { WidgetWrapper } from '@/lib/components/WidgetWrapper/WidgetWrapper';
+import { ButtonGroup, FormControl, Stack } from '@mui/material';
+import { DashboardDatePicker, DashboardDatePickerProps } from '@/lib/components/DashboardDatePicker/DashboardDatePicker';
+import { useDashboardFiltersLogic } from "./useDashboardFiltersLogic";
 
-export interface DashboardFiltersProps extends ReturnType<typeof useDashboardFilters> {
-  isDatePickerHidden?: boolean
-  periods?: TimeUnit[]
+export interface DashboardFiltersProps {
+  dashboardFiltersLogic: ReturnType<typeof useDashboardFiltersLogic>;
 }
 
 export function DashboardFilters(props: DashboardFiltersProps) {
-  const inviteLinkPickerLogic = useInviteLinkPickerLogic();
-
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, minWidth: 'auto' }}>
-      {!props.isDatePickerHidden ? (
-        <DatePicker
-          format="DD.MM.YYYY"
-          value={props.startDate}
-          onChange={(newValue) => {
-            newValue?.seconds(0)
-            newValue?.minutes(0)
-            props.setStartDate(newValue)
-          }}
-          label="Дата"
-        />
-
-      ) : null}
-      <ButtonGroup variant="outlined" aria-label="outlined button group" size="large">
-        {(props.periods || periods).map((period) => (
-          <Button
-            key={period}
-            variant={props.timePeriod === period ? 'contained' : 'outlined'}
-            onClick={() => props.setTimePeriod(period)}
-          >
-            {period === 'day' && 'День'}
-            {period === 'week' && 'Неделя'}
-            {period === 'month' && 'Месяц'}
-            {period === 'year' && 'Год'}
-          </Button>
-        ))}
-      </ButtonGroup>
-      <WidgetWrapper
-        query={inviteLinkPickerLogic.getGroupsQuery}
-        minWidth={100}
-      // minHeight={200}
-      >
-        <InviteLinkPickerModal {...inviteLinkPickerLogic} />
-      </WidgetWrapper>
-    </Box>
+    <FormControl size='small' sx={{ width: { xs: '100%', md: 'auto' } }}>
+      <Stack direction={{ xs: 'row', md: 'row' }} alignItems='center' spacing={1} useFlexGap flexWrap="wrap">
+        <DashboardDatePicker {...props.dashboardFiltersLogic.filterDatePickerLogic} />
+        <WidgetWrapper
+          queries={[props.dashboardFiltersLogic.inviteLinkPickerLogic.getGroupsQuery, props.dashboardFiltersLogic.tgChannelsPickerLogic.getTelegramChannelsQuery]}
+          width={187}
+          height={40}
+        >
+          <ButtonGroup variant="outlined">
+            <ModalWrapper label="Ссылки">
+              <InviteLinkPicker {...props.dashboardFiltersLogic.inviteLinkPickerLogic} />
+            </ModalWrapper>
+            <ModalWrapper label="Каналы">
+              <TgChannelsPicker {...props.dashboardFiltersLogic.tgChannelsPickerLogic} />
+            </ModalWrapper>
+          </ButtonGroup>
+        </WidgetWrapper>
+      </Stack>
+    </FormControl>
   )
 }

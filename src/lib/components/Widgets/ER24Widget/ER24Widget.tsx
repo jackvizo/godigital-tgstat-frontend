@@ -1,25 +1,11 @@
-// src/lib/components/Widgets/ER24Widget/ER24Widget.tsx
-import React from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
-import { useER24WidgetLogic } from './useER24WidgetLogic';
+import { TextWidget } from '@/lib/components/TextWidget/TextWidget';
 
 export interface ER24WidgetProps {
-  tgChannelIds: number[];
-  date: Date;
+  er24Percent: number | undefined;
 }
 
-export function ER24Widget({ tgChannelIds, date }: ER24WidgetProps) {
-  const { loading, error, data } = useER24WidgetLogic({ tgChannelIds, date });
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
+export function ER24Widget(props: ER24WidgetProps) {
   return (
-    <Card>
-      <CardContent>
-        <Typography variant="h6">ER 24</Typography>
-        <Typography variant="h4">{data}%</Typography>
-      </CardContent>
-    </Card>
-  );
+    <TextWidget label='ER 24' value={`${props.er24Percent}%`} />
+  )
 }

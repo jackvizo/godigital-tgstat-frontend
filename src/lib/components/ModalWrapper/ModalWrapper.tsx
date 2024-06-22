@@ -1,12 +1,12 @@
-// src/components/InviteLinkPickerModal.tsx
-import { InviteLinkPicker, InviteLinkPickerProps } from '@/lib/components/InviteLinkPicker/InviteLinkPicker';
 import { Close } from '@mui/icons-material';
 import { Box, Button, Card, IconButton, Modal, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
-export interface InviteLinkPickerModalProps extends InviteLinkPickerProps { }
+export interface ModalWrapperProps extends React.PropsWithChildren {
+  label?: string
+}
 
-export const InviteLinkPickerModal: React.FC<InviteLinkPickerModalProps> = (props) => {
+export const ModalWrapper: React.FC<ModalWrapperProps> = (props) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -14,7 +14,7 @@ export const InviteLinkPickerModal: React.FC<InviteLinkPickerModalProps> = (prop
 
   return (
     <div>
-      <Button onClick={handleOpen}>Ссылки</Button>
+      <Button onClick={handleOpen}>{props.label}</Button>
       <Modal open={open} onClose={handleClose} sx={{ p: 4 }}>
         <Box sx={{
           position: 'absolute',
@@ -29,12 +29,12 @@ export const InviteLinkPickerModal: React.FC<InviteLinkPickerModalProps> = (prop
             p: 3
           }}>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-              <Typography variant="h6">Ссылки</Typography>
+              <Typography variant="h6">{props.label}</Typography>
               <IconButton onClick={handleClose}>
                 <Close />
               </IconButton>
             </Box>
-            <InviteLinkPicker {...props} />
+            {props.children}
           </Card>
         </Box>
       </Modal>

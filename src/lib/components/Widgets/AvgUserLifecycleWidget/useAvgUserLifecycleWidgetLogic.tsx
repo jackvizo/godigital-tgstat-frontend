@@ -17,7 +17,7 @@ export interface UseAvgUserLifecycleWidgetLogicProps {
 
 export function useAvgUserLifecycleWidgetLogic({ tgChannelIds }: UseAvgUserLifecycleWidgetLogicProps) {
   const auth = useAuth();
-  const { loading, error, data } = useQuery(AVG_USER_LIFECYCLE_QUERY, {
+  const avgUserLifecycleQuery = useQuery(AVG_USER_LIFECYCLE_QUERY, {
     skip: !auth?.session?.data?.accessToken,
     variables: {
       tg_channel_ids: `{${tgChannelIds.join(',')}}`
@@ -25,8 +25,7 @@ export function useAvgUserLifecycleWidgetLogic({ tgChannelIds }: UseAvgUserLifec
   });
 
   return {
-    loading,
-    error,
-    data: (data?.get_avg_user_lifecycle?.[0]?.avg_lifecycle_days ?? 0).toFixed(2),
+    avgUserLifecycleQuery,
+    days: (avgUserLifecycleQuery?.data?.get_avg_user_lifecycle?.[0]?.avg_lifecycle_days ?? 0).toFixed(2)
   };
 }
