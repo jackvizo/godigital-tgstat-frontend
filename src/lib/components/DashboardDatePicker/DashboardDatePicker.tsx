@@ -25,7 +25,7 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
               newValue?.set('second', 0)?.set?.('minutes', 0)
               props.setStartDateState(newValue?.toDate())
             }}
-            label="Дата"
+            label="Дата от"
             slotProps={{
               textField: {
                 size: 'small'
@@ -40,8 +40,9 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
             onChange={(newValue) => {
               newValue?.set('second', 0)?.set?.('minutes', 0)
               props.setEndDateState(newValue?.toDate())
+              props.setTimePeriod(undefined)
             }}
-            label="Дата"
+            label="Дата до"
             slotProps={{
               textField: {
                 size: 'small'

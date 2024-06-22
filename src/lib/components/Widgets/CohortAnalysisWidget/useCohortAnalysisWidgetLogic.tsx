@@ -50,7 +50,7 @@ export function useCohortAnalysisWidgetLogic(props: UseCohortAnalysisWidgetLogic
 
   return {
     cohortAnalysisQuery,
-    data: cohortAnalysisQuery?.data?.cohort_analysis ?? [],
+    data,
     joinDates,
     leftDates
   };

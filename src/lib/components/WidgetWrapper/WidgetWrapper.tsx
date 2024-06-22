@@ -4,7 +4,7 @@ import { useAuth } from '@/lib/auth/use-auth';
 import formatError from '@/lib/format-error';
 import { QueryResult } from '@apollo/client';
 import { WarningAmber } from '@mui/icons-material';
-import { Alert, Box, Paper, Skeleton, Typography } from '@mui/material';
+import { Alert, Box, BoxProps, Paper, Skeleton, Typography } from '@mui/material';
 import React, { useRef } from 'react';
 
 export interface WidgetWrapperProps {
@@ -13,7 +13,7 @@ export interface WidgetWrapperProps {
   query?: QueryResult<any, any>;
   queries?: QueryResult<any, any>[];
   children: React.ReactNode;
-  width?: number;
+  width?: BoxProps['width'];
   height?: number;
 }
 

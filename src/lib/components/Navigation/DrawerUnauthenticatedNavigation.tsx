@@ -6,7 +6,8 @@ import { ThemeToggler } from "./MenuItems/ThemeToggler";
 import { Divider } from "./Divider";
 import { MenuItem } from "./MenuItem";
 import Box from "@mui/material/Box";
-import { MenuItemUnsubscribes } from "./MenuItems/MenuItemUnsubscribes";
+// import { MenuItemUnsubscribes } from "./MenuItems/MenuItemUnsubscribes";
+import { MenuItemAnalytics } from "./MenuItems/MenuItemAnalytics";
 
 export interface DrawerUnauthenticatedNavigationProps {
   onMenuItemClick?: () => void;
@@ -24,8 +25,10 @@ export function DrawerUnauthenticatedNavigation(props: DrawerUnauthenticatedNavi
       </Box>
       <Divider />
 
-      <MenuItemDashboard MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} />
-      <MenuItemUnsubscribes MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} />
+      <MenuItemAnalytics MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} />
+
+      {/* <MenuItemDashboard MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} />
+      <MenuItemUnsubscribes MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} /> */}
     </>
   );
 }

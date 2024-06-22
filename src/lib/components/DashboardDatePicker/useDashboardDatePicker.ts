@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export const periods: TimeUnit[] = ["day", "week", "month", "year"];
 
-const calculateEndDate = (startDate: Date | undefined, period: TimeUnit): Date => {
+const calculateEndDate = (startDate: Date | undefined, period: TimeUnit | undefined): Date => {
   if (!startDate) {
     return new Date();
   }
@@ -35,13 +35,14 @@ export function useDashboardDatePicker(props?: { startDate?: Date | undefined; i
 
     return d.toDate();
   });
-  const [timePeriod, setTimePeriod] = useState<TimeUnit>(props?.initialPeriod ?? "day");
-  const startDatePlusPeriod = calculateEndDate(props?.startDate || startDateState, timePeriod);
-  const [endDateState, setEndDateState] = useState<Date | undefined>(startDatePlusPeriod);
+  const [timePeriod, setTimePeriod] = useState<TimeUnit | undefined>(props?.initialPeriod ?? "day");
+  const [endDateState, setEndDateState] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
-    // setEndDateState(startDatePlusPeriod);
-  }, [startDatePlusPeriod]);
+    if (timePeriod) {
+      setEndDateState(calculateEndDate(props?.startDate || startDateState, timePeriod));
+    }
+  }, [timePeriod, startDateState]);
 
   return {
     startDateState,

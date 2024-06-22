@@ -13,7 +13,7 @@ import { UnsubscribesByPeriodWidget } from "@/lib/components/Widgets/Unsubscribe
 import { useUnsubscribesByPeriodWidgetLogic } from "@/lib/components/Widgets/UnsubscribesByPeriodWidget/useUnsubscribesByPeriodWidgetLogic";
 import { UnsubscribesPieWidget } from "@/lib/components/Widgets/UnsubscribesPieWidget/UnsubscribesPieWidget";
 import { useUnsubscribesPieWidgetLogic } from "@/lib/components/Widgets/UnsubscribesPieWidget/useUnsubscribesPieWidgetLogic";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import { useState } from "react";
 
@@ -36,7 +36,9 @@ function CohortWidget(props: CohortWidgetProps) {
   });
   const cohortAnalysisLogic = useCohortAnalysisWidgetLogic({
     ...props.dashboardFiltersLogic.filters,
-    ...cohortAnalysisDatePicker,
+    startDate: cohortAnalysisDatePicker.startDateState,
+    endDate: cohortAnalysisDatePicker.endDateState,
+    timePeriod: cohortAnalysisDatePicker.timePeriod!
   });
 
   return (
@@ -49,7 +51,7 @@ function CohortWidget(props: CohortWidgetProps) {
         periods={["week", "month", "year"]}
         displayDatePickers={false}
       />
-      <WidgetWrapper query={cohortAnalysisLogic.cohortAnalysisQuery} height={rowHeight2} width={332}>
+      <WidgetWrapper query={cohortAnalysisLogic.cohortAnalysisQuery} height={469} width='100%'>
         <CohortAnalysisWidget {...cohortAnalysisLogic} />
       </WidgetWrapper>
     </Box>
@@ -100,16 +102,18 @@ export function ClientContainer(props: ClientContainerProps) {
           <UnsubscribesPieWidget {...unsubscribesPieWidgetLogic} />
         </WidgetWrapper>
 
-        <WidgetWrapper
-          query={unsubscribesByPeriodWidgetLogic.unsubscribesByPeriodsQuery}
-          height={rowHeight2}
-          width={332}
-        >
-          <UnsubscribesByPeriodWidget {...unsubscribesByPeriodWidgetLogic} />
-        </WidgetWrapper>
       </Row>
 
-      <Divider />
+
+      <WidgetWrapper
+        query={unsubscribesByPeriodWidgetLogic.unsubscribesByPeriodsQuery}
+        height={686}
+        width={400}
+      >
+        <Box sx={{ maxWidth: 400 }}>
+          <UnsubscribesByPeriodWidget {...unsubscribesByPeriodWidgetLogic} />
+        </Box>
+      </WidgetWrapper>
 
       <CohortWidget dashboardFiltersLogic={dashboardFiltersLogic} />
     </Box>
