@@ -4,11 +4,12 @@ import { DashboardFilters } from '@/lib/components/DashboardFilters/useDashboard
 import { useAuth } from '@/lib/auth/use-auth';
 
 export const ER24_QUERY = graphql(`
-  query ER24($tg_channel_ids: [bigint!]!, $date: timestamp!) {
-    stat_post_aggregate(where: { tg_channel_id: { _in: $tg_channel_ids }, timestamp: { _lte: $date } }) {
+  query ER24($tg_channel_ids: [bigint!]!) {
+    stat_post_aggregate(where: { tg_channel_id: { _in: $tg_channel_ids } }) {
       aggregate {
         sum {
           view_24h
+          views
         }
       }
     }
@@ -24,12 +25,16 @@ export function useER24WidgetLogic(props: UseER24WidgetLogicProps) {
     skip: !auth?.session?.data?.accessToken,
     variables: {
       tg_channel_ids: props.tgChannelIds,
-      date: props.startDate
     },
   });
 
+  const views24 = er24Query?.data?.stat_post_aggregate?.aggregate?.sum?.view_24h ?? 0;
+  const viewsTotal = er24Query?.data?.stat_post_aggregate?.aggregate?.sum?.views ?? 0;
+
+  const er24Percent = viewsTotal > 0 ? views24 / viewsTotal : 0;
+
   return {
     er24Query,
-    er24Percent: er24Query?.data?.stat_post_aggregate?.aggregate?.sum?.view_24h ?? 0
+    er24Percent
   };
 }
