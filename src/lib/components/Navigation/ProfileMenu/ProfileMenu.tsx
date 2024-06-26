@@ -42,9 +42,13 @@ export function ProfileMenu(props: ProfileMenuProps) {
         }}
       >
         <Menu menuItemStyles={proSidebarMenuItemStyles(isDarkMode ? "dark" : "light")}>
-          <ProfileMenuItemDashboard isRpsMenuItem RpsMenuItemProps={{ icon: <Dashboard /> }} />
+          {/* <ProfileMenuItemDashboard isRpsMenuItem RpsMenuItemProps={{ icon: <Dashboard /> }} />
           <ProfileMenuItemUnsubscribe isRpsMenuItem RpsMenuItemProps={{ icon: <Unsubscribe /> }} />
-          <ProfileMenuItemSignOut isRpsMenuItem RpsMenuItemProps={{ icon: <Logout /> }} />
+          <ProfileMenuItemSignOut isRpsMenuItem RpsMenuItemProps={{ icon: <Logout /> }} /> */}
+          <ProfileMenuItemDashboard isRpsMenuItem />
+          <ProfileMenuItemUnsubscribe isRpsMenuItem />
+          <ProfileMenuItemSignOut isRpsMenuItem />
+
         </Menu>
       </Sidebar>
       <Box sx={{ position: "sticky", bottom: 0, zIndex: 10 }}>

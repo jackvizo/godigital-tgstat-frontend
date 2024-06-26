@@ -4,7 +4,7 @@ import { DashboardFilters } from '@/lib/components/DashboardFilters/useDashboard
 import { useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 
-const COHORT_ANALYSIS_QUERY = graphql(`
+export const COHORT_ANALYSIS_QUERY = graphql(`
   query CohortAnalysis($end_date: date!, $start_date: date!, $tg_channel_ids: _int8!) {
     cohort_analysis(args: { start_date: $start_date, end_date: $end_date, tg_channel_ids: $tg_channel_ids }) {
       join_date

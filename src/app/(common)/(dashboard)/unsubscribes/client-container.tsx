@@ -38,7 +38,7 @@ function CohortWidget(props: CohortWidgetProps) {
     ...props.dashboardFiltersLogic.filters,
     startDate: cohortAnalysisDatePicker.startDateState,
     endDate: cohortAnalysisDatePicker.endDateState,
-    timePeriod: cohortAnalysisDatePicker.timePeriod!
+    timePeriod: cohortAnalysisDatePicker.timePeriod!,
   });
 
   return (
@@ -51,7 +51,7 @@ function CohortWidget(props: CohortWidgetProps) {
         periods={["week", "month", "year"]}
         displayDatePickers={false}
       />
-      <WidgetWrapper query={cohortAnalysisLogic.cohortAnalysisQuery} height={469} width='100%'>
+      <WidgetWrapper query={cohortAnalysisLogic.cohortAnalysisQuery} height={469} width="100%">
         <CohortAnalysisWidget {...cohortAnalysisLogic} />
       </WidgetWrapper>
     </Box>
@@ -101,15 +101,9 @@ export function ClientContainer(props: ClientContainerProps) {
         >
           <UnsubscribesPieWidget {...unsubscribesPieWidgetLogic} />
         </WidgetWrapper>
-
       </Row>
 
-
-      <WidgetWrapper
-        query={unsubscribesByPeriodWidgetLogic.unsubscribesByPeriodsQuery}
-        height={686}
-        width={400}
-      >
+      <WidgetWrapper query={unsubscribesByPeriodWidgetLogic.unsubscribesByPeriodsQuery} height={686} width={400}>
         <Box sx={{ maxWidth: 400 }}>
           <UnsubscribesByPeriodWidget {...unsubscribesByPeriodWidgetLogic} />
         </Box>

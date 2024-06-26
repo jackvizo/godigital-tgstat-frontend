@@ -9,7 +9,7 @@ export interface DashboardFilters {
   tgChannelIds: number[];
   startDate: Date | undefined;
   endDate: Date | undefined;
-  timePeriod: TimeUnit;
+  timePeriod: TimeUnit | undefined;
 }
 
 export function useDashboardFiltersLogic() {

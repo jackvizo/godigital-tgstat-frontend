@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { DashboardFilters } from '@/lib/components/DashboardFilters/useDashboardFiltersLogic';
 import { useAuth } from '@/lib/auth/use-auth';
 
-const ER24_QUERY = graphql(`
+export const ER24_QUERY = graphql(`
   query ER24($tg_channel_ids: [bigint!]!, $date: timestamp!) {
     stat_post_aggregate(where: { tg_channel_id: { _in: $tg_channel_ids }, timestamp: { _lte: $date } }) {
       aggregate {

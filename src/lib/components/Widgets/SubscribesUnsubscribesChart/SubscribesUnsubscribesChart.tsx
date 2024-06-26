@@ -6,8 +6,8 @@ import { Line } from 'react-chartjs-2';
 
 export interface SubscribesUnsubscribesChartProps {
   title: string;
-  subscribesChart?: (string | Date)[]
-  unsubscribesChart?: (string | Date)[]
+  subscribesChart?: number[]
+  unsubscribesChart?: number[]
   labels: (string | Date)[]
 }
 export function SubscribesUnsubscribesChart(props: SubscribesUnsubscribesChartProps) {

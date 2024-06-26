@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { DashboardFilters } from '@/lib/components/DashboardFilters/useDashboardFiltersLogic';
 import { useAuth } from '@/lib/auth/use-auth';
 
-const SUBSCRIBES_BY_INVITE_LINKS_QUERY = graphql(`
+export const SUBSCRIBES_BY_INVITE_LINKS_QUERY = graphql(`
   query SubscribesByInviteLinksAggregates($tg_channel_ids: [bigint!], $start_date: timestamp!, $end_date: timestamp!) {
     without_link: stat_user_aggregate(
       where: {

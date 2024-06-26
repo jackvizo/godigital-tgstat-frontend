@@ -3,7 +3,7 @@ import { useAuth } from "@/lib/auth/use-auth";
 import { DashboardFilters } from "@/lib/components/DashboardFilters/useDashboardFiltersLogic";
 import { useQuery } from "@apollo/client";
 
-const SUBSCRIBERS_BY_DATE_RANGE_QUERY = graphql(`
+export const SUBSCRIBERS_BY_DATE_RANGE_QUERY = graphql(`
   query SubscribersAmountByDateRage($end_date: timestamp!, $start_date: timestamp!, $tg_channel_ids: [bigint!]) {
     stat_user_aggregate(
       where: { joined_at: { _lte: $end_date, _gte: $start_date }, tg_channel_id: { _in: $tg_channel_ids } }

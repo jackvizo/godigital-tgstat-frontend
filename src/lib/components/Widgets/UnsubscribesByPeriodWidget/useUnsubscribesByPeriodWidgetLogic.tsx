@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { DashboardFilters } from "@/lib/components/DashboardFilters/useDashboardFiltersLogic";
 import { useAuth } from "@/lib/auth/use-auth";
 
-const UNSUBSCRIBES_BY_PERIODS_QUERY = graphql(`
+export const UNSUBSCRIBES_BY_PERIODS_QUERY = graphql(`
   query UnsubscribesByPeriods($start_date: timestamp!, $end_date: timestamp!, $tg_channel_ids: _int8!) {
     unsubscribes_by_periods(args: { start_date: $start_date, end_date: $end_date, tg_channel_ids: $tg_channel_ids }) {
       interval_label

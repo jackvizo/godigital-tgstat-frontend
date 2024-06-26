@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { DashboardFilters } from '@/lib/components/DashboardFilters/useDashboardFiltersLogic';
 import { useAuth } from '@/lib/auth/use-auth';
 
-const SUBSCRIBES_UNSUBSCRIBES_PIE_AGGREGATES_QUERY = graphql(`
+export const SUBSCRIBES_UNSUBSCRIBES_PIE_AGGREGATES_QUERY = graphql(`
 query SubcribesUnsubscribesPieAggregates($tg_channel_ids: [bigint!], $start_date: timestamp!, $end_date: timestamp!) {
   subscribes: stat_user_aggregate(
     where: {

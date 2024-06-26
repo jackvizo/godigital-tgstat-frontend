@@ -3,7 +3,7 @@ import { graphql } from '@/generated/gql';
 import { useAuth } from '@/lib/auth/use-auth';
 import { useQuery } from '@apollo/client';
 
-const AVG_USER_LIFECYCLE_QUERY = graphql(`
+export const AVG_USER_LIFECYCLE_QUERY = graphql(`
   query AvgUserLifecycle($tg_channel_ids: _int8!) {
     get_avg_user_lifecycle(args: { tg_channel_ids: $tg_channel_ids }) {
       avg_lifecycle_days

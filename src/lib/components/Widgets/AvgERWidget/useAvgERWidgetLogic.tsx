@@ -3,7 +3,7 @@ import { useAuth } from '@/lib/auth/use-auth';
 import { useQuery } from '@apollo/client';
 import { DashboardFilters } from '@/lib/components/DashboardFilters/useDashboardFiltersLogic';
 
-const AVG_ER_QUERY = graphql(`
+export const AVG_ER_QUERY = graphql(`
   query ERAvg($from_date: timestamp!, $to_date: timestamp!, $tg_channel_ids: [bigint!]) {
     stat_user_aggregate(
       where: { joined_at: { _gte: $from_date, _lte: $to_date }, tg_channel_id: { _in: $tg_channel_ids } }
