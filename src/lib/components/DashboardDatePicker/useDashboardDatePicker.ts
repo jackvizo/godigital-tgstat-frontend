@@ -44,6 +44,12 @@ export function useDashboardDatePicker(props?: { startDate?: Date | undefined; i
     }
   }, [timePeriod, startDateState]);
 
+  useEffect(() => {
+    if (props?.startDate) {
+      setStartDateState(props.startDate);
+    }
+  }, [props?.startDate]);
+
   return {
     startDateState,
     timePeriod,

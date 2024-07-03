@@ -121,6 +121,7 @@ input cohort_analysis_args {
   end_date: date
   start_date: date
   tg_channel_ids: _int8
+  time_bucket: String
 }
 
 """ordering argument of a cursor"""
@@ -1587,6 +1588,29 @@ type query_root {
     """filter the rows returned"""
     where: fn_unsubscribes_by_periods_bool_exp
   ): fn_unsubscribes_by_periods_aggregate!
+
+  """
+  fetch data from the table: "user"
+  """
+  user(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): [user!]!
+
+  """fetch data from the table: "user" using primary key columns"""
+  user_by_pk(id: uuid!): user
 
   """
   execute function "user_signups_by_period" which returns "fn_users_by_period"
@@ -3336,6 +3360,29 @@ type subscription_root {
   ): fn_unsubscribes_by_periods_aggregate!
 
   """
+  fetch data from the table: "user"
+  """
+  user(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): [user!]!
+
+  """fetch data from the table: "user" using primary key columns"""
+  user_by_pk(id: uuid!): user
+
+  """
   execute function "user_signups_by_period" which returns "fn_users_by_period"
   """
   user_signups_by_period(
@@ -3384,6 +3431,20 @@ type subscription_root {
     """filter the rows returned"""
     where: fn_users_by_period_bool_exp
   ): fn_users_by_period_aggregate!
+
+  """
+  fetch data from the table in a streaming manner: "user"
+  """
+  user_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [user_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): [user!]!
 
   """
   fetch data from the table: "user_tg_channel"
@@ -3558,6 +3619,9 @@ columns and relationships of "tg_invite_link_group"
 type tg_invite_link_group {
   group_name: String!
   pk: bigint!
+
+  """An object relationship"""
+  user: user!
   user_id: uuid!
 
   """An array relationship"""
@@ -3605,6 +3669,17 @@ type tg_invite_link_group_aggregate {
   nodes: [tg_invite_link_group!]!
 }
 
+input tg_invite_link_group_aggregate_bool_exp {
+  count: tg_invite_link_group_aggregate_bool_exp_count
+}
+
+input tg_invite_link_group_aggregate_bool_exp_count {
+  arguments: [tg_invite_link_group_select_column!]
+  distinct: Boolean
+  filter: tg_invite_link_group_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "tg_invite_link_group"
 """
@@ -3622,9 +3697,33 @@ type tg_invite_link_group_aggregate_fields {
   variance: tg_invite_link_group_variance_fields
 }
 
+"""
+order by aggregate values of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_aggregate_order_by {
+  avg: tg_invite_link_group_avg_order_by
+  count: order_by
+  max: tg_invite_link_group_max_order_by
+  min: tg_invite_link_group_min_order_by
+  stddev: tg_invite_link_group_stddev_order_by
+  stddev_pop: tg_invite_link_group_stddev_pop_order_by
+  stddev_samp: tg_invite_link_group_stddev_samp_order_by
+  sum: tg_invite_link_group_sum_order_by
+  var_pop: tg_invite_link_group_var_pop_order_by
+  var_samp: tg_invite_link_group_var_samp_order_by
+  variance: tg_invite_link_group_variance_order_by
+}
+
 """aggregate avg on columns"""
 type tg_invite_link_group_avg_fields {
   pk: Float
+}
+
+"""
+order by avg() on columns of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_avg_order_by {
+  pk: order_by
 }
 
 """
@@ -3636,6 +3735,7 @@ input tg_invite_link_group_bool_exp {
   _or: [tg_invite_link_group_bool_exp!]
   group_name: String_comparison_exp
   pk: bigint_comparison_exp
+  user: user_bool_exp
   user_id: uuid_comparison_exp
   user_tg_invite_links: user_tg_invite_link_bool_exp
   user_tg_invite_links_aggregate: user_tg_invite_link_aggregate_bool_exp
@@ -3667,11 +3767,29 @@ type tg_invite_link_group_max_fields {
   user_id: uuid
 }
 
+"""
+order by max() on columns of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_max_order_by {
+  group_name: order_by
+  pk: order_by
+  user_id: order_by
+}
+
 """aggregate min on columns"""
 type tg_invite_link_group_min_fields {
   group_name: String
   pk: bigint
   user_id: uuid
+}
+
+"""
+order by min() on columns of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_min_order_by {
+  group_name: order_by
+  pk: order_by
+  user_id: order_by
 }
 
 """
@@ -3708,6 +3826,7 @@ input tg_invite_link_group_on_conflict {
 input tg_invite_link_group_order_by {
   group_name: order_by
   pk: order_by
+  user: user_order_by
   user_id: order_by
   user_tg_invite_links_aggregate: user_tg_invite_link_aggregate_order_by
 }
@@ -3743,14 +3862,35 @@ type tg_invite_link_group_stddev_fields {
   pk: Float
 }
 
+"""
+order by stddev() on columns of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_stddev_order_by {
+  pk: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type tg_invite_link_group_stddev_pop_fields {
   pk: Float
 }
 
+"""
+order by stddev_pop() on columns of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_stddev_pop_order_by {
+  pk: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type tg_invite_link_group_stddev_samp_fields {
   pk: Float
+}
+
+"""
+order by stddev_samp() on columns of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_stddev_samp_order_by {
+  pk: order_by
 }
 
 """
@@ -3777,6 +3917,13 @@ type tg_invite_link_group_sum_fields {
 }
 
 """
+order by sum() on columns of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_sum_order_by {
+  pk: order_by
+}
+
+"""
 update columns of table "tg_invite_link_group"
 """
 enum tg_invite_link_group_update_column {
@@ -3797,14 +3944,35 @@ type tg_invite_link_group_var_pop_fields {
   pk: Float
 }
 
+"""
+order by var_pop() on columns of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_var_pop_order_by {
+  pk: order_by
+}
+
 """aggregate var_samp on columns"""
 type tg_invite_link_group_var_samp_fields {
   pk: Float
 }
 
+"""
+order by var_samp() on columns of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_var_samp_order_by {
+  pk: order_by
+}
+
 """aggregate variance on columns"""
 type tg_invite_link_group_variance_fields {
   pk: Float
+}
+
+"""
+order by variance() on columns of table "tg_invite_link_group"
+"""
+input tg_invite_link_group_variance_order_by {
+  pk: order_by
 }
 
 scalar timestamp
@@ -3837,6 +4005,159 @@ input unsubscribes_by_periods_args {
   tg_channel_ids: _int8
 }
 
+"""
+columns and relationships of "user"
+"""
+type user {
+  created_at: timestamp!
+  id: uuid!
+
+  """An array relationship"""
+  tg_invite_link_groups(
+    """distinct select on columns"""
+    distinct_on: [tg_invite_link_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [tg_invite_link_group_order_by!]
+
+    """filter the rows returned"""
+    where: tg_invite_link_group_bool_exp
+  ): [tg_invite_link_group!]!
+
+  """An aggregate relationship"""
+  tg_invite_link_groups_aggregate(
+    """distinct select on columns"""
+    distinct_on: [tg_invite_link_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [tg_invite_link_group_order_by!]
+
+    """filter the rows returned"""
+    where: tg_invite_link_group_bool_exp
+  ): tg_invite_link_group_aggregate!
+
+  """An array relationship"""
+  user_tg_channels(
+    """distinct select on columns"""
+    distinct_on: [user_tg_channel_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_tg_channel_order_by!]
+
+    """filter the rows returned"""
+    where: user_tg_channel_bool_exp
+  ): [user_tg_channel!]!
+
+  """An aggregate relationship"""
+  user_tg_channels_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_tg_channel_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_tg_channel_order_by!]
+
+    """filter the rows returned"""
+    where: user_tg_channel_bool_exp
+  ): user_tg_channel_aggregate!
+
+  """An array relationship"""
+  user_tg_invite_links(
+    """distinct select on columns"""
+    distinct_on: [user_tg_invite_link_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_tg_invite_link_order_by!]
+
+    """filter the rows returned"""
+    where: user_tg_invite_link_bool_exp
+  ): [user_tg_invite_link!]!
+
+  """An aggregate relationship"""
+  user_tg_invite_links_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_tg_invite_link_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_tg_invite_link_order_by!]
+
+    """filter the rows returned"""
+    where: user_tg_invite_link_bool_exp
+  ): user_tg_invite_link_aggregate!
+}
+
+"""
+Boolean expression to filter rows from the table "user". All fields are combined with a logical 'AND'.
+"""
+input user_bool_exp {
+  _and: [user_bool_exp!]
+  _not: user_bool_exp
+  _or: [user_bool_exp!]
+  created_at: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  tg_invite_link_groups: tg_invite_link_group_bool_exp
+  tg_invite_link_groups_aggregate: tg_invite_link_group_aggregate_bool_exp
+  user_tg_channels: user_tg_channel_bool_exp
+  user_tg_channels_aggregate: user_tg_channel_aggregate_bool_exp
+  user_tg_invite_links: user_tg_invite_link_bool_exp
+  user_tg_invite_links_aggregate: user_tg_invite_link_aggregate_bool_exp
+}
+
+"""Ordering options when selecting data from "user"."""
+input user_order_by {
+  created_at: order_by
+  id: order_by
+  tg_invite_link_groups_aggregate: tg_invite_link_group_aggregate_order_by
+  user_tg_channels_aggregate: user_tg_channel_aggregate_order_by
+  user_tg_invite_links_aggregate: user_tg_invite_link_aggregate_order_by
+}
+
+"""
+select columns of table "user"
+"""
+enum user_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+}
+
 input user_signups_by_period_args {
   end_date: timestamp
   start_date: timestamp
@@ -3845,10 +4166,30 @@ input user_signups_by_period_args {
 }
 
 """
+Streaming cursor of the table "user"
+"""
+input user_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: user_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input user_stream_cursor_value_input {
+  created_at: timestamp
+  id: uuid
+}
+
+"""
 columns and relationships of "user_tg_channel"
 """
 type user_tg_channel {
   tg_channel_id: bigint!
+
+  """An object relationship"""
+  user: user!
   user_id: uuid!
 }
 
@@ -3858,6 +4199,17 @@ aggregated selection of "user_tg_channel"
 type user_tg_channel_aggregate {
   aggregate: user_tg_channel_aggregate_fields
   nodes: [user_tg_channel!]!
+}
+
+input user_tg_channel_aggregate_bool_exp {
+  count: user_tg_channel_aggregate_bool_exp_count
+}
+
+input user_tg_channel_aggregate_bool_exp_count {
+  arguments: [user_tg_channel_select_column!]
+  distinct: Boolean
+  filter: user_tg_channel_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -3877,9 +4229,33 @@ type user_tg_channel_aggregate_fields {
   variance: user_tg_channel_variance_fields
 }
 
+"""
+order by aggregate values of table "user_tg_channel"
+"""
+input user_tg_channel_aggregate_order_by {
+  avg: user_tg_channel_avg_order_by
+  count: order_by
+  max: user_tg_channel_max_order_by
+  min: user_tg_channel_min_order_by
+  stddev: user_tg_channel_stddev_order_by
+  stddev_pop: user_tg_channel_stddev_pop_order_by
+  stddev_samp: user_tg_channel_stddev_samp_order_by
+  sum: user_tg_channel_sum_order_by
+  var_pop: user_tg_channel_var_pop_order_by
+  var_samp: user_tg_channel_var_samp_order_by
+  variance: user_tg_channel_variance_order_by
+}
+
 """aggregate avg on columns"""
 type user_tg_channel_avg_fields {
   tg_channel_id: Float
+}
+
+"""
+order by avg() on columns of table "user_tg_channel"
+"""
+input user_tg_channel_avg_order_by {
+  tg_channel_id: order_by
 }
 
 """
@@ -3890,6 +4266,7 @@ input user_tg_channel_bool_exp {
   _not: user_tg_channel_bool_exp
   _or: [user_tg_channel_bool_exp!]
   tg_channel_id: bigint_comparison_exp
+  user: user_bool_exp
   user_id: uuid_comparison_exp
 }
 
@@ -3899,15 +4276,32 @@ type user_tg_channel_max_fields {
   user_id: uuid
 }
 
+"""
+order by max() on columns of table "user_tg_channel"
+"""
+input user_tg_channel_max_order_by {
+  tg_channel_id: order_by
+  user_id: order_by
+}
+
 """aggregate min on columns"""
 type user_tg_channel_min_fields {
   tg_channel_id: bigint
   user_id: uuid
 }
 
+"""
+order by min() on columns of table "user_tg_channel"
+"""
+input user_tg_channel_min_order_by {
+  tg_channel_id: order_by
+  user_id: order_by
+}
+
 """Ordering options when selecting data from "user_tg_channel"."""
 input user_tg_channel_order_by {
   tg_channel_id: order_by
+  user: user_order_by
   user_id: order_by
 }
 
@@ -3927,14 +4321,35 @@ type user_tg_channel_stddev_fields {
   tg_channel_id: Float
 }
 
+"""
+order by stddev() on columns of table "user_tg_channel"
+"""
+input user_tg_channel_stddev_order_by {
+  tg_channel_id: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type user_tg_channel_stddev_pop_fields {
   tg_channel_id: Float
 }
 
+"""
+order by stddev_pop() on columns of table "user_tg_channel"
+"""
+input user_tg_channel_stddev_pop_order_by {
+  tg_channel_id: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type user_tg_channel_stddev_samp_fields {
   tg_channel_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "user_tg_channel"
+"""
+input user_tg_channel_stddev_samp_order_by {
+  tg_channel_id: order_by
 }
 
 """
@@ -3959,9 +4374,23 @@ type user_tg_channel_sum_fields {
   tg_channel_id: bigint
 }
 
+"""
+order by sum() on columns of table "user_tg_channel"
+"""
+input user_tg_channel_sum_order_by {
+  tg_channel_id: order_by
+}
+
 """aggregate var_pop on columns"""
 type user_tg_channel_var_pop_fields {
   tg_channel_id: Float
+}
+
+"""
+order by var_pop() on columns of table "user_tg_channel"
+"""
+input user_tg_channel_var_pop_order_by {
+  tg_channel_id: order_by
 }
 
 """aggregate var_samp on columns"""
@@ -3969,9 +4398,23 @@ type user_tg_channel_var_samp_fields {
   tg_channel_id: Float
 }
 
+"""
+order by var_samp() on columns of table "user_tg_channel"
+"""
+input user_tg_channel_var_samp_order_by {
+  tg_channel_id: order_by
+}
+
 """aggregate variance on columns"""
 type user_tg_channel_variance_fields {
   tg_channel_id: Float
+}
+
+"""
+order by variance() on columns of table "user_tg_channel"
+"""
+input user_tg_channel_variance_order_by {
+  tg_channel_id: order_by
 }
 
 """
@@ -3985,6 +4428,9 @@ type user_tg_invite_link {
 
   """An object relationship"""
   tg_invite_link_group: tg_invite_link_group!
+
+  """An object relationship"""
+  user: user!
   user_id: uuid!
 }
 
@@ -4077,6 +4523,7 @@ input user_tg_invite_link_bool_exp {
   pk: bigint_comparison_exp
   tg_invite_link: String_comparison_exp
   tg_invite_link_group: tg_invite_link_group_bool_exp
+  user: user_bool_exp
   user_id: uuid_comparison_exp
 }
 
@@ -4175,6 +4622,7 @@ input user_tg_invite_link_order_by {
   pk: order_by
   tg_invite_link: order_by
   tg_invite_link_group: tg_invite_link_group_order_by
+  user: user_order_by
   user_id: order_by
 }
 

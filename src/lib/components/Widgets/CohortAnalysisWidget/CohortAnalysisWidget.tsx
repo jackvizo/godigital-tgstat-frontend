@@ -1,39 +1,56 @@
-import { Card, CardContent, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
-import { CohortData, getLeftCount, getPercentage } from './useCohortAnalysisWidgetLogic';
+import { Card, CardContent, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
 export interface CohortAnalysisWidgetProps {
-  data: CohortData;
-  joinDates: string[];
-  leftDates: string[];
+  formattedMatrixData: {
+    join_date?: string;
+    left_date?: string;
+    joined_count?: number;
+    left_count?: number;
+    formattedJoinDate?: string;
+    formattedLeftDate?: string;
+    percentage?: string;
+    heat?: number;
+  }[][];
+  dates: string[];
 }
 
+
+const getColor = (heat: number | undefined) => {
+  if (heat === undefined || heat === 0) {
+    return undefined
+  }
+  const color = Math.floor(heat * 255);
+  return `rgba(${color}, 0, 0, 0.5)`;
+};
+
 export function CohortAnalysisWidget(props: CohortAnalysisWidgetProps) {
+  const { formattedMatrixData, dates } = props;
+
   return (
-    <Card>
+    <Card sx={{ overflow: 'scroll' }}>
       <CardContent>
-        <Table>
+        <Table size="small">
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
-              {props.leftDates.map((date, index) => (
+              {dates.map((date, index) => (
                 <TableCell key={index} align="center">{date}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.joinDates.map((joinDate, rowIndex) => (
+            {formattedMatrixData.map((row, rowIndex) => (
               <TableRow key={rowIndex}>
-                <TableCell>{joinDate}</TableCell>
-                {props.leftDates.map((leftDate, colIndex) => {
-                  const leftCount = getLeftCount(props.data, joinDate, leftDate);
-                  const percentage = getPercentage(props.data, joinDate, leftDate);
-
-                  return (
-                    <TableCell key={colIndex} align="center">
-                      {leftCount !== null ? `${leftCount} (${percentage})` : ''}
+                <TableCell>{row[0].formattedJoinDate}</TableCell>
+                {row.map((cell, colIndex) => (
+                  rowIndex <= colIndex ? (
+                    <TableCell key={colIndex} align="center" sx={{ backgroundColor: getColor(cell.heat) }}>
+                      {cell.left_count}<br />({cell.percentage})
                     </TableCell>
-                  );
-                })}
+                  ) : (
+                    <TableCell key={colIndex} align="center"></TableCell>
+                  )
+                ))}
               </TableRow>
             ))}
           </TableBody>

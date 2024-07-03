@@ -19,7 +19,7 @@ export function useDashboardFiltersLogic() {
 
   const filters: DashboardFilters = {
     // tgChannelIds: tgChannelsPickerLogic.channels?.map((item) => Number(item.tg_channel_id)),
-    tgChannelIds: [1, 2, 3],
+    tgChannelIds: [1001, 1002, 1003, 1004],
     startDate: filterDatePickerLogic.startDateState,
     endDate: filterDatePickerLogic.endDateState,
     timePeriod: filterDatePickerLogic.timePeriod,
