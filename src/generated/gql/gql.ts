@@ -20,6 +20,10 @@ const documents = {
     "\n  mutation CreateInviteLink($tg_invite_link: String!, $label: String!, $group_id: bigint!, $user_id: uuid!) {\n    insert_user_tg_invite_link_one(\n      object: { tg_invite_link: $tg_invite_link, label: $label, group_id: $group_id, user_id: $user_id }\n    ) {\n      pk\n      tg_invite_link\n      label\n    }\n  }\n": types.CreateInviteLinkDocument,
     "\n  mutation UpdateInviteLink($pk: bigint!, $tg_invite_link: String!, $label: String!) {\n    update_user_tg_invite_link_by_pk(\n      pk_columns: { pk: $pk }\n      _set: { tg_invite_link: $tg_invite_link, label: $label }\n    ) {\n      pk\n      tg_invite_link\n      label\n    }\n  }\n": types.UpdateInviteLinkDocument,
     "\n  mutation DeleteInviteLink($pk: bigint!) {\n    delete_user_tg_invite_link_by_pk(pk: $pk) {\n      pk\n    }\n  }\n": types.DeleteInviteLinkDocument,
+    "\n  query GetUserPhoneNumbers($user_id: uuid!) {\n    user_phone_number(where: { user_id: { _eq: $user_id } }) {\n      pk\n      phone_number\n      status\n    }\n    get_tg_auth_flow_id {\n      flow_id\n    }\n  }\n": types.GetUserPhoneNumbersDocument,
+    "\n  mutation Request2FA($flow_id: String!, $phone_number: String!) {\n    request_2fa(arg1: { flow_id: $flow_id, phone_number: $phone_number }) {\n      error_text\n      flow_run_id\n      status\n    }\n  }\n": types.Request2FaDocument,
+    "\n  mutation Confirm2FA($flow_run_id: String!, $phone_number: String!, $code_2fa: String!, $cloud_password: String) {\n    confirm_2fa(\n      arg1: {\n        code_2fa: $code_2fa\n        flow_run_id: $flow_run_id\n        phone_number: $phone_number\n        cloud_password: $cloud_password\n      }\n    ) {\n      status\n      error_text\n    }\n  }\n": types.Confirm2FaDocument,
+    "\n  mutation RemoveUserPhone($pk: bigint!) {\n    update_user_phone_number_by_pk(pk_columns: { pk: $pk }, _set: { status: \"deleted\" }) {\n      pk\n    }\n  }\n": types.RemoveUserPhoneDocument,
     "\n  query GetTelegramChannels($user_id: uuid!) {\n    user(where: { id: { _eq: $user_id } }) {\n      user_tg_channels {\n        tg_channel_id\n      }\n    }\n  }\n": types.GetTelegramChannelsDocument,
     "\n  query ERAvg($from_date: timestamp!, $to_date: timestamp!, $tg_channel_ids: [bigint!]) {\n    stat_user_aggregate(\n      where: { joined_at: { _gte: $from_date, _lte: $to_date }, tg_channel_id: { _in: $tg_channel_ids } }\n    ) {\n      aggregate {\n        count(columns: pk)\n      }\n    }\n    stat_post_aggregate(where: { timestamp: { _gte: $from_date, _lte: $to_date } }) {\n      aggregate {\n        sum {\n          views\n        }\n      }\n    }\n  }\n": types.ErAvgDocument,
     "\n  query AvgUserLifecycle($tg_channel_ids: _int8!) {\n    get_avg_user_lifecycle(args: { tg_channel_ids: $tg_channel_ids }) {\n      avg_lifecycle_days\n    }\n  }\n": types.AvgUserLifecycleDocument,
@@ -79,6 +83,22 @@ export function graphql(source: "\n  mutation UpdateInviteLink($pk: bigint!, $tg
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation DeleteInviteLink($pk: bigint!) {\n    delete_user_tg_invite_link_by_pk(pk: $pk) {\n      pk\n    }\n  }\n"): (typeof documents)["\n  mutation DeleteInviteLink($pk: bigint!) {\n    delete_user_tg_invite_link_by_pk(pk: $pk) {\n      pk\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetUserPhoneNumbers($user_id: uuid!) {\n    user_phone_number(where: { user_id: { _eq: $user_id } }) {\n      pk\n      phone_number\n      status\n    }\n    get_tg_auth_flow_id {\n      flow_id\n    }\n  }\n"): (typeof documents)["\n  query GetUserPhoneNumbers($user_id: uuid!) {\n    user_phone_number(where: { user_id: { _eq: $user_id } }) {\n      pk\n      phone_number\n      status\n    }\n    get_tg_auth_flow_id {\n      flow_id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation Request2FA($flow_id: String!, $phone_number: String!) {\n    request_2fa(arg1: { flow_id: $flow_id, phone_number: $phone_number }) {\n      error_text\n      flow_run_id\n      status\n    }\n  }\n"): (typeof documents)["\n  mutation Request2FA($flow_id: String!, $phone_number: String!) {\n    request_2fa(arg1: { flow_id: $flow_id, phone_number: $phone_number }) {\n      error_text\n      flow_run_id\n      status\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation Confirm2FA($flow_run_id: String!, $phone_number: String!, $code_2fa: String!, $cloud_password: String) {\n    confirm_2fa(\n      arg1: {\n        code_2fa: $code_2fa\n        flow_run_id: $flow_run_id\n        phone_number: $phone_number\n        cloud_password: $cloud_password\n      }\n    ) {\n      status\n      error_text\n    }\n  }\n"): (typeof documents)["\n  mutation Confirm2FA($flow_run_id: String!, $phone_number: String!, $code_2fa: String!, $cloud_password: String) {\n    confirm_2fa(\n      arg1: {\n        code_2fa: $code_2fa\n        flow_run_id: $flow_run_id\n        phone_number: $phone_number\n        cloud_password: $cloud_password\n      }\n    ) {\n      status\n      error_text\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation RemoveUserPhone($pk: bigint!) {\n    update_user_phone_number_by_pk(pk_columns: { pk: $pk }, _set: { status: \"deleted\" }) {\n      pk\n    }\n  }\n"): (typeof documents)["\n  mutation RemoveUserPhone($pk: bigint!) {\n    update_user_phone_number_by_pk(pk_columns: { pk: $pk }, _set: { status: \"deleted\" }) {\n      pk\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

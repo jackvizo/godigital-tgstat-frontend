@@ -28,6 +28,22 @@ input Boolean_comparison_exp {
   _nin: [Boolean!]
 }
 
+input Confirm2FAInput {
+  cloud_password: String
+  code_2fa: String!
+  flow_run_id: String!
+  phone_number: String!
+}
+
+type Confirm2FAOutput {
+  error_text: String
+  status: String!
+}
+
+type GetTgAuthFlowIdOutput {
+  flow_id: String!
+}
+
 """
 Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
 """
@@ -41,6 +57,17 @@ input Int_comparison_exp {
   _lte: Int
   _neq: Int
   _nin: [Int!]
+}
+
+input Request2FAInput {
+  flow_id: String!
+  phone_number: String!
+}
+
+type Request2FAOutput {
+  error_text: String
+  flow_run_id: String
+  status: String!
 }
 
 """
@@ -873,6 +900,8 @@ input get_avg_user_lifecycle_args {
 
 """mutation root"""
 type mutation_root {
+  confirm_2fa(arg1: Confirm2FAInput!): Confirm2FAOutput
+
   """
   delete data from the table: "user_tg_invite_link"
   """
@@ -929,6 +958,7 @@ type mutation_root {
     """upsert condition"""
     on_conflict: user_tg_invite_link_on_conflict
   ): user_tg_invite_link
+  request_2fa(arg1: Request2FAInput!): Request2FAOutput
 
   """
   update data of the table: "tg_invite_link_group"
@@ -957,6 +987,34 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [tg_invite_link_group_updates!]!
   ): [tg_invite_link_group_mutation_response]
+
+  """
+  update data of the table: "user_phone_number"
+  """
+  update_user_phone_number(
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_phone_number_set_input
+
+    """filter the rows which have to be updated"""
+    where: user_phone_number_bool_exp!
+  ): user_phone_number_mutation_response
+
+  """
+  update single row of the table: "user_phone_number"
+  """
+  update_user_phone_number_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_phone_number_set_input
+    pk_columns: user_phone_number_pk_columns_input!
+  ): user_phone_number
+
+  """
+  update multiples rows of table: "user_phone_number"
+  """
+  update_user_phone_number_many(
+    """updates to execute, in order"""
+    updates: [user_phone_number_updates!]!
+  ): [user_phone_number_mutation_response]
 
   """
   update data of the table: "user_tg_invite_link"
@@ -1314,6 +1372,7 @@ type query_root {
     """filter the rows returned"""
     where: fn_get_avg_user_lifecycle_bool_exp
   ): fn_get_avg_user_lifecycle_aggregate!
+  get_tg_auth_flow_id: GetTgAuthFlowIdOutput
 
   """
   fetch data from the table: "stat_post"
@@ -1611,6 +1670,51 @@ type query_root {
 
   """fetch data from the table: "user" using primary key columns"""
   user_by_pk(id: uuid!): user
+
+  """
+  fetch data from the table: "user_phone_number"
+  """
+  user_phone_number(
+    """distinct select on columns"""
+    distinct_on: [user_phone_number_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_phone_number_order_by!]
+
+    """filter the rows returned"""
+    where: user_phone_number_bool_exp
+  ): [user_phone_number!]!
+
+  """
+  fetch aggregated fields from the table: "user_phone_number"
+  """
+  user_phone_number_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_phone_number_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_phone_number_order_by!]
+
+    """filter the rows returned"""
+    where: user_phone_number_bool_exp
+  ): user_phone_number_aggregate!
+
+  """
+  fetch data from the table: "user_phone_number" using primary key columns
+  """
+  user_phone_number_by_pk(pk: bigint!): user_phone_number
 
   """
   execute function "user_signups_by_period" which returns "fn_users_by_period"
@@ -3383,6 +3487,65 @@ type subscription_root {
   user_by_pk(id: uuid!): user
 
   """
+  fetch data from the table: "user_phone_number"
+  """
+  user_phone_number(
+    """distinct select on columns"""
+    distinct_on: [user_phone_number_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_phone_number_order_by!]
+
+    """filter the rows returned"""
+    where: user_phone_number_bool_exp
+  ): [user_phone_number!]!
+
+  """
+  fetch aggregated fields from the table: "user_phone_number"
+  """
+  user_phone_number_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_phone_number_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_phone_number_order_by!]
+
+    """filter the rows returned"""
+    where: user_phone_number_bool_exp
+  ): user_phone_number_aggregate!
+
+  """
+  fetch data from the table: "user_phone_number" using primary key columns
+  """
+  user_phone_number_by_pk(pk: bigint!): user_phone_number
+
+  """
+  fetch data from the table in a streaming manner: "user_phone_number"
+  """
+  user_phone_number_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [user_phone_number_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: user_phone_number_bool_exp
+  ): [user_phone_number!]!
+
+  """
   execute function "user_signups_by_period" which returns "fn_users_by_period"
   """
   user_signups_by_period(
@@ -4049,6 +4212,42 @@ type user {
   ): tg_invite_link_group_aggregate!
 
   """An array relationship"""
+  user_phone_numbers(
+    """distinct select on columns"""
+    distinct_on: [user_phone_number_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_phone_number_order_by!]
+
+    """filter the rows returned"""
+    where: user_phone_number_bool_exp
+  ): [user_phone_number!]!
+
+  """An aggregate relationship"""
+  user_phone_numbers_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_phone_number_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_phone_number_order_by!]
+
+    """filter the rows returned"""
+    where: user_phone_number_bool_exp
+  ): user_phone_number_aggregate!
+
+  """An array relationship"""
   user_tg_channels(
     """distinct select on columns"""
     distinct_on: [user_tg_channel_select_column!]
@@ -4132,6 +4331,8 @@ input user_bool_exp {
   id: uuid_comparison_exp
   tg_invite_link_groups: tg_invite_link_group_bool_exp
   tg_invite_link_groups_aggregate: tg_invite_link_group_aggregate_bool_exp
+  user_phone_numbers: user_phone_number_bool_exp
+  user_phone_numbers_aggregate: user_phone_number_aggregate_bool_exp
   user_tg_channels: user_tg_channel_bool_exp
   user_tg_channels_aggregate: user_tg_channel_aggregate_bool_exp
   user_tg_invite_links: user_tg_invite_link_bool_exp
@@ -4143,8 +4344,297 @@ input user_order_by {
   created_at: order_by
   id: order_by
   tg_invite_link_groups_aggregate: tg_invite_link_group_aggregate_order_by
+  user_phone_numbers_aggregate: user_phone_number_aggregate_order_by
   user_tg_channels_aggregate: user_tg_channel_aggregate_order_by
   user_tg_invite_links_aggregate: user_tg_invite_link_aggregate_order_by
+}
+
+"""
+columns and relationships of "user_phone_number"
+"""
+type user_phone_number {
+  phone_number: String!
+  pk: bigint!
+  status: String
+
+  """An object relationship"""
+  user: user!
+  user_id: uuid!
+}
+
+"""
+aggregated selection of "user_phone_number"
+"""
+type user_phone_number_aggregate {
+  aggregate: user_phone_number_aggregate_fields
+  nodes: [user_phone_number!]!
+}
+
+input user_phone_number_aggregate_bool_exp {
+  count: user_phone_number_aggregate_bool_exp_count
+}
+
+input user_phone_number_aggregate_bool_exp_count {
+  arguments: [user_phone_number_select_column!]
+  distinct: Boolean
+  filter: user_phone_number_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "user_phone_number"
+"""
+type user_phone_number_aggregate_fields {
+  avg: user_phone_number_avg_fields
+  count(columns: [user_phone_number_select_column!], distinct: Boolean): Int!
+  max: user_phone_number_max_fields
+  min: user_phone_number_min_fields
+  stddev: user_phone_number_stddev_fields
+  stddev_pop: user_phone_number_stddev_pop_fields
+  stddev_samp: user_phone_number_stddev_samp_fields
+  sum: user_phone_number_sum_fields
+  var_pop: user_phone_number_var_pop_fields
+  var_samp: user_phone_number_var_samp_fields
+  variance: user_phone_number_variance_fields
+}
+
+"""
+order by aggregate values of table "user_phone_number"
+"""
+input user_phone_number_aggregate_order_by {
+  avg: user_phone_number_avg_order_by
+  count: order_by
+  max: user_phone_number_max_order_by
+  min: user_phone_number_min_order_by
+  stddev: user_phone_number_stddev_order_by
+  stddev_pop: user_phone_number_stddev_pop_order_by
+  stddev_samp: user_phone_number_stddev_samp_order_by
+  sum: user_phone_number_sum_order_by
+  var_pop: user_phone_number_var_pop_order_by
+  var_samp: user_phone_number_var_samp_order_by
+  variance: user_phone_number_variance_order_by
+}
+
+"""aggregate avg on columns"""
+type user_phone_number_avg_fields {
+  pk: Float
+}
+
+"""
+order by avg() on columns of table "user_phone_number"
+"""
+input user_phone_number_avg_order_by {
+  pk: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "user_phone_number". All fields are combined with a logical 'AND'.
+"""
+input user_phone_number_bool_exp {
+  _and: [user_phone_number_bool_exp!]
+  _not: user_phone_number_bool_exp
+  _or: [user_phone_number_bool_exp!]
+  phone_number: String_comparison_exp
+  pk: bigint_comparison_exp
+  status: String_comparison_exp
+  user: user_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""aggregate max on columns"""
+type user_phone_number_max_fields {
+  phone_number: String
+  pk: bigint
+  status: String
+  user_id: uuid
+}
+
+"""
+order by max() on columns of table "user_phone_number"
+"""
+input user_phone_number_max_order_by {
+  phone_number: order_by
+  pk: order_by
+  status: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type user_phone_number_min_fields {
+  phone_number: String
+  pk: bigint
+  status: String
+  user_id: uuid
+}
+
+"""
+order by min() on columns of table "user_phone_number"
+"""
+input user_phone_number_min_order_by {
+  phone_number: order_by
+  pk: order_by
+  status: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "user_phone_number"
+"""
+type user_phone_number_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [user_phone_number!]!
+}
+
+"""Ordering options when selecting data from "user_phone_number"."""
+input user_phone_number_order_by {
+  phone_number: order_by
+  pk: order_by
+  status: order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: user_phone_number"""
+input user_phone_number_pk_columns_input {
+  pk: bigint!
+}
+
+"""
+select columns of table "user_phone_number"
+"""
+enum user_phone_number_select_column {
+  """column name"""
+  phone_number
+
+  """column name"""
+  pk
+
+  """column name"""
+  status
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "user_phone_number"
+"""
+input user_phone_number_set_input {
+  status: String
+}
+
+"""aggregate stddev on columns"""
+type user_phone_number_stddev_fields {
+  pk: Float
+}
+
+"""
+order by stddev() on columns of table "user_phone_number"
+"""
+input user_phone_number_stddev_order_by {
+  pk: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type user_phone_number_stddev_pop_fields {
+  pk: Float
+}
+
+"""
+order by stddev_pop() on columns of table "user_phone_number"
+"""
+input user_phone_number_stddev_pop_order_by {
+  pk: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type user_phone_number_stddev_samp_fields {
+  pk: Float
+}
+
+"""
+order by stddev_samp() on columns of table "user_phone_number"
+"""
+input user_phone_number_stddev_samp_order_by {
+  pk: order_by
+}
+
+"""
+Streaming cursor of the table "user_phone_number"
+"""
+input user_phone_number_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: user_phone_number_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input user_phone_number_stream_cursor_value_input {
+  phone_number: String
+  pk: bigint
+  status: String
+  user_id: uuid
+}
+
+"""aggregate sum on columns"""
+type user_phone_number_sum_fields {
+  pk: bigint
+}
+
+"""
+order by sum() on columns of table "user_phone_number"
+"""
+input user_phone_number_sum_order_by {
+  pk: order_by
+}
+
+input user_phone_number_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: user_phone_number_set_input
+
+  """filter the rows which have to be updated"""
+  where: user_phone_number_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type user_phone_number_var_pop_fields {
+  pk: Float
+}
+
+"""
+order by var_pop() on columns of table "user_phone_number"
+"""
+input user_phone_number_var_pop_order_by {
+  pk: order_by
+}
+
+"""aggregate var_samp on columns"""
+type user_phone_number_var_samp_fields {
+  pk: Float
+}
+
+"""
+order by var_samp() on columns of table "user_phone_number"
+"""
+input user_phone_number_var_samp_order_by {
+  pk: order_by
+}
+
+"""aggregate variance on columns"""
+type user_phone_number_variance_fields {
+  pk: Float
+}
+
+"""
+order by variance() on columns of table "user_phone_number"
+"""
+input user_phone_number_variance_order_by {
+  pk: order_by
 }
 
 """
