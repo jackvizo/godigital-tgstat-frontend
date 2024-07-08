@@ -2,6 +2,7 @@
 
 import { DashboardFilters } from "@/lib/components/DashboardFilters/DashboardFilters";
 import { useDashboardFiltersLogic } from "@/lib/components/DashboardFilters/useDashboardFiltersLogic";
+import { usePhoneNumberListLogic } from "@/lib/components/PhoneNumberList/usePhoneNumberListLogic";
 import { WidgetWrapper } from "@/lib/components/WidgetWrapper/WidgetWrapper";
 import { AvgERWidget } from "@/lib/components/Widgets/AvgERWidget/AvgERWidget";
 import { useAvgERWidgetLogic } from "@/lib/components/Widgets/AvgERWidget/useAvgERWidgetLogic";
@@ -35,6 +36,7 @@ const rowHeight2 = 372;
 
 export function ClientContainer(props: ClientContainerProps) {
   const dashboardFiltersLogic = useDashboardFiltersLogic();
+  const phoneNumberListLogic = usePhoneNumberListLogic()
 
   const totalSubscribersWidgetLogic = useTotalSubscribersWidgetLogic(dashboardFiltersLogic.filters)
   const avgUserLifecycleWidgetLogic = useAvgUserLifecycleWidgetLogic(dashboardFiltersLogic.filters)
@@ -52,7 +54,7 @@ export function ClientContainer(props: ClientContainerProps) {
   return (
     <Box>
       <Box sx={{ my: 2 }}>
-        <DashboardFilters dashboardFiltersLogic={dashboardFiltersLogic} />
+        <DashboardFilters dashboardFiltersLogic={dashboardFiltersLogic} phoneNumberListLogic={phoneNumberListLogic} />
       </Box>
 
       <Typography variant="subtitle1" gutterBottom>За всё время</Typography>
