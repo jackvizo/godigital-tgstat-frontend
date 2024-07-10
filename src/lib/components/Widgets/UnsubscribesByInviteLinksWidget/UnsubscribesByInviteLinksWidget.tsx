@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, useTheme } from '@mui/material';
+import { Box, Card, CardContent, Typography, useTheme } from '@mui/material';
 import { Doughnut } from 'react-chartjs-2';
 
 export interface UnsubscribesByInviteLinksWidgetProps {
@@ -23,6 +23,20 @@ export function UnsubscribesByInviteLinksWidget(props: UnsubscribesByInviteLinks
       },
     ],
   };
+
+
+  const isEmptyData = props.withLinkCount === 0 && props.withoutLinkCount === 0
+
+  if (isEmptyData) {
+    return <Card>
+      <CardContent sx={{ height: '100%' }}>
+        <Typography variant="subtitle2" gutterBottom>Подписалось</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+          <Typography>Нет данных</Typography>
+        </Box>
+      </CardContent>
+    </Card>
+  }
 
   return (
     <Card>

@@ -134,7 +134,6 @@ input String_comparison_exp {
 
 type TgChannel {
   channel_id: String!
-  is_tracked: Boolean!
   phone_number: String!
   title: String!
 }

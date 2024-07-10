@@ -1,6 +1,6 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import { Card, CardContent, Typography, useTheme } from '@mui/material';
+import { Box, Card, CardContent, Typography, useTheme } from '@mui/material';
 
 export interface SubscribesByInviteLinksWidgetProps {
   withLinkPercent: number;
@@ -25,10 +25,25 @@ export function SubscribesByInviteLinksWidget(props: SubscribesByInviteLinksWidg
     ],
   };
 
+  const isEmptyData = props.withLinkCount === 0 && props.withoutLinkCount === 0
+
+  if (isEmptyData) {
+    return <Card>
+      <CardContent sx={{ height: '100%' }}>
+        <Typography variant="subtitle2" gutterBottom>Подписалось</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+          <Typography>Нет данных</Typography>
+        </Box>
+      </CardContent>
+    </Card>
+  }
+
   return (
     <Card>
       <CardContent>
         <Typography variant="subtitle2" gutterBottom>Подписалось</Typography>
+
+
         <Doughnut data={chartData} options={{
           plugins: {
             legend: {

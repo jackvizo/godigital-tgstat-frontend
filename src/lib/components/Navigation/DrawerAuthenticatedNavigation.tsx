@@ -24,7 +24,7 @@ export function DrawerAuthenticatedNavigation(props: DrawerAuthenticatedNavigati
       </Box>
       <Divider />
       <MenuItemDashboard MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} />
-      <MenuItemUnsubscribes MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} />
+      {/* <MenuItemUnsubscribes MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} /> */}
       <ProfileMenuItemSignOut MenuItemComponent={MenuItem} onMenuItemClick={props.onMenuItemClick} />
     </>
   );

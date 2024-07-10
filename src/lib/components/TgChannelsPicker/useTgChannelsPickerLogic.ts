@@ -6,15 +6,24 @@ import errorHandler from "@/lib/error-handler";
 import { usePhoneNumberListLogic } from "@/lib/components/PhoneNumberList/usePhoneNumberListLogic";
 import { useEffect } from "react";
 
-const GET_TELEGRAM_CHANNELS = graphql(`
+const AVALIABLE_TG_CHANNELS = graphql(`
   query TgChannels {
     tg_channels {
       channels {
         channel_id
         title
-        is_tracked
         phone_number
       }
+    }
+  }
+`);
+
+const TRACKED_TG_CHANNELS = graphql(`
+  query TrackedTgChannels($user_id: uuid!) {
+    user_tg_channel(where: { user_id: { _eq: $user_id } }) {
+      tg_channel_id
+      user_id
+      phone_number
     }
   }
 `);
@@ -46,22 +55,30 @@ const UNTRACK_TG_CHANNEL = graphql(`
 `);
 
 export type TgChannelListItem = NonNullable<
-  DocumentType<typeof GET_TELEGRAM_CHANNELS>["tg_channels"]
->["channels"][number];
+  DocumentType<typeof AVALIABLE_TG_CHANNELS>["tg_channels"]
+>["channels"][number] & { is_tracked: boolean };
 
 export const useTgChannelsPickerLogic = (props: {
   phoneNumberListLogic: ReturnType<typeof usePhoneNumberListLogic>;
 }) => {
   const auth = useAuth();
   const userId = auth.session?.data?.userId!;
-  const getTelegramChannelsQuery = useQuery(GET_TELEGRAM_CHANNELS, {
+  const trackedTgChannelsQuery = useQuery(TRACKED_TG_CHANNELS, {
     skip: !auth.session?.data?.accessToken,
+  });
+  const getTelegramChannelsQuery = useQuery(AVALIABLE_TG_CHANNELS, {
+    skip: !auth.session?.data?.accessToken || trackedTgChannelsQuery.loading,
     fetchPolicy: "cache-first",
   });
-
+  const trackedTgChannels = trackedTgChannelsQuery.data?.user_tg_channel || [];
   const trackTgChannelMutation = useMutation(TRACK_TG_CHANNEL, { onError: errorHandler });
   const untrackTgChannelMutation = useMutation(UNTRACK_TG_CHANNEL, { onError: errorHandler });
-  const channels = getTelegramChannelsQuery.data?.tg_channels?.channels || [];
+  const channels: TgChannelListItem[] = (getTelegramChannelsQuery.data?.tg_channels?.channels || []).map((item) => ({
+    ...item,
+    is_tracked: !!trackedTgChannels.find(
+      (trackedTgChannel) => trackedTgChannel.tg_channel_id.toString() === item.channel_id.toString()
+    ),
+  }));
 
   const onTrackToggle = async (channel: TgChannelListItem) => {
     const variables = { phone_number: channel.phone_number, tg_channel_id: channel.channel_id, user_id: userId };
@@ -74,22 +91,23 @@ export const useTgChannelsPickerLogic = (props: {
         variables,
       });
     }
-    await getTelegramChannelsQuery.refetch();
+    await trackedTgChannelsQuery.refetch();
   };
 
   const prevPhoneList = props.phoneNumberListLogic.getUserPhoneNumbersQuery.previousData?.user_phone_number;
   const newPhoneList = props.phoneNumberListLogic.getUserPhoneNumbersQuery.data?.user_phone_number;
 
   useEffect(() => {
-    const isShallRefetchChannels = prevPhoneList && newPhoneList && prevPhoneList.length !== newPhoneList.length;
+    const isShallRefetchTrackedChannels = prevPhoneList && newPhoneList && prevPhoneList.length !== newPhoneList.length;
 
-    if (isShallRefetchChannels) {
-      getTelegramChannelsQuery.refetch();
+    if (isShallRefetchTrackedChannels) {
+      trackedTgChannelsQuery.refetch();
     }
-  }, [prevPhoneList, newPhoneList, getTelegramChannelsQuery]);
+  }, [prevPhoneList, newPhoneList, trackedTgChannelsQuery]);
 
   return {
     channels,
+    trackedTgChannelsQuery,
     getTelegramChannelsQuery,
     trackTgChannelMutation,
     untrackTgChannelMutation,

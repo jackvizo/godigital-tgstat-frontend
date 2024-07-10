@@ -25,12 +25,6 @@ export async function getChannels(args: { userId: string }) {
         },
       });
 
-      const trackedChannels = await prismaClient.user_tg_channel.findMany({
-        where: {
-          user_id: args.userId,
-        },
-      });
-
       if (!session || !session.session_str || !session.api_hash || !session.api_id) {
         return [];
       }
@@ -49,12 +43,6 @@ export async function getChannels(args: { userId: string }) {
           .map((item) => ({
             channel_id: item.id?.toString() || "",
             title: item.title || "",
-            is_tracked: !!trackedChannels.find(
-              (trackedChannel) =>
-                trackedChannel.tg_channel_id &&
-                item.id &&
-                trackedChannel.tg_channel_id?.toString() === item.id?.toString()
-            ),
             phone_number: phoneNumber,
           }));
 

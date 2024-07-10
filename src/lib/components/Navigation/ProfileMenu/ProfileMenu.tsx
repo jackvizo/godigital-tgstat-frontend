@@ -46,7 +46,7 @@ export function ProfileMenu(props: ProfileMenuProps) {
           <ProfileMenuItemUnsubscribe isRpsMenuItem RpsMenuItemProps={{ icon: <Unsubscribe /> }} />
           <ProfileMenuItemSignOut isRpsMenuItem RpsMenuItemProps={{ icon: <Logout /> }} /> */}
           <ProfileMenuItemDashboard isRpsMenuItem />
-          <ProfileMenuItemUnsubscribe isRpsMenuItem />
+          {/* <ProfileMenuItemUnsubscribe isRpsMenuItem /> */}
           <ProfileMenuItemSignOut isRpsMenuItem />
 
         </Menu>

@@ -1,13 +1,16 @@
 'use client'
 
+import { DashboardDatePicker } from "@/lib/components/DashboardDatePicker/DashboardDatePicker";
+import { useDashboardDatePicker } from "@/lib/components/DashboardDatePicker/useDashboardDatePicker";
 import { DashboardFilters } from "@/lib/components/DashboardFilters/DashboardFilters";
 import { useDashboardFiltersLogic } from "@/lib/components/DashboardFilters/useDashboardFiltersLogic";
-import { usePhoneNumberListLogic } from "@/lib/components/PhoneNumberList/usePhoneNumberListLogic";
 import { WidgetWrapper } from "@/lib/components/WidgetWrapper/WidgetWrapper";
 import { AvgERWidget } from "@/lib/components/Widgets/AvgERWidget/AvgERWidget";
 import { useAvgERWidgetLogic } from "@/lib/components/Widgets/AvgERWidget/useAvgERWidgetLogic";
 import { AvgUserLifecycleWidget } from "@/lib/components/Widgets/AvgUserLifecycleWidget/AvgUserLifecycleWidget";
 import { useAvgUserLifecycleWidgetLogic } from "@/lib/components/Widgets/AvgUserLifecycleWidget/useAvgUserLifecycleWidgetLogic";
+import { CohortAnalysisWidget } from "@/lib/components/Widgets/CohortAnalysisWidget/CohortAnalysisWidget";
+import { useCohortAnalysisWidgetLogic } from "@/lib/components/Widgets/CohortAnalysisWidget/useCohortAnalysisWidgetLogic";
 import { ER24Widget } from "@/lib/components/Widgets/ER24Widget/ER24Widget";
 import { useER24WidgetLogic } from "@/lib/components/Widgets/ER24Widget/useER24WidgetLogic";
 import { SubscribersAmountByDateRangeWidget } from "@/lib/components/Widgets/SubscribersAmountByDateRange/SubscribersAmountByDateRangeWidget";
@@ -24,12 +27,49 @@ import { UnsubscribersPercentByDateRangeWidget } from "@/lib/components/Widgets/
 import { useUnsubscribersPercentWidgetLogic } from "@/lib/components/Widgets/UnsubscribersPercentByDateRange/useUnsubscribersPercenttByDateRangeWidgetLogic";
 import { UnsubscribesByInviteLinksWidget } from "@/lib/components/Widgets/UnsubscribesByInviteLinksWidget/UnsubscribesByInviteLinksWidget";
 import { useUnsubscribesByInviteLinksWidgetLogic } from "@/lib/components/Widgets/UnsubscribesByInviteLinksWidget/useUnsubscribesByInviteLinksWidgetLogic";
+import { UnsubscribesPieWidget } from "@/lib/components/Widgets/UnsubscribesPieWidget/UnsubscribesPieWidget";
+import { useUnsubscribesPieWidgetLogic } from "@/lib/components/Widgets/UnsubscribesPieWidget/useUnsubscribesPieWidgetLogic";
 import { Box, Divider, Typography } from '@mui/material';
-import React from "react";
+import dayjs from "dayjs";
+import React, { useState } from "react";
 
 export interface ClientContainerProps { };
 
 const Row: React.FC<React.PropsWithChildren> = (props) => <Box sx={{ display: 'flex', flexWrap: 'wrap', my: 2, gap: 2 }}>{props.children}</Box>
+
+
+interface CohortWidgetProps {
+  dashboardFiltersLogic: ReturnType<typeof useDashboardFiltersLogic>;
+}
+
+function CohortWidget(props: CohortWidgetProps) {
+  const cohortAnalysisDatePicker = useDashboardDatePicker({
+    startDate: props.dashboardFiltersLogic.filters.startDate,
+    initialPeriod: "week",
+  });
+  const cohortAnalysisLogic = useCohortAnalysisWidgetLogic({
+    ...props.dashboardFiltersLogic.filters,
+    startDate: cohortAnalysisDatePicker.startDateState,
+    endDate: cohortAnalysisDatePicker.endDateState,
+    timePeriod: cohortAnalysisDatePicker.timePeriod!,
+  });
+
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", my: 2, gap: 2, maxHeight: 600 }}>
+      <Typography variant="subtitle2" gutterBottom>
+        Когорта отписок
+      </Typography>
+      <DashboardDatePicker
+        {...cohortAnalysisDatePicker}
+        periods={["week", "month", "year"]}
+        displayDatePickers={false}
+      />
+      <WidgetWrapper query={cohortAnalysisLogic.cohortAnalysisQuery} height={469} width="100%">
+        <CohortAnalysisWidget {...cohortAnalysisLogic} />
+      </WidgetWrapper>
+    </Box>
+  );
+}
 
 const rowHeight1 = 70;
 const rowHeight2 = 372;
@@ -49,6 +89,9 @@ export function ClientContainer(props: ClientContainerProps) {
   const subscribesUnsubscribesChartWidgetLogic = useSubscribesUnsubscribesChartWidgetLogic(dashboardFiltersLogic.filters)
   const subscribesByInviteLinksWidgetLogic = useSubscribesByInviteLinksWidgetLogic(dashboardFiltersLogic.filters)
   const unsubscribesByInviteLinksWidgetLogic = useUnsubscribesByInviteLinksWidgetLogic(dashboardFiltersLogic.filters)
+
+  const unsubscribesPieWidgetLogic = useUnsubscribesPieWidgetLogic(dashboardFiltersLogic.filters);
+
 
   return (
     <Box>
@@ -99,7 +142,19 @@ export function ClientContainer(props: ClientContainerProps) {
         <WidgetWrapper query={unsubscribesByInviteLinksWidgetLogic.unsubscribesByInviteLinksQuery} height={rowHeight2} width={332}>
           <UnsubscribesByInviteLinksWidget {...unsubscribesByInviteLinksWidgetLogic} />
         </WidgetWrapper>
+        <WidgetWrapper
+          query={unsubscribesPieWidgetLogic.subscribesUnsubscribesPieAggregatesQuery}
+          height={rowHeight2}
+          width={332}
+        >
+          <UnsubscribesPieWidget {...unsubscribesPieWidgetLogic} />
+        </WidgetWrapper>
       </Row>
+
+      <Divider />
+
+
+      <CohortWidget dashboardFiltersLogic={dashboardFiltersLogic} />
     </Box>
   )
 }
