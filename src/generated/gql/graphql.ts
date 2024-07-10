@@ -123,6 +123,19 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type TgChannel = {
+  __typename?: 'TgChannel';
+  channel_id: Scalars['String']['output'];
+  is_tracked: Scalars['Boolean']['output'];
+  phone_number: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type TgChannelsOutput = {
+  __typename?: 'TgChannelsOutput';
+  channels: Array<TgChannel>;
+};
+
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
 export type Bigint_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['bigint']['input']>;
@@ -159,6 +172,8 @@ export type Cohort_Analysis_Args = {
 /** columns and relationships of "config__tg_bot_session_pool" */
 export type Config__Tg_Bot_Session_Pool = {
   __typename?: 'config__tg_bot_session_pool';
+  api_hash?: Maybe<Scalars['String']['output']>;
+  api_id?: Maybe<Scalars['String']['output']>;
   config__tg_channel_pk?: Maybe<Scalars['bigint']['output']>;
   created_at: Scalars['timestamp']['output'];
   phone_number: Scalars['String']['output'];
@@ -212,6 +227,8 @@ export type Config__Tg_Bot_Session_Pool_Bool_Exp = {
   _and?: InputMaybe<Array<Config__Tg_Bot_Session_Pool_Bool_Exp>>;
   _not?: InputMaybe<Config__Tg_Bot_Session_Pool_Bool_Exp>;
   _or?: InputMaybe<Array<Config__Tg_Bot_Session_Pool_Bool_Exp>>;
+  api_hash?: InputMaybe<String_Comparison_Exp>;
+  api_id?: InputMaybe<String_Comparison_Exp>;
   config__tg_channel_pk?: InputMaybe<Bigint_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   phone_number?: InputMaybe<String_Comparison_Exp>;
@@ -236,6 +253,8 @@ export type Config__Tg_Bot_Session_Pool_Inc_Input = {
 
 /** input type for inserting data into table "config__tg_bot_session_pool" */
 export type Config__Tg_Bot_Session_Pool_Insert_Input = {
+  api_hash?: InputMaybe<Scalars['String']['input']>;
+  api_id?: InputMaybe<Scalars['String']['input']>;
   config__tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   phone_number?: InputMaybe<Scalars['String']['input']>;
@@ -249,6 +268,8 @@ export type Config__Tg_Bot_Session_Pool_Insert_Input = {
 /** aggregate max on columns */
 export type Config__Tg_Bot_Session_Pool_Max_Fields = {
   __typename?: 'config__tg_bot_session_pool_max_fields';
+  api_hash?: Maybe<Scalars['String']['output']>;
+  api_id?: Maybe<Scalars['String']['output']>;
   config__tg_channel_pk?: Maybe<Scalars['bigint']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
   phone_number?: Maybe<Scalars['String']['output']>;
@@ -260,6 +281,8 @@ export type Config__Tg_Bot_Session_Pool_Max_Fields = {
 /** aggregate min on columns */
 export type Config__Tg_Bot_Session_Pool_Min_Fields = {
   __typename?: 'config__tg_bot_session_pool_min_fields';
+  api_hash?: Maybe<Scalars['String']['output']>;
+  api_id?: Maybe<Scalars['String']['output']>;
   config__tg_channel_pk?: Maybe<Scalars['bigint']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
   phone_number?: Maybe<Scalars['String']['output']>;
@@ -286,6 +309,8 @@ export type Config__Tg_Bot_Session_Pool_On_Conflict = {
 
 /** Ordering options when selecting data from "config__tg_bot_session_pool". */
 export type Config__Tg_Bot_Session_Pool_Order_By = {
+  api_hash?: InputMaybe<Order_By>;
+  api_id?: InputMaybe<Order_By>;
   config__tg_channel_pk?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   phone_number?: InputMaybe<Order_By>;
@@ -304,6 +329,10 @@ export type Config__Tg_Bot_Session_Pool_Pk_Columns_Input = {
 /** select columns of table "config__tg_bot_session_pool" */
 export enum Config__Tg_Bot_Session_Pool_Select_Column {
   /** column name */
+  api_hash = 'api_hash',
+  /** column name */
+  api_id = 'api_id',
+  /** column name */
   config__tg_channel_pk = 'config__tg_channel_pk',
   /** column name */
   created_at = 'created_at',
@@ -321,6 +350,8 @@ export enum Config__Tg_Bot_Session_Pool_Select_Column {
 
 /** input type for updating data in table "config__tg_bot_session_pool" */
 export type Config__Tg_Bot_Session_Pool_Set_Input = {
+  api_hash?: InputMaybe<Scalars['String']['input']>;
+  api_id?: InputMaybe<Scalars['String']['input']>;
   config__tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   phone_number?: InputMaybe<Scalars['String']['input']>;
@@ -361,6 +392,8 @@ export type Config__Tg_Bot_Session_Pool_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Config__Tg_Bot_Session_Pool_Stream_Cursor_Value_Input = {
+  api_hash?: InputMaybe<Scalars['String']['input']>;
+  api_id?: InputMaybe<Scalars['String']['input']>;
   config__tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   phone_number?: InputMaybe<Scalars['String']['input']>;
@@ -379,6 +412,10 @@ export type Config__Tg_Bot_Session_Pool_Sum_Fields = {
 
 /** update columns of table "config__tg_bot_session_pool" */
 export enum Config__Tg_Bot_Session_Pool_Update_Column {
+  /** column name */
+  api_hash = 'api_hash',
+  /** column name */
+  api_id = 'api_id',
   /** column name */
   config__tg_channel_pk = 'config__tg_channel_pk',
   /** column name */
@@ -2232,6 +2269,7 @@ export type Query_Root = {
   stat_user_aggregate: Stat_User_Aggregate;
   /** fetch data from the table: "stat_user" using primary key columns */
   stat_user_by_pk?: Maybe<Stat_User>;
+  tg_channels?: Maybe<TgChannelsOutput>;
   /** fetch data from the table: "tg_invite_link_group" */
   tg_invite_link_group: Array<Tg_Invite_Link_Group>;
   /** fetch aggregated fields from the table: "tg_invite_link_group" */
@@ -5472,6 +5510,7 @@ export type User_Stream_Cursor_Value_Input = {
 /** columns and relationships of "user_tg_channel" */
 export type User_Tg_Channel = {
   __typename?: 'user_tg_channel';
+  phone_number: Scalars['String']['output'];
   tg_channel_id: Scalars['bigint']['output'];
   /** An object relationship */
   user: User;
@@ -5557,6 +5596,7 @@ export type User_Tg_Channel_Bool_Exp = {
   _and?: InputMaybe<Array<User_Tg_Channel_Bool_Exp>>;
   _not?: InputMaybe<User_Tg_Channel_Bool_Exp>;
   _or?: InputMaybe<Array<User_Tg_Channel_Bool_Exp>>;
+  phone_number?: InputMaybe<String_Comparison_Exp>;
   tg_channel_id?: InputMaybe<Bigint_Comparison_Exp>;
   user?: InputMaybe<User_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -5575,6 +5615,7 @@ export type User_Tg_Channel_Inc_Input = {
 
 /** input type for inserting data into table "user_tg_channel" */
 export type User_Tg_Channel_Insert_Input = {
+  phone_number?: InputMaybe<Scalars['String']['input']>;
   tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
   user?: InputMaybe<User_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
@@ -5583,12 +5624,14 @@ export type User_Tg_Channel_Insert_Input = {
 /** aggregate max on columns */
 export type User_Tg_Channel_Max_Fields = {
   __typename?: 'user_tg_channel_max_fields';
+  phone_number?: Maybe<Scalars['String']['output']>;
   tg_channel_id?: Maybe<Scalars['bigint']['output']>;
   user_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by max() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Max_Order_By = {
+  phone_number?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -5596,12 +5639,14 @@ export type User_Tg_Channel_Max_Order_By = {
 /** aggregate min on columns */
 export type User_Tg_Channel_Min_Fields = {
   __typename?: 'user_tg_channel_min_fields';
+  phone_number?: Maybe<Scalars['String']['output']>;
   tg_channel_id?: Maybe<Scalars['bigint']['output']>;
   user_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by min() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Min_Order_By = {
+  phone_number?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -5624,6 +5669,7 @@ export type User_Tg_Channel_On_Conflict = {
 
 /** Ordering options when selecting data from "user_tg_channel". */
 export type User_Tg_Channel_Order_By = {
+  phone_number?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
   user?: InputMaybe<User_Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -5638,6 +5684,8 @@ export type User_Tg_Channel_Pk_Columns_Input = {
 /** select columns of table "user_tg_channel" */
 export enum User_Tg_Channel_Select_Column {
   /** column name */
+  phone_number = 'phone_number',
+  /** column name */
   tg_channel_id = 'tg_channel_id',
   /** column name */
   user_id = 'user_id'
@@ -5645,6 +5693,7 @@ export enum User_Tg_Channel_Select_Column {
 
 /** input type for updating data in table "user_tg_channel" */
 export type User_Tg_Channel_Set_Input = {
+  phone_number?: InputMaybe<Scalars['String']['input']>;
   tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
@@ -5692,6 +5741,7 @@ export type User_Tg_Channel_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type User_Tg_Channel_Stream_Cursor_Value_Input = {
+  phone_number?: InputMaybe<Scalars['String']['input']>;
   tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
@@ -5709,6 +5759,8 @@ export type User_Tg_Channel_Sum_Order_By = {
 
 /** update columns of table "user_tg_channel" */
 export enum User_Tg_Channel_Update_Column {
+  /** column name */
+  phone_number = 'phone_number',
   /** column name */
   tg_channel_id = 'tg_channel_id',
   /** column name */
@@ -6237,14 +6289,30 @@ export type DeletePhoneNumberMutationVariables = Exact<{
 }>;
 
 
-export type DeletePhoneNumberMutation = { __typename?: 'mutation_root', delete_config__tg_bot_session_pool?: { __typename?: 'config__tg_bot_session_pool_mutation_response', affected_rows: number } | null, delete_user_phone_number?: { __typename?: 'user_phone_number_mutation_response', affected_rows: number } | null };
+export type DeletePhoneNumberMutation = { __typename?: 'mutation_root', delete_config__tg_bot_session_pool?: { __typename?: 'config__tg_bot_session_pool_mutation_response', affected_rows: number } | null, delete_user_tg_channel?: { __typename?: 'user_tg_channel_mutation_response', affected_rows: number } | null, delete_user_phone_number?: { __typename?: 'user_phone_number_mutation_response', affected_rows: number } | null };
 
-export type GetTelegramChannelsQueryVariables = Exact<{
+export type TgChannelsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TgChannelsQuery = { __typename?: 'query_root', tg_channels?: { __typename?: 'TgChannelsOutput', channels: Array<{ __typename?: 'TgChannel', channel_id: string, title: string, is_tracked: boolean, phone_number: string }> } | null };
+
+export type TrackTgChannelMutationVariables = Exact<{
+  phone_number: Scalars['String']['input'];
+  tg_channel_id: Scalars['bigint']['input'];
   user_id: Scalars['uuid']['input'];
 }>;
 
 
-export type GetTelegramChannelsQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', user_tg_channels: Array<{ __typename?: 'user_tg_channel', tg_channel_id: any }> }> };
+export type TrackTgChannelMutation = { __typename?: 'mutation_root', insert_user_tg_channel_one?: { __typename?: 'user_tg_channel', phone_number: string, tg_channel_id: any, user_id: any } | null };
+
+export type UntrackTgChannelMutationVariables = Exact<{
+  phone_number: Scalars['String']['input'];
+  user_id: Scalars['uuid']['input'];
+  tg_channel_id: Scalars['bigint']['input'];
+}>;
+
+
+export type UntrackTgChannelMutation = { __typename?: 'mutation_root', delete_user_tg_channel?: { __typename?: 'user_tg_channel_mutation_response', affected_rows: number } | null };
 
 export type ErAvgQueryVariables = Exact<{
   from_date: Scalars['timestamp']['input'];
@@ -6381,8 +6449,10 @@ export const GetUserPhoneNumbersDocument = {"kind":"Document","definitions":[{"k
 export const FlowRunStateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FlowRunState"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"flow_run_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"flow_run"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"arg1"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"flow_run_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"flow_run_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"state"}}]}}]}}]} as unknown as DocumentNode<FlowRunStateQuery, FlowRunStateQueryVariables>;
 export const Request2FaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Request2FA"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deployment_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"api_hash"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"api_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"request_2fa"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"arg1"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"deployment_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deployment_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"api_hash"},"value":{"kind":"Variable","name":{"kind":"Name","value":"api_hash"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"api_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"api_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"error_text"}},{"kind":"Field","name":{"kind":"Name","value":"flow_run_id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<Request2FaMutation, Request2FaMutationVariables>;
 export const Confirm2FaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Confirm2FA"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"flow_run_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code_2fa"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cloud_password"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"confirm_2fa"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"arg1"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"code_2fa"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code_2fa"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"flow_run_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"flow_run_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"cloud_password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cloud_password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"error_text"}}]}}]}}]} as unknown as DocumentNode<Confirm2FaMutation, Confirm2FaMutationVariables>;
-export const DeletePhoneNumberDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePhoneNumber"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_config__tg_bot_session_pool"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_user_phone_number"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<DeletePhoneNumberMutation, DeletePhoneNumberMutationVariables>;
-export const GetTelegramChannelsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTelegramChannels"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_tg_channels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tg_channel_id"}}]}}]}}]}}]} as unknown as DocumentNode<GetTelegramChannelsQuery, GetTelegramChannelsQueryVariables>;
+export const DeletePhoneNumberDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePhoneNumber"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_config__tg_bot_session_pool"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_user_phone_number"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<DeletePhoneNumberMutation, DeletePhoneNumberMutationVariables>;
+export const TgChannelsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TgChannels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tg_channels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"channels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"channel_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"is_tracked"}},{"kind":"Field","name":{"kind":"Name","value":"phone_number"}}]}}]}}]}}]} as unknown as DocumentNode<TgChannelsQuery, TgChannelsQueryVariables>;
+export const TrackTgChannelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TrackTgChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_user_tg_channel_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phone_number"}},{"kind":"Field","name":{"kind":"Name","value":"tg_channel_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}}]}}]}}]} as unknown as DocumentNode<TrackTgChannelMutation, TrackTgChannelMutationVariables>;
+export const UntrackTgChannelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UntrackTgChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<UntrackTgChannelMutation, UntrackTgChannelMutationVariables>;
 export const ErAvgDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ERAvg"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ErAvgQuery, ErAvgQueryVariables>;
 export const AvgUserLifecycleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AvgUserLifecycle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"get_avg_user_lifecycle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avg_lifecycle_days"}}]}}]}}]} as unknown as DocumentNode<AvgUserLifecycleQuery, AvgUserLifecycleQueryVariables>;
 export const CohortAnalysisDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CohortAnalysis"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_bucket"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cohort_analysis"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"time_bucket"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_bucket"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"join_date"}},{"kind":"Field","name":{"kind":"Name","value":"left_date"}},{"kind":"Field","name":{"kind":"Name","value":"joined_count"}},{"kind":"Field","name":{"kind":"Name","value":"left_count"}}]}}]}}]} as unknown as DocumentNode<CohortAnalysisQuery, CohortAnalysisQueryVariables>;

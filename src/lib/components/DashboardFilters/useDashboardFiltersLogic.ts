@@ -2,6 +2,7 @@
 
 import { useDashboardDatePicker } from "@/lib/components/DashboardDatePicker/useDashboardDatePicker";
 import { useInviteLinkPickerLogic } from "@/lib/components/InviteLinkPicker/useInviteLinkPickerLogic";
+import { usePhoneNumberListLogic } from "@/lib/components/PhoneNumberList/usePhoneNumberListLogic";
 import { useTgChannelsPickerLogic } from "@/lib/components/TgChannelsPicker/useTgChannelsPickerLogic";
 import { TimeUnit } from "chart.js";
 
@@ -14,12 +15,14 @@ export interface DashboardFilters {
 
 export function useDashboardFiltersLogic() {
   const inviteLinkPickerLogic = useInviteLinkPickerLogic();
-  const tgChannelsPickerLogic = useTgChannelsPickerLogic();
+  const phoneNumberListLogic = usePhoneNumberListLogic();
+  const tgChannelsPickerLogic = useTgChannelsPickerLogic({ phoneNumberListLogic });
   const filterDatePickerLogic = useDashboardDatePicker();
 
   const filters: DashboardFilters = {
-    // tgChannelIds: tgChannelsPickerLogic.channels?.map((item) => Number(item.tg_channel_id)),
-    tgChannelIds: [1001, 1002, 1003, 1004],
+    tgChannelIds: tgChannelsPickerLogic.channels
+      ?.filter((item) => item.is_tracked)
+      ?.map((item) => Number(item.channel_id)),
     startDate: filterDatePickerLogic.startDateState,
     endDate: filterDatePickerLogic.endDateState,
     timePeriod: filterDatePickerLogic.timePeriod,
@@ -27,6 +30,7 @@ export function useDashboardFiltersLogic() {
 
   return {
     filters,
+    phoneNumberListLogic,
     inviteLinkPickerLogic,
     tgChannelsPickerLogic,
     filterDatePickerLogic,

@@ -51,6 +51,9 @@ const REMOVE_PHONE_NUMBER = graphql(`
     delete_config__tg_bot_session_pool(where: { phone_number: { _eq: $phone_number } }) {
       affected_rows
     }
+    delete_user_tg_channel(where: { phone_number: { _eq: $phone_number } }) {
+      affected_rows
+    }
     delete_user_phone_number(where: { phone_number: { _eq: $phone_number } }) {
       affected_rows
     }
@@ -67,6 +70,7 @@ export const usePhoneNumberListLogic = () => {
   const getUserPhoneNumbersQuery = useQuery(GET_PHONE_NUMBERS, {
     variables: { user_id: userId },
     skip: !userId,
+    fetchPolicy: "cache-and-network",
   });
 
   const request2FAMutation = useMutation(REQUEST_2FA_MUTATION, {
@@ -103,8 +107,6 @@ export const usePhoneNumberListLogic = () => {
     skip: !flowRunId || !isFlowRunPolling,
     variables: { flow_run_id: flowRunId! },
   });
-
-  console.log("wtf", "flowRunId", flowRunId, "isFlowRunPolling", isFlowRunPolling, "addingStep", addingStep);
 
   useEffect(() => {
     if (addingStep === "request2fa" && flowRunStateQuery.data?.flow_run?.state === "PAUSED") {

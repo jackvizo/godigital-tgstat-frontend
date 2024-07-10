@@ -132,6 +132,17 @@ input String_comparison_exp {
   _similar: String
 }
 
+type TgChannel {
+  channel_id: String!
+  is_tracked: Boolean!
+  phone_number: String!
+  title: String!
+}
+
+type TgChannelsOutput {
+  channels: [TgChannel!]!
+}
+
 scalar _int8
 
 scalar _text
@@ -997,6 +1008,19 @@ type mutation_root {
   delete_user_phone_number_by_pk(pk: bigint!): user_phone_number
 
   """
+  delete data from the table: "user_tg_channel"
+  """
+  delete_user_tg_channel(
+    """filter the rows which have to be deleted"""
+    where: user_tg_channel_bool_exp!
+  ): user_tg_channel_mutation_response
+
+  """
+  delete single row from the table: "user_tg_channel"
+  """
+  delete_user_tg_channel_by_pk(tg_channel_id: bigint!, user_id: uuid!): user_tg_channel
+
+  """
   delete data from the table: "user_tg_invite_link"
   """
   delete_user_tg_invite_link(
@@ -1030,6 +1054,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: tg_invite_link_group_on_conflict
   ): tg_invite_link_group
+
+  """
+  insert data into the table: "user_tg_channel"
+  """
+  insert_user_tg_channel(
+    """the rows to be inserted"""
+    objects: [user_tg_channel_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: user_tg_channel_on_conflict
+  ): user_tg_channel_mutation_response
+
+  """
+  insert a single row into the table: "user_tg_channel"
+  """
+  insert_user_tg_channel_one(
+    """the row to be inserted"""
+    object: user_tg_channel_insert_input!
+
+    """upsert condition"""
+    on_conflict: user_tg_channel_on_conflict
+  ): user_tg_channel
 
   """
   insert data into the table: "user_tg_invite_link"
@@ -1589,6 +1635,7 @@ type query_root {
 
   """fetch data from the table: "stat_user" using primary key columns"""
   stat_user_by_pk(pk: bigint!): stat_user
+  tg_channels: TgChannelsOutput
 
   """
   fetch data from the table: "tg_invite_link_group"
@@ -4777,6 +4824,7 @@ input user_stream_cursor_value_input {
 columns and relationships of "user_tg_channel"
 """
 type user_tg_channel {
+  phone_number: String!
   tg_channel_id: bigint!
 
   """An object relationship"""
@@ -4856,13 +4904,34 @@ input user_tg_channel_bool_exp {
   _and: [user_tg_channel_bool_exp!]
   _not: user_tg_channel_bool_exp
   _or: [user_tg_channel_bool_exp!]
+  phone_number: String_comparison_exp
   tg_channel_id: bigint_comparison_exp
   user: user_bool_exp
   user_id: uuid_comparison_exp
 }
 
+"""
+unique or primary key constraints on table "user_tg_channel"
+"""
+enum user_tg_channel_constraint {
+  """
+  unique or primary key constraint on columns "tg_channel_id", "user_id"
+  """
+  user_tg_channel_pkey
+}
+
+"""
+input type for inserting data into table "user_tg_channel"
+"""
+input user_tg_channel_insert_input {
+  phone_number: String
+  tg_channel_id: bigint
+  user_id: uuid
+}
+
 """aggregate max on columns"""
 type user_tg_channel_max_fields {
+  phone_number: String
   tg_channel_id: bigint
   user_id: uuid
 }
@@ -4871,12 +4940,14 @@ type user_tg_channel_max_fields {
 order by max() on columns of table "user_tg_channel"
 """
 input user_tg_channel_max_order_by {
+  phone_number: order_by
   tg_channel_id: order_by
   user_id: order_by
 }
 
 """aggregate min on columns"""
 type user_tg_channel_min_fields {
+  phone_number: String
   tg_channel_id: bigint
   user_id: uuid
 }
@@ -4885,12 +4956,34 @@ type user_tg_channel_min_fields {
 order by min() on columns of table "user_tg_channel"
 """
 input user_tg_channel_min_order_by {
+  phone_number: order_by
   tg_channel_id: order_by
   user_id: order_by
 }
 
+"""
+response of any mutation on the table "user_tg_channel"
+"""
+type user_tg_channel_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [user_tg_channel!]!
+}
+
+"""
+on_conflict condition type for table "user_tg_channel"
+"""
+input user_tg_channel_on_conflict {
+  constraint: user_tg_channel_constraint!
+  update_columns: [user_tg_channel_update_column!]! = []
+  where: user_tg_channel_bool_exp
+}
+
 """Ordering options when selecting data from "user_tg_channel"."""
 input user_tg_channel_order_by {
+  phone_number: order_by
   tg_channel_id: order_by
   user: user_order_by
   user_id: order_by
@@ -4900,6 +4993,9 @@ input user_tg_channel_order_by {
 select columns of table "user_tg_channel"
 """
 enum user_tg_channel_select_column {
+  """column name"""
+  phone_number
+
   """column name"""
   tg_channel_id
 
@@ -4956,6 +5052,7 @@ input user_tg_channel_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input user_tg_channel_stream_cursor_value_input {
+  phone_number: String
   tg_channel_id: bigint
   user_id: uuid
 }
@@ -4970,6 +5067,14 @@ order by sum() on columns of table "user_tg_channel"
 """
 input user_tg_channel_sum_order_by {
   tg_channel_id: order_by
+}
+
+"""
+placeholder for update columns of table "user_tg_channel" (current role has no relevant permissions)
+"""
+enum user_tg_channel_update_column {
+  """placeholder (do not use)"""
+  _PLACEHOLDER
 }
 
 """aggregate var_pop on columns"""

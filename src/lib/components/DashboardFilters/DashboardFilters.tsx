@@ -3,16 +3,14 @@
 import { DashboardDatePicker } from '@/lib/components/DashboardDatePicker/DashboardDatePicker';
 import { InviteLinkPicker } from '@/lib/components/InviteLinkPicker/InviteLinkPicker';
 import { ModalWrapper } from '@/lib/components/ModalWrapper/ModalWrapper';
+import PhoneNumberList from '@/lib/components/PhoneNumberList/PhoneNumberList';
 import { TgChannelsPicker } from '@/lib/components/TgChannelsPicker/TgChannelsPicker';
 import { WidgetWrapper } from '@/lib/components/WidgetWrapper/WidgetWrapper';
 import { ButtonGroup, FormControl, Stack } from '@mui/material';
 import { useDashboardFiltersLogic } from "./useDashboardFiltersLogic";
-import PhoneNumberList from '@/lib/components/PhoneNumberList/PhoneNumberList';
-import { usePhoneNumberListLogic } from '@/lib/components/PhoneNumberList/usePhoneNumberListLogic';
 
 export interface DashboardFiltersProps {
   dashboardFiltersLogic: ReturnType<typeof useDashboardFiltersLogic>;
-  phoneNumberListLogic: ReturnType<typeof usePhoneNumberListLogic>
 }
 
 export function DashboardFilters(props: DashboardFiltersProps) {
@@ -34,7 +32,7 @@ export function DashboardFilters(props: DashboardFiltersProps) {
             </ModalWrapper>
             <ModalWrapper label="Каналы">
               <TgChannelsPicker {...props.dashboardFiltersLogic.tgChannelsPickerLogic} />
-              <PhoneNumberList {...props.phoneNumberListLogic} />
+              <PhoneNumberList {...props.dashboardFiltersLogic.phoneNumberListLogic} />
             </ModalWrapper>
           </ButtonGroup>
         </WidgetWrapper>
