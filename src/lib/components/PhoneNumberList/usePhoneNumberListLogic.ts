@@ -4,9 +4,46 @@ import errorHandler from "@/lib/error-handler";
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 
+const _crotch_AVALIABLE_TG_CHANNELS = graphql(`
+  query TgChannels($title_search: String!) {
+    tg_channels(arg1: { title_search: $title_search }) {
+      channels {
+        channel_id
+        title
+        phone_numbers
+      }
+    }
+  }
+`);
+
+const _crotch_TRACKED_TG_CHANNELS = graphql(`
+  query TrackedTgChannels($user_id: uuid!) {
+    user_tg_channel(where: { user_id: { _eq: $user_id } }) {
+      tg_channel_id
+      user_id
+    }
+  }
+`);
+
+const _crotch_TRACK_TG_CHANNEL = graphql(`
+  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!) {
+    track_tg_channel(arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id }) {
+      success
+    }
+  }
+`);
+
+const _crotch_UNTRACK_TG_CHANNEL = graphql(`
+  mutation UntrackTgChannel($user_id: uuid!, $tg_channel_id: bigint!) {
+    delete_user_tg_channel(where: { user_id: { _eq: $user_id }, tg_channel_id: { _eq: $tg_channel_id } }) {
+      affected_rows
+    }
+  }
+`);
+
 const GET_PHONE_NUMBERS = graphql(`
   query GetUserPhoneNumbers($user_id: uuid!) {
-    user_phone_number(where: { user_id: { _eq: $user_id } }) {
+    config__tg_bot_session_pool(where: { user_id: { _eq: $user_id } }) {
       pk
       phone_number
       status
@@ -49,12 +86,6 @@ const CONFIRM_2FA_MUTATION = graphql(`
 const REMOVE_PHONE_NUMBER = graphql(`
   mutation DeletePhoneNumber($phone_number: String!) {
     delete_config__tg_bot_session_pool(where: { phone_number: { _eq: $phone_number } }) {
-      affected_rows
-    }
-    delete_user_tg_channel(where: { phone_number: { _eq: $phone_number } }) {
-      affected_rows
-    }
-    delete_user_phone_number(where: { phone_number: { _eq: $phone_number } }) {
       affected_rows
     }
   }
@@ -154,7 +185,7 @@ export const usePhoneNumberListLogic = () => {
     await getUserPhoneNumbersQuery.refetch();
   };
 
-  const phoneNumbers = (getUserPhoneNumbersQuery.data?.user_phone_number || []).map((item) => ({
+  const phoneNumbers = (getUserPhoneNumbersQuery.data?.config__tg_bot_session_pool || []).map((item) => ({
     pk: item.pk ?? "",
     phone_number: item.phone_number ?? "",
     status: item.status ?? undefined,

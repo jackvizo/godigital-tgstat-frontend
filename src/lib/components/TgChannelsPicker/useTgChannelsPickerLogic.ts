@@ -1,18 +1,17 @@
-import { useMutation, useQuery } from "@apollo/client";
-import { graphql } from "@/generated/gql";
+import { DocumentType, graphql } from "@/generated/gql";
 import { useAuth } from "@/lib/auth/use-auth";
-import { DocumentType } from "@/generated/gql";
-import errorHandler from "@/lib/error-handler";
 import { usePhoneNumberListLogic } from "@/lib/components/PhoneNumberList/usePhoneNumberListLogic";
+import errorHandler from "@/lib/error-handler";
+import { useMutation, useQuery } from "@apollo/client";
 import { useEffect } from "react";
 
 const AVALIABLE_TG_CHANNELS = graphql(`
-  query TgChannels {
-    tg_channels {
+  query TgChannels($title_search: String!) {
+    tg_channels(arg1: { title_search: $title_search }) {
       channels {
         channel_id
         title
-        phone_number
+        phone_numbers
       }
     }
   }
@@ -23,32 +22,21 @@ const TRACKED_TG_CHANNELS = graphql(`
     user_tg_channel(where: { user_id: { _eq: $user_id } }) {
       tg_channel_id
       user_id
-      phone_number
     }
   }
 `);
 
 const TRACK_TG_CHANNEL = graphql(`
-  mutation TrackTgChannel($phone_number: String!, $tg_channel_id: bigint!, $user_id: uuid!) {
-    insert_user_tg_channel_one(
-      object: { phone_number: $phone_number, tg_channel_id: $tg_channel_id, user_id: $user_id }
-    ) {
-      phone_number
-      tg_channel_id
-      user_id
+  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!) {
+    track_tg_channel(arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id }) {
+      success
     }
   }
 `);
 
 const UNTRACK_TG_CHANNEL = graphql(`
-  mutation UntrackTgChannel($phone_number: String!, $user_id: uuid!, $tg_channel_id: bigint!) {
-    delete_user_tg_channel(
-      where: {
-        phone_number: { _eq: $phone_number }
-        user_id: { _eq: $user_id }
-        tg_channel_id: { _eq: $tg_channel_id }
-      }
-    ) {
+  mutation UntrackTgChannel($user_id: uuid!, $tg_channel_id: bigint!) {
+    delete_user_tg_channel(where: { user_id: { _eq: $user_id }, tg_channel_id: { _eq: $tg_channel_id } }) {
       affected_rows
     }
   }
@@ -81,21 +69,20 @@ export const useTgChannelsPickerLogic = (props: {
   }));
 
   const onTrackToggle = async (channel: TgChannelListItem) => {
-    const variables = { phone_number: channel.phone_number, tg_channel_id: channel.channel_id, user_id: userId };
     if (channel.is_tracked) {
       await untrackTgChannelMutation[0]({
-        variables,
+        variables: { tg_channel_id: channel.channel_id, user_id: userId },
       });
     } else {
       await trackTgChannelMutation[0]({
-        variables,
+        variables: { phone_numbers: channel.phone_numbers, tg_channel_id: channel.channel_id },
       });
     }
     await trackedTgChannelsQuery.refetch();
   };
 
-  const prevPhoneList = props.phoneNumberListLogic.getUserPhoneNumbersQuery.previousData?.user_phone_number;
-  const newPhoneList = props.phoneNumberListLogic.getUserPhoneNumbersQuery.data?.user_phone_number;
+  const prevPhoneList = props.phoneNumberListLogic.getUserPhoneNumbersQuery.previousData?.config__tg_bot_session_pool;
+  const newPhoneList = props.phoneNumberListLogic.getUserPhoneNumbersQuery.data?.config__tg_bot_session_pool;
 
   useEffect(() => {
     const isShallRefetchTrackedChannels = prevPhoneList && newPhoneList && prevPhoneList.length !== newPhoneList.length;

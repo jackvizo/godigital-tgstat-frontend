@@ -11,8 +11,10 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
+    const userId = body.user_id;
+    const titleSearch = body.title_search;
 
-    const channels = await getChannels({ userId: body.userId! });
+    const channels = await getChannels({ userId, titleSearch });
     return NextResponse.json({ channels }, { status: 200 });
   } catch (error) {
     return errorHandler(error);

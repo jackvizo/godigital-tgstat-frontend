@@ -17,7 +17,6 @@ export type Scalars = {
   _int8: { input: any; output: any; }
   _text: { input: any; output: any; }
   bigint: { input: any; output: any; }
-  bytea: { input: any; output: any; }
   date: { input: any; output: any; }
   float8: { input: any; output: any; }
   timestamp: { input: any; output: any; }
@@ -126,8 +125,12 @@ export type String_Comparison_Exp = {
 export type TgChannel = {
   __typename?: 'TgChannel';
   channel_id: Scalars['String']['output'];
-  phone_number: Scalars['String']['output'];
+  phone_numbers: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
+};
+
+export type TgChannelsInput = {
+  title_search: Scalars['String']['input'];
 };
 
 export type TgChannelsOutput = {
@@ -148,19 +151,6 @@ export type Bigint_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['bigint']['input']>>;
 };
 
-/** Boolean expression to compare columns of type "bytea". All fields are combined with logical 'AND'. */
-export type Bytea_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['bytea']['input']>;
-  _gt?: InputMaybe<Scalars['bytea']['input']>;
-  _gte?: InputMaybe<Scalars['bytea']['input']>;
-  _in?: InputMaybe<Array<Scalars['bytea']['input']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
-  _lt?: InputMaybe<Scalars['bytea']['input']>;
-  _lte?: InputMaybe<Scalars['bytea']['input']>;
-  _neq?: InputMaybe<Scalars['bytea']['input']>;
-  _nin?: InputMaybe<Array<Scalars['bytea']['input']>>;
-};
-
 export type Cohort_Analysis_Args = {
   end_date?: InputMaybe<Scalars['date']['input']>;
   start_date?: InputMaybe<Scalars['date']['input']>;
@@ -171,17 +161,40 @@ export type Cohort_Analysis_Args = {
 /** columns and relationships of "config__tg_bot_session_pool" */
 export type Config__Tg_Bot_Session_Pool = {
   __typename?: 'config__tg_bot_session_pool';
-  api_hash?: Maybe<Scalars['String']['output']>;
-  api_id?: Maybe<Scalars['String']['output']>;
-  config__tg_channel_pk?: Maybe<Scalars['bigint']['output']>;
+  api_hash: Scalars['String']['output'];
+  api_id: Scalars['String']['output'];
   created_at: Scalars['timestamp']['output'];
   phone_number: Scalars['String']['output'];
   pk: Scalars['bigint']['output'];
-  session_bytes?: Maybe<Scalars['bytea']['output']>;
-  session_str?: Maybe<Scalars['String']['output']>;
+  session_str: Scalars['String']['output'];
   status: Scalars['String']['output'];
+  /** An array relationship */
+  tg_channel__sessions: Array<Tg_Channel__Session>;
+  /** An aggregate relationship */
+  tg_channel__sessions_aggregate: Tg_Channel__Session_Aggregate;
   /** An object relationship */
-  user_phone_number?: Maybe<User_Phone_Number>;
+  user: User;
+  user_id: Scalars['uuid']['output'];
+};
+
+
+/** columns and relationships of "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_PoolTg_Channel__SessionsArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Channel__Session_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Channel__Session_Order_By>>;
+  where?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+};
+
+
+/** columns and relationships of "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_PoolTg_Channel__Sessions_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Channel__Session_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Channel__Session_Order_By>>;
+  where?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
 };
 
 /** aggregated selection of "config__tg_bot_session_pool" */
@@ -189,6 +202,17 @@ export type Config__Tg_Bot_Session_Pool_Aggregate = {
   __typename?: 'config__tg_bot_session_pool_aggregate';
   aggregate?: Maybe<Config__Tg_Bot_Session_Pool_Aggregate_Fields>;
   nodes: Array<Config__Tg_Bot_Session_Pool>;
+};
+
+export type Config__Tg_Bot_Session_Pool_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Config__Tg_Bot_Session_Pool_Aggregate_Bool_Exp_Count>;
+};
+
+export type Config__Tg_Bot_Session_Pool_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Config__Tg_Bot_Session_Pool_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Config__Tg_Bot_Session_Pool_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "config__tg_bot_session_pool" */
@@ -214,11 +238,37 @@ export type Config__Tg_Bot_Session_Pool_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Aggregate_Order_By = {
+  avg?: InputMaybe<Config__Tg_Bot_Session_Pool_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Config__Tg_Bot_Session_Pool_Max_Order_By>;
+  min?: InputMaybe<Config__Tg_Bot_Session_Pool_Min_Order_By>;
+  stddev?: InputMaybe<Config__Tg_Bot_Session_Pool_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Config__Tg_Bot_Session_Pool_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Config__Tg_Bot_Session_Pool_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Config__Tg_Bot_Session_Pool_Sum_Order_By>;
+  var_pop?: InputMaybe<Config__Tg_Bot_Session_Pool_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Config__Tg_Bot_Session_Pool_Var_Samp_Order_By>;
+  variance?: InputMaybe<Config__Tg_Bot_Session_Pool_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Arr_Rel_Insert_Input = {
+  data: Array<Config__Tg_Bot_Session_Pool_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Config__Tg_Bot_Session_Pool_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Config__Tg_Bot_Session_Pool_Avg_Fields = {
   __typename?: 'config__tg_bot_session_pool_avg_fields';
-  config__tg_channel_pk?: Maybe<Scalars['Float']['output']>;
   pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Avg_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "config__tg_bot_session_pool". All fields are combined with a logical 'AND'. */
@@ -228,14 +278,15 @@ export type Config__Tg_Bot_Session_Pool_Bool_Exp = {
   _or?: InputMaybe<Array<Config__Tg_Bot_Session_Pool_Bool_Exp>>;
   api_hash?: InputMaybe<String_Comparison_Exp>;
   api_id?: InputMaybe<String_Comparison_Exp>;
-  config__tg_channel_pk?: InputMaybe<Bigint_Comparison_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   phone_number?: InputMaybe<String_Comparison_Exp>;
   pk?: InputMaybe<Bigint_Comparison_Exp>;
-  session_bytes?: InputMaybe<Bytea_Comparison_Exp>;
   session_str?: InputMaybe<String_Comparison_Exp>;
   status?: InputMaybe<String_Comparison_Exp>;
-  user_phone_number?: InputMaybe<User_Phone_Number_Bool_Exp>;
+  tg_channel__sessions?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+  tg_channel__sessions_aggregate?: InputMaybe<Tg_Channel__Session_Aggregate_Bool_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "config__tg_bot_session_pool" */
@@ -246,7 +297,6 @@ export enum Config__Tg_Bot_Session_Pool_Constraint {
 
 /** input type for incrementing numeric columns in table "config__tg_bot_session_pool" */
 export type Config__Tg_Bot_Session_Pool_Inc_Input = {
-  config__tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
 };
 
@@ -254,14 +304,14 @@ export type Config__Tg_Bot_Session_Pool_Inc_Input = {
 export type Config__Tg_Bot_Session_Pool_Insert_Input = {
   api_hash?: InputMaybe<Scalars['String']['input']>;
   api_id?: InputMaybe<Scalars['String']['input']>;
-  config__tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   phone_number?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
-  session_bytes?: InputMaybe<Scalars['bytea']['input']>;
   session_str?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
-  user_phone_number?: InputMaybe<User_Phone_Number_Obj_Rel_Insert_Input>;
+  tg_channel__sessions?: InputMaybe<Tg_Channel__Session_Arr_Rel_Insert_Input>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate max on columns */
@@ -269,12 +319,24 @@ export type Config__Tg_Bot_Session_Pool_Max_Fields = {
   __typename?: 'config__tg_bot_session_pool_max_fields';
   api_hash?: Maybe<Scalars['String']['output']>;
   api_id?: Maybe<Scalars['String']['output']>;
-  config__tg_channel_pk?: Maybe<Scalars['bigint']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
   phone_number?: Maybe<Scalars['String']['output']>;
   pk?: Maybe<Scalars['bigint']['output']>;
   session_str?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Max_Order_By = {
+  api_hash?: InputMaybe<Order_By>;
+  api_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  phone_number?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  session_str?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -282,12 +344,24 @@ export type Config__Tg_Bot_Session_Pool_Min_Fields = {
   __typename?: 'config__tg_bot_session_pool_min_fields';
   api_hash?: Maybe<Scalars['String']['output']>;
   api_id?: Maybe<Scalars['String']['output']>;
-  config__tg_channel_pk?: Maybe<Scalars['bigint']['output']>;
   created_at?: Maybe<Scalars['timestamp']['output']>;
   phone_number?: Maybe<Scalars['String']['output']>;
   pk?: Maybe<Scalars['bigint']['output']>;
   session_str?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Min_Order_By = {
+  api_hash?: InputMaybe<Order_By>;
+  api_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  phone_number?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  session_str?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "config__tg_bot_session_pool" */
@@ -297,6 +371,13 @@ export type Config__Tg_Bot_Session_Pool_Mutation_Response = {
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<Config__Tg_Bot_Session_Pool>;
+};
+
+/** input type for inserting object relation for remote table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Obj_Rel_Insert_Input = {
+  data: Config__Tg_Bot_Session_Pool_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Config__Tg_Bot_Session_Pool_On_Conflict>;
 };
 
 /** on_conflict condition type for table "config__tg_bot_session_pool" */
@@ -310,14 +391,14 @@ export type Config__Tg_Bot_Session_Pool_On_Conflict = {
 export type Config__Tg_Bot_Session_Pool_Order_By = {
   api_hash?: InputMaybe<Order_By>;
   api_id?: InputMaybe<Order_By>;
-  config__tg_channel_pk?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   phone_number?: InputMaybe<Order_By>;
   pk?: InputMaybe<Order_By>;
-  session_bytes?: InputMaybe<Order_By>;
   session_str?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
-  user_phone_number?: InputMaybe<User_Phone_Number_Order_By>;
+  tg_channel__sessions_aggregate?: InputMaybe<Tg_Channel__Session_Aggregate_Order_By>;
+  user?: InputMaybe<User_Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: config__tg_bot_session_pool */
@@ -332,53 +413,62 @@ export enum Config__Tg_Bot_Session_Pool_Select_Column {
   /** column name */
   api_id = 'api_id',
   /** column name */
-  config__tg_channel_pk = 'config__tg_channel_pk',
-  /** column name */
   created_at = 'created_at',
   /** column name */
   phone_number = 'phone_number',
   /** column name */
   pk = 'pk',
   /** column name */
-  session_bytes = 'session_bytes',
-  /** column name */
   session_str = 'session_str',
   /** column name */
-  status = 'status'
+  status = 'status',
+  /** column name */
+  user_id = 'user_id'
 }
 
 /** input type for updating data in table "config__tg_bot_session_pool" */
 export type Config__Tg_Bot_Session_Pool_Set_Input = {
   api_hash?: InputMaybe<Scalars['String']['input']>;
   api_id?: InputMaybe<Scalars['String']['input']>;
-  config__tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   phone_number?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
-  session_bytes?: InputMaybe<Scalars['bytea']['input']>;
   session_str?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate stddev on columns */
 export type Config__Tg_Bot_Session_Pool_Stddev_Fields = {
   __typename?: 'config__tg_bot_session_pool_stddev_fields';
-  config__tg_channel_pk?: Maybe<Scalars['Float']['output']>;
   pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Stddev_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Config__Tg_Bot_Session_Pool_Stddev_Pop_Fields = {
   __typename?: 'config__tg_bot_session_pool_stddev_pop_fields';
-  config__tg_channel_pk?: Maybe<Scalars['Float']['output']>;
   pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Stddev_Pop_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Config__Tg_Bot_Session_Pool_Stddev_Samp_Fields = {
   __typename?: 'config__tg_bot_session_pool_stddev_samp_fields';
-  config__tg_channel_pk?: Maybe<Scalars['Float']['output']>;
   pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Stddev_Samp_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "config__tg_bot_session_pool" */
@@ -393,20 +483,23 @@ export type Config__Tg_Bot_Session_Pool_Stream_Cursor_Input = {
 export type Config__Tg_Bot_Session_Pool_Stream_Cursor_Value_Input = {
   api_hash?: InputMaybe<Scalars['String']['input']>;
   api_id?: InputMaybe<Scalars['String']['input']>;
-  config__tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   phone_number?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
-  session_bytes?: InputMaybe<Scalars['bytea']['input']>;
   session_str?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate sum on columns */
 export type Config__Tg_Bot_Session_Pool_Sum_Fields = {
   __typename?: 'config__tg_bot_session_pool_sum_fields';
-  config__tg_channel_pk?: Maybe<Scalars['bigint']['output']>;
   pk?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** order by sum() on columns of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Sum_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "config__tg_bot_session_pool" */
@@ -416,19 +509,17 @@ export enum Config__Tg_Bot_Session_Pool_Update_Column {
   /** column name */
   api_id = 'api_id',
   /** column name */
-  config__tg_channel_pk = 'config__tg_channel_pk',
-  /** column name */
   created_at = 'created_at',
   /** column name */
   phone_number = 'phone_number',
   /** column name */
   pk = 'pk',
   /** column name */
-  session_bytes = 'session_bytes',
-  /** column name */
   session_str = 'session_str',
   /** column name */
-  status = 'status'
+  status = 'status',
+  /** column name */
+  user_id = 'user_id'
 }
 
 export type Config__Tg_Bot_Session_Pool_Updates = {
@@ -443,22 +534,34 @@ export type Config__Tg_Bot_Session_Pool_Updates = {
 /** aggregate var_pop on columns */
 export type Config__Tg_Bot_Session_Pool_Var_Pop_Fields = {
   __typename?: 'config__tg_bot_session_pool_var_pop_fields';
-  config__tg_channel_pk?: Maybe<Scalars['Float']['output']>;
   pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Var_Pop_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Config__Tg_Bot_Session_Pool_Var_Samp_Fields = {
   __typename?: 'config__tg_bot_session_pool_var_samp_fields';
-  config__tg_channel_pk?: Maybe<Scalars['Float']['output']>;
   pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Var_Samp_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Config__Tg_Bot_Session_Pool_Variance_Fields = {
   __typename?: 'config__tg_bot_session_pool_variance_fields';
-  config__tg_channel_pk?: Maybe<Scalars['Float']['output']>;
   pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "config__tg_bot_session_pool" */
+export type Config__Tg_Bot_Session_Pool_Variance_Order_By = {
+  pk?: InputMaybe<Order_By>;
 };
 
 /** ordering argument of a cursor */
@@ -1440,6 +1543,10 @@ export type Mutation_Root = {
   delete_stat_user?: Maybe<Stat_User_Mutation_Response>;
   /** delete single row from the table: "stat_user" */
   delete_stat_user_by_pk?: Maybe<Stat_User>;
+  /** delete data from the table: "tg_channel__session" */
+  delete_tg_channel__session?: Maybe<Tg_Channel__Session_Mutation_Response>;
+  /** delete single row from the table: "tg_channel__session" */
+  delete_tg_channel__session_by_pk?: Maybe<Tg_Channel__Session>;
   /** delete data from the table: "tg_invite_link_group" */
   delete_tg_invite_link_group?: Maybe<Tg_Invite_Link_Group_Mutation_Response>;
   /** delete single row from the table: "tg_invite_link_group" */
@@ -1448,10 +1555,6 @@ export type Mutation_Root = {
   delete_user?: Maybe<User_Mutation_Response>;
   /** delete single row from the table: "user" */
   delete_user_by_pk?: Maybe<User>;
-  /** delete data from the table: "user_phone_number" */
-  delete_user_phone_number?: Maybe<User_Phone_Number_Mutation_Response>;
-  /** delete single row from the table: "user_phone_number" */
-  delete_user_phone_number_by_pk?: Maybe<User_Phone_Number>;
   /** delete data from the table: "user_tg_channel" */
   delete_user_tg_channel?: Maybe<User_Tg_Channel_Mutation_Response>;
   /** delete single row from the table: "user_tg_channel" */
@@ -1496,6 +1599,10 @@ export type Mutation_Root = {
   insert_stat_user?: Maybe<Stat_User_Mutation_Response>;
   /** insert a single row into the table: "stat_user" */
   insert_stat_user_one?: Maybe<Stat_User>;
+  /** insert data into the table: "tg_channel__session" */
+  insert_tg_channel__session?: Maybe<Tg_Channel__Session_Mutation_Response>;
+  /** insert a single row into the table: "tg_channel__session" */
+  insert_tg_channel__session_one?: Maybe<Tg_Channel__Session>;
   /** insert data into the table: "tg_invite_link_group" */
   insert_tg_invite_link_group?: Maybe<Tg_Invite_Link_Group_Mutation_Response>;
   /** insert a single row into the table: "tg_invite_link_group" */
@@ -1504,10 +1611,6 @@ export type Mutation_Root = {
   insert_user?: Maybe<User_Mutation_Response>;
   /** insert a single row into the table: "user" */
   insert_user_one?: Maybe<User>;
-  /** insert data into the table: "user_phone_number" */
-  insert_user_phone_number?: Maybe<User_Phone_Number_Mutation_Response>;
-  /** insert a single row into the table: "user_phone_number" */
-  insert_user_phone_number_one?: Maybe<User_Phone_Number>;
   /** insert data into the table: "user_tg_channel" */
   insert_user_tg_channel?: Maybe<User_Tg_Channel_Mutation_Response>;
   /** insert a single row into the table: "user_tg_channel" */
@@ -1517,6 +1620,7 @@ export type Mutation_Root = {
   /** insert a single row into the table: "user_tg_invite_link" */
   insert_user_tg_invite_link_one?: Maybe<User_Tg_Invite_Link>;
   request_2fa?: Maybe<Request2FaOutput>;
+  track_tg_channel?: Maybe<Track_Tg_Channel_Output>;
   /** update data of the table: "config__tg_bot_session_pool" */
   update_config__tg_bot_session_pool?: Maybe<Config__Tg_Bot_Session_Pool_Mutation_Response>;
   /** update single row of the table: "config__tg_bot_session_pool" */
@@ -1561,6 +1665,12 @@ export type Mutation_Root = {
   update_stat_user_by_pk?: Maybe<Stat_User>;
   /** update multiples rows of table: "stat_user" */
   update_stat_user_many?: Maybe<Array<Maybe<Stat_User_Mutation_Response>>>;
+  /** update data of the table: "tg_channel__session" */
+  update_tg_channel__session?: Maybe<Tg_Channel__Session_Mutation_Response>;
+  /** update single row of the table: "tg_channel__session" */
+  update_tg_channel__session_by_pk?: Maybe<Tg_Channel__Session>;
+  /** update multiples rows of table: "tg_channel__session" */
+  update_tg_channel__session_many?: Maybe<Array<Maybe<Tg_Channel__Session_Mutation_Response>>>;
   /** update data of the table: "tg_invite_link_group" */
   update_tg_invite_link_group?: Maybe<Tg_Invite_Link_Group_Mutation_Response>;
   /** update single row of the table: "tg_invite_link_group" */
@@ -1573,12 +1683,6 @@ export type Mutation_Root = {
   update_user_by_pk?: Maybe<User>;
   /** update multiples rows of table: "user" */
   update_user_many?: Maybe<Array<Maybe<User_Mutation_Response>>>;
-  /** update data of the table: "user_phone_number" */
-  update_user_phone_number?: Maybe<User_Phone_Number_Mutation_Response>;
-  /** update single row of the table: "user_phone_number" */
-  update_user_phone_number_by_pk?: Maybe<User_Phone_Number>;
-  /** update multiples rows of table: "user_phone_number" */
-  update_user_phone_number_many?: Maybe<Array<Maybe<User_Phone_Number_Mutation_Response>>>;
   /** update data of the table: "user_tg_channel" */
   update_user_tg_channel?: Maybe<User_Tg_Channel_Mutation_Response>;
   /** update single row of the table: "user_tg_channel" */
@@ -1679,6 +1783,19 @@ export type Mutation_RootDelete_Stat_User_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Tg_Channel__SessionArgs = {
+  where: Tg_Channel__Session_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Tg_Channel__Session_By_PkArgs = {
+  config__tg_bot_session_pool_pk: Scalars['bigint']['input'];
+  user_tg_channel_pk: Scalars['bigint']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Tg_Invite_Link_GroupArgs = {
   where: Tg_Invite_Link_Group_Bool_Exp;
 };
@@ -1703,18 +1820,6 @@ export type Mutation_RootDelete_User_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_User_Phone_NumberArgs = {
-  where: User_Phone_Number_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_User_Phone_Number_By_PkArgs = {
-  pk: Scalars['bigint']['input'];
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_User_Tg_ChannelArgs = {
   where: User_Tg_Channel_Bool_Exp;
 };
@@ -1722,8 +1827,7 @@ export type Mutation_RootDelete_User_Tg_ChannelArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_User_Tg_Channel_By_PkArgs = {
-  tg_channel_id: Scalars['bigint']['input'];
-  user_id: Scalars['uuid']['input'];
+  pk: Scalars['bigint']['input'];
 };
 
 
@@ -1856,6 +1960,20 @@ export type Mutation_RootInsert_Stat_User_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Tg_Channel__SessionArgs = {
+  objects: Array<Tg_Channel__Session_Insert_Input>;
+  on_conflict?: InputMaybe<Tg_Channel__Session_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Tg_Channel__Session_OneArgs = {
+  object: Tg_Channel__Session_Insert_Input;
+  on_conflict?: InputMaybe<Tg_Channel__Session_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Tg_Invite_Link_GroupArgs = {
   objects: Array<Tg_Invite_Link_Group_Insert_Input>;
   on_conflict?: InputMaybe<Tg_Invite_Link_Group_On_Conflict>;
@@ -1880,20 +1998,6 @@ export type Mutation_RootInsert_UserArgs = {
 export type Mutation_RootInsert_User_OneArgs = {
   object: User_Insert_Input;
   on_conflict?: InputMaybe<User_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_User_Phone_NumberArgs = {
-  objects: Array<User_Phone_Number_Insert_Input>;
-  on_conflict?: InputMaybe<User_Phone_Number_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_User_Phone_Number_OneArgs = {
-  object: User_Phone_Number_Insert_Input;
-  on_conflict?: InputMaybe<User_Phone_Number_On_Conflict>;
 };
 
 
@@ -1928,6 +2032,12 @@ export type Mutation_RootInsert_User_Tg_Invite_Link_OneArgs = {
 /** mutation root */
 export type Mutation_RootRequest_2faArgs = {
   arg1: Request2FaInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootTrack_Tg_ChannelArgs = {
+  arg1: Track_Tg_Channel_Input;
 };
 
 
@@ -2090,6 +2200,28 @@ export type Mutation_RootUpdate_Stat_User_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Tg_Channel__SessionArgs = {
+  _inc?: InputMaybe<Tg_Channel__Session_Inc_Input>;
+  _set?: InputMaybe<Tg_Channel__Session_Set_Input>;
+  where: Tg_Channel__Session_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Tg_Channel__Session_By_PkArgs = {
+  _inc?: InputMaybe<Tg_Channel__Session_Inc_Input>;
+  _set?: InputMaybe<Tg_Channel__Session_Set_Input>;
+  pk_columns: Tg_Channel__Session_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Tg_Channel__Session_ManyArgs = {
+  updates: Array<Tg_Channel__Session_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Tg_Invite_Link_GroupArgs = {
   _inc?: InputMaybe<Tg_Invite_Link_Group_Inc_Input>;
   _set?: InputMaybe<Tg_Invite_Link_Group_Set_Input>;
@@ -2128,28 +2260,6 @@ export type Mutation_RootUpdate_User_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_User_ManyArgs = {
   updates: Array<User_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_User_Phone_NumberArgs = {
-  _inc?: InputMaybe<User_Phone_Number_Inc_Input>;
-  _set?: InputMaybe<User_Phone_Number_Set_Input>;
-  where: User_Phone_Number_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_User_Phone_Number_By_PkArgs = {
-  _inc?: InputMaybe<User_Phone_Number_Inc_Input>;
-  _set?: InputMaybe<User_Phone_Number_Set_Input>;
-  pk_columns: User_Phone_Number_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_User_Phone_Number_ManyArgs = {
-  updates: Array<User_Phone_Number_Updates>;
 };
 
 
@@ -2268,6 +2378,12 @@ export type Query_Root = {
   stat_user_aggregate: Stat_User_Aggregate;
   /** fetch data from the table: "stat_user" using primary key columns */
   stat_user_by_pk?: Maybe<Stat_User>;
+  /** fetch data from the table: "tg_channel__session" */
+  tg_channel__session: Array<Tg_Channel__Session>;
+  /** fetch aggregated fields from the table: "tg_channel__session" */
+  tg_channel__session_aggregate: Tg_Channel__Session_Aggregate;
+  /** fetch data from the table: "tg_channel__session" using primary key columns */
+  tg_channel__session_by_pk?: Maybe<Tg_Channel__Session>;
   tg_channels?: Maybe<TgChannelsOutput>;
   /** fetch data from the table: "tg_invite_link_group" */
   tg_invite_link_group: Array<Tg_Invite_Link_Group>;
@@ -2289,12 +2405,6 @@ export type Query_Root = {
   user_aggregate: User_Aggregate;
   /** fetch data from the table: "user" using primary key columns */
   user_by_pk?: Maybe<User>;
-  /** fetch data from the table: "user_phone_number" */
-  user_phone_number: Array<User_Phone_Number>;
-  /** fetch aggregated fields from the table: "user_phone_number" */
-  user_phone_number_aggregate: User_Phone_Number_Aggregate;
-  /** fetch data from the table: "user_phone_number" using primary key columns */
-  user_phone_number_by_pk?: Maybe<User_Phone_Number>;
   /** execute function "user_signups_by_period" which returns "fn_users_by_period" */
   user_signups_by_period: Array<Fn_Users_By_Period>;
   /** execute function "user_signups_by_period" and query aggregates on result of table type "fn_users_by_period" */
@@ -2545,6 +2655,35 @@ export type Query_RootStat_User_By_PkArgs = {
 };
 
 
+export type Query_RootTg_Channel__SessionArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Channel__Session_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Channel__Session_Order_By>>;
+  where?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+};
+
+
+export type Query_RootTg_Channel__Session_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Channel__Session_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Channel__Session_Order_By>>;
+  where?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+};
+
+
+export type Query_RootTg_Channel__Session_By_PkArgs = {
+  config__tg_bot_session_pool_pk: Scalars['bigint']['input'];
+  user_tg_channel_pk: Scalars['bigint']['input'];
+};
+
+
+export type Query_RootTg_ChannelsArgs = {
+  arg1: TgChannelsInput;
+};
+
+
 export type Query_RootTg_Invite_Link_GroupArgs = {
   distinct_on?: InputMaybe<Array<Tg_Invite_Link_Group_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2631,29 +2770,6 @@ export type Query_RootUser_By_PkArgs = {
 };
 
 
-export type Query_RootUser_Phone_NumberArgs = {
-  distinct_on?: InputMaybe<Array<User_Phone_Number_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<User_Phone_Number_Order_By>>;
-  where?: InputMaybe<User_Phone_Number_Bool_Exp>;
-};
-
-
-export type Query_RootUser_Phone_Number_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<User_Phone_Number_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<User_Phone_Number_Order_By>>;
-  where?: InputMaybe<User_Phone_Number_Bool_Exp>;
-};
-
-
-export type Query_RootUser_Phone_Number_By_PkArgs = {
-  pk: Scalars['bigint']['input'];
-};
-
-
 export type Query_RootUser_Signups_By_PeriodArgs = {
   args: User_Signups_By_Period_Args;
   distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
@@ -2693,8 +2809,7 @@ export type Query_RootUser_Tg_Channel_AggregateArgs = {
 
 
 export type Query_RootUser_Tg_Channel_By_PkArgs = {
-  tg_channel_id: Scalars['bigint']['input'];
-  user_id: Scalars['uuid']['input'];
+  pk: Scalars['bigint']['input'];
 };
 
 
@@ -4001,6 +4116,14 @@ export type Subscription_Root = {
   stat_user_by_pk?: Maybe<Stat_User>;
   /** fetch data from the table in a streaming manner: "stat_user" */
   stat_user_stream: Array<Stat_User>;
+  /** fetch data from the table: "tg_channel__session" */
+  tg_channel__session: Array<Tg_Channel__Session>;
+  /** fetch aggregated fields from the table: "tg_channel__session" */
+  tg_channel__session_aggregate: Tg_Channel__Session_Aggregate;
+  /** fetch data from the table: "tg_channel__session" using primary key columns */
+  tg_channel__session_by_pk?: Maybe<Tg_Channel__Session>;
+  /** fetch data from the table in a streaming manner: "tg_channel__session" */
+  tg_channel__session_stream: Array<Tg_Channel__Session>;
   /** fetch data from the table: "tg_invite_link_group" */
   tg_invite_link_group: Array<Tg_Invite_Link_Group>;
   /** fetch aggregated fields from the table: "tg_invite_link_group" */
@@ -4023,14 +4146,6 @@ export type Subscription_Root = {
   user_aggregate: User_Aggregate;
   /** fetch data from the table: "user" using primary key columns */
   user_by_pk?: Maybe<User>;
-  /** fetch data from the table: "user_phone_number" */
-  user_phone_number: Array<User_Phone_Number>;
-  /** fetch aggregated fields from the table: "user_phone_number" */
-  user_phone_number_aggregate: User_Phone_Number_Aggregate;
-  /** fetch data from the table: "user_phone_number" using primary key columns */
-  user_phone_number_by_pk?: Maybe<User_Phone_Number>;
-  /** fetch data from the table in a streaming manner: "user_phone_number" */
-  user_phone_number_stream: Array<User_Phone_Number>;
   /** execute function "user_signups_by_period" which returns "fn_users_by_period" */
   user_signups_by_period: Array<Fn_Users_By_Period>;
   /** execute function "user_signups_by_period" and query aggregates on result of table type "fn_users_by_period" */
@@ -4345,6 +4460,37 @@ export type Subscription_RootStat_User_StreamArgs = {
 };
 
 
+export type Subscription_RootTg_Channel__SessionArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Channel__Session_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Channel__Session_Order_By>>;
+  where?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+};
+
+
+export type Subscription_RootTg_Channel__Session_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Channel__Session_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Channel__Session_Order_By>>;
+  where?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+};
+
+
+export type Subscription_RootTg_Channel__Session_By_PkArgs = {
+  config__tg_bot_session_pool_pk: Scalars['bigint']['input'];
+  user_tg_channel_pk: Scalars['bigint']['input'];
+};
+
+
+export type Subscription_RootTg_Channel__Session_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Tg_Channel__Session_Stream_Cursor_Input>>;
+  where?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+};
+
+
 export type Subscription_RootTg_Invite_Link_GroupArgs = {
   distinct_on?: InputMaybe<Array<Tg_Invite_Link_Group_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -4438,36 +4584,6 @@ export type Subscription_RootUser_By_PkArgs = {
 };
 
 
-export type Subscription_RootUser_Phone_NumberArgs = {
-  distinct_on?: InputMaybe<Array<User_Phone_Number_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<User_Phone_Number_Order_By>>;
-  where?: InputMaybe<User_Phone_Number_Bool_Exp>;
-};
-
-
-export type Subscription_RootUser_Phone_Number_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<User_Phone_Number_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<User_Phone_Number_Order_By>>;
-  where?: InputMaybe<User_Phone_Number_Bool_Exp>;
-};
-
-
-export type Subscription_RootUser_Phone_Number_By_PkArgs = {
-  pk: Scalars['bigint']['input'];
-};
-
-
-export type Subscription_RootUser_Phone_Number_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<User_Phone_Number_Stream_Cursor_Input>>;
-  where?: InputMaybe<User_Phone_Number_Bool_Exp>;
-};
-
-
 export type Subscription_RootUser_Signups_By_PeriodArgs = {
   args: User_Signups_By_Period_Args;
   distinct_on?: InputMaybe<Array<Fn_Users_By_Period_Select_Column>>;
@@ -4514,8 +4630,7 @@ export type Subscription_RootUser_Tg_Channel_AggregateArgs = {
 
 
 export type Subscription_RootUser_Tg_Channel_By_PkArgs = {
-  tg_channel_id: Scalars['bigint']['input'];
-  user_id: Scalars['uuid']['input'];
+  pk: Scalars['bigint']['input'];
 };
 
 
@@ -4573,6 +4688,316 @@ export type Subscription_RootUser_Unsubscribes_By_Period_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
   where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+/** columns and relationships of "tg_channel__session" */
+export type Tg_Channel__Session = {
+  __typename?: 'tg_channel__session';
+  /** An object relationship */
+  config__tg_bot_session_pool: Config__Tg_Bot_Session_Pool;
+  config__tg_bot_session_pool_pk: Scalars['bigint']['output'];
+  /** An object relationship */
+  user_tg_channel: User_Tg_Channel;
+  user_tg_channel_pk: Scalars['bigint']['output'];
+};
+
+/** aggregated selection of "tg_channel__session" */
+export type Tg_Channel__Session_Aggregate = {
+  __typename?: 'tg_channel__session_aggregate';
+  aggregate?: Maybe<Tg_Channel__Session_Aggregate_Fields>;
+  nodes: Array<Tg_Channel__Session>;
+};
+
+export type Tg_Channel__Session_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Tg_Channel__Session_Aggregate_Bool_Exp_Count>;
+};
+
+export type Tg_Channel__Session_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Tg_Channel__Session_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "tg_channel__session" */
+export type Tg_Channel__Session_Aggregate_Fields = {
+  __typename?: 'tg_channel__session_aggregate_fields';
+  avg?: Maybe<Tg_Channel__Session_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Tg_Channel__Session_Max_Fields>;
+  min?: Maybe<Tg_Channel__Session_Min_Fields>;
+  stddev?: Maybe<Tg_Channel__Session_Stddev_Fields>;
+  stddev_pop?: Maybe<Tg_Channel__Session_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Tg_Channel__Session_Stddev_Samp_Fields>;
+  sum?: Maybe<Tg_Channel__Session_Sum_Fields>;
+  var_pop?: Maybe<Tg_Channel__Session_Var_Pop_Fields>;
+  var_samp?: Maybe<Tg_Channel__Session_Var_Samp_Fields>;
+  variance?: Maybe<Tg_Channel__Session_Variance_Fields>;
+};
+
+
+/** aggregate fields of "tg_channel__session" */
+export type Tg_Channel__Session_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Tg_Channel__Session_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "tg_channel__session" */
+export type Tg_Channel__Session_Aggregate_Order_By = {
+  avg?: InputMaybe<Tg_Channel__Session_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Tg_Channel__Session_Max_Order_By>;
+  min?: InputMaybe<Tg_Channel__Session_Min_Order_By>;
+  stddev?: InputMaybe<Tg_Channel__Session_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Tg_Channel__Session_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Tg_Channel__Session_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Tg_Channel__Session_Sum_Order_By>;
+  var_pop?: InputMaybe<Tg_Channel__Session_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Tg_Channel__Session_Var_Samp_Order_By>;
+  variance?: InputMaybe<Tg_Channel__Session_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "tg_channel__session" */
+export type Tg_Channel__Session_Arr_Rel_Insert_Input = {
+  data: Array<Tg_Channel__Session_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Tg_Channel__Session_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Tg_Channel__Session_Avg_Fields = {
+  __typename?: 'tg_channel__session_avg_fields';
+  config__tg_bot_session_pool_pk?: Maybe<Scalars['Float']['output']>;
+  user_tg_channel_pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "tg_channel__session" */
+export type Tg_Channel__Session_Avg_Order_By = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "tg_channel__session". All fields are combined with a logical 'AND'. */
+export type Tg_Channel__Session_Bool_Exp = {
+  _and?: InputMaybe<Array<Tg_Channel__Session_Bool_Exp>>;
+  _not?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+  _or?: InputMaybe<Array<Tg_Channel__Session_Bool_Exp>>;
+  config__tg_bot_session_pool?: InputMaybe<Config__Tg_Bot_Session_Pool_Bool_Exp>;
+  config__tg_bot_session_pool_pk?: InputMaybe<Bigint_Comparison_Exp>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Bool_Exp>;
+  user_tg_channel_pk?: InputMaybe<Bigint_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "tg_channel__session" */
+export enum Tg_Channel__Session_Constraint {
+  /** unique or primary key constraint on columns "user_tg_channel_pk", "config__tg_bot_session_pool_pk" */
+  tg_channel__session_pkey = 'tg_channel__session_pkey'
+}
+
+/** input type for incrementing numeric columns in table "tg_channel__session" */
+export type Tg_Channel__Session_Inc_Input = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Scalars['bigint']['input']>;
+  user_tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** input type for inserting data into table "tg_channel__session" */
+export type Tg_Channel__Session_Insert_Input = {
+  config__tg_bot_session_pool?: InputMaybe<Config__Tg_Bot_Session_Pool_Obj_Rel_Insert_Input>;
+  config__tg_bot_session_pool_pk?: InputMaybe<Scalars['bigint']['input']>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Obj_Rel_Insert_Input>;
+  user_tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** aggregate max on columns */
+export type Tg_Channel__Session_Max_Fields = {
+  __typename?: 'tg_channel__session_max_fields';
+  config__tg_bot_session_pool_pk?: Maybe<Scalars['bigint']['output']>;
+  user_tg_channel_pk?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** order by max() on columns of table "tg_channel__session" */
+export type Tg_Channel__Session_Max_Order_By = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Tg_Channel__Session_Min_Fields = {
+  __typename?: 'tg_channel__session_min_fields';
+  config__tg_bot_session_pool_pk?: Maybe<Scalars['bigint']['output']>;
+  user_tg_channel_pk?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** order by min() on columns of table "tg_channel__session" */
+export type Tg_Channel__Session_Min_Order_By = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "tg_channel__session" */
+export type Tg_Channel__Session_Mutation_Response = {
+  __typename?: 'tg_channel__session_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Tg_Channel__Session>;
+};
+
+/** on_conflict condition type for table "tg_channel__session" */
+export type Tg_Channel__Session_On_Conflict = {
+  constraint: Tg_Channel__Session_Constraint;
+  update_columns?: Array<Tg_Channel__Session_Update_Column>;
+  where?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "tg_channel__session". */
+export type Tg_Channel__Session_Order_By = {
+  config__tg_bot_session_pool?: InputMaybe<Config__Tg_Bot_Session_Pool_Order_By>;
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: tg_channel__session */
+export type Tg_Channel__Session_Pk_Columns_Input = {
+  config__tg_bot_session_pool_pk: Scalars['bigint']['input'];
+  user_tg_channel_pk: Scalars['bigint']['input'];
+};
+
+/** select columns of table "tg_channel__session" */
+export enum Tg_Channel__Session_Select_Column {
+  /** column name */
+  config__tg_bot_session_pool_pk = 'config__tg_bot_session_pool_pk',
+  /** column name */
+  user_tg_channel_pk = 'user_tg_channel_pk'
+}
+
+/** input type for updating data in table "tg_channel__session" */
+export type Tg_Channel__Session_Set_Input = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Scalars['bigint']['input']>;
+  user_tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Tg_Channel__Session_Stddev_Fields = {
+  __typename?: 'tg_channel__session_stddev_fields';
+  config__tg_bot_session_pool_pk?: Maybe<Scalars['Float']['output']>;
+  user_tg_channel_pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "tg_channel__session" */
+export type Tg_Channel__Session_Stddev_Order_By = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Tg_Channel__Session_Stddev_Pop_Fields = {
+  __typename?: 'tg_channel__session_stddev_pop_fields';
+  config__tg_bot_session_pool_pk?: Maybe<Scalars['Float']['output']>;
+  user_tg_channel_pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "tg_channel__session" */
+export type Tg_Channel__Session_Stddev_Pop_Order_By = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Tg_Channel__Session_Stddev_Samp_Fields = {
+  __typename?: 'tg_channel__session_stddev_samp_fields';
+  config__tg_bot_session_pool_pk?: Maybe<Scalars['Float']['output']>;
+  user_tg_channel_pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "tg_channel__session" */
+export type Tg_Channel__Session_Stddev_Samp_Order_By = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "tg_channel__session" */
+export type Tg_Channel__Session_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Tg_Channel__Session_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Tg_Channel__Session_Stream_Cursor_Value_Input = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Scalars['bigint']['input']>;
+  user_tg_channel_pk?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Tg_Channel__Session_Sum_Fields = {
+  __typename?: 'tg_channel__session_sum_fields';
+  config__tg_bot_session_pool_pk?: Maybe<Scalars['bigint']['output']>;
+  user_tg_channel_pk?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** order by sum() on columns of table "tg_channel__session" */
+export type Tg_Channel__Session_Sum_Order_By = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "tg_channel__session" */
+export enum Tg_Channel__Session_Update_Column {
+  /** column name */
+  config__tg_bot_session_pool_pk = 'config__tg_bot_session_pool_pk',
+  /** column name */
+  user_tg_channel_pk = 'user_tg_channel_pk'
+}
+
+export type Tg_Channel__Session_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Tg_Channel__Session_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Tg_Channel__Session_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Tg_Channel__Session_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Tg_Channel__Session_Var_Pop_Fields = {
+  __typename?: 'tg_channel__session_var_pop_fields';
+  config__tg_bot_session_pool_pk?: Maybe<Scalars['Float']['output']>;
+  user_tg_channel_pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "tg_channel__session" */
+export type Tg_Channel__Session_Var_Pop_Order_By = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Tg_Channel__Session_Var_Samp_Fields = {
+  __typename?: 'tg_channel__session_var_samp_fields';
+  config__tg_bot_session_pool_pk?: Maybe<Scalars['Float']['output']>;
+  user_tg_channel_pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "tg_channel__session" */
+export type Tg_Channel__Session_Var_Samp_Order_By = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Tg_Channel__Session_Variance_Fields = {
+  __typename?: 'tg_channel__session_variance_fields';
+  config__tg_bot_session_pool_pk?: Maybe<Scalars['Float']['output']>;
+  user_tg_channel_pk?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "tg_channel__session" */
+export type Tg_Channel__Session_Variance_Order_By = {
+  config__tg_bot_session_pool_pk?: InputMaybe<Order_By>;
+  user_tg_channel_pk?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "tg_invite_link_group" */
@@ -4924,6 +5349,16 @@ export type Timestamp_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['timestamp']['input']>>;
 };
 
+export type Track_Tg_Channel_Input = {
+  phone_numbers: Array<Scalars['String']['input']>;
+  tg_channel_id: Scalars['String']['input'];
+};
+
+export type Track_Tg_Channel_Output = {
+  __typename?: 'track_tg_channel_output';
+  success: Scalars['Boolean']['output'];
+};
+
 export type Unsubscribes_By_Links_Args = {
   end_date?: InputMaybe<Scalars['timestamp']['input']>;
   link_array?: InputMaybe<Scalars['_text']['input']>;
@@ -4940,16 +5375,16 @@ export type Unsubscribes_By_Periods_Args = {
 /** columns and relationships of "user" */
 export type User = {
   __typename?: 'user';
+  /** An array relationship */
+  config__tg_bot_session_pools: Array<Config__Tg_Bot_Session_Pool>;
+  /** An aggregate relationship */
+  config__tg_bot_session_pools_aggregate: Config__Tg_Bot_Session_Pool_Aggregate;
   created_at: Scalars['timestamp']['output'];
   id: Scalars['uuid']['output'];
   /** An array relationship */
   tg_invite_link_groups: Array<Tg_Invite_Link_Group>;
   /** An aggregate relationship */
   tg_invite_link_groups_aggregate: Tg_Invite_Link_Group_Aggregate;
-  /** An array relationship */
-  user_phone_numbers: Array<User_Phone_Number>;
-  /** An aggregate relationship */
-  user_phone_numbers_aggregate: User_Phone_Number_Aggregate;
   /** An array relationship */
   user_tg_channels: Array<User_Tg_Channel>;
   /** An aggregate relationship */
@@ -4958,6 +5393,26 @@ export type User = {
   user_tg_invite_links: Array<User_Tg_Invite_Link>;
   /** An aggregate relationship */
   user_tg_invite_links_aggregate: User_Tg_Invite_Link_Aggregate;
+};
+
+
+/** columns and relationships of "user" */
+export type UserConfig__Tg_Bot_Session_PoolsArgs = {
+  distinct_on?: InputMaybe<Array<Config__Tg_Bot_Session_Pool_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Config__Tg_Bot_Session_Pool_Order_By>>;
+  where?: InputMaybe<Config__Tg_Bot_Session_Pool_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user" */
+export type UserConfig__Tg_Bot_Session_Pools_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Config__Tg_Bot_Session_Pool_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Config__Tg_Bot_Session_Pool_Order_By>>;
+  where?: InputMaybe<Config__Tg_Bot_Session_Pool_Bool_Exp>;
 };
 
 
@@ -4978,26 +5433,6 @@ export type UserTg_Invite_Link_Groups_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Tg_Invite_Link_Group_Order_By>>;
   where?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserUser_Phone_NumbersArgs = {
-  distinct_on?: InputMaybe<Array<User_Phone_Number_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<User_Phone_Number_Order_By>>;
-  where?: InputMaybe<User_Phone_Number_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserUser_Phone_Numbers_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<User_Phone_Number_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<User_Phone_Number_Order_By>>;
-  where?: InputMaybe<User_Phone_Number_Bool_Exp>;
 };
 
 
@@ -5067,12 +5502,12 @@ export type User_Bool_Exp = {
   _and?: InputMaybe<Array<User_Bool_Exp>>;
   _not?: InputMaybe<User_Bool_Exp>;
   _or?: InputMaybe<Array<User_Bool_Exp>>;
+  config__tg_bot_session_pools?: InputMaybe<Config__Tg_Bot_Session_Pool_Bool_Exp>;
+  config__tg_bot_session_pools_aggregate?: InputMaybe<Config__Tg_Bot_Session_Pool_Aggregate_Bool_Exp>;
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   tg_invite_link_groups?: InputMaybe<Tg_Invite_Link_Group_Bool_Exp>;
   tg_invite_link_groups_aggregate?: InputMaybe<Tg_Invite_Link_Group_Aggregate_Bool_Exp>;
-  user_phone_numbers?: InputMaybe<User_Phone_Number_Bool_Exp>;
-  user_phone_numbers_aggregate?: InputMaybe<User_Phone_Number_Aggregate_Bool_Exp>;
   user_tg_channels?: InputMaybe<User_Tg_Channel_Bool_Exp>;
   user_tg_channels_aggregate?: InputMaybe<User_Tg_Channel_Aggregate_Bool_Exp>;
   user_tg_invite_links?: InputMaybe<User_Tg_Invite_Link_Bool_Exp>;
@@ -5089,10 +5524,10 @@ export enum User_Constraint {
 
 /** input type for inserting data into table "user" */
 export type User_Insert_Input = {
+  config__tg_bot_session_pools?: InputMaybe<Config__Tg_Bot_Session_Pool_Arr_Rel_Insert_Input>;
   created_at?: InputMaybe<Scalars['timestamp']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   tg_invite_link_groups?: InputMaybe<Tg_Invite_Link_Group_Arr_Rel_Insert_Input>;
-  user_phone_numbers?: InputMaybe<User_Phone_Number_Arr_Rel_Insert_Input>;
   user_tg_channels?: InputMaybe<User_Tg_Channel_Arr_Rel_Insert_Input>;
   user_tg_invite_links?: InputMaybe<User_Tg_Invite_Link_Arr_Rel_Insert_Input>;
 };
@@ -5136,334 +5571,12 @@ export type User_On_Conflict = {
 
 /** Ordering options when selecting data from "user". */
 export type User_Order_By = {
+  config__tg_bot_session_pools_aggregate?: InputMaybe<Config__Tg_Bot_Session_Pool_Aggregate_Order_By>;
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   tg_invite_link_groups_aggregate?: InputMaybe<Tg_Invite_Link_Group_Aggregate_Order_By>;
-  user_phone_numbers_aggregate?: InputMaybe<User_Phone_Number_Aggregate_Order_By>;
   user_tg_channels_aggregate?: InputMaybe<User_Tg_Channel_Aggregate_Order_By>;
   user_tg_invite_links_aggregate?: InputMaybe<User_Tg_Invite_Link_Aggregate_Order_By>;
-};
-
-/** columns and relationships of "user_phone_number" */
-export type User_Phone_Number = {
-  __typename?: 'user_phone_number';
-  phone_number: Scalars['String']['output'];
-  pk: Scalars['bigint']['output'];
-  status?: Maybe<Scalars['String']['output']>;
-  /** An object relationship */
-  user: User;
-  user_id: Scalars['uuid']['output'];
-};
-
-/** aggregated selection of "user_phone_number" */
-export type User_Phone_Number_Aggregate = {
-  __typename?: 'user_phone_number_aggregate';
-  aggregate?: Maybe<User_Phone_Number_Aggregate_Fields>;
-  nodes: Array<User_Phone_Number>;
-};
-
-export type User_Phone_Number_Aggregate_Bool_Exp = {
-  count?: InputMaybe<User_Phone_Number_Aggregate_Bool_Exp_Count>;
-};
-
-export type User_Phone_Number_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<User_Phone_Number_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<User_Phone_Number_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
-};
-
-/** aggregate fields of "user_phone_number" */
-export type User_Phone_Number_Aggregate_Fields = {
-  __typename?: 'user_phone_number_aggregate_fields';
-  avg?: Maybe<User_Phone_Number_Avg_Fields>;
-  count: Scalars['Int']['output'];
-  max?: Maybe<User_Phone_Number_Max_Fields>;
-  min?: Maybe<User_Phone_Number_Min_Fields>;
-  stddev?: Maybe<User_Phone_Number_Stddev_Fields>;
-  stddev_pop?: Maybe<User_Phone_Number_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<User_Phone_Number_Stddev_Samp_Fields>;
-  sum?: Maybe<User_Phone_Number_Sum_Fields>;
-  var_pop?: Maybe<User_Phone_Number_Var_Pop_Fields>;
-  var_samp?: Maybe<User_Phone_Number_Var_Samp_Fields>;
-  variance?: Maybe<User_Phone_Number_Variance_Fields>;
-};
-
-
-/** aggregate fields of "user_phone_number" */
-export type User_Phone_Number_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<User_Phone_Number_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** order by aggregate values of table "user_phone_number" */
-export type User_Phone_Number_Aggregate_Order_By = {
-  avg?: InputMaybe<User_Phone_Number_Avg_Order_By>;
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<User_Phone_Number_Max_Order_By>;
-  min?: InputMaybe<User_Phone_Number_Min_Order_By>;
-  stddev?: InputMaybe<User_Phone_Number_Stddev_Order_By>;
-  stddev_pop?: InputMaybe<User_Phone_Number_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<User_Phone_Number_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<User_Phone_Number_Sum_Order_By>;
-  var_pop?: InputMaybe<User_Phone_Number_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<User_Phone_Number_Var_Samp_Order_By>;
-  variance?: InputMaybe<User_Phone_Number_Variance_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "user_phone_number" */
-export type User_Phone_Number_Arr_Rel_Insert_Input = {
-  data: Array<User_Phone_Number_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<User_Phone_Number_On_Conflict>;
-};
-
-/** aggregate avg on columns */
-export type User_Phone_Number_Avg_Fields = {
-  __typename?: 'user_phone_number_avg_fields';
-  pk?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by avg() on columns of table "user_phone_number" */
-export type User_Phone_Number_Avg_Order_By = {
-  pk?: InputMaybe<Order_By>;
-};
-
-/** Boolean expression to filter rows from the table "user_phone_number". All fields are combined with a logical 'AND'. */
-export type User_Phone_Number_Bool_Exp = {
-  _and?: InputMaybe<Array<User_Phone_Number_Bool_Exp>>;
-  _not?: InputMaybe<User_Phone_Number_Bool_Exp>;
-  _or?: InputMaybe<Array<User_Phone_Number_Bool_Exp>>;
-  phone_number?: InputMaybe<String_Comparison_Exp>;
-  pk?: InputMaybe<Bigint_Comparison_Exp>;
-  status?: InputMaybe<String_Comparison_Exp>;
-  user?: InputMaybe<User_Bool_Exp>;
-  user_id?: InputMaybe<Uuid_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "user_phone_number" */
-export enum User_Phone_Number_Constraint {
-  /** unique or primary key constraint on columns "pk" */
-  user_phone_number_pkey = 'user_phone_number_pkey'
-}
-
-/** input type for incrementing numeric columns in table "user_phone_number" */
-export type User_Phone_Number_Inc_Input = {
-  pk?: InputMaybe<Scalars['bigint']['input']>;
-};
-
-/** input type for inserting data into table "user_phone_number" */
-export type User_Phone_Number_Insert_Input = {
-  phone_number?: InputMaybe<Scalars['String']['input']>;
-  pk?: InputMaybe<Scalars['bigint']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
-  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** aggregate max on columns */
-export type User_Phone_Number_Max_Fields = {
-  __typename?: 'user_phone_number_max_fields';
-  phone_number?: Maybe<Scalars['String']['output']>;
-  pk?: Maybe<Scalars['bigint']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  user_id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by max() on columns of table "user_phone_number" */
-export type User_Phone_Number_Max_Order_By = {
-  phone_number?: InputMaybe<Order_By>;
-  pk?: InputMaybe<Order_By>;
-  status?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type User_Phone_Number_Min_Fields = {
-  __typename?: 'user_phone_number_min_fields';
-  phone_number?: Maybe<Scalars['String']['output']>;
-  pk?: Maybe<Scalars['bigint']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  user_id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by min() on columns of table "user_phone_number" */
-export type User_Phone_Number_Min_Order_By = {
-  phone_number?: InputMaybe<Order_By>;
-  pk?: InputMaybe<Order_By>;
-  status?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** response of any mutation on the table "user_phone_number" */
-export type User_Phone_Number_Mutation_Response = {
-  __typename?: 'user_phone_number_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<User_Phone_Number>;
-};
-
-/** input type for inserting object relation for remote table "user_phone_number" */
-export type User_Phone_Number_Obj_Rel_Insert_Input = {
-  data: User_Phone_Number_Insert_Input;
-  /** upsert condition */
-  on_conflict?: InputMaybe<User_Phone_Number_On_Conflict>;
-};
-
-/** on_conflict condition type for table "user_phone_number" */
-export type User_Phone_Number_On_Conflict = {
-  constraint: User_Phone_Number_Constraint;
-  update_columns?: Array<User_Phone_Number_Update_Column>;
-  where?: InputMaybe<User_Phone_Number_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "user_phone_number". */
-export type User_Phone_Number_Order_By = {
-  phone_number?: InputMaybe<Order_By>;
-  pk?: InputMaybe<Order_By>;
-  status?: InputMaybe<Order_By>;
-  user?: InputMaybe<User_Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: user_phone_number */
-export type User_Phone_Number_Pk_Columns_Input = {
-  pk: Scalars['bigint']['input'];
-};
-
-/** select columns of table "user_phone_number" */
-export enum User_Phone_Number_Select_Column {
-  /** column name */
-  phone_number = 'phone_number',
-  /** column name */
-  pk = 'pk',
-  /** column name */
-  status = 'status',
-  /** column name */
-  user_id = 'user_id'
-}
-
-/** input type for updating data in table "user_phone_number" */
-export type User_Phone_Number_Set_Input = {
-  phone_number?: InputMaybe<Scalars['String']['input']>;
-  pk?: InputMaybe<Scalars['bigint']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** aggregate stddev on columns */
-export type User_Phone_Number_Stddev_Fields = {
-  __typename?: 'user_phone_number_stddev_fields';
-  pk?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev() on columns of table "user_phone_number" */
-export type User_Phone_Number_Stddev_Order_By = {
-  pk?: InputMaybe<Order_By>;
-};
-
-/** aggregate stddev_pop on columns */
-export type User_Phone_Number_Stddev_Pop_Fields = {
-  __typename?: 'user_phone_number_stddev_pop_fields';
-  pk?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev_pop() on columns of table "user_phone_number" */
-export type User_Phone_Number_Stddev_Pop_Order_By = {
-  pk?: InputMaybe<Order_By>;
-};
-
-/** aggregate stddev_samp on columns */
-export type User_Phone_Number_Stddev_Samp_Fields = {
-  __typename?: 'user_phone_number_stddev_samp_fields';
-  pk?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by stddev_samp() on columns of table "user_phone_number" */
-export type User_Phone_Number_Stddev_Samp_Order_By = {
-  pk?: InputMaybe<Order_By>;
-};
-
-/** Streaming cursor of the table "user_phone_number" */
-export type User_Phone_Number_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: User_Phone_Number_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type User_Phone_Number_Stream_Cursor_Value_Input = {
-  phone_number?: InputMaybe<Scalars['String']['input']>;
-  pk?: InputMaybe<Scalars['bigint']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
-  user_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** aggregate sum on columns */
-export type User_Phone_Number_Sum_Fields = {
-  __typename?: 'user_phone_number_sum_fields';
-  pk?: Maybe<Scalars['bigint']['output']>;
-};
-
-/** order by sum() on columns of table "user_phone_number" */
-export type User_Phone_Number_Sum_Order_By = {
-  pk?: InputMaybe<Order_By>;
-};
-
-/** update columns of table "user_phone_number" */
-export enum User_Phone_Number_Update_Column {
-  /** column name */
-  phone_number = 'phone_number',
-  /** column name */
-  pk = 'pk',
-  /** column name */
-  status = 'status',
-  /** column name */
-  user_id = 'user_id'
-}
-
-export type User_Phone_Number_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<User_Phone_Number_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<User_Phone_Number_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: User_Phone_Number_Bool_Exp;
-};
-
-/** aggregate var_pop on columns */
-export type User_Phone_Number_Var_Pop_Fields = {
-  __typename?: 'user_phone_number_var_pop_fields';
-  pk?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by var_pop() on columns of table "user_phone_number" */
-export type User_Phone_Number_Var_Pop_Order_By = {
-  pk?: InputMaybe<Order_By>;
-};
-
-/** aggregate var_samp on columns */
-export type User_Phone_Number_Var_Samp_Fields = {
-  __typename?: 'user_phone_number_var_samp_fields';
-  pk?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by var_samp() on columns of table "user_phone_number" */
-export type User_Phone_Number_Var_Samp_Order_By = {
-  pk?: InputMaybe<Order_By>;
-};
-
-/** aggregate variance on columns */
-export type User_Phone_Number_Variance_Fields = {
-  __typename?: 'user_phone_number_variance_fields';
-  pk?: Maybe<Scalars['Float']['output']>;
-};
-
-/** order by variance() on columns of table "user_phone_number" */
-export type User_Phone_Number_Variance_Order_By = {
-  pk?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: user */
@@ -5509,11 +5622,35 @@ export type User_Stream_Cursor_Value_Input = {
 /** columns and relationships of "user_tg_channel" */
 export type User_Tg_Channel = {
   __typename?: 'user_tg_channel';
-  phone_number: Scalars['String']['output'];
+  pk: Scalars['bigint']['output'];
+  /** An array relationship */
+  tg_channel__sessions: Array<Tg_Channel__Session>;
+  /** An aggregate relationship */
+  tg_channel__sessions_aggregate: Tg_Channel__Session_Aggregate;
   tg_channel_id: Scalars['bigint']['output'];
   /** An object relationship */
   user: User;
   user_id: Scalars['uuid']['output'];
+};
+
+
+/** columns and relationships of "user_tg_channel" */
+export type User_Tg_ChannelTg_Channel__SessionsArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Channel__Session_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Channel__Session_Order_By>>;
+  where?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+};
+
+
+/** columns and relationships of "user_tg_channel" */
+export type User_Tg_ChannelTg_Channel__Sessions_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tg_Channel__Session_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tg_Channel__Session_Order_By>>;
+  where?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
 };
 
 /** aggregated selection of "user_tg_channel" */
@@ -5582,11 +5719,13 @@ export type User_Tg_Channel_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type User_Tg_Channel_Avg_Fields = {
   __typename?: 'user_tg_channel_avg_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by avg() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Avg_Order_By = {
+  pk?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
 };
 
@@ -5595,7 +5734,9 @@ export type User_Tg_Channel_Bool_Exp = {
   _and?: InputMaybe<Array<User_Tg_Channel_Bool_Exp>>;
   _not?: InputMaybe<User_Tg_Channel_Bool_Exp>;
   _or?: InputMaybe<Array<User_Tg_Channel_Bool_Exp>>;
-  phone_number?: InputMaybe<String_Comparison_Exp>;
+  pk?: InputMaybe<Bigint_Comparison_Exp>;
+  tg_channel__sessions?: InputMaybe<Tg_Channel__Session_Bool_Exp>;
+  tg_channel__sessions_aggregate?: InputMaybe<Tg_Channel__Session_Aggregate_Bool_Exp>;
   tg_channel_id?: InputMaybe<Bigint_Comparison_Exp>;
   user?: InputMaybe<User_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -5603,18 +5744,20 @@ export type User_Tg_Channel_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_tg_channel" */
 export enum User_Tg_Channel_Constraint {
-  /** unique or primary key constraint on columns "tg_channel_id", "user_id" */
+  /** unique or primary key constraint on columns "pk" */
   user_tg_channel_pkey = 'user_tg_channel_pkey'
 }
 
 /** input type for incrementing numeric columns in table "user_tg_channel" */
 export type User_Tg_Channel_Inc_Input = {
+  pk?: InputMaybe<Scalars['bigint']['input']>;
   tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
 };
 
 /** input type for inserting data into table "user_tg_channel" */
 export type User_Tg_Channel_Insert_Input = {
-  phone_number?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  tg_channel__sessions?: InputMaybe<Tg_Channel__Session_Arr_Rel_Insert_Input>;
   tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
   user?: InputMaybe<User_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
@@ -5623,14 +5766,14 @@ export type User_Tg_Channel_Insert_Input = {
 /** aggregate max on columns */
 export type User_Tg_Channel_Max_Fields = {
   __typename?: 'user_tg_channel_max_fields';
-  phone_number?: Maybe<Scalars['String']['output']>;
+  pk?: Maybe<Scalars['bigint']['output']>;
   tg_channel_id?: Maybe<Scalars['bigint']['output']>;
   user_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by max() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Max_Order_By = {
-  phone_number?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -5638,14 +5781,14 @@ export type User_Tg_Channel_Max_Order_By = {
 /** aggregate min on columns */
 export type User_Tg_Channel_Min_Fields = {
   __typename?: 'user_tg_channel_min_fields';
-  phone_number?: Maybe<Scalars['String']['output']>;
+  pk?: Maybe<Scalars['bigint']['output']>;
   tg_channel_id?: Maybe<Scalars['bigint']['output']>;
   user_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** order by min() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Min_Order_By = {
-  phone_number?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -5659,6 +5802,13 @@ export type User_Tg_Channel_Mutation_Response = {
   returning: Array<User_Tg_Channel>;
 };
 
+/** input type for inserting object relation for remote table "user_tg_channel" */
+export type User_Tg_Channel_Obj_Rel_Insert_Input = {
+  data: User_Tg_Channel_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Tg_Channel_On_Conflict>;
+};
+
 /** on_conflict condition type for table "user_tg_channel" */
 export type User_Tg_Channel_On_Conflict = {
   constraint: User_Tg_Channel_Constraint;
@@ -5668,7 +5818,8 @@ export type User_Tg_Channel_On_Conflict = {
 
 /** Ordering options when selecting data from "user_tg_channel". */
 export type User_Tg_Channel_Order_By = {
-  phone_number?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  tg_channel__sessions_aggregate?: InputMaybe<Tg_Channel__Session_Aggregate_Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
   user?: InputMaybe<User_Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -5676,14 +5827,13 @@ export type User_Tg_Channel_Order_By = {
 
 /** primary key columns input for table: user_tg_channel */
 export type User_Tg_Channel_Pk_Columns_Input = {
-  tg_channel_id: Scalars['bigint']['input'];
-  user_id: Scalars['uuid']['input'];
+  pk: Scalars['bigint']['input'];
 };
 
 /** select columns of table "user_tg_channel" */
 export enum User_Tg_Channel_Select_Column {
   /** column name */
-  phone_number = 'phone_number',
+  pk = 'pk',
   /** column name */
   tg_channel_id = 'tg_channel_id',
   /** column name */
@@ -5692,7 +5842,7 @@ export enum User_Tg_Channel_Select_Column {
 
 /** input type for updating data in table "user_tg_channel" */
 export type User_Tg_Channel_Set_Input = {
-  phone_number?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
   tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
@@ -5700,33 +5850,39 @@ export type User_Tg_Channel_Set_Input = {
 /** aggregate stddev on columns */
 export type User_Tg_Channel_Stddev_Fields = {
   __typename?: 'user_tg_channel_stddev_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Stddev_Order_By = {
+  pk?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type User_Tg_Channel_Stddev_Pop_Fields = {
   __typename?: 'user_tg_channel_stddev_pop_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_pop() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Stddev_Pop_Order_By = {
+  pk?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type User_Tg_Channel_Stddev_Samp_Fields = {
   __typename?: 'user_tg_channel_stddev_samp_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by stddev_samp() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Stddev_Samp_Order_By = {
+  pk?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
 };
 
@@ -5740,7 +5896,7 @@ export type User_Tg_Channel_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type User_Tg_Channel_Stream_Cursor_Value_Input = {
-  phone_number?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
   tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
@@ -5748,18 +5904,20 @@ export type User_Tg_Channel_Stream_Cursor_Value_Input = {
 /** aggregate sum on columns */
 export type User_Tg_Channel_Sum_Fields = {
   __typename?: 'user_tg_channel_sum_fields';
+  pk?: Maybe<Scalars['bigint']['output']>;
   tg_channel_id?: Maybe<Scalars['bigint']['output']>;
 };
 
 /** order by sum() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Sum_Order_By = {
+  pk?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "user_tg_channel" */
 export enum User_Tg_Channel_Update_Column {
   /** column name */
-  phone_number = 'phone_number',
+  pk = 'pk',
   /** column name */
   tg_channel_id = 'tg_channel_id',
   /** column name */
@@ -5778,33 +5936,39 @@ export type User_Tg_Channel_Updates = {
 /** aggregate var_pop on columns */
 export type User_Tg_Channel_Var_Pop_Fields = {
   __typename?: 'user_tg_channel_var_pop_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_pop() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Var_Pop_Order_By = {
+  pk?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type User_Tg_Channel_Var_Samp_Fields = {
   __typename?: 'user_tg_channel_var_samp_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by var_samp() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Var_Samp_Order_By = {
+  pk?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type User_Tg_Channel_Variance_Fields = {
   __typename?: 'user_tg_channel_variance_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
   tg_channel_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** order by variance() on columns of table "user_tg_channel" */
 export type User_Tg_Channel_Variance_Order_By = {
+  pk?: InputMaybe<Order_By>;
   tg_channel_id?: InputMaybe<Order_By>;
 };
 
@@ -6250,12 +6414,42 @@ export type DeleteInviteLinkMutationVariables = Exact<{
 
 export type DeleteInviteLinkMutation = { __typename?: 'mutation_root', delete_user_tg_invite_link_by_pk?: { __typename?: 'user_tg_invite_link', pk: any } | null };
 
+export type TgChannelsQueryVariables = Exact<{
+  title_search: Scalars['String']['input'];
+}>;
+
+
+export type TgChannelsQuery = { __typename?: 'query_root', tg_channels?: { __typename?: 'TgChannelsOutput', channels: Array<{ __typename?: 'TgChannel', channel_id: string, title: string, phone_numbers: Array<string> }> } | null };
+
+export type TrackedTgChannelsQueryVariables = Exact<{
+  user_id: Scalars['uuid']['input'];
+}>;
+
+
+export type TrackedTgChannelsQuery = { __typename?: 'query_root', user_tg_channel: Array<{ __typename?: 'user_tg_channel', tg_channel_id: any, user_id: any }> };
+
+export type TrackTgChannelMutationVariables = Exact<{
+  phone_numbers: Array<Scalars['String']['input']> | Scalars['String']['input'];
+  tg_channel_id: Scalars['String']['input'];
+}>;
+
+
+export type TrackTgChannelMutation = { __typename?: 'mutation_root', track_tg_channel?: { __typename?: 'track_tg_channel_output', success: boolean } | null };
+
+export type UntrackTgChannelMutationVariables = Exact<{
+  user_id: Scalars['uuid']['input'];
+  tg_channel_id: Scalars['bigint']['input'];
+}>;
+
+
+export type UntrackTgChannelMutation = { __typename?: 'mutation_root', delete_user_tg_channel?: { __typename?: 'user_tg_channel_mutation_response', affected_rows: number } | null };
+
 export type GetUserPhoneNumbersQueryVariables = Exact<{
   user_id: Scalars['uuid']['input'];
 }>;
 
 
-export type GetUserPhoneNumbersQuery = { __typename?: 'query_root', user_phone_number: Array<{ __typename?: 'user_phone_number', pk: any, phone_number: string, status?: string | null }>, get_tg_auth_deployment_id?: { __typename?: 'GetTgAuthDeploymentIdOutput', deployment_id: string } | null };
+export type GetUserPhoneNumbersQuery = { __typename?: 'query_root', config__tg_bot_session_pool: Array<{ __typename?: 'config__tg_bot_session_pool', pk: any, phone_number: string, status: string }>, get_tg_auth_deployment_id?: { __typename?: 'GetTgAuthDeploymentIdOutput', deployment_id: string } | null };
 
 export type FlowRunStateQueryVariables = Exact<{
   flow_run_id: Scalars['String']['input'];
@@ -6288,37 +6482,7 @@ export type DeletePhoneNumberMutationVariables = Exact<{
 }>;
 
 
-export type DeletePhoneNumberMutation = { __typename?: 'mutation_root', delete_config__tg_bot_session_pool?: { __typename?: 'config__tg_bot_session_pool_mutation_response', affected_rows: number } | null, delete_user_tg_channel?: { __typename?: 'user_tg_channel_mutation_response', affected_rows: number } | null, delete_user_phone_number?: { __typename?: 'user_phone_number_mutation_response', affected_rows: number } | null };
-
-export type TgChannelsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type TgChannelsQuery = { __typename?: 'query_root', tg_channels?: { __typename?: 'TgChannelsOutput', channels: Array<{ __typename?: 'TgChannel', channel_id: string, title: string, phone_number: string }> } | null };
-
-export type TrackedTgChannelsQueryVariables = Exact<{
-  user_id: Scalars['uuid']['input'];
-}>;
-
-
-export type TrackedTgChannelsQuery = { __typename?: 'query_root', user_tg_channel: Array<{ __typename?: 'user_tg_channel', tg_channel_id: any, user_id: any, phone_number: string }> };
-
-export type TrackTgChannelMutationVariables = Exact<{
-  phone_number: Scalars['String']['input'];
-  tg_channel_id: Scalars['bigint']['input'];
-  user_id: Scalars['uuid']['input'];
-}>;
-
-
-export type TrackTgChannelMutation = { __typename?: 'mutation_root', insert_user_tg_channel_one?: { __typename?: 'user_tg_channel', phone_number: string, tg_channel_id: any, user_id: any } | null };
-
-export type UntrackTgChannelMutationVariables = Exact<{
-  phone_number: Scalars['String']['input'];
-  user_id: Scalars['uuid']['input'];
-  tg_channel_id: Scalars['bigint']['input'];
-}>;
-
-
-export type UntrackTgChannelMutation = { __typename?: 'mutation_root', delete_user_tg_channel?: { __typename?: 'user_tg_channel_mutation_response', affected_rows: number } | null };
+export type DeletePhoneNumberMutation = { __typename?: 'mutation_root', delete_config__tg_bot_session_pool?: { __typename?: 'config__tg_bot_session_pool_mutation_response', affected_rows: number } | null };
 
 export type ErAvgQueryVariables = Exact<{
   from_date: Scalars['timestamp']['input'];
@@ -6451,15 +6615,15 @@ export const DeleteGroupDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const CreateInviteLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateInviteLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_invite_link"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"label"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"group_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_user_tg_invite_link_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_invite_link"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_invite_link"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"label"},"value":{"kind":"Variable","name":{"kind":"Name","value":"label"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"group_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"tg_invite_link"}},{"kind":"Field","name":{"kind":"Name","value":"label"}}]}}]}}]} as unknown as DocumentNode<CreateInviteLinkMutation, CreateInviteLinkMutationVariables>;
 export const UpdateInviteLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateInviteLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pk"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_invite_link"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"label"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_user_tg_invite_link_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"pk"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pk"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_invite_link"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_invite_link"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"label"},"value":{"kind":"Variable","name":{"kind":"Name","value":"label"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"tg_invite_link"}},{"kind":"Field","name":{"kind":"Name","value":"label"}}]}}]}}]} as unknown as DocumentNode<UpdateInviteLinkMutation, UpdateInviteLinkMutationVariables>;
 export const DeleteInviteLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteInviteLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pk"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_user_tg_invite_link_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pk"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}}]}}]}}]} as unknown as DocumentNode<DeleteInviteLinkMutation, DeleteInviteLinkMutationVariables>;
-export const GetUserPhoneNumbersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserPhoneNumbers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_phone_number"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"phone_number"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"get_tg_auth_deployment_id"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deployment_id"}}]}}]}}]} as unknown as DocumentNode<GetUserPhoneNumbersQuery, GetUserPhoneNumbersQueryVariables>;
+export const TgChannelsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TgChannels"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title_search"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tg_channels"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"arg1"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title_search"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title_search"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"channels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"channel_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"phone_numbers"}}]}}]}}]}}]} as unknown as DocumentNode<TgChannelsQuery, TgChannelsQueryVariables>;
+export const TrackedTgChannelsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TrackedTgChannels"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tg_channel_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}}]}}]}}]} as unknown as DocumentNode<TrackedTgChannelsQuery, TrackedTgChannelsQueryVariables>;
+export const TrackTgChannelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TrackTgChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_numbers"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"track_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"arg1"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_numbers"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_numbers"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}}]}}]}}]} as unknown as DocumentNode<TrackTgChannelMutation, TrackTgChannelMutationVariables>;
+export const UntrackTgChannelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UntrackTgChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<UntrackTgChannelMutation, UntrackTgChannelMutationVariables>;
+export const GetUserPhoneNumbersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserPhoneNumbers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"config__tg_bot_session_pool"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"phone_number"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"get_tg_auth_deployment_id"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deployment_id"}}]}}]}}]} as unknown as DocumentNode<GetUserPhoneNumbersQuery, GetUserPhoneNumbersQueryVariables>;
 export const FlowRunStateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FlowRunState"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"flow_run_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"flow_run"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"arg1"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"flow_run_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"flow_run_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"state"}}]}}]}}]} as unknown as DocumentNode<FlowRunStateQuery, FlowRunStateQueryVariables>;
 export const Request2FaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Request2FA"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deployment_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"api_hash"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"api_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"request_2fa"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"arg1"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"deployment_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deployment_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"api_hash"},"value":{"kind":"Variable","name":{"kind":"Name","value":"api_hash"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"api_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"api_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"error_text"}},{"kind":"Field","name":{"kind":"Name","value":"flow_run_id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<Request2FaMutation, Request2FaMutationVariables>;
 export const Confirm2FaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Confirm2FA"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"flow_run_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code_2fa"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cloud_password"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"confirm_2fa"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"arg1"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"code_2fa"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code_2fa"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"flow_run_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"flow_run_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"cloud_password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cloud_password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"error_text"}}]}}]}}]} as unknown as DocumentNode<Confirm2FaMutation, Confirm2FaMutationVariables>;
-export const DeletePhoneNumberDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePhoneNumber"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_config__tg_bot_session_pool"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_user_phone_number"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<DeletePhoneNumberMutation, DeletePhoneNumberMutationVariables>;
-export const TgChannelsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TgChannels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tg_channels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"channels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"channel_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"phone_number"}}]}}]}}]}}]} as unknown as DocumentNode<TgChannelsQuery, TgChannelsQueryVariables>;
-export const TrackedTgChannelsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TrackedTgChannels"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tg_channel_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"phone_number"}}]}}]}}]} as unknown as DocumentNode<TrackedTgChannelsQuery, TrackedTgChannelsQueryVariables>;
-export const TrackTgChannelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TrackTgChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_user_tg_channel_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phone_number"}},{"kind":"Field","name":{"kind":"Name","value":"tg_channel_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}}]}}]}}]} as unknown as DocumentNode<TrackTgChannelMutation, TrackTgChannelMutationVariables>;
-export const UntrackTgChannelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UntrackTgChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<UntrackTgChannelMutation, UntrackTgChannelMutationVariables>;
+export const DeletePhoneNumberDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePhoneNumber"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_config__tg_bot_session_pool"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<DeletePhoneNumberMutation, DeletePhoneNumberMutationVariables>;
 export const ErAvgDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ERAvg"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ErAvgQuery, ErAvgQueryVariables>;
 export const AvgUserLifecycleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AvgUserLifecycle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"get_avg_user_lifecycle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avg_lifecycle_days"}}]}}]}}]} as unknown as DocumentNode<AvgUserLifecycleQuery, AvgUserLifecycleQueryVariables>;
 export const CohortAnalysisDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CohortAnalysis"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_bucket"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cohort_analysis"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"time_bucket"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_bucket"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"join_date"}},{"kind":"Field","name":{"kind":"Name","value":"left_date"}},{"kind":"Field","name":{"kind":"Name","value":"joined_count"}},{"kind":"Field","name":{"kind":"Name","value":"left_count"}}]}}]}}]} as unknown as DocumentNode<CohortAnalysisQuery, CohortAnalysisQueryVariables>;

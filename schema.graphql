@@ -134,8 +134,12 @@ input String_comparison_exp {
 
 type TgChannel {
   channel_id: String!
-  phone_number: String!
+  phone_numbers: [String!]!
   title: String!
+}
+
+input TgChannelsInput {
+  title_search: String!
 }
 
 type TgChannelsOutput {
@@ -174,10 +178,56 @@ input cohort_analysis_args {
 columns and relationships of "config__tg_bot_session_pool"
 """
 type config__tg_bot_session_pool {
+  created_at: timestamp!
   phone_number: String!
+  pk: bigint!
+  status: String!
+
+  """An array relationship"""
+  tg_channel__sessions(
+    """distinct select on columns"""
+    distinct_on: [tg_channel__session_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [tg_channel__session_order_by!]
+
+    """filter the rows returned"""
+    where: tg_channel__session_bool_exp
+  ): [tg_channel__session!]!
 
   """An object relationship"""
-  user_phone_number: user_phone_number
+  user: user!
+  user_id: uuid!
+}
+
+"""
+order by aggregate values of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_aggregate_order_by {
+  avg: config__tg_bot_session_pool_avg_order_by
+  count: order_by
+  max: config__tg_bot_session_pool_max_order_by
+  min: config__tg_bot_session_pool_min_order_by
+  stddev: config__tg_bot_session_pool_stddev_order_by
+  stddev_pop: config__tg_bot_session_pool_stddev_pop_order_by
+  stddev_samp: config__tg_bot_session_pool_stddev_samp_order_by
+  sum: config__tg_bot_session_pool_sum_order_by
+  var_pop: config__tg_bot_session_pool_var_pop_order_by
+  var_samp: config__tg_bot_session_pool_var_samp_order_by
+  variance: config__tg_bot_session_pool_variance_order_by
+}
+
+"""
+order by avg() on columns of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_avg_order_by {
+  pk: order_by
 }
 
 """
@@ -187,8 +237,35 @@ input config__tg_bot_session_pool_bool_exp {
   _and: [config__tg_bot_session_pool_bool_exp!]
   _not: config__tg_bot_session_pool_bool_exp
   _or: [config__tg_bot_session_pool_bool_exp!]
+  created_at: timestamp_comparison_exp
   phone_number: String_comparison_exp
-  user_phone_number: user_phone_number_bool_exp
+  pk: bigint_comparison_exp
+  status: String_comparison_exp
+  tg_channel__sessions: tg_channel__session_bool_exp
+  user: user_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+order by max() on columns of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_max_order_by {
+  created_at: order_by
+  phone_number: order_by
+  pk: order_by
+  status: order_by
+  user_id: order_by
+}
+
+"""
+order by min() on columns of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_min_order_by {
+  created_at: order_by
+  phone_number: order_by
+  pk: order_by
+  status: order_by
+  user_id: order_by
 }
 
 """
@@ -206,8 +283,13 @@ type config__tg_bot_session_pool_mutation_response {
 Ordering options when selecting data from "config__tg_bot_session_pool".
 """
 input config__tg_bot_session_pool_order_by {
+  created_at: order_by
   phone_number: order_by
-  user_phone_number: user_phone_number_order_by
+  pk: order_by
+  status: order_by
+  tg_channel__sessions_aggregate: tg_channel__session_aggregate_order_by
+  user: user_order_by
+  user_id: order_by
 }
 
 """
@@ -215,7 +297,40 @@ select columns of table "config__tg_bot_session_pool"
 """
 enum config__tg_bot_session_pool_select_column {
   """column name"""
+  created_at
+
+  """column name"""
   phone_number
+
+  """column name"""
+  pk
+
+  """column name"""
+  status
+
+  """column name"""
+  user_id
+}
+
+"""
+order by stddev() on columns of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_stddev_order_by {
+  pk: order_by
+}
+
+"""
+order by stddev_pop() on columns of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_stddev_pop_order_by {
+  pk: order_by
+}
+
+"""
+order by stddev_samp() on columns of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_stddev_samp_order_by {
+  pk: order_by
 }
 
 """
@@ -231,7 +346,39 @@ input config__tg_bot_session_pool_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input config__tg_bot_session_pool_stream_cursor_value_input {
+  created_at: timestamp
   phone_number: String
+  pk: bigint
+  status: String
+  user_id: uuid
+}
+
+"""
+order by sum() on columns of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_sum_order_by {
+  pk: order_by
+}
+
+"""
+order by var_pop() on columns of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_var_pop_order_by {
+  pk: order_by
+}
+
+"""
+order by var_samp() on columns of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_var_samp_order_by {
+  pk: order_by
+}
+
+"""
+order by variance() on columns of table "config__tg_bot_session_pool"
+"""
+input config__tg_bot_session_pool_variance_order_by {
+  pk: order_by
 }
 
 """ordering argument of a cursor"""
@@ -994,17 +1141,9 @@ type mutation_root {
   ): config__tg_bot_session_pool_mutation_response
 
   """
-  delete data from the table: "user_phone_number"
+  delete single row from the table: "config__tg_bot_session_pool"
   """
-  delete_user_phone_number(
-    """filter the rows which have to be deleted"""
-    where: user_phone_number_bool_exp!
-  ): user_phone_number_mutation_response
-
-  """
-  delete single row from the table: "user_phone_number"
-  """
-  delete_user_phone_number_by_pk(pk: bigint!): user_phone_number
+  delete_config__tg_bot_session_pool_by_pk(pk: bigint!): config__tg_bot_session_pool
 
   """
   delete data from the table: "user_tg_channel"
@@ -1017,7 +1156,7 @@ type mutation_root {
   """
   delete single row from the table: "user_tg_channel"
   """
-  delete_user_tg_channel_by_pk(tg_channel_id: bigint!, user_id: uuid!): user_tg_channel
+  delete_user_tg_channel_by_pk(pk: bigint!): user_tg_channel
 
   """
   delete data from the table: "user_tg_invite_link"
@@ -1055,28 +1194,6 @@ type mutation_root {
   ): tg_invite_link_group
 
   """
-  insert data into the table: "user_tg_channel"
-  """
-  insert_user_tg_channel(
-    """the rows to be inserted"""
-    objects: [user_tg_channel_insert_input!]!
-
-    """upsert condition"""
-    on_conflict: user_tg_channel_on_conflict
-  ): user_tg_channel_mutation_response
-
-  """
-  insert a single row into the table: "user_tg_channel"
-  """
-  insert_user_tg_channel_one(
-    """the row to be inserted"""
-    object: user_tg_channel_insert_input!
-
-    """upsert condition"""
-    on_conflict: user_tg_channel_on_conflict
-  ): user_tg_channel
-
-  """
   insert data into the table: "user_tg_invite_link"
   """
   insert_user_tg_invite_link(
@@ -1098,6 +1215,7 @@ type mutation_root {
     on_conflict: user_tg_invite_link_on_conflict
   ): user_tg_invite_link
   request_2fa(arg1: Request2FAInput!): Request2FAOutput
+  track_tg_channel(arg1: track_tg_channel_input!): track_tg_channel_output
 
   """
   update data of the table: "tg_invite_link_group"
@@ -1253,6 +1371,11 @@ type query_root {
     """filter the rows returned"""
     where: config__tg_bot_session_pool_bool_exp
   ): [config__tg_bot_session_pool!]!
+
+  """
+  fetch data from the table: "config__tg_bot_session_pool" using primary key columns
+  """
+  config__tg_bot_session_pool_by_pk(pk: bigint!): config__tg_bot_session_pool
   flow_run(arg1: FlowRunInput!): FlowRunOutput
 
   """
@@ -1634,7 +1757,32 @@ type query_root {
 
   """fetch data from the table: "stat_user" using primary key columns"""
   stat_user_by_pk(pk: bigint!): stat_user
-  tg_channels: TgChannelsOutput
+
+  """
+  fetch data from the table: "tg_channel__session"
+  """
+  tg_channel__session(
+    """distinct select on columns"""
+    distinct_on: [tg_channel__session_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [tg_channel__session_order_by!]
+
+    """filter the rows returned"""
+    where: tg_channel__session_bool_exp
+  ): [tg_channel__session!]!
+
+  """
+  fetch data from the table: "tg_channel__session" using primary key columns
+  """
+  tg_channel__session_by_pk(config__tg_bot_session_pool_pk: bigint!, user_tg_channel_pk: bigint!): tg_channel__session
+  tg_channels(arg1: TgChannelsInput!): TgChannelsOutput
 
   """
   fetch data from the table: "tg_invite_link_group"
@@ -1805,51 +1953,6 @@ type query_root {
   user_by_pk(id: uuid!): user
 
   """
-  fetch data from the table: "user_phone_number"
-  """
-  user_phone_number(
-    """distinct select on columns"""
-    distinct_on: [user_phone_number_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_phone_number_order_by!]
-
-    """filter the rows returned"""
-    where: user_phone_number_bool_exp
-  ): [user_phone_number!]!
-
-  """
-  fetch aggregated fields from the table: "user_phone_number"
-  """
-  user_phone_number_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_phone_number_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_phone_number_order_by!]
-
-    """filter the rows returned"""
-    where: user_phone_number_bool_exp
-  ): user_phone_number_aggregate!
-
-  """
-  fetch data from the table: "user_phone_number" using primary key columns
-  """
-  user_phone_number_by_pk(pk: bigint!): user_phone_number
-
-  """
   execute function "user_signups_by_period" which returns "fn_users_by_period"
   """
   user_signups_by_period(
@@ -1919,28 +2022,8 @@ type query_root {
     where: user_tg_channel_bool_exp
   ): [user_tg_channel!]!
 
-  """
-  fetch aggregated fields from the table: "user_tg_channel"
-  """
-  user_tg_channel_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_tg_channel_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_tg_channel_order_by!]
-
-    """filter the rows returned"""
-    where: user_tg_channel_bool_exp
-  ): user_tg_channel_aggregate!
-
   """fetch data from the table: "user_tg_channel" using primary key columns"""
-  user_tg_channel_by_pk(tg_channel_id: bigint!, user_id: uuid!): user_tg_channel
+  user_tg_channel_by_pk(pk: bigint!): user_tg_channel
 
   """
   fetch data from the table: "user_tg_invite_link"
@@ -2967,6 +3050,11 @@ type subscription_root {
   ): [config__tg_bot_session_pool!]!
 
   """
+  fetch data from the table: "config__tg_bot_session_pool" using primary key columns
+  """
+  config__tg_bot_session_pool_by_pk(pk: bigint!): config__tg_bot_session_pool
+
+  """
   fetch data from the table in a streaming manner: "config__tg_bot_session_pool"
   """
   config__tg_bot_session_pool_stream(
@@ -3472,6 +3560,45 @@ type subscription_root {
   ): [stat_user!]!
 
   """
+  fetch data from the table: "tg_channel__session"
+  """
+  tg_channel__session(
+    """distinct select on columns"""
+    distinct_on: [tg_channel__session_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [tg_channel__session_order_by!]
+
+    """filter the rows returned"""
+    where: tg_channel__session_bool_exp
+  ): [tg_channel__session!]!
+
+  """
+  fetch data from the table: "tg_channel__session" using primary key columns
+  """
+  tg_channel__session_by_pk(config__tg_bot_session_pool_pk: bigint!, user_tg_channel_pk: bigint!): tg_channel__session
+
+  """
+  fetch data from the table in a streaming manner: "tg_channel__session"
+  """
+  tg_channel__session_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [tg_channel__session_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: tg_channel__session_bool_exp
+  ): [tg_channel__session!]!
+
+  """
   fetch data from the table: "tg_invite_link_group"
   """
   tg_invite_link_group(
@@ -3654,65 +3781,6 @@ type subscription_root {
   user_by_pk(id: uuid!): user
 
   """
-  fetch data from the table: "user_phone_number"
-  """
-  user_phone_number(
-    """distinct select on columns"""
-    distinct_on: [user_phone_number_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_phone_number_order_by!]
-
-    """filter the rows returned"""
-    where: user_phone_number_bool_exp
-  ): [user_phone_number!]!
-
-  """
-  fetch aggregated fields from the table: "user_phone_number"
-  """
-  user_phone_number_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_phone_number_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_phone_number_order_by!]
-
-    """filter the rows returned"""
-    where: user_phone_number_bool_exp
-  ): user_phone_number_aggregate!
-
-  """
-  fetch data from the table: "user_phone_number" using primary key columns
-  """
-  user_phone_number_by_pk(pk: bigint!): user_phone_number
-
-  """
-  fetch data from the table in a streaming manner: "user_phone_number"
-  """
-  user_phone_number_stream(
-    """maximum number of rows returned in a single batch"""
-    batch_size: Int!
-
-    """cursor to stream the results returned by the query"""
-    cursor: [user_phone_number_stream_cursor_input]!
-
-    """filter the rows returned"""
-    where: user_phone_number_bool_exp
-  ): [user_phone_number!]!
-
-  """
   execute function "user_signups_by_period" which returns "fn_users_by_period"
   """
   user_signups_by_period(
@@ -3796,28 +3864,8 @@ type subscription_root {
     where: user_tg_channel_bool_exp
   ): [user_tg_channel!]!
 
-  """
-  fetch aggregated fields from the table: "user_tg_channel"
-  """
-  user_tg_channel_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_tg_channel_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_tg_channel_order_by!]
-
-    """filter the rows returned"""
-    where: user_tg_channel_bool_exp
-  ): user_tg_channel_aggregate!
-
   """fetch data from the table: "user_tg_channel" using primary key columns"""
-  user_tg_channel_by_pk(tg_channel_id: bigint!, user_id: uuid!): user_tg_channel
+  user_tg_channel_by_pk(pk: bigint!): user_tg_channel
 
   """
   fetch data from the table in a streaming manner: "user_tg_channel"
@@ -3941,6 +3989,165 @@ type subscription_root {
     """filter the rows returned"""
     where: fn_users_by_period_bool_exp
   ): fn_users_by_period_aggregate!
+}
+
+"""
+columns and relationships of "tg_channel__session"
+"""
+type tg_channel__session {
+  """An object relationship"""
+  config__tg_bot_session_pool: config__tg_bot_session_pool!
+  config__tg_bot_session_pool_pk: bigint!
+
+  """An object relationship"""
+  user_tg_channel: user_tg_channel!
+  user_tg_channel_pk: bigint!
+}
+
+"""
+order by aggregate values of table "tg_channel__session"
+"""
+input tg_channel__session_aggregate_order_by {
+  avg: tg_channel__session_avg_order_by
+  count: order_by
+  max: tg_channel__session_max_order_by
+  min: tg_channel__session_min_order_by
+  stddev: tg_channel__session_stddev_order_by
+  stddev_pop: tg_channel__session_stddev_pop_order_by
+  stddev_samp: tg_channel__session_stddev_samp_order_by
+  sum: tg_channel__session_sum_order_by
+  var_pop: tg_channel__session_var_pop_order_by
+  var_samp: tg_channel__session_var_samp_order_by
+  variance: tg_channel__session_variance_order_by
+}
+
+"""
+order by avg() on columns of table "tg_channel__session"
+"""
+input tg_channel__session_avg_order_by {
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel_pk: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "tg_channel__session". All fields are combined with a logical 'AND'.
+"""
+input tg_channel__session_bool_exp {
+  _and: [tg_channel__session_bool_exp!]
+  _not: tg_channel__session_bool_exp
+  _or: [tg_channel__session_bool_exp!]
+  config__tg_bot_session_pool: config__tg_bot_session_pool_bool_exp
+  config__tg_bot_session_pool_pk: bigint_comparison_exp
+  user_tg_channel: user_tg_channel_bool_exp
+  user_tg_channel_pk: bigint_comparison_exp
+}
+
+"""
+order by max() on columns of table "tg_channel__session"
+"""
+input tg_channel__session_max_order_by {
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel_pk: order_by
+}
+
+"""
+order by min() on columns of table "tg_channel__session"
+"""
+input tg_channel__session_min_order_by {
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel_pk: order_by
+}
+
+"""Ordering options when selecting data from "tg_channel__session"."""
+input tg_channel__session_order_by {
+  config__tg_bot_session_pool: config__tg_bot_session_pool_order_by
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel: user_tg_channel_order_by
+  user_tg_channel_pk: order_by
+}
+
+"""
+select columns of table "tg_channel__session"
+"""
+enum tg_channel__session_select_column {
+  """column name"""
+  config__tg_bot_session_pool_pk
+
+  """column name"""
+  user_tg_channel_pk
+}
+
+"""
+order by stddev() on columns of table "tg_channel__session"
+"""
+input tg_channel__session_stddev_order_by {
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel_pk: order_by
+}
+
+"""
+order by stddev_pop() on columns of table "tg_channel__session"
+"""
+input tg_channel__session_stddev_pop_order_by {
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel_pk: order_by
+}
+
+"""
+order by stddev_samp() on columns of table "tg_channel__session"
+"""
+input tg_channel__session_stddev_samp_order_by {
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel_pk: order_by
+}
+
+"""
+Streaming cursor of the table "tg_channel__session"
+"""
+input tg_channel__session_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: tg_channel__session_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input tg_channel__session_stream_cursor_value_input {
+  config__tg_bot_session_pool_pk: bigint
+  user_tg_channel_pk: bigint
+}
+
+"""
+order by sum() on columns of table "tg_channel__session"
+"""
+input tg_channel__session_sum_order_by {
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel_pk: order_by
+}
+
+"""
+order by var_pop() on columns of table "tg_channel__session"
+"""
+input tg_channel__session_var_pop_order_by {
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel_pk: order_by
+}
+
+"""
+order by var_samp() on columns of table "tg_channel__session"
+"""
+input tg_channel__session_var_samp_order_by {
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel_pk: order_by
+}
+
+"""
+order by variance() on columns of table "tg_channel__session"
+"""
+input tg_channel__session_variance_order_by {
+  config__tg_bot_session_pool_pk: order_by
+  user_tg_channel_pk: order_by
 }
 
 """
@@ -4322,6 +4529,15 @@ input timestamp_comparison_exp {
   _nin: [timestamp!]
 }
 
+input track_tg_channel_input {
+  phone_numbers: [String!]!
+  tg_channel_id: String!
+}
+
+type track_tg_channel_output {
+  success: Boolean!
+}
+
 input unsubscribes_by_links_args {
   end_date: timestamp
   link_array: _text
@@ -4339,6 +4555,23 @@ input unsubscribes_by_periods_args {
 columns and relationships of "user"
 """
 type user {
+  """An array relationship"""
+  config__tg_bot_session_pools(
+    """distinct select on columns"""
+    distinct_on: [config__tg_bot_session_pool_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [config__tg_bot_session_pool_order_by!]
+
+    """filter the rows returned"""
+    where: config__tg_bot_session_pool_bool_exp
+  ): [config__tg_bot_session_pool!]!
   created_at: timestamp!
   id: uuid!
 
@@ -4379,42 +4612,6 @@ type user {
   ): tg_invite_link_group_aggregate!
 
   """An array relationship"""
-  user_phone_numbers(
-    """distinct select on columns"""
-    distinct_on: [user_phone_number_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_phone_number_order_by!]
-
-    """filter the rows returned"""
-    where: user_phone_number_bool_exp
-  ): [user_phone_number!]!
-
-  """An aggregate relationship"""
-  user_phone_numbers_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_phone_number_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_phone_number_order_by!]
-
-    """filter the rows returned"""
-    where: user_phone_number_bool_exp
-  ): user_phone_number_aggregate!
-
-  """An array relationship"""
   user_tg_channels(
     """distinct select on columns"""
     distinct_on: [user_tg_channel_select_column!]
@@ -4431,24 +4628,6 @@ type user {
     """filter the rows returned"""
     where: user_tg_channel_bool_exp
   ): [user_tg_channel!]!
-
-  """An aggregate relationship"""
-  user_tg_channels_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_tg_channel_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_tg_channel_order_by!]
-
-    """filter the rows returned"""
-    where: user_tg_channel_bool_exp
-  ): user_tg_channel_aggregate!
 
   """An array relationship"""
   user_tg_invite_links(
@@ -4494,294 +4673,24 @@ input user_bool_exp {
   _and: [user_bool_exp!]
   _not: user_bool_exp
   _or: [user_bool_exp!]
+  config__tg_bot_session_pools: config__tg_bot_session_pool_bool_exp
   created_at: timestamp_comparison_exp
   id: uuid_comparison_exp
   tg_invite_link_groups: tg_invite_link_group_bool_exp
   tg_invite_link_groups_aggregate: tg_invite_link_group_aggregate_bool_exp
-  user_phone_numbers: user_phone_number_bool_exp
-  user_phone_numbers_aggregate: user_phone_number_aggregate_bool_exp
   user_tg_channels: user_tg_channel_bool_exp
-  user_tg_channels_aggregate: user_tg_channel_aggregate_bool_exp
   user_tg_invite_links: user_tg_invite_link_bool_exp
   user_tg_invite_links_aggregate: user_tg_invite_link_aggregate_bool_exp
 }
 
 """Ordering options when selecting data from "user"."""
 input user_order_by {
+  config__tg_bot_session_pools_aggregate: config__tg_bot_session_pool_aggregate_order_by
   created_at: order_by
   id: order_by
   tg_invite_link_groups_aggregate: tg_invite_link_group_aggregate_order_by
-  user_phone_numbers_aggregate: user_phone_number_aggregate_order_by
   user_tg_channels_aggregate: user_tg_channel_aggregate_order_by
   user_tg_invite_links_aggregate: user_tg_invite_link_aggregate_order_by
-}
-
-"""
-columns and relationships of "user_phone_number"
-"""
-type user_phone_number {
-  phone_number: String!
-  pk: bigint!
-  status: String
-
-  """An object relationship"""
-  user: user!
-  user_id: uuid!
-}
-
-"""
-aggregated selection of "user_phone_number"
-"""
-type user_phone_number_aggregate {
-  aggregate: user_phone_number_aggregate_fields
-  nodes: [user_phone_number!]!
-}
-
-input user_phone_number_aggregate_bool_exp {
-  count: user_phone_number_aggregate_bool_exp_count
-}
-
-input user_phone_number_aggregate_bool_exp_count {
-  arguments: [user_phone_number_select_column!]
-  distinct: Boolean
-  filter: user_phone_number_bool_exp
-  predicate: Int_comparison_exp!
-}
-
-"""
-aggregate fields of "user_phone_number"
-"""
-type user_phone_number_aggregate_fields {
-  avg: user_phone_number_avg_fields
-  count(columns: [user_phone_number_select_column!], distinct: Boolean): Int!
-  max: user_phone_number_max_fields
-  min: user_phone_number_min_fields
-  stddev: user_phone_number_stddev_fields
-  stddev_pop: user_phone_number_stddev_pop_fields
-  stddev_samp: user_phone_number_stddev_samp_fields
-  sum: user_phone_number_sum_fields
-  var_pop: user_phone_number_var_pop_fields
-  var_samp: user_phone_number_var_samp_fields
-  variance: user_phone_number_variance_fields
-}
-
-"""
-order by aggregate values of table "user_phone_number"
-"""
-input user_phone_number_aggregate_order_by {
-  avg: user_phone_number_avg_order_by
-  count: order_by
-  max: user_phone_number_max_order_by
-  min: user_phone_number_min_order_by
-  stddev: user_phone_number_stddev_order_by
-  stddev_pop: user_phone_number_stddev_pop_order_by
-  stddev_samp: user_phone_number_stddev_samp_order_by
-  sum: user_phone_number_sum_order_by
-  var_pop: user_phone_number_var_pop_order_by
-  var_samp: user_phone_number_var_samp_order_by
-  variance: user_phone_number_variance_order_by
-}
-
-"""aggregate avg on columns"""
-type user_phone_number_avg_fields {
-  pk: Float
-}
-
-"""
-order by avg() on columns of table "user_phone_number"
-"""
-input user_phone_number_avg_order_by {
-  pk: order_by
-}
-
-"""
-Boolean expression to filter rows from the table "user_phone_number". All fields are combined with a logical 'AND'.
-"""
-input user_phone_number_bool_exp {
-  _and: [user_phone_number_bool_exp!]
-  _not: user_phone_number_bool_exp
-  _or: [user_phone_number_bool_exp!]
-  phone_number: String_comparison_exp
-  pk: bigint_comparison_exp
-  status: String_comparison_exp
-  user: user_bool_exp
-  user_id: uuid_comparison_exp
-}
-
-"""aggregate max on columns"""
-type user_phone_number_max_fields {
-  phone_number: String
-  pk: bigint
-  status: String
-  user_id: uuid
-}
-
-"""
-order by max() on columns of table "user_phone_number"
-"""
-input user_phone_number_max_order_by {
-  phone_number: order_by
-  pk: order_by
-  status: order_by
-  user_id: order_by
-}
-
-"""aggregate min on columns"""
-type user_phone_number_min_fields {
-  phone_number: String
-  pk: bigint
-  status: String
-  user_id: uuid
-}
-
-"""
-order by min() on columns of table "user_phone_number"
-"""
-input user_phone_number_min_order_by {
-  phone_number: order_by
-  pk: order_by
-  status: order_by
-  user_id: order_by
-}
-
-"""
-response of any mutation on the table "user_phone_number"
-"""
-type user_phone_number_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [user_phone_number!]!
-}
-
-"""Ordering options when selecting data from "user_phone_number"."""
-input user_phone_number_order_by {
-  phone_number: order_by
-  pk: order_by
-  status: order_by
-  user: user_order_by
-  user_id: order_by
-}
-
-"""
-select columns of table "user_phone_number"
-"""
-enum user_phone_number_select_column {
-  """column name"""
-  phone_number
-
-  """column name"""
-  pk
-
-  """column name"""
-  status
-
-  """column name"""
-  user_id
-}
-
-"""aggregate stddev on columns"""
-type user_phone_number_stddev_fields {
-  pk: Float
-}
-
-"""
-order by stddev() on columns of table "user_phone_number"
-"""
-input user_phone_number_stddev_order_by {
-  pk: order_by
-}
-
-"""aggregate stddev_pop on columns"""
-type user_phone_number_stddev_pop_fields {
-  pk: Float
-}
-
-"""
-order by stddev_pop() on columns of table "user_phone_number"
-"""
-input user_phone_number_stddev_pop_order_by {
-  pk: order_by
-}
-
-"""aggregate stddev_samp on columns"""
-type user_phone_number_stddev_samp_fields {
-  pk: Float
-}
-
-"""
-order by stddev_samp() on columns of table "user_phone_number"
-"""
-input user_phone_number_stddev_samp_order_by {
-  pk: order_by
-}
-
-"""
-Streaming cursor of the table "user_phone_number"
-"""
-input user_phone_number_stream_cursor_input {
-  """Stream column input with initial value"""
-  initial_value: user_phone_number_stream_cursor_value_input!
-
-  """cursor ordering"""
-  ordering: cursor_ordering
-}
-
-"""Initial value of the column from where the streaming should start"""
-input user_phone_number_stream_cursor_value_input {
-  phone_number: String
-  pk: bigint
-  status: String
-  user_id: uuid
-}
-
-"""aggregate sum on columns"""
-type user_phone_number_sum_fields {
-  pk: bigint
-}
-
-"""
-order by sum() on columns of table "user_phone_number"
-"""
-input user_phone_number_sum_order_by {
-  pk: order_by
-}
-
-"""aggregate var_pop on columns"""
-type user_phone_number_var_pop_fields {
-  pk: Float
-}
-
-"""
-order by var_pop() on columns of table "user_phone_number"
-"""
-input user_phone_number_var_pop_order_by {
-  pk: order_by
-}
-
-"""aggregate var_samp on columns"""
-type user_phone_number_var_samp_fields {
-  pk: Float
-}
-
-"""
-order by var_samp() on columns of table "user_phone_number"
-"""
-input user_phone_number_var_samp_order_by {
-  pk: order_by
-}
-
-"""aggregate variance on columns"""
-type user_phone_number_variance_fields {
-  pk: Float
-}
-
-"""
-order by variance() on columns of table "user_phone_number"
-"""
-input user_phone_number_variance_order_by {
-  pk: order_by
 }
 
 """
@@ -4823,48 +4732,30 @@ input user_stream_cursor_value_input {
 columns and relationships of "user_tg_channel"
 """
 type user_tg_channel {
-  phone_number: String!
+  pk: bigint!
+
+  """An array relationship"""
+  tg_channel__sessions(
+    """distinct select on columns"""
+    distinct_on: [tg_channel__session_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [tg_channel__session_order_by!]
+
+    """filter the rows returned"""
+    where: tg_channel__session_bool_exp
+  ): [tg_channel__session!]!
   tg_channel_id: bigint!
 
   """An object relationship"""
   user: user!
   user_id: uuid!
-}
-
-"""
-aggregated selection of "user_tg_channel"
-"""
-type user_tg_channel_aggregate {
-  aggregate: user_tg_channel_aggregate_fields
-  nodes: [user_tg_channel!]!
-}
-
-input user_tg_channel_aggregate_bool_exp {
-  count: user_tg_channel_aggregate_bool_exp_count
-}
-
-input user_tg_channel_aggregate_bool_exp_count {
-  arguments: [user_tg_channel_select_column!]
-  distinct: Boolean
-  filter: user_tg_channel_bool_exp
-  predicate: Int_comparison_exp!
-}
-
-"""
-aggregate fields of "user_tg_channel"
-"""
-type user_tg_channel_aggregate_fields {
-  avg: user_tg_channel_avg_fields
-  count(columns: [user_tg_channel_select_column!], distinct: Boolean): Int!
-  max: user_tg_channel_max_fields
-  min: user_tg_channel_min_fields
-  stddev: user_tg_channel_stddev_fields
-  stddev_pop: user_tg_channel_stddev_pop_fields
-  stddev_samp: user_tg_channel_stddev_samp_fields
-  sum: user_tg_channel_sum_fields
-  var_pop: user_tg_channel_var_pop_fields
-  var_samp: user_tg_channel_var_samp_fields
-  variance: user_tg_channel_variance_fields
 }
 
 """
@@ -4884,15 +4775,11 @@ input user_tg_channel_aggregate_order_by {
   variance: user_tg_channel_variance_order_by
 }
 
-"""aggregate avg on columns"""
-type user_tg_channel_avg_fields {
-  tg_channel_id: Float
-}
-
 """
 order by avg() on columns of table "user_tg_channel"
 """
 input user_tg_channel_avg_order_by {
+  pk: order_by
   tg_channel_id: order_by
 }
 
@@ -4903,59 +4790,27 @@ input user_tg_channel_bool_exp {
   _and: [user_tg_channel_bool_exp!]
   _not: user_tg_channel_bool_exp
   _or: [user_tg_channel_bool_exp!]
-  phone_number: String_comparison_exp
+  pk: bigint_comparison_exp
+  tg_channel__sessions: tg_channel__session_bool_exp
   tg_channel_id: bigint_comparison_exp
   user: user_bool_exp
   user_id: uuid_comparison_exp
 }
 
 """
-unique or primary key constraints on table "user_tg_channel"
-"""
-enum user_tg_channel_constraint {
-  """
-  unique or primary key constraint on columns "tg_channel_id", "user_id"
-  """
-  user_tg_channel_pkey
-}
-
-"""
-input type for inserting data into table "user_tg_channel"
-"""
-input user_tg_channel_insert_input {
-  phone_number: String
-  tg_channel_id: bigint
-  user_id: uuid
-}
-
-"""aggregate max on columns"""
-type user_tg_channel_max_fields {
-  phone_number: String
-  tg_channel_id: bigint
-  user_id: uuid
-}
-
-"""
 order by max() on columns of table "user_tg_channel"
 """
 input user_tg_channel_max_order_by {
-  phone_number: order_by
+  pk: order_by
   tg_channel_id: order_by
   user_id: order_by
-}
-
-"""aggregate min on columns"""
-type user_tg_channel_min_fields {
-  phone_number: String
-  tg_channel_id: bigint
-  user_id: uuid
 }
 
 """
 order by min() on columns of table "user_tg_channel"
 """
 input user_tg_channel_min_order_by {
-  phone_number: order_by
+  pk: order_by
   tg_channel_id: order_by
   user_id: order_by
 }
@@ -4971,18 +4826,10 @@ type user_tg_channel_mutation_response {
   returning: [user_tg_channel!]!
 }
 
-"""
-on_conflict condition type for table "user_tg_channel"
-"""
-input user_tg_channel_on_conflict {
-  constraint: user_tg_channel_constraint!
-  update_columns: [user_tg_channel_update_column!]! = []
-  where: user_tg_channel_bool_exp
-}
-
 """Ordering options when selecting data from "user_tg_channel"."""
 input user_tg_channel_order_by {
-  phone_number: order_by
+  pk: order_by
+  tg_channel__sessions_aggregate: tg_channel__session_aggregate_order_by
   tg_channel_id: order_by
   user: user_order_by
   user_id: order_by
@@ -4993,7 +4840,7 @@ select columns of table "user_tg_channel"
 """
 enum user_tg_channel_select_column {
   """column name"""
-  phone_number
+  pk
 
   """column name"""
   tg_channel_id
@@ -5002,39 +4849,27 @@ enum user_tg_channel_select_column {
   user_id
 }
 
-"""aggregate stddev on columns"""
-type user_tg_channel_stddev_fields {
-  tg_channel_id: Float
-}
-
 """
 order by stddev() on columns of table "user_tg_channel"
 """
 input user_tg_channel_stddev_order_by {
+  pk: order_by
   tg_channel_id: order_by
-}
-
-"""aggregate stddev_pop on columns"""
-type user_tg_channel_stddev_pop_fields {
-  tg_channel_id: Float
 }
 
 """
 order by stddev_pop() on columns of table "user_tg_channel"
 """
 input user_tg_channel_stddev_pop_order_by {
+  pk: order_by
   tg_channel_id: order_by
-}
-
-"""aggregate stddev_samp on columns"""
-type user_tg_channel_stddev_samp_fields {
-  tg_channel_id: Float
 }
 
 """
 order by stddev_samp() on columns of table "user_tg_channel"
 """
 input user_tg_channel_stddev_samp_order_by {
+  pk: order_by
   tg_channel_id: order_by
 }
 
@@ -5051,64 +4886,40 @@ input user_tg_channel_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input user_tg_channel_stream_cursor_value_input {
-  phone_number: String
+  pk: bigint
   tg_channel_id: bigint
   user_id: uuid
-}
-
-"""aggregate sum on columns"""
-type user_tg_channel_sum_fields {
-  tg_channel_id: bigint
 }
 
 """
 order by sum() on columns of table "user_tg_channel"
 """
 input user_tg_channel_sum_order_by {
+  pk: order_by
   tg_channel_id: order_by
-}
-
-"""
-placeholder for update columns of table "user_tg_channel" (current role has no relevant permissions)
-"""
-enum user_tg_channel_update_column {
-  """placeholder (do not use)"""
-  _PLACEHOLDER
-}
-
-"""aggregate var_pop on columns"""
-type user_tg_channel_var_pop_fields {
-  tg_channel_id: Float
 }
 
 """
 order by var_pop() on columns of table "user_tg_channel"
 """
 input user_tg_channel_var_pop_order_by {
+  pk: order_by
   tg_channel_id: order_by
-}
-
-"""aggregate var_samp on columns"""
-type user_tg_channel_var_samp_fields {
-  tg_channel_id: Float
 }
 
 """
 order by var_samp() on columns of table "user_tg_channel"
 """
 input user_tg_channel_var_samp_order_by {
+  pk: order_by
   tg_channel_id: order_by
-}
-
-"""aggregate variance on columns"""
-type user_tg_channel_variance_fields {
-  tg_channel_id: Float
 }
 
 """
 order by variance() on columns of table "user_tg_channel"
 """
 input user_tg_channel_variance_order_by {
+  pk: order_by
   tg_channel_id: order_by
 }
 
