@@ -38,7 +38,7 @@ export function useUnsubscribesByInviteLinksWidgetLogic(props: UseUnsubscribesBy
   const auth = useAuth();
 
   const unsubscribesByInviteLinksQuery = useQuery(UNSUBSCRIBES_BY_INVITE_LINKS_QUERY, {
-    skip: !auth?.session?.data?.accessToken,
+    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1,
     variables: {
       end_date: props.endDate,
       start_date: props.startDate,

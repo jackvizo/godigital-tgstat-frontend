@@ -32,7 +32,7 @@ export interface UseUnsubscriptionRateWidgetLogicProps {
 export function useUnsubscriptionRateWidgetLogic({ tgChannelIds, fromDate, toDate }: UseUnsubscriptionRateWidgetLogicProps) {
   const auth = useAuth();
   const { loading, error, data } = useQuery(UNSUBSCRIPTION_RATE_QUERY, {
-    skip: !auth?.session?.data?.accessToken,
+    skip: !auth?.session?.data?.accessToken || tgChannelIds.length < 1,
     variables: {
       from_date: moment(fromDate).format('YYYY-MM-DDTHH:mm:ssZ'),
       to_date: moment(toDate).format('YYYY-MM-DDTHH:mm:ssZ'),
@@ -43,6 +43,6 @@ export function useUnsubscriptionRateWidgetLogic({ tgChannelIds, fromDate, toDat
   return {
     loading,
     error,
-    data: data?.stat_user_aggregate?.aggregate ? ((data?.stat_user_aggregate?.aggregate?.count / data?.stat_post_aggregate?.aggregate?.sum?.views!) ?? 0) * 100 : null,
+    data: data?.stat_user_aggregate?.aggregate ? ((data?.stat_user_aggregate?.aggregate?.count / data?.stat_post_info_aggregate?.aggregate?.sum?.views!) ?? 0) * 100 : null,
   };
 }

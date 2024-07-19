@@ -30,7 +30,7 @@ export function UnsubscribesPieWidget(props: UnsubscribesPieWidgetProps) {
   if (isEmptyData) {
     return <Card>
       <CardContent sx={{ height: '100%' }}>
-        <Typography variant="subtitle2" gutterBottom>Подписалось</Typography>
+        <Typography variant="subtitle2" gutterBottom>Подписки/отписки</Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
           <Typography>Нет данных</Typography>
         </Box>
@@ -42,7 +42,7 @@ export function UnsubscribesPieWidget(props: UnsubscribesPieWidgetProps) {
   return (
     <Card>
       <CardContent>
-        <Typography variant="subtitle2" gutterBottom>Отписки</Typography>
+        <Typography variant="subtitle2" gutterBottom>Подписки/отписки</Typography>
         <Doughnut data={chartData} options={{
           plugins: {
             legend: {

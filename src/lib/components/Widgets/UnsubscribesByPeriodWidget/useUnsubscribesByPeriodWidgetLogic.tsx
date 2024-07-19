@@ -29,7 +29,7 @@ const intervalLabels: Record<string, string> = {
 export function useUnsubscribesByPeriodWidgetLogic(props: UseUnsubscribesByPeriodWidgetLogicProps) {
   const auth = useAuth();
   const unsubscribesByPeriodsQuery = useQuery(UNSUBSCRIBES_BY_PERIODS_QUERY, {
-    skip: !auth.session?.data?.accessToken,
+    skip: !auth.session?.data?.accessToken || props.tgChannelIds.length < 1,
     variables: {
       start_date: props.startDate,
       end_date: props.endDate,

@@ -12,7 +12,7 @@ export const AVG_ER_QUERY = graphql(`
         count(columns: pk)
       }
     }
-    stat_post_info_aggregate(where: { date_of_post: { _gte: $from_date, _lte: $to_date, tg_channel_id: { _in: $tg_channel_ids } } }) {
+    stat_post_info_aggregate(where: { date_of_post: { _gte: $from_date, _lte: $to_date }, tg_channel_id: { _in: $tg_channel_ids } }) {
       aggregate {
         sum {
           views
@@ -28,7 +28,7 @@ export interface UseAvgERWidgetLogicProps extends DashboardFilters {
 export function useAvgERWidgetLogic(props: UseAvgERWidgetLogicProps) {
   const auth = useAuth();
   const avgErQuery = useQuery(AVG_ER_QUERY, {
-    skip: !auth?.session?.data?.accessToken,
+    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.startDate || !props.endDate,
     variables: {
       from_date: props.startDate,
       to_date: props.endDate,
@@ -37,7 +37,7 @@ export function useAvgERWidgetLogic(props: UseAvgERWidgetLogicProps) {
   });
 
   const usersCount = Number(avgErQuery?.data?.stat_user_aggregate?.aggregate?.count);
-  const views = Number(avgErQuery?.data?.stat_post_aggregate?.aggregate?.sum?.views);
+  const views = Number(avgErQuery?.data?.stat_post_info_aggregate?.aggregate?.sum?.views);
   const avgEr = !isNaN(usersCount) && !isNaN(views) && views > 0 ? ((usersCount / views) * 100) : 0
 
   return {

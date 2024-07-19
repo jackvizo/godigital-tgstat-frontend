@@ -22,16 +22,16 @@ export interface UseER24WidgetLogicProps extends DashboardFilters {
 export function useER24WidgetLogic(props: UseER24WidgetLogicProps) {
   const auth = useAuth();
   const er24Query = useQuery(ER24_QUERY, {
-    skip: !auth?.session?.data?.accessToken,
+    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1,
     variables: {
       tg_channel_ids: props.tgChannelIds,
     },
   });
 
-  const views24 = er24Query?.data?.stat_post_aggregate?.aggregate?.sum?.view_24h ?? 0;
-  const viewsTotal = er24Query?.data?.stat_post_aggregate?.aggregate?.sum?.views ?? 0;
+  const views24 = er24Query?.data?.stat_post_info_aggregate?.aggregate?.sum?.view_24h ?? 0;
+  const viewsTotal = er24Query?.data?.stat_post_info_aggregate?.aggregate?.sum?.views ?? 0;
 
-  const er24Percent = viewsTotal > 0 ? views24 / viewsTotal : 0;
+  const er24Percent = (viewsTotal > 0 ? views24 / viewsTotal : 0) * 100
 
   return {
     er24Query,

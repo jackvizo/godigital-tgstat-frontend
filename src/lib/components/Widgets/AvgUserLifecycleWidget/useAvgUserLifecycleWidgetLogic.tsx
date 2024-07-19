@@ -18,7 +18,7 @@ export interface UseAvgUserLifecycleWidgetLogicProps {
 export function useAvgUserLifecycleWidgetLogic({ tgChannelIds }: UseAvgUserLifecycleWidgetLogicProps) {
   const auth = useAuth();
   const avgUserLifecycleQuery = useQuery(AVG_USER_LIFECYCLE_QUERY, {
-    skip: !auth?.session?.data?.accessToken,
+    skip: !auth?.session?.data?.accessToken || tgChannelIds.length < 1,
     variables: {
       tg_channel_ids: `{${tgChannelIds.join(',')}}`
     },

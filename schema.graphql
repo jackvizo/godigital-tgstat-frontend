@@ -1673,6 +1673,49 @@ type query_root {
   stat_post_by_pk(pk: bigint!): stat_post
 
   """
+  fetch data from the table: "stat_post_info"
+  """
+  stat_post_info(
+    """distinct select on columns"""
+    distinct_on: [stat_post_info_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stat_post_info_order_by!]
+
+    """filter the rows returned"""
+    where: stat_post_info_bool_exp
+  ): [stat_post_info!]!
+
+  """
+  fetch aggregated fields from the table: "stat_post_info"
+  """
+  stat_post_info_aggregate(
+    """distinct select on columns"""
+    distinct_on: [stat_post_info_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stat_post_info_order_by!]
+
+    """filter the rows returned"""
+    where: stat_post_info_bool_exp
+  ): stat_post_info_aggregate!
+
+  """fetch data from the table: "stat_post_info" using primary key columns"""
+  stat_post_info_by_pk(pk: bigint!): stat_post_info
+
+  """
   fetch data from the table: "stat_reaction"
   """
   stat_reaction(
@@ -2125,25 +2168,26 @@ type query_root {
 columns and relationships of "stat_post"
 """
 type stat_post {
-  comments_channels_count: Int!
-  comments_messages_count: Int!
-  comments_messages_count_1h: Int!
-  comments_messages_count_24h: Int!
-  comments_users_count: Int!
-  forwards: Int!
-  link: String!
-  media: String!
-  message: String!
+  comments_channels_count: Int
+  comments_messages_count: Int
+  comments_messages_count_1h: Int
+  comments_messages_count_24h: Int
+  comments_users_count: Int
+  date_of_post: timestamp
+  forwards: Int
   pk: bigint!
-  reaction_24h: Int!
-  reactions_1h: Int!
+  reaction_24h: Int
+  reactions_1h: Int
   tg_channel_id: bigint!
   tg_post_id: bigint!
   timestamp: timestamp!
-  total_reactions_count: Int!
-  view_24h: Int!
-  views: Int!
-  views_1h: Int!
+  total_reactions_count: Int
+
+  """An object relationship"""
+  user_tg_channel: user_tg_channel
+  view_24h: Int
+  views: Int
+  views_1h: Int
 }
 
 """
@@ -2202,6 +2246,107 @@ input stat_post_bool_exp {
   comments_messages_count_1h: Int_comparison_exp
   comments_messages_count_24h: Int_comparison_exp
   comments_users_count: Int_comparison_exp
+  date_of_post: timestamp_comparison_exp
+  forwards: Int_comparison_exp
+  pk: bigint_comparison_exp
+  reaction_24h: Int_comparison_exp
+  reactions_1h: Int_comparison_exp
+  tg_channel_id: bigint_comparison_exp
+  tg_post_id: bigint_comparison_exp
+  timestamp: timestamp_comparison_exp
+  total_reactions_count: Int_comparison_exp
+  user_tg_channel: user_tg_channel_bool_exp
+  view_24h: Int_comparison_exp
+  views: Int_comparison_exp
+  views_1h: Int_comparison_exp
+}
+
+"""
+columns and relationships of "stat_post_info"
+"""
+type stat_post_info {
+  comments_channels_count: Int
+  comments_messages_count: Int
+  comments_messages_count_1h: Int
+  comments_messages_count_24h: Int
+  comments_users_count: Int
+  date_of_post: timestamp
+  forwards: Int
+  link: String
+  media: String
+  message: String
+  pk: bigint!
+  reaction_24h: Int
+  reactions_1h: Int
+  tg_channel_id: bigint!
+  tg_post_id: bigint!
+  timestamp: timestamp!
+  total_reactions_count: Int
+
+  """An object relationship"""
+  user_tg_channel: user_tg_channel
+  view_24h: Int
+  views: Int
+  views_1h: Int
+}
+
+"""
+aggregated selection of "stat_post_info"
+"""
+type stat_post_info_aggregate {
+  aggregate: stat_post_info_aggregate_fields
+  nodes: [stat_post_info!]!
+}
+
+"""
+aggregate fields of "stat_post_info"
+"""
+type stat_post_info_aggregate_fields {
+  avg: stat_post_info_avg_fields
+  count(columns: [stat_post_info_select_column!], distinct: Boolean): Int!
+  max: stat_post_info_max_fields
+  min: stat_post_info_min_fields
+  stddev: stat_post_info_stddev_fields
+  stddev_pop: stat_post_info_stddev_pop_fields
+  stddev_samp: stat_post_info_stddev_samp_fields
+  sum: stat_post_info_sum_fields
+  var_pop: stat_post_info_var_pop_fields
+  var_samp: stat_post_info_var_samp_fields
+  variance: stat_post_info_variance_fields
+}
+
+"""aggregate avg on columns"""
+type stat_post_info_avg_fields {
+  comments_channels_count: Float
+  comments_messages_count: Float
+  comments_messages_count_1h: Float
+  comments_messages_count_24h: Float
+  comments_users_count: Float
+  forwards: Float
+  pk: Float
+  reaction_24h: Float
+  reactions_1h: Float
+  tg_channel_id: Float
+  tg_post_id: Float
+  total_reactions_count: Float
+  view_24h: Float
+  views: Float
+  views_1h: Float
+}
+
+"""
+Boolean expression to filter rows from the table "stat_post_info". All fields are combined with a logical 'AND'.
+"""
+input stat_post_info_bool_exp {
+  _and: [stat_post_info_bool_exp!]
+  _not: stat_post_info_bool_exp
+  _or: [stat_post_info_bool_exp!]
+  comments_channels_count: Int_comparison_exp
+  comments_messages_count: Int_comparison_exp
+  comments_messages_count_1h: Int_comparison_exp
+  comments_messages_count_24h: Int_comparison_exp
+  comments_users_count: Int_comparison_exp
+  date_of_post: timestamp_comparison_exp
   forwards: Int_comparison_exp
   link: String_comparison_exp
   media: String_comparison_exp
@@ -2213,9 +2358,316 @@ input stat_post_bool_exp {
   tg_post_id: bigint_comparison_exp
   timestamp: timestamp_comparison_exp
   total_reactions_count: Int_comparison_exp
+  user_tg_channel: user_tg_channel_bool_exp
   view_24h: Int_comparison_exp
   views: Int_comparison_exp
   views_1h: Int_comparison_exp
+}
+
+"""aggregate max on columns"""
+type stat_post_info_max_fields {
+  comments_channels_count: Int
+  comments_messages_count: Int
+  comments_messages_count_1h: Int
+  comments_messages_count_24h: Int
+  comments_users_count: Int
+  date_of_post: timestamp
+  forwards: Int
+  link: String
+  media: String
+  message: String
+  pk: bigint
+  reaction_24h: Int
+  reactions_1h: Int
+  tg_channel_id: bigint
+  tg_post_id: bigint
+  timestamp: timestamp
+  total_reactions_count: Int
+  view_24h: Int
+  views: Int
+  views_1h: Int
+}
+
+"""aggregate min on columns"""
+type stat_post_info_min_fields {
+  comments_channels_count: Int
+  comments_messages_count: Int
+  comments_messages_count_1h: Int
+  comments_messages_count_24h: Int
+  comments_users_count: Int
+  date_of_post: timestamp
+  forwards: Int
+  link: String
+  media: String
+  message: String
+  pk: bigint
+  reaction_24h: Int
+  reactions_1h: Int
+  tg_channel_id: bigint
+  tg_post_id: bigint
+  timestamp: timestamp
+  total_reactions_count: Int
+  view_24h: Int
+  views: Int
+  views_1h: Int
+}
+
+"""Ordering options when selecting data from "stat_post_info"."""
+input stat_post_info_order_by {
+  comments_channels_count: order_by
+  comments_messages_count: order_by
+  comments_messages_count_1h: order_by
+  comments_messages_count_24h: order_by
+  comments_users_count: order_by
+  date_of_post: order_by
+  forwards: order_by
+  link: order_by
+  media: order_by
+  message: order_by
+  pk: order_by
+  reaction_24h: order_by
+  reactions_1h: order_by
+  tg_channel_id: order_by
+  tg_post_id: order_by
+  timestamp: order_by
+  total_reactions_count: order_by
+  user_tg_channel: user_tg_channel_order_by
+  view_24h: order_by
+  views: order_by
+  views_1h: order_by
+}
+
+"""
+select columns of table "stat_post_info"
+"""
+enum stat_post_info_select_column {
+  """column name"""
+  comments_channels_count
+
+  """column name"""
+  comments_messages_count
+
+  """column name"""
+  comments_messages_count_1h
+
+  """column name"""
+  comments_messages_count_24h
+
+  """column name"""
+  comments_users_count
+
+  """column name"""
+  date_of_post
+
+  """column name"""
+  forwards
+
+  """column name"""
+  link
+
+  """column name"""
+  media
+
+  """column name"""
+  message
+
+  """column name"""
+  pk
+
+  """column name"""
+  reaction_24h
+
+  """column name"""
+  reactions_1h
+
+  """column name"""
+  tg_channel_id
+
+  """column name"""
+  tg_post_id
+
+  """column name"""
+  timestamp
+
+  """column name"""
+  total_reactions_count
+
+  """column name"""
+  view_24h
+
+  """column name"""
+  views
+
+  """column name"""
+  views_1h
+}
+
+"""aggregate stddev on columns"""
+type stat_post_info_stddev_fields {
+  comments_channels_count: Float
+  comments_messages_count: Float
+  comments_messages_count_1h: Float
+  comments_messages_count_24h: Float
+  comments_users_count: Float
+  forwards: Float
+  pk: Float
+  reaction_24h: Float
+  reactions_1h: Float
+  tg_channel_id: Float
+  tg_post_id: Float
+  total_reactions_count: Float
+  view_24h: Float
+  views: Float
+  views_1h: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type stat_post_info_stddev_pop_fields {
+  comments_channels_count: Float
+  comments_messages_count: Float
+  comments_messages_count_1h: Float
+  comments_messages_count_24h: Float
+  comments_users_count: Float
+  forwards: Float
+  pk: Float
+  reaction_24h: Float
+  reactions_1h: Float
+  tg_channel_id: Float
+  tg_post_id: Float
+  total_reactions_count: Float
+  view_24h: Float
+  views: Float
+  views_1h: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type stat_post_info_stddev_samp_fields {
+  comments_channels_count: Float
+  comments_messages_count: Float
+  comments_messages_count_1h: Float
+  comments_messages_count_24h: Float
+  comments_users_count: Float
+  forwards: Float
+  pk: Float
+  reaction_24h: Float
+  reactions_1h: Float
+  tg_channel_id: Float
+  tg_post_id: Float
+  total_reactions_count: Float
+  view_24h: Float
+  views: Float
+  views_1h: Float
+}
+
+"""
+Streaming cursor of the table "stat_post_info"
+"""
+input stat_post_info_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: stat_post_info_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input stat_post_info_stream_cursor_value_input {
+  comments_channels_count: Int
+  comments_messages_count: Int
+  comments_messages_count_1h: Int
+  comments_messages_count_24h: Int
+  comments_users_count: Int
+  date_of_post: timestamp
+  forwards: Int
+  link: String
+  media: String
+  message: String
+  pk: bigint
+  reaction_24h: Int
+  reactions_1h: Int
+  tg_channel_id: bigint
+  tg_post_id: bigint
+  timestamp: timestamp
+  total_reactions_count: Int
+  view_24h: Int
+  views: Int
+  views_1h: Int
+}
+
+"""aggregate sum on columns"""
+type stat_post_info_sum_fields {
+  comments_channels_count: Int
+  comments_messages_count: Int
+  comments_messages_count_1h: Int
+  comments_messages_count_24h: Int
+  comments_users_count: Int
+  forwards: Int
+  pk: bigint
+  reaction_24h: Int
+  reactions_1h: Int
+  tg_channel_id: bigint
+  tg_post_id: bigint
+  total_reactions_count: Int
+  view_24h: Int
+  views: Int
+  views_1h: Int
+}
+
+"""aggregate var_pop on columns"""
+type stat_post_info_var_pop_fields {
+  comments_channels_count: Float
+  comments_messages_count: Float
+  comments_messages_count_1h: Float
+  comments_messages_count_24h: Float
+  comments_users_count: Float
+  forwards: Float
+  pk: Float
+  reaction_24h: Float
+  reactions_1h: Float
+  tg_channel_id: Float
+  tg_post_id: Float
+  total_reactions_count: Float
+  view_24h: Float
+  views: Float
+  views_1h: Float
+}
+
+"""aggregate var_samp on columns"""
+type stat_post_info_var_samp_fields {
+  comments_channels_count: Float
+  comments_messages_count: Float
+  comments_messages_count_1h: Float
+  comments_messages_count_24h: Float
+  comments_users_count: Float
+  forwards: Float
+  pk: Float
+  reaction_24h: Float
+  reactions_1h: Float
+  tg_channel_id: Float
+  tg_post_id: Float
+  total_reactions_count: Float
+  view_24h: Float
+  views: Float
+  views_1h: Float
+}
+
+"""aggregate variance on columns"""
+type stat_post_info_variance_fields {
+  comments_channels_count: Float
+  comments_messages_count: Float
+  comments_messages_count_1h: Float
+  comments_messages_count_24h: Float
+  comments_users_count: Float
+  forwards: Float
+  pk: Float
+  reaction_24h: Float
+  reactions_1h: Float
+  tg_channel_id: Float
+  tg_post_id: Float
+  total_reactions_count: Float
+  view_24h: Float
+  views: Float
+  views_1h: Float
 }
 
 """aggregate max on columns"""
@@ -2225,10 +2677,8 @@ type stat_post_max_fields {
   comments_messages_count_1h: Int
   comments_messages_count_24h: Int
   comments_users_count: Int
+  date_of_post: timestamp
   forwards: Int
-  link: String
-  media: String
-  message: String
   pk: bigint
   reaction_24h: Int
   reactions_1h: Int
@@ -2248,10 +2698,8 @@ type stat_post_min_fields {
   comments_messages_count_1h: Int
   comments_messages_count_24h: Int
   comments_users_count: Int
+  date_of_post: timestamp
   forwards: Int
-  link: String
-  media: String
-  message: String
   pk: bigint
   reaction_24h: Int
   reactions_1h: Int
@@ -2271,10 +2719,8 @@ input stat_post_order_by {
   comments_messages_count_1h: order_by
   comments_messages_count_24h: order_by
   comments_users_count: order_by
+  date_of_post: order_by
   forwards: order_by
-  link: order_by
-  media: order_by
-  message: order_by
   pk: order_by
   reaction_24h: order_by
   reactions_1h: order_by
@@ -2282,6 +2728,7 @@ input stat_post_order_by {
   tg_post_id: order_by
   timestamp: order_by
   total_reactions_count: order_by
+  user_tg_channel: user_tg_channel_order_by
   view_24h: order_by
   views: order_by
   views_1h: order_by
@@ -2307,16 +2754,10 @@ enum stat_post_select_column {
   comments_users_count
 
   """column name"""
+  date_of_post
+
+  """column name"""
   forwards
-
-  """column name"""
-  link
-
-  """column name"""
-  media
-
-  """column name"""
-  message
 
   """column name"""
   pk
@@ -2424,10 +2865,8 @@ input stat_post_stream_cursor_value_input {
   comments_messages_count_1h: Int
   comments_messages_count_24h: Int
   comments_users_count: Int
+  date_of_post: timestamp
   forwards: Int
-  link: String
-  media: String
-  message: String
   pk: bigint
   reaction_24h: Int
   reactions_1h: Int
@@ -2521,12 +2960,15 @@ columns and relationships of "stat_reaction"
 """
 type stat_reaction {
   pk: bigint!
-  reaction_count: Int!
-  reaction_emoticon: String!
-  reaction_emoticon_code: Int!
+  reaction_count: Int
+  reaction_emoticon: String
+  reaction_emoticon_code: Int
   tg_channel_id: bigint!
   tg_post_id: bigint!
   timestamp: timestamp!
+
+  """An object relationship"""
+  user_tg_channel: user_tg_channel
 }
 
 """
@@ -2577,6 +3019,7 @@ input stat_reaction_bool_exp {
   tg_channel_id: bigint_comparison_exp
   tg_post_id: bigint_comparison_exp
   timestamp: timestamp_comparison_exp
+  user_tg_channel: user_tg_channel_bool_exp
 }
 
 """aggregate max on columns"""
@@ -2610,6 +3053,7 @@ input stat_reaction_order_by {
   tg_channel_id: order_by
   tg_post_id: order_by
   timestamp: order_by
+  user_tg_channel: user_tg_channel_order_by
 }
 
 """
@@ -2740,6 +3184,9 @@ type stat_user {
   tg_channel_id: bigint!
   tg_user_id: bigint!
   timestamp: timestamp!
+
+  """An object relationship"""
+  user_tg_channel: user_tg_channel
   username: String
   verified: Boolean
 }
@@ -2796,6 +3243,7 @@ input stat_user_bool_exp {
   tg_channel_id: bigint_comparison_exp
   tg_user_id: bigint_comparison_exp
   timestamp: timestamp_comparison_exp
+  user_tg_channel: user_tg_channel_bool_exp
   username: String_comparison_exp
   verified: Boolean_comparison_exp
 }
@@ -2845,6 +3293,7 @@ input stat_user_order_by {
   tg_channel_id: order_by
   tg_user_id: order_by
   timestamp: order_by
+  user_tg_channel: user_tg_channel_order_by
   username: order_by
   verified: order_by
 }
@@ -3430,6 +3879,63 @@ type subscription_root {
 
   """fetch data from the table: "stat_post" using primary key columns"""
   stat_post_by_pk(pk: bigint!): stat_post
+
+  """
+  fetch data from the table: "stat_post_info"
+  """
+  stat_post_info(
+    """distinct select on columns"""
+    distinct_on: [stat_post_info_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stat_post_info_order_by!]
+
+    """filter the rows returned"""
+    where: stat_post_info_bool_exp
+  ): [stat_post_info!]!
+
+  """
+  fetch aggregated fields from the table: "stat_post_info"
+  """
+  stat_post_info_aggregate(
+    """distinct select on columns"""
+    distinct_on: [stat_post_info_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stat_post_info_order_by!]
+
+    """filter the rows returned"""
+    where: stat_post_info_bool_exp
+  ): stat_post_info_aggregate!
+
+  """fetch data from the table: "stat_post_info" using primary key columns"""
+  stat_post_info_by_pk(pk: bigint!): stat_post_info
+
+  """
+  fetch data from the table in a streaming manner: "stat_post_info"
+  """
+  stat_post_info_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [stat_post_info_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: stat_post_info_bool_exp
+  ): [stat_post_info!]!
 
   """
   fetch data from the table in a streaming manner: "stat_post"

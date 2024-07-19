@@ -34,7 +34,7 @@ export interface useUnsubscribesPieWidgetLogicProps extends DashboardFilters {
 export function useUnsubscribesPieWidgetLogic(props: useUnsubscribesPieWidgetLogicProps) {
   const auth = useAuth();
   const subscribesUnsubscribesPieAggregatesQuery = useQuery(SUBSCRIBES_UNSUBSCRIBES_PIE_AGGREGATES_QUERY, {
-    skip: !auth.session?.data?.accessToken,
+    skip: !auth.session?.data?.accessToken || props.tgChannelIds.length < 1,
     variables: {
       end_date: props.endDate,
       start_date: props.startDate,

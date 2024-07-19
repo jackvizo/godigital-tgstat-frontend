@@ -60,7 +60,7 @@ const remapTimePriod = (period: TimeUnit | undefined, startDate: Date | undefine
 
 export function useSubscribesUnsubscribesChartWidgetLogic(props: UseSubscribesUnsubscribesChartWidgetLogicProps) {
   const auth = useAuth();
-  const skip = !auth?.session?.data?.accessToken
+  const skip = !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1
 
   const period = remapTimePriod(props.timePeriod, props.startDate, props.endDate);
   const variables = {

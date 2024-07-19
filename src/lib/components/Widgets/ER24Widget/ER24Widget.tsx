@@ -6,6 +6,6 @@ export interface ER24WidgetProps {
 
 export function ER24Widget(props: ER24WidgetProps) {
   return (
-    <TextWidget label='ER 24' value={`${props.er24Percent}%`} />
+    <TextWidget label='ER 24' value={`${props.er24Percent?.toFixed(2)}%`} />
   )
 }

@@ -5,6 +5,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { TimeUnit } from 'chart.js';
 import dayjs from 'dayjs';
 import { periods, useDashboardDatePicker } from "./useDashboardDatePicker";
+import { removeTime } from '@/lib/helpers/remove-time'
 
 export interface DashboardDatePickerProps extends ReturnType<typeof useDashboardDatePicker> {
   periods?: TimeUnit[]
@@ -22,8 +23,9 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
             format="DD.MM.YYYY"
             value={dayjs(props.startDateState)}
             onChange={(newValue) => {
-              newValue?.set('second', 0)?.set?.('minutes', 0)
-              props.setStartDateState(newValue?.toDate())
+              if (newValue) {
+                props.setStartDateState(removeTime(newValue).toDate())
+              }
             }}
             label="Дата от"
             slotProps={{
@@ -38,9 +40,10 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
             format="DD.MM.YYYY"
             value={dayjs(props.endDateState)}
             onChange={(newValue) => {
-              newValue?.set('second', 0)?.set?.('minutes', 0)
-              props.setEndDateState(newValue?.toDate())
-              props.setTimePeriod(undefined)
+              if (newValue) {
+                props.setEndDateState(removeTime(newValue).toDate())
+                props.setTimePeriod(undefined)
+              }
             }}
             label="Дата до"
             slotProps={{

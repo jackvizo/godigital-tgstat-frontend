@@ -30,8 +30,7 @@ import { useUnsubscribesByInviteLinksWidgetLogic } from "@/lib/components/Widget
 import { UnsubscribesPieWidget } from "@/lib/components/Widgets/UnsubscribesPieWidget/UnsubscribesPieWidget";
 import { useUnsubscribesPieWidgetLogic } from "@/lib/components/Widgets/UnsubscribesPieWidget/useUnsubscribesPieWidgetLogic";
 import { Box, Divider, Typography } from '@mui/material';
-import dayjs from "dayjs";
-import React, { useState } from "react";
+import React from "react";
 
 export interface ClientContainerProps { };
 
@@ -64,7 +63,7 @@ function CohortWidget(props: CohortWidgetProps) {
         periods={["week", "month", "year"]}
         displayDatePickers={false}
       />
-      <WidgetWrapper query={cohortAnalysisLogic.cohortAnalysisQuery} height={469} width="100%">
+      <WidgetWrapper query={cohortAnalysisLogic.cohortAnalysisQuery} loading={props.dashboardFiltersLogic.isTgChannelsInitiallyLoading} height={469} width="100%">
         <CohortAnalysisWidget {...cohortAnalysisLogic} />
       </WidgetWrapper>
     </Box>
@@ -91,6 +90,7 @@ export function ClientContainer(props: ClientContainerProps) {
   const unsubscribesByInviteLinksWidgetLogic = useUnsubscribesByInviteLinksWidgetLogic(dashboardFiltersLogic.filters)
 
   const unsubscribesPieWidgetLogic = useUnsubscribesPieWidgetLogic(dashboardFiltersLogic.filters);
+  const initiallyLoading = dashboardFiltersLogic.isTgChannelsInitiallyLoading
 
   return (
     <Box>
@@ -106,13 +106,13 @@ export function ClientContainer(props: ClientContainerProps) {
           <Divider />
 
           <Row>
-            <WidgetWrapper query={totalSubscribersWidgetLogic.totalSubscribersQuery} height={rowHeight1} width={167}>
+            <WidgetWrapper query={totalSubscribersWidgetLogic.totalSubscribersQuery} loading={initiallyLoading} height={rowHeight1} width={167}>
               <TotalSubscribersWidget {...totalSubscribersWidgetLogic} />
             </WidgetWrapper>
-            <WidgetWrapper query={avgUserLifecycleWidgetLogic.avgUserLifecycleQuery} height={rowHeight1} width={200}>
+            <WidgetWrapper query={avgUserLifecycleWidgetLogic.avgUserLifecycleQuery} loading={initiallyLoading} height={rowHeight1} width={200}>
               <AvgUserLifecycleWidget {...avgUserLifecycleWidgetLogic} />
             </WidgetWrapper>
-            <WidgetWrapper query={er24WidgetLogic.er24Query} height={rowHeight1} width={70}>
+            <WidgetWrapper query={er24WidgetLogic.er24Query} loading={initiallyLoading} height={rowHeight1} width={70}>
               <ER24Widget {...er24WidgetLogic} />
             </WidgetWrapper>
           </Row>
@@ -121,32 +121,33 @@ export function ClientContainer(props: ClientContainerProps) {
           <Divider />
 
           <Row>
-            <WidgetWrapper query={subscribersAmountWidgetLogic.subscribersAmountByDateRangeQuery} height={rowHeight1} width={125}>
+            <WidgetWrapper query={subscribersAmountWidgetLogic.subscribersAmountByDateRangeQuery} loading={initiallyLoading} height={rowHeight1} width={125}>
               <SubscribersAmountByDateRangeWidget {...subscribersAmountWidgetLogic} />
             </WidgetWrapper>
-            <WidgetWrapper query={unsubscribersAmountWidgetLogic.unsubscribersAmountByDateRangeQuery} height={rowHeight1} width={115}>
+            <WidgetWrapper query={unsubscribersAmountWidgetLogic.unsubscribersAmountByDateRangeQuery} loading={initiallyLoading} height={rowHeight1} width={115}>
               <UnsubscribersAmountByDateRangeWidget {...unsubscribersAmountWidgetLogic} />
             </WidgetWrapper>
-            <WidgetWrapper queries={[subscribersAmountWidgetLogic.subscribersAmountByDateRangeQuery, unsubscribersAmountWidgetLogic.unsubscribersAmountByDateRangeQuery]} height={rowHeight1} width={109}>
+            <WidgetWrapper queries={[subscribersAmountWidgetLogic.subscribersAmountByDateRangeQuery, unsubscribersAmountWidgetLogic.unsubscribersAmountByDateRangeQuery]} loading={initiallyLoading} height={rowHeight1} width={109}>
               <UnsubscribersPercentByDateRangeWidget {...unsubscribersPercentWidgetLogic} />
             </WidgetWrapper>
-            <WidgetWrapper query={avgErLogic.avgErQuery} height={rowHeight1} width={112}>
+            <WidgetWrapper query={avgErLogic.avgErQuery} loading={initiallyLoading} height={rowHeight1} width={112}>
               <AvgERWidget {...avgErLogic} />
             </WidgetWrapper>
           </Row>
 
           <Row>
-            <WidgetWrapper queries={[subscribesUnsubscribesChartWidgetLogic.subscribesQuery, subscribesUnsubscribesChartWidgetLogic.unsubscribesQuery]} height={rowHeight2} width={500}>
+            <WidgetWrapper queries={[subscribesUnsubscribesChartWidgetLogic.subscribesQuery, subscribesUnsubscribesChartWidgetLogic.unsubscribesQuery]} loading={initiallyLoading} height={rowHeight2} width={500}>
               <SubscribesUnsubscribesChart {...subscribesUnsubscribesChartWidgetLogic} title="Подписки и отписки" />
             </WidgetWrapper>
-            <WidgetWrapper query={subscribesByInviteLinksWidgetLogic.subscribesByInviteLinksQuery} height={rowHeight2} width={332}>
+            <WidgetWrapper query={subscribesByInviteLinksWidgetLogic.subscribesByInviteLinksQuery} loading={initiallyLoading} height={rowHeight2} width={332}>
               <SubscribesByInviteLinksWidget {...subscribesByInviteLinksWidgetLogic} />
             </WidgetWrapper>
-            <WidgetWrapper query={unsubscribesByInviteLinksWidgetLogic.unsubscribesByInviteLinksQuery} height={rowHeight2} width={332}>
+            <WidgetWrapper query={unsubscribesByInviteLinksWidgetLogic.unsubscribesByInviteLinksQuery} loading={initiallyLoading} height={rowHeight2} width={332}>
               <UnsubscribesByInviteLinksWidget {...unsubscribesByInviteLinksWidgetLogic} />
             </WidgetWrapper>
             <WidgetWrapper
               query={unsubscribesPieWidgetLogic.subscribesUnsubscribesPieAggregatesQuery}
+              loading={initiallyLoading}
               height={rowHeight2}
               width={332}
             >

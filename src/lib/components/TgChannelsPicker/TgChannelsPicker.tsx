@@ -76,7 +76,7 @@ export const TgChannelsPicker: React.FC<TgChannelsPickerProps> = (props) => {
             size="small"
             InputProps={{
               endAdornment: (
-                <Tooltip title="Поиск только среди каналов, к которым есть права администратора">
+                <Tooltip title="Поиск только среди каналов, для которых есть права администратора">
                   <IconButton>
                     <HelpOutlineIcon />
                   </IconButton>

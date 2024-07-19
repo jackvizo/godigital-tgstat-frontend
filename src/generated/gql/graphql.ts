@@ -1535,6 +1535,10 @@ export type Mutation_Root = {
   delete_stat_post?: Maybe<Stat_Post_Mutation_Response>;
   /** delete single row from the table: "stat_post" */
   delete_stat_post_by_pk?: Maybe<Stat_Post>;
+  /** delete data from the table: "stat_post_info" */
+  delete_stat_post_info?: Maybe<Stat_Post_Info_Mutation_Response>;
+  /** delete single row from the table: "stat_post_info" */
+  delete_stat_post_info_by_pk?: Maybe<Stat_Post_Info>;
   /** delete data from the table: "stat_reaction" */
   delete_stat_reaction?: Maybe<Stat_Reaction_Mutation_Response>;
   /** delete single row from the table: "stat_reaction" */
@@ -1589,6 +1593,10 @@ export type Mutation_Root = {
   insert_fn_users_by_period_one?: Maybe<Fn_Users_By_Period>;
   /** insert data into the table: "stat_post" */
   insert_stat_post?: Maybe<Stat_Post_Mutation_Response>;
+  /** insert data into the table: "stat_post_info" */
+  insert_stat_post_info?: Maybe<Stat_Post_Info_Mutation_Response>;
+  /** insert a single row into the table: "stat_post_info" */
+  insert_stat_post_info_one?: Maybe<Stat_Post_Info>;
   /** insert a single row into the table: "stat_post" */
   insert_stat_post_one?: Maybe<Stat_Post>;
   /** insert data into the table: "stat_reaction" */
@@ -1651,6 +1659,12 @@ export type Mutation_Root = {
   update_stat_post?: Maybe<Stat_Post_Mutation_Response>;
   /** update single row of the table: "stat_post" */
   update_stat_post_by_pk?: Maybe<Stat_Post>;
+  /** update data of the table: "stat_post_info" */
+  update_stat_post_info?: Maybe<Stat_Post_Info_Mutation_Response>;
+  /** update single row of the table: "stat_post_info" */
+  update_stat_post_info_by_pk?: Maybe<Stat_Post_Info>;
+  /** update multiples rows of table: "stat_post_info" */
+  update_stat_post_info_many?: Maybe<Array<Maybe<Stat_Post_Info_Mutation_Response>>>;
   /** update multiples rows of table: "stat_post" */
   update_stat_post_many?: Maybe<Array<Maybe<Stat_Post_Mutation_Response>>>;
   /** update data of the table: "stat_reaction" */
@@ -1754,6 +1768,18 @@ export type Mutation_RootDelete_Stat_PostArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Stat_Post_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Stat_Post_InfoArgs = {
+  where: Stat_Post_Info_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Stat_Post_Info_By_PkArgs = {
   pk: Scalars['bigint']['input'];
 };
 
@@ -1921,6 +1947,20 @@ export type Mutation_RootInsert_Fn_Users_By_Period_OneArgs = {
 export type Mutation_RootInsert_Stat_PostArgs = {
   objects: Array<Stat_Post_Insert_Input>;
   on_conflict?: InputMaybe<Stat_Post_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Stat_Post_InfoArgs = {
+  objects: Array<Stat_Post_Info_Insert_Input>;
+  on_conflict?: InputMaybe<Stat_Post_Info_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Stat_Post_Info_OneArgs = {
+  object: Stat_Post_Info_Insert_Input;
+  on_conflict?: InputMaybe<Stat_Post_Info_On_Conflict>;
 };
 
 
@@ -2150,6 +2190,28 @@ export type Mutation_RootUpdate_Stat_Post_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Stat_Post_InfoArgs = {
+  _inc?: InputMaybe<Stat_Post_Info_Inc_Input>;
+  _set?: InputMaybe<Stat_Post_Info_Set_Input>;
+  where: Stat_Post_Info_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Stat_Post_Info_By_PkArgs = {
+  _inc?: InputMaybe<Stat_Post_Info_Inc_Input>;
+  _set?: InputMaybe<Stat_Post_Info_Set_Input>;
+  pk_columns: Stat_Post_Info_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Stat_Post_Info_ManyArgs = {
+  updates: Array<Stat_Post_Info_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Stat_Post_ManyArgs = {
   updates: Array<Stat_Post_Updates>;
 };
@@ -2366,6 +2428,12 @@ export type Query_Root = {
   stat_post_aggregate: Stat_Post_Aggregate;
   /** fetch data from the table: "stat_post" using primary key columns */
   stat_post_by_pk?: Maybe<Stat_Post>;
+  /** fetch data from the table: "stat_post_info" */
+  stat_post_info: Array<Stat_Post_Info>;
+  /** fetch aggregated fields from the table: "stat_post_info" */
+  stat_post_info_aggregate: Stat_Post_Info_Aggregate;
+  /** fetch data from the table: "stat_post_info" using primary key columns */
+  stat_post_info_by_pk?: Maybe<Stat_Post_Info>;
   /** fetch data from the table: "stat_reaction" */
   stat_reaction: Array<Stat_Reaction>;
   /** fetch aggregated fields from the table: "stat_reaction" */
@@ -2605,6 +2673,29 @@ export type Query_RootStat_Post_AggregateArgs = {
 
 
 export type Query_RootStat_Post_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
+};
+
+
+export type Query_RootStat_Post_InfoArgs = {
+  distinct_on?: InputMaybe<Array<Stat_Post_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Stat_Post_Info_Order_By>>;
+  where?: InputMaybe<Stat_Post_Info_Bool_Exp>;
+};
+
+
+export type Query_RootStat_Post_Info_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Stat_Post_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Stat_Post_Info_Order_By>>;
+  where?: InputMaybe<Stat_Post_Info_Bool_Exp>;
+};
+
+
+export type Query_RootStat_Post_Info_By_PkArgs = {
   pk: Scalars['bigint']['input'];
 };
 
@@ -2858,25 +2949,25 @@ export type Query_RootUser_Unsubscribes_By_Period_AggregateArgs = {
 /** columns and relationships of "stat_post" */
 export type Stat_Post = {
   __typename?: 'stat_post';
-  comments_channels_count: Scalars['Int']['output'];
-  comments_messages_count: Scalars['Int']['output'];
-  comments_messages_count_1h: Scalars['Int']['output'];
-  comments_messages_count_24h: Scalars['Int']['output'];
-  comments_users_count: Scalars['Int']['output'];
-  forwards: Scalars['Int']['output'];
-  link: Scalars['String']['output'];
-  media: Scalars['String']['output'];
-  message: Scalars['String']['output'];
+  comments_channels_count?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Int']['output']>;
+  comments_users_count?: Maybe<Scalars['Int']['output']>;
+  date_of_post?: Maybe<Scalars['timestamp']['output']>;
+  forwards?: Maybe<Scalars['Int']['output']>;
   pk: Scalars['bigint']['output'];
-  reaction_24h: Scalars['Int']['output'];
-  reactions_1h: Scalars['Int']['output'];
+  reaction_24h?: Maybe<Scalars['Int']['output']>;
+  reactions_1h?: Maybe<Scalars['Int']['output']>;
   tg_channel_id: Scalars['bigint']['output'];
   tg_post_id: Scalars['bigint']['output'];
   timestamp: Scalars['timestamp']['output'];
-  total_reactions_count: Scalars['Int']['output'];
-  view_24h: Scalars['Int']['output'];
-  views: Scalars['Int']['output'];
-  views_1h: Scalars['Int']['output'];
+  total_reactions_count?: Maybe<Scalars['Int']['output']>;
+  /** An object relationship */
+  user_tg_channel?: Maybe<User_Tg_Channel>;
+  view_24h?: Maybe<Scalars['Int']['output']>;
+  views?: Maybe<Scalars['Int']['output']>;
+  views_1h?: Maybe<Scalars['Int']['output']>;
 };
 
 /** aggregated selection of "stat_post" */
@@ -2939,10 +3030,8 @@ export type Stat_Post_Bool_Exp = {
   comments_messages_count_1h?: InputMaybe<Int_Comparison_Exp>;
   comments_messages_count_24h?: InputMaybe<Int_Comparison_Exp>;
   comments_users_count?: InputMaybe<Int_Comparison_Exp>;
+  date_of_post?: InputMaybe<Timestamp_Comparison_Exp>;
   forwards?: InputMaybe<Int_Comparison_Exp>;
-  link?: InputMaybe<String_Comparison_Exp>;
-  media?: InputMaybe<String_Comparison_Exp>;
-  message?: InputMaybe<String_Comparison_Exp>;
   pk?: InputMaybe<Bigint_Comparison_Exp>;
   reaction_24h?: InputMaybe<Int_Comparison_Exp>;
   reactions_1h?: InputMaybe<Int_Comparison_Exp>;
@@ -2950,6 +3039,7 @@ export type Stat_Post_Bool_Exp = {
   tg_post_id?: InputMaybe<Bigint_Comparison_Exp>;
   timestamp?: InputMaybe<Timestamp_Comparison_Exp>;
   total_reactions_count?: InputMaybe<Int_Comparison_Exp>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Bool_Exp>;
   view_24h?: InputMaybe<Int_Comparison_Exp>;
   views?: InputMaybe<Int_Comparison_Exp>;
   views_1h?: InputMaybe<Int_Comparison_Exp>;
@@ -2958,9 +3048,7 @@ export type Stat_Post_Bool_Exp = {
 /** unique or primary key constraints on table "stat_post" */
 export enum Stat_Post_Constraint {
   /** unique or primary key constraint on columns "pk" */
-  stat_post_pkey = 'stat_post_pkey',
-  /** unique or primary key constraint on columns "tg_post_id" */
-  stat_post_tg_post_id_key = 'stat_post_tg_post_id_key'
+  stat_post_pkey = 'stat_post_pkey'
 }
 
 /** input type for incrementing numeric columns in table "stat_post" */
@@ -2982,13 +3070,311 @@ export type Stat_Post_Inc_Input = {
   views_1h?: InputMaybe<Scalars['Int']['input']>;
 };
 
-/** input type for inserting data into table "stat_post" */
-export type Stat_Post_Insert_Input = {
+/** columns and relationships of "stat_post_info" */
+export type Stat_Post_Info = {
+  __typename?: 'stat_post_info';
+  comments_channels_count?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Int']['output']>;
+  comments_users_count?: Maybe<Scalars['Int']['output']>;
+  date_of_post?: Maybe<Scalars['timestamp']['output']>;
+  forwards?: Maybe<Scalars['Int']['output']>;
+  link?: Maybe<Scalars['String']['output']>;
+  media?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  pk: Scalars['bigint']['output'];
+  reaction_24h?: Maybe<Scalars['Int']['output']>;
+  reactions_1h?: Maybe<Scalars['Int']['output']>;
+  tg_channel_id: Scalars['bigint']['output'];
+  tg_post_id: Scalars['bigint']['output'];
+  timestamp: Scalars['timestamp']['output'];
+  total_reactions_count?: Maybe<Scalars['Int']['output']>;
+  /** An object relationship */
+  user_tg_channel?: Maybe<User_Tg_Channel>;
+  view_24h?: Maybe<Scalars['Int']['output']>;
+  views?: Maybe<Scalars['Int']['output']>;
+  views_1h?: Maybe<Scalars['Int']['output']>;
+};
+
+/** aggregated selection of "stat_post_info" */
+export type Stat_Post_Info_Aggregate = {
+  __typename?: 'stat_post_info_aggregate';
+  aggregate?: Maybe<Stat_Post_Info_Aggregate_Fields>;
+  nodes: Array<Stat_Post_Info>;
+};
+
+/** aggregate fields of "stat_post_info" */
+export type Stat_Post_Info_Aggregate_Fields = {
+  __typename?: 'stat_post_info_aggregate_fields';
+  avg?: Maybe<Stat_Post_Info_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Stat_Post_Info_Max_Fields>;
+  min?: Maybe<Stat_Post_Info_Min_Fields>;
+  stddev?: Maybe<Stat_Post_Info_Stddev_Fields>;
+  stddev_pop?: Maybe<Stat_Post_Info_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Stat_Post_Info_Stddev_Samp_Fields>;
+  sum?: Maybe<Stat_Post_Info_Sum_Fields>;
+  var_pop?: Maybe<Stat_Post_Info_Var_Pop_Fields>;
+  var_samp?: Maybe<Stat_Post_Info_Var_Samp_Fields>;
+  variance?: Maybe<Stat_Post_Info_Variance_Fields>;
+};
+
+
+/** aggregate fields of "stat_post_info" */
+export type Stat_Post_Info_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Stat_Post_Info_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Stat_Post_Info_Avg_Fields = {
+  __typename?: 'stat_post_info_avg_fields';
+  comments_channels_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Float']['output']>;
+  comments_users_count?: Maybe<Scalars['Float']['output']>;
+  forwards?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+  reaction_24h?: Maybe<Scalars['Float']['output']>;
+  reactions_1h?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_post_id?: Maybe<Scalars['Float']['output']>;
+  total_reactions_count?: Maybe<Scalars['Float']['output']>;
+  view_24h?: Maybe<Scalars['Float']['output']>;
+  views?: Maybe<Scalars['Float']['output']>;
+  views_1h?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "stat_post_info". All fields are combined with a logical 'AND'. */
+export type Stat_Post_Info_Bool_Exp = {
+  _and?: InputMaybe<Array<Stat_Post_Info_Bool_Exp>>;
+  _not?: InputMaybe<Stat_Post_Info_Bool_Exp>;
+  _or?: InputMaybe<Array<Stat_Post_Info_Bool_Exp>>;
+  comments_channels_count?: InputMaybe<Int_Comparison_Exp>;
+  comments_messages_count?: InputMaybe<Int_Comparison_Exp>;
+  comments_messages_count_1h?: InputMaybe<Int_Comparison_Exp>;
+  comments_messages_count_24h?: InputMaybe<Int_Comparison_Exp>;
+  comments_users_count?: InputMaybe<Int_Comparison_Exp>;
+  date_of_post?: InputMaybe<Timestamp_Comparison_Exp>;
+  forwards?: InputMaybe<Int_Comparison_Exp>;
+  link?: InputMaybe<String_Comparison_Exp>;
+  media?: InputMaybe<String_Comparison_Exp>;
+  message?: InputMaybe<String_Comparison_Exp>;
+  pk?: InputMaybe<Bigint_Comparison_Exp>;
+  reaction_24h?: InputMaybe<Int_Comparison_Exp>;
+  reactions_1h?: InputMaybe<Int_Comparison_Exp>;
+  tg_channel_id?: InputMaybe<Bigint_Comparison_Exp>;
+  tg_post_id?: InputMaybe<Bigint_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamp_Comparison_Exp>;
+  total_reactions_count?: InputMaybe<Int_Comparison_Exp>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Bool_Exp>;
+  view_24h?: InputMaybe<Int_Comparison_Exp>;
+  views?: InputMaybe<Int_Comparison_Exp>;
+  views_1h?: InputMaybe<Int_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "stat_post_info" */
+export enum Stat_Post_Info_Constraint {
+  /** unique or primary key constraint on columns "pk" */
+  stat_post_info_pkey = 'stat_post_info_pkey',
+  /** unique or primary key constraint on columns "tg_post_id", "tg_channel_id" */
+  stat_post_info_tg_channel_id_tg_post_id_key = 'stat_post_info_tg_channel_id_tg_post_id_key'
+}
+
+/** input type for incrementing numeric columns in table "stat_post_info" */
+export type Stat_Post_Info_Inc_Input = {
   comments_channels_count?: InputMaybe<Scalars['Int']['input']>;
   comments_messages_count?: InputMaybe<Scalars['Int']['input']>;
   comments_messages_count_1h?: InputMaybe<Scalars['Int']['input']>;
   comments_messages_count_24h?: InputMaybe<Scalars['Int']['input']>;
   comments_users_count?: InputMaybe<Scalars['Int']['input']>;
+  forwards?: InputMaybe<Scalars['Int']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  reaction_24h?: InputMaybe<Scalars['Int']['input']>;
+  reactions_1h?: InputMaybe<Scalars['Int']['input']>;
+  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
+  tg_post_id?: InputMaybe<Scalars['bigint']['input']>;
+  total_reactions_count?: InputMaybe<Scalars['Int']['input']>;
+  view_24h?: InputMaybe<Scalars['Int']['input']>;
+  views?: InputMaybe<Scalars['Int']['input']>;
+  views_1h?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "stat_post_info" */
+export type Stat_Post_Info_Insert_Input = {
+  comments_channels_count?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count_1h?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count_24h?: InputMaybe<Scalars['Int']['input']>;
+  comments_users_count?: InputMaybe<Scalars['Int']['input']>;
+  date_of_post?: InputMaybe<Scalars['timestamp']['input']>;
+  forwards?: InputMaybe<Scalars['Int']['input']>;
+  link?: InputMaybe<Scalars['String']['input']>;
+  media?: InputMaybe<Scalars['String']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  reaction_24h?: InputMaybe<Scalars['Int']['input']>;
+  reactions_1h?: InputMaybe<Scalars['Int']['input']>;
+  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
+  tg_post_id?: InputMaybe<Scalars['bigint']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamp']['input']>;
+  total_reactions_count?: InputMaybe<Scalars['Int']['input']>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Obj_Rel_Insert_Input>;
+  view_24h?: InputMaybe<Scalars['Int']['input']>;
+  views?: InputMaybe<Scalars['Int']['input']>;
+  views_1h?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate max on columns */
+export type Stat_Post_Info_Max_Fields = {
+  __typename?: 'stat_post_info_max_fields';
+  comments_channels_count?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Int']['output']>;
+  comments_users_count?: Maybe<Scalars['Int']['output']>;
+  date_of_post?: Maybe<Scalars['timestamp']['output']>;
+  forwards?: Maybe<Scalars['Int']['output']>;
+  link?: Maybe<Scalars['String']['output']>;
+  media?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  pk?: Maybe<Scalars['bigint']['output']>;
+  reaction_24h?: Maybe<Scalars['Int']['output']>;
+  reactions_1h?: Maybe<Scalars['Int']['output']>;
+  tg_channel_id?: Maybe<Scalars['bigint']['output']>;
+  tg_post_id?: Maybe<Scalars['bigint']['output']>;
+  timestamp?: Maybe<Scalars['timestamp']['output']>;
+  total_reactions_count?: Maybe<Scalars['Int']['output']>;
+  view_24h?: Maybe<Scalars['Int']['output']>;
+  views?: Maybe<Scalars['Int']['output']>;
+  views_1h?: Maybe<Scalars['Int']['output']>;
+};
+
+/** aggregate min on columns */
+export type Stat_Post_Info_Min_Fields = {
+  __typename?: 'stat_post_info_min_fields';
+  comments_channels_count?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Int']['output']>;
+  comments_users_count?: Maybe<Scalars['Int']['output']>;
+  date_of_post?: Maybe<Scalars['timestamp']['output']>;
+  forwards?: Maybe<Scalars['Int']['output']>;
+  link?: Maybe<Scalars['String']['output']>;
+  media?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  pk?: Maybe<Scalars['bigint']['output']>;
+  reaction_24h?: Maybe<Scalars['Int']['output']>;
+  reactions_1h?: Maybe<Scalars['Int']['output']>;
+  tg_channel_id?: Maybe<Scalars['bigint']['output']>;
+  tg_post_id?: Maybe<Scalars['bigint']['output']>;
+  timestamp?: Maybe<Scalars['timestamp']['output']>;
+  total_reactions_count?: Maybe<Scalars['Int']['output']>;
+  view_24h?: Maybe<Scalars['Int']['output']>;
+  views?: Maybe<Scalars['Int']['output']>;
+  views_1h?: Maybe<Scalars['Int']['output']>;
+};
+
+/** response of any mutation on the table "stat_post_info" */
+export type Stat_Post_Info_Mutation_Response = {
+  __typename?: 'stat_post_info_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Stat_Post_Info>;
+};
+
+/** on_conflict condition type for table "stat_post_info" */
+export type Stat_Post_Info_On_Conflict = {
+  constraint: Stat_Post_Info_Constraint;
+  update_columns?: Array<Stat_Post_Info_Update_Column>;
+  where?: InputMaybe<Stat_Post_Info_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "stat_post_info". */
+export type Stat_Post_Info_Order_By = {
+  comments_channels_count?: InputMaybe<Order_By>;
+  comments_messages_count?: InputMaybe<Order_By>;
+  comments_messages_count_1h?: InputMaybe<Order_By>;
+  comments_messages_count_24h?: InputMaybe<Order_By>;
+  comments_users_count?: InputMaybe<Order_By>;
+  date_of_post?: InputMaybe<Order_By>;
+  forwards?: InputMaybe<Order_By>;
+  link?: InputMaybe<Order_By>;
+  media?: InputMaybe<Order_By>;
+  message?: InputMaybe<Order_By>;
+  pk?: InputMaybe<Order_By>;
+  reaction_24h?: InputMaybe<Order_By>;
+  reactions_1h?: InputMaybe<Order_By>;
+  tg_channel_id?: InputMaybe<Order_By>;
+  tg_post_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  total_reactions_count?: InputMaybe<Order_By>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Order_By>;
+  view_24h?: InputMaybe<Order_By>;
+  views?: InputMaybe<Order_By>;
+  views_1h?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: stat_post_info */
+export type Stat_Post_Info_Pk_Columns_Input = {
+  pk: Scalars['bigint']['input'];
+};
+
+/** select columns of table "stat_post_info" */
+export enum Stat_Post_Info_Select_Column {
+  /** column name */
+  comments_channels_count = 'comments_channels_count',
+  /** column name */
+  comments_messages_count = 'comments_messages_count',
+  /** column name */
+  comments_messages_count_1h = 'comments_messages_count_1h',
+  /** column name */
+  comments_messages_count_24h = 'comments_messages_count_24h',
+  /** column name */
+  comments_users_count = 'comments_users_count',
+  /** column name */
+  date_of_post = 'date_of_post',
+  /** column name */
+  forwards = 'forwards',
+  /** column name */
+  link = 'link',
+  /** column name */
+  media = 'media',
+  /** column name */
+  message = 'message',
+  /** column name */
+  pk = 'pk',
+  /** column name */
+  reaction_24h = 'reaction_24h',
+  /** column name */
+  reactions_1h = 'reactions_1h',
+  /** column name */
+  tg_channel_id = 'tg_channel_id',
+  /** column name */
+  tg_post_id = 'tg_post_id',
+  /** column name */
+  timestamp = 'timestamp',
+  /** column name */
+  total_reactions_count = 'total_reactions_count',
+  /** column name */
+  view_24h = 'view_24h',
+  /** column name */
+  views = 'views',
+  /** column name */
+  views_1h = 'views_1h'
+}
+
+/** input type for updating data in table "stat_post_info" */
+export type Stat_Post_Info_Set_Input = {
+  comments_channels_count?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count_1h?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count_24h?: InputMaybe<Scalars['Int']['input']>;
+  comments_users_count?: InputMaybe<Scalars['Int']['input']>;
+  date_of_post?: InputMaybe<Scalars['timestamp']['input']>;
   forwards?: InputMaybe<Scalars['Int']['input']>;
   link?: InputMaybe<Scalars['String']['input']>;
   media?: InputMaybe<Scalars['String']['input']>;
@@ -3005,6 +3391,253 @@ export type Stat_Post_Insert_Input = {
   views_1h?: InputMaybe<Scalars['Int']['input']>;
 };
 
+/** aggregate stddev on columns */
+export type Stat_Post_Info_Stddev_Fields = {
+  __typename?: 'stat_post_info_stddev_fields';
+  comments_channels_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Float']['output']>;
+  comments_users_count?: Maybe<Scalars['Float']['output']>;
+  forwards?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+  reaction_24h?: Maybe<Scalars['Float']['output']>;
+  reactions_1h?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_post_id?: Maybe<Scalars['Float']['output']>;
+  total_reactions_count?: Maybe<Scalars['Float']['output']>;
+  view_24h?: Maybe<Scalars['Float']['output']>;
+  views?: Maybe<Scalars['Float']['output']>;
+  views_1h?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Stat_Post_Info_Stddev_Pop_Fields = {
+  __typename?: 'stat_post_info_stddev_pop_fields';
+  comments_channels_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Float']['output']>;
+  comments_users_count?: Maybe<Scalars['Float']['output']>;
+  forwards?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+  reaction_24h?: Maybe<Scalars['Float']['output']>;
+  reactions_1h?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_post_id?: Maybe<Scalars['Float']['output']>;
+  total_reactions_count?: Maybe<Scalars['Float']['output']>;
+  view_24h?: Maybe<Scalars['Float']['output']>;
+  views?: Maybe<Scalars['Float']['output']>;
+  views_1h?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Stat_Post_Info_Stddev_Samp_Fields = {
+  __typename?: 'stat_post_info_stddev_samp_fields';
+  comments_channels_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Float']['output']>;
+  comments_users_count?: Maybe<Scalars['Float']['output']>;
+  forwards?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+  reaction_24h?: Maybe<Scalars['Float']['output']>;
+  reactions_1h?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_post_id?: Maybe<Scalars['Float']['output']>;
+  total_reactions_count?: Maybe<Scalars['Float']['output']>;
+  view_24h?: Maybe<Scalars['Float']['output']>;
+  views?: Maybe<Scalars['Float']['output']>;
+  views_1h?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "stat_post_info" */
+export type Stat_Post_Info_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Stat_Post_Info_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Stat_Post_Info_Stream_Cursor_Value_Input = {
+  comments_channels_count?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count_1h?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count_24h?: InputMaybe<Scalars['Int']['input']>;
+  comments_users_count?: InputMaybe<Scalars['Int']['input']>;
+  date_of_post?: InputMaybe<Scalars['timestamp']['input']>;
+  forwards?: InputMaybe<Scalars['Int']['input']>;
+  link?: InputMaybe<Scalars['String']['input']>;
+  media?: InputMaybe<Scalars['String']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  reaction_24h?: InputMaybe<Scalars['Int']['input']>;
+  reactions_1h?: InputMaybe<Scalars['Int']['input']>;
+  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
+  tg_post_id?: InputMaybe<Scalars['bigint']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamp']['input']>;
+  total_reactions_count?: InputMaybe<Scalars['Int']['input']>;
+  view_24h?: InputMaybe<Scalars['Int']['input']>;
+  views?: InputMaybe<Scalars['Int']['input']>;
+  views_1h?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Stat_Post_Info_Sum_Fields = {
+  __typename?: 'stat_post_info_sum_fields';
+  comments_channels_count?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Int']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Int']['output']>;
+  comments_users_count?: Maybe<Scalars['Int']['output']>;
+  forwards?: Maybe<Scalars['Int']['output']>;
+  pk?: Maybe<Scalars['bigint']['output']>;
+  reaction_24h?: Maybe<Scalars['Int']['output']>;
+  reactions_1h?: Maybe<Scalars['Int']['output']>;
+  tg_channel_id?: Maybe<Scalars['bigint']['output']>;
+  tg_post_id?: Maybe<Scalars['bigint']['output']>;
+  total_reactions_count?: Maybe<Scalars['Int']['output']>;
+  view_24h?: Maybe<Scalars['Int']['output']>;
+  views?: Maybe<Scalars['Int']['output']>;
+  views_1h?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "stat_post_info" */
+export enum Stat_Post_Info_Update_Column {
+  /** column name */
+  comments_channels_count = 'comments_channels_count',
+  /** column name */
+  comments_messages_count = 'comments_messages_count',
+  /** column name */
+  comments_messages_count_1h = 'comments_messages_count_1h',
+  /** column name */
+  comments_messages_count_24h = 'comments_messages_count_24h',
+  /** column name */
+  comments_users_count = 'comments_users_count',
+  /** column name */
+  date_of_post = 'date_of_post',
+  /** column name */
+  forwards = 'forwards',
+  /** column name */
+  link = 'link',
+  /** column name */
+  media = 'media',
+  /** column name */
+  message = 'message',
+  /** column name */
+  pk = 'pk',
+  /** column name */
+  reaction_24h = 'reaction_24h',
+  /** column name */
+  reactions_1h = 'reactions_1h',
+  /** column name */
+  tg_channel_id = 'tg_channel_id',
+  /** column name */
+  tg_post_id = 'tg_post_id',
+  /** column name */
+  timestamp = 'timestamp',
+  /** column name */
+  total_reactions_count = 'total_reactions_count',
+  /** column name */
+  view_24h = 'view_24h',
+  /** column name */
+  views = 'views',
+  /** column name */
+  views_1h = 'views_1h'
+}
+
+export type Stat_Post_Info_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Stat_Post_Info_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Stat_Post_Info_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Stat_Post_Info_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Stat_Post_Info_Var_Pop_Fields = {
+  __typename?: 'stat_post_info_var_pop_fields';
+  comments_channels_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Float']['output']>;
+  comments_users_count?: Maybe<Scalars['Float']['output']>;
+  forwards?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+  reaction_24h?: Maybe<Scalars['Float']['output']>;
+  reactions_1h?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_post_id?: Maybe<Scalars['Float']['output']>;
+  total_reactions_count?: Maybe<Scalars['Float']['output']>;
+  view_24h?: Maybe<Scalars['Float']['output']>;
+  views?: Maybe<Scalars['Float']['output']>;
+  views_1h?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Stat_Post_Info_Var_Samp_Fields = {
+  __typename?: 'stat_post_info_var_samp_fields';
+  comments_channels_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Float']['output']>;
+  comments_users_count?: Maybe<Scalars['Float']['output']>;
+  forwards?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+  reaction_24h?: Maybe<Scalars['Float']['output']>;
+  reactions_1h?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_post_id?: Maybe<Scalars['Float']['output']>;
+  total_reactions_count?: Maybe<Scalars['Float']['output']>;
+  view_24h?: Maybe<Scalars['Float']['output']>;
+  views?: Maybe<Scalars['Float']['output']>;
+  views_1h?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Stat_Post_Info_Variance_Fields = {
+  __typename?: 'stat_post_info_variance_fields';
+  comments_channels_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_1h?: Maybe<Scalars['Float']['output']>;
+  comments_messages_count_24h?: Maybe<Scalars['Float']['output']>;
+  comments_users_count?: Maybe<Scalars['Float']['output']>;
+  forwards?: Maybe<Scalars['Float']['output']>;
+  pk?: Maybe<Scalars['Float']['output']>;
+  reaction_24h?: Maybe<Scalars['Float']['output']>;
+  reactions_1h?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_post_id?: Maybe<Scalars['Float']['output']>;
+  total_reactions_count?: Maybe<Scalars['Float']['output']>;
+  view_24h?: Maybe<Scalars['Float']['output']>;
+  views?: Maybe<Scalars['Float']['output']>;
+  views_1h?: Maybe<Scalars['Float']['output']>;
+};
+
+/** input type for inserting data into table "stat_post" */
+export type Stat_Post_Insert_Input = {
+  comments_channels_count?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count_1h?: InputMaybe<Scalars['Int']['input']>;
+  comments_messages_count_24h?: InputMaybe<Scalars['Int']['input']>;
+  comments_users_count?: InputMaybe<Scalars['Int']['input']>;
+  date_of_post?: InputMaybe<Scalars['timestamp']['input']>;
+  forwards?: InputMaybe<Scalars['Int']['input']>;
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  reaction_24h?: InputMaybe<Scalars['Int']['input']>;
+  reactions_1h?: InputMaybe<Scalars['Int']['input']>;
+  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
+  tg_post_id?: InputMaybe<Scalars['bigint']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamp']['input']>;
+  total_reactions_count?: InputMaybe<Scalars['Int']['input']>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Obj_Rel_Insert_Input>;
+  view_24h?: InputMaybe<Scalars['Int']['input']>;
+  views?: InputMaybe<Scalars['Int']['input']>;
+  views_1h?: InputMaybe<Scalars['Int']['input']>;
+};
+
 /** aggregate max on columns */
 export type Stat_Post_Max_Fields = {
   __typename?: 'stat_post_max_fields';
@@ -3013,10 +3646,8 @@ export type Stat_Post_Max_Fields = {
   comments_messages_count_1h?: Maybe<Scalars['Int']['output']>;
   comments_messages_count_24h?: Maybe<Scalars['Int']['output']>;
   comments_users_count?: Maybe<Scalars['Int']['output']>;
+  date_of_post?: Maybe<Scalars['timestamp']['output']>;
   forwards?: Maybe<Scalars['Int']['output']>;
-  link?: Maybe<Scalars['String']['output']>;
-  media?: Maybe<Scalars['String']['output']>;
-  message?: Maybe<Scalars['String']['output']>;
   pk?: Maybe<Scalars['bigint']['output']>;
   reaction_24h?: Maybe<Scalars['Int']['output']>;
   reactions_1h?: Maybe<Scalars['Int']['output']>;
@@ -3037,10 +3668,8 @@ export type Stat_Post_Min_Fields = {
   comments_messages_count_1h?: Maybe<Scalars['Int']['output']>;
   comments_messages_count_24h?: Maybe<Scalars['Int']['output']>;
   comments_users_count?: Maybe<Scalars['Int']['output']>;
+  date_of_post?: Maybe<Scalars['timestamp']['output']>;
   forwards?: Maybe<Scalars['Int']['output']>;
-  link?: Maybe<Scalars['String']['output']>;
-  media?: Maybe<Scalars['String']['output']>;
-  message?: Maybe<Scalars['String']['output']>;
   pk?: Maybe<Scalars['bigint']['output']>;
   reaction_24h?: Maybe<Scalars['Int']['output']>;
   reactions_1h?: Maybe<Scalars['Int']['output']>;
@@ -3076,10 +3705,8 @@ export type Stat_Post_Order_By = {
   comments_messages_count_1h?: InputMaybe<Order_By>;
   comments_messages_count_24h?: InputMaybe<Order_By>;
   comments_users_count?: InputMaybe<Order_By>;
+  date_of_post?: InputMaybe<Order_By>;
   forwards?: InputMaybe<Order_By>;
-  link?: InputMaybe<Order_By>;
-  media?: InputMaybe<Order_By>;
-  message?: InputMaybe<Order_By>;
   pk?: InputMaybe<Order_By>;
   reaction_24h?: InputMaybe<Order_By>;
   reactions_1h?: InputMaybe<Order_By>;
@@ -3087,6 +3714,7 @@ export type Stat_Post_Order_By = {
   tg_post_id?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
   total_reactions_count?: InputMaybe<Order_By>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Order_By>;
   view_24h?: InputMaybe<Order_By>;
   views?: InputMaybe<Order_By>;
   views_1h?: InputMaybe<Order_By>;
@@ -3110,13 +3738,9 @@ export enum Stat_Post_Select_Column {
   /** column name */
   comments_users_count = 'comments_users_count',
   /** column name */
+  date_of_post = 'date_of_post',
+  /** column name */
   forwards = 'forwards',
-  /** column name */
-  link = 'link',
-  /** column name */
-  media = 'media',
-  /** column name */
-  message = 'message',
   /** column name */
   pk = 'pk',
   /** column name */
@@ -3146,10 +3770,8 @@ export type Stat_Post_Set_Input = {
   comments_messages_count_1h?: InputMaybe<Scalars['Int']['input']>;
   comments_messages_count_24h?: InputMaybe<Scalars['Int']['input']>;
   comments_users_count?: InputMaybe<Scalars['Int']['input']>;
+  date_of_post?: InputMaybe<Scalars['timestamp']['input']>;
   forwards?: InputMaybe<Scalars['Int']['input']>;
-  link?: InputMaybe<Scalars['String']['input']>;
-  media?: InputMaybe<Scalars['String']['input']>;
-  message?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
   reaction_24h?: InputMaybe<Scalars['Int']['input']>;
   reactions_1h?: InputMaybe<Scalars['Int']['input']>;
@@ -3237,10 +3859,8 @@ export type Stat_Post_Stream_Cursor_Value_Input = {
   comments_messages_count_1h?: InputMaybe<Scalars['Int']['input']>;
   comments_messages_count_24h?: InputMaybe<Scalars['Int']['input']>;
   comments_users_count?: InputMaybe<Scalars['Int']['input']>;
+  date_of_post?: InputMaybe<Scalars['timestamp']['input']>;
   forwards?: InputMaybe<Scalars['Int']['input']>;
-  link?: InputMaybe<Scalars['String']['input']>;
-  media?: InputMaybe<Scalars['String']['input']>;
-  message?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['bigint']['input']>;
   reaction_24h?: InputMaybe<Scalars['Int']['input']>;
   reactions_1h?: InputMaybe<Scalars['Int']['input']>;
@@ -3286,13 +3906,9 @@ export enum Stat_Post_Update_Column {
   /** column name */
   comments_users_count = 'comments_users_count',
   /** column name */
+  date_of_post = 'date_of_post',
+  /** column name */
   forwards = 'forwards',
-  /** column name */
-  link = 'link',
-  /** column name */
-  media = 'media',
-  /** column name */
-  message = 'message',
   /** column name */
   pk = 'pk',
   /** column name */
@@ -3388,12 +4004,14 @@ export type Stat_Post_Variance_Fields = {
 export type Stat_Reaction = {
   __typename?: 'stat_reaction';
   pk: Scalars['bigint']['output'];
-  reaction_count: Scalars['Int']['output'];
-  reaction_emoticon: Scalars['String']['output'];
-  reaction_emoticon_code: Scalars['Int']['output'];
+  reaction_count?: Maybe<Scalars['Int']['output']>;
+  reaction_emoticon?: Maybe<Scalars['String']['output']>;
+  reaction_emoticon_code?: Maybe<Scalars['Int']['output']>;
   tg_channel_id: Scalars['bigint']['output'];
   tg_post_id: Scalars['bigint']['output'];
   timestamp: Scalars['timestamp']['output'];
+  /** An object relationship */
+  user_tg_channel?: Maybe<User_Tg_Channel>;
 };
 
 /** aggregated selection of "stat_reaction" */
@@ -3448,14 +4066,15 @@ export type Stat_Reaction_Bool_Exp = {
   tg_channel_id?: InputMaybe<Bigint_Comparison_Exp>;
   tg_post_id?: InputMaybe<Bigint_Comparison_Exp>;
   timestamp?: InputMaybe<Timestamp_Comparison_Exp>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "stat_reaction" */
 export enum Stat_Reaction_Constraint {
   /** unique or primary key constraint on columns "pk" */
   stat_reaction_pkey = 'stat_reaction_pkey',
-  /** unique or primary key constraint on columns "tg_post_id" */
-  stat_reaction_tg_post_id_key = 'stat_reaction_tg_post_id_key'
+  /** unique or primary key constraint on columns "tg_post_id", "tg_channel_id", "reaction_emoticon_code" */
+  stat_reaction_tg_channel_id_tg_post_id_reaction_emoticon_co_key = 'stat_reaction_tg_channel_id_tg_post_id_reaction_emoticon_co_key'
 }
 
 /** input type for incrementing numeric columns in table "stat_reaction" */
@@ -3476,6 +4095,7 @@ export type Stat_Reaction_Insert_Input = {
   tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
   tg_post_id?: InputMaybe<Scalars['bigint']['input']>;
   timestamp?: InputMaybe<Scalars['timestamp']['input']>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Obj_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -3527,6 +4147,7 @@ export type Stat_Reaction_Order_By = {
   tg_channel_id?: InputMaybe<Order_By>;
   tg_post_id?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Order_By>;
 };
 
 /** primary key columns input for table: stat_reaction */
@@ -3695,6 +4316,8 @@ export type Stat_User = {
   tg_channel_id: Scalars['bigint']['output'];
   tg_user_id: Scalars['bigint']['output'];
   timestamp: Scalars['timestamp']['output'];
+  /** An object relationship */
+  user_tg_channel?: Maybe<User_Tg_Channel>;
   username?: Maybe<Scalars['String']['output']>;
   verified?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -3755,6 +4378,7 @@ export type Stat_User_Bool_Exp = {
   tg_channel_id?: InputMaybe<Bigint_Comparison_Exp>;
   tg_user_id?: InputMaybe<Bigint_Comparison_Exp>;
   timestamp?: InputMaybe<Timestamp_Comparison_Exp>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Bool_Exp>;
   username?: InputMaybe<String_Comparison_Exp>;
   verified?: InputMaybe<Boolean_Comparison_Exp>;
 };
@@ -3789,6 +4413,7 @@ export type Stat_User_Insert_Input = {
   tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
   tg_user_id?: InputMaybe<Scalars['bigint']['input']>;
   timestamp?: InputMaybe<Scalars['timestamp']['input']>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Obj_Rel_Insert_Input>;
   username?: InputMaybe<Scalars['String']['input']>;
   verified?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -3856,6 +4481,7 @@ export type Stat_User_Order_By = {
   tg_channel_id?: InputMaybe<Order_By>;
   tg_user_id?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Order_By>;
   username?: InputMaybe<Order_By>;
   verified?: InputMaybe<Order_By>;
 };
@@ -4098,6 +4724,14 @@ export type Subscription_Root = {
   stat_post_aggregate: Stat_Post_Aggregate;
   /** fetch data from the table: "stat_post" using primary key columns */
   stat_post_by_pk?: Maybe<Stat_Post>;
+  /** fetch data from the table: "stat_post_info" */
+  stat_post_info: Array<Stat_Post_Info>;
+  /** fetch aggregated fields from the table: "stat_post_info" */
+  stat_post_info_aggregate: Stat_Post_Info_Aggregate;
+  /** fetch data from the table: "stat_post_info" using primary key columns */
+  stat_post_info_by_pk?: Maybe<Stat_Post_Info>;
+  /** fetch data from the table in a streaming manner: "stat_post_info" */
+  stat_post_info_stream: Array<Stat_Post_Info>;
   /** fetch data from the table in a streaming manner: "stat_post" */
   stat_post_stream: Array<Stat_Post>;
   /** fetch data from the table: "stat_reaction" */
@@ -4390,6 +5024,36 @@ export type Subscription_RootStat_Post_AggregateArgs = {
 
 export type Subscription_RootStat_Post_By_PkArgs = {
   pk: Scalars['bigint']['input'];
+};
+
+
+export type Subscription_RootStat_Post_InfoArgs = {
+  distinct_on?: InputMaybe<Array<Stat_Post_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Stat_Post_Info_Order_By>>;
+  where?: InputMaybe<Stat_Post_Info_Bool_Exp>;
+};
+
+
+export type Subscription_RootStat_Post_Info_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Stat_Post_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Stat_Post_Info_Order_By>>;
+  where?: InputMaybe<Stat_Post_Info_Bool_Exp>;
+};
+
+
+export type Subscription_RootStat_Post_Info_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
+};
+
+
+export type Subscription_RootStat_Post_Info_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Stat_Post_Info_Stream_Cursor_Input>>;
+  where?: InputMaybe<Stat_Post_Info_Bool_Exp>;
 };
 
 
@@ -6507,7 +7171,7 @@ export type ErAvgQueryVariables = Exact<{
 }>;
 
 
-export type ErAvgQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, stat_post_aggregate: { __typename?: 'stat_post_aggregate', aggregate?: { __typename?: 'stat_post_aggregate_fields', sum?: { __typename?: 'stat_post_sum_fields', views?: number | null } | null } | null } };
+export type ErAvgQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, stat_post_info_aggregate: { __typename?: 'stat_post_info_aggregate', aggregate?: { __typename?: 'stat_post_info_aggregate_fields', sum?: { __typename?: 'stat_post_info_sum_fields', views?: number | null } | null } | null } };
 
 export type AvgUserLifecycleQueryVariables = Exact<{
   tg_channel_ids: Scalars['_int8']['input'];
@@ -6531,7 +7195,7 @@ export type Er24QueryVariables = Exact<{
 }>;
 
 
-export type Er24Query = { __typename?: 'query_root', stat_post_aggregate: { __typename?: 'stat_post_aggregate', aggregate?: { __typename?: 'stat_post_aggregate_fields', sum?: { __typename?: 'stat_post_sum_fields', view_24h?: number | null, views?: number | null } | null } | null } };
+export type Er24Query = { __typename?: 'query_root', stat_post_info_aggregate: { __typename?: 'stat_post_info_aggregate', aggregate?: { __typename?: 'stat_post_info_aggregate_fields', sum?: { __typename?: 'stat_post_info_sum_fields', view_24h?: number | null, views?: number | null } | null } | null } };
 
 export type SubscribersAmountByDateRageQueryVariables = Exact<{
   end_date: Scalars['timestamp']['input'];
@@ -6621,7 +7285,7 @@ export type UnsubscriptionRateQueryVariables = Exact<{
 }>;
 
 
-export type UnsubscriptionRateQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, stat_post_aggregate: { __typename?: 'stat_post_aggregate', aggregate?: { __typename?: 'stat_post_aggregate_fields', sum?: { __typename?: 'stat_post_sum_fields', views?: number | null } | null } | null } };
+export type UnsubscriptionRateQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, stat_post_info_aggregate: { __typename?: 'stat_post_info_aggregate', aggregate?: { __typename?: 'stat_post_info_aggregate_fields', sum?: { __typename?: 'stat_post_info_sum_fields', views?: number | null } | null } | null } };
 
 
 export const GetGroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGroups"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tg_invite_link_group"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"group_name"}},{"kind":"Field","name":{"kind":"Name","value":"user_tg_invite_links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pk"}},{"kind":"Field","name":{"kind":"Name","value":"tg_invite_link"}},{"kind":"Field","name":{"kind":"Name","value":"label"}}]}}]}}]}}]} as unknown as DocumentNode<GetGroupsQuery, GetGroupsQueryVariables>;
@@ -6640,10 +7304,10 @@ export const TgChannelsDocument = {"kind":"Document","definitions":[{"kind":"Ope
 export const TrackedTgChannelsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TrackedTgChannels"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tg_channel_id"}},{"kind":"Field","name":{"kind":"Name","value":"tg_channel_title"}}]}}]}}]} as unknown as DocumentNode<TrackedTgChannelsQuery, TrackedTgChannelsQueryVariables>;
 export const TrackTgChannelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TrackTgChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_numbers"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"track_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"arg1"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_numbers"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_numbers"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_title"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}}]}}]}}]} as unknown as DocumentNode<TrackTgChannelMutation, TrackTgChannelMutationVariables>;
 export const UntrackTgChannelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UntrackTgChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<UntrackTgChannelMutation, UntrackTgChannelMutationVariables>;
-export const ErAvgDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ERAvg"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ErAvgQuery, ErAvgQueryVariables>;
+export const ErAvgDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ERAvg"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_info_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date_of_post"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ErAvgQuery, ErAvgQueryVariables>;
 export const AvgUserLifecycleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AvgUserLifecycle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"get_avg_user_lifecycle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avg_lifecycle_days"}}]}}]}}]} as unknown as DocumentNode<AvgUserLifecycleQuery, AvgUserLifecycleQueryVariables>;
 export const CohortAnalysisDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CohortAnalysis"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_bucket"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cohort_analysis"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"time_bucket"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_bucket"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"join_date"}},{"kind":"Field","name":{"kind":"Name","value":"left_date"}},{"kind":"Field","name":{"kind":"Name","value":"joined_count"}},{"kind":"Field","name":{"kind":"Name","value":"left_count"}}]}}]}}]} as unknown as DocumentNode<CohortAnalysisQuery, CohortAnalysisQueryVariables>;
-export const Er24Document = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ER24"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_post_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"view_24h"}},{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<Er24Query, Er24QueryVariables>;
+export const Er24Document = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ER24"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_post_info_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"view_24h"}},{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<Er24Query, Er24QueryVariables>;
 export const SubscribersAmountByDateRageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubscribersAmountByDateRage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}}]}}]} as unknown as DocumentNode<SubscribersAmountByDateRageQuery, SubscribersAmountByDateRageQueryVariables>;
 export const SubscribesByInviteLinksAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubscribesByInviteLinksAggregates"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"without_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"with_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<SubscribesByInviteLinksAggregatesQuery, SubscribesByInviteLinksAggregatesQueryVariables>;
 export const SubscribesChartDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubscribesChart"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_signups_by_period"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"time_period"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"time_bucket"}}]}}]}}]} as unknown as DocumentNode<SubscribesChartQuery, SubscribesChartQueryVariables>;
@@ -6653,4 +7317,4 @@ export const UnsubscribersAmountByDateRageDocument = {"kind":"Document","definit
 export const UnsubscribesUsersByLinksAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscribesUsersByLinksAggregates"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"without_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"with_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<UnsubscribesUsersByLinksAggregatesQuery, UnsubscribesUsersByLinksAggregatesQueryVariables>;
 export const UnsubscribesByPeriodsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscribesByPeriods"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unsubscribes_by_periods"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"interval_label"}},{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"percentage"}}]}}]}}]} as unknown as DocumentNode<UnsubscribesByPeriodsQuery, UnsubscribesByPeriodsQueryVariables>;
 export const SubcribesUnsubscribesPieAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubcribesUnsubscribesPieAggregates"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"subscribes"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"unsubscribes"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<SubcribesUnsubscribesPieAggregatesQuery, SubcribesUnsubscribesPieAggregatesQueryVariables>;
-export const UnsubscriptionRateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscriptionRate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UnsubscriptionRateQuery, UnsubscriptionRateQueryVariables>;
+export const UnsubscriptionRateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscriptionRate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_info_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date_of_post"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UnsubscriptionRateQuery, UnsubscriptionRateQueryVariables>;

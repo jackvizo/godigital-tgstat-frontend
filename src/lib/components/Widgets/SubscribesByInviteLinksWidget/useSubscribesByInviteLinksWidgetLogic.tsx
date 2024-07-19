@@ -37,7 +37,7 @@ export function useSubscribesByInviteLinksWidgetLogic(props: UseSubscribesByInvi
   const auth = useAuth();
 
   const subscribesByInviteLinksQuery = useQuery(SUBSCRIBES_BY_INVITE_LINKS_QUERY, {
-    skip: !auth?.session?.data?.accessToken,
+    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1,
     variables: {
       end_date: props.endDate,
       start_date: props.startDate,

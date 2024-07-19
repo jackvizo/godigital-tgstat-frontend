@@ -19,8 +19,9 @@ export interface UseSubscribersAmountWidgetLogicProps extends DashboardFilters {
 
 export function useSubscribersAmountWidgetLogic(props: UseSubscribersAmountWidgetLogicProps) {
   const auth = useAuth();
+
   const subscribersAmountByDateRangeQuery = useQuery(SUBSCRIBERS_BY_DATE_RANGE_QUERY, {
-    skip: !auth.session?.data?.accessToken,
+    skip: !auth.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.startDate || !props.endDate,
     variables: {
       end_date: props.endDate,
       start_date: props.startDate,

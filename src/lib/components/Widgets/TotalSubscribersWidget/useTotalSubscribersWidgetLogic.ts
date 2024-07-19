@@ -18,7 +18,7 @@ export interface UseTotalSubscribersWidgetLogicProps extends DashboardFilters {}
 export function useTotalSubscribersWidgetLogic(props: UseTotalSubscribersWidgetLogicProps) {
   const auth = useAuth();
   const totalSubscribersQuery = useQuery(TOTAL_SUBSCRIBERS_QUERY, {
-    skip: !auth?.session?.data?.accessToken,
+    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1,
     variables: {
       tg_channel_id: props.tgChannelIds,
     },

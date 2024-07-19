@@ -87,7 +87,7 @@ export function useCohortAnalysisWidgetLogic(props: UseCohortAnalysisWidgetLogic
   const timeBucket = props.timePeriod === 'year' ? 'month' : 'day';
 
   const cohortAnalysisQuery = useQuery(COHORT_ANALYSIS_QUERY, {
-    skip: !auth.session?.data?.accessToken,
+    skip: !auth.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.endDate || !props.endDate,
     variables: {
       end_date: props.endDate,
       start_date: props.startDate,

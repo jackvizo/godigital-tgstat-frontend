@@ -19,7 +19,13 @@ export interface WidgetWrapperProps {
 
 export const WidgetWrapper: React.FC<WidgetWrapperProps> = (props) => {
   const auth = useAuth();
-  const isLoading = !auth.session?.data?.accessToken || (props.loading ?? ((props.query?.loading && !(props.query.previousData ?? props.query.data)) || props.queries?.some(item => item.loading && !(item.previousData ?? item.data))) ?? false);
+  const isLoading = !auth.session?.data?.accessToken
+    || (props.loading
+      || (
+        (props.query?.loading && !(props.query.previousData ?? props.query.data))
+        || props.queries?.some(item => item.loading && !(item.previousData ?? item.data))
+      ) || false
+    );
   const error = props.error ?? props.query?.error ?? props.queries?.find(item => item.error) ?? null;
   const width = props.width ?? 100;
   const height = props.height ?? 100;

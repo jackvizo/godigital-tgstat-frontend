@@ -30,7 +30,7 @@ export function UnsubscribesByInviteLinksWidget(props: UnsubscribesByInviteLinks
   if (isEmptyData) {
     return <Card>
       <CardContent sx={{ height: '100%' }}>
-        <Typography variant="subtitle2" gutterBottom>Подписалось</Typography>
+        <Typography variant="subtitle2" gutterBottom>Отписалось (с/без ссылки)</Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
           <Typography>Нет данных</Typography>
         </Box>
@@ -41,7 +41,7 @@ export function UnsubscribesByInviteLinksWidget(props: UnsubscribesByInviteLinks
   return (
     <Card>
       <CardContent>
-        <Typography variant="subtitle2" gutterBottom>Отписалось</Typography>
+        <Typography variant="subtitle2" gutterBottom>Отписалось (с/без ссылки)</Typography>
         <Doughnut data={chartData} options={{
           plugins: {
             legend: {
