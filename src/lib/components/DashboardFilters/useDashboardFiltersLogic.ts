@@ -20,16 +20,24 @@ export function useDashboardFiltersLogic() {
   const filterDatePickerLogic = useDashboardDatePicker();
 
   const filters: DashboardFilters = {
-    tgChannelIds: tgChannelsPickerLogic.channels
+    tgChannelIds: tgChannelsPickerLogic.trackedChannels
       ?.filter((item) => item.is_tracked)
-      ?.map((item) => Number(item.channel_id)),
+      ?.map((item) => Number(item.tg_channel_id)),
     startDate: filterDatePickerLogic.startDateState,
     endDate: filterDatePickerLogic.endDateState,
     timePeriod: filterDatePickerLogic.timePeriod,
   };
 
+  const isNoTrackedChannels =
+    !tgChannelsPickerLogic.trackedTgChannelsQuery.loading &&
+    !!(
+      tgChannelsPickerLogic.trackedTgChannelsQuery.previousData ?? tgChannelsPickerLogic.trackedTgChannelsQuery.data
+    ) &&
+    filters.tgChannelIds.length < 1;
+
   return {
     filters,
+    isNoTrackedChannels,
     phoneNumberListLogic,
     inviteLinkPickerLogic,
     tgChannelsPickerLogic,

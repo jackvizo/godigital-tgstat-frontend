@@ -3,10 +3,9 @@
 import { DashboardDatePicker } from '@/lib/components/DashboardDatePicker/DashboardDatePicker';
 import { InviteLinkPicker } from '@/lib/components/InviteLinkPicker/InviteLinkPicker';
 import { ModalWrapper } from '@/lib/components/ModalWrapper/ModalWrapper';
-import PhoneNumberList from '@/lib/components/PhoneNumberList/PhoneNumberList';
-import { TgChannelsPicker } from '@/lib/components/TgChannelsPicker/TgChannelsPicker';
 import { WidgetWrapper } from '@/lib/components/WidgetWrapper/WidgetWrapper';
 import { ButtonGroup, FormControl, Stack } from '@mui/material';
+import { TgChannelsAndPhoneNumbersPicker } from '../TgChannelsAndPhoneNumbersPicker/TgChannelsAndPhoneNumbersPicker';
 import { useDashboardFiltersLogic } from "./useDashboardFiltersLogic";
 
 export interface DashboardFiltersProps {
@@ -20,8 +19,7 @@ export function DashboardFilters(props: DashboardFiltersProps) {
         <DashboardDatePicker {...props.dashboardFiltersLogic.filterDatePickerLogic} />
         <WidgetWrapper
           queries={[
-            props.dashboardFiltersLogic.inviteLinkPickerLogic.getGroupsQuery,
-            props.dashboardFiltersLogic.tgChannelsPickerLogic.getTelegramChannelsQuery
+            props.dashboardFiltersLogic.inviteLinkPickerLogic.getGroupsQuery
           ]}
           width={187}
           height={40}
@@ -31,8 +29,10 @@ export function DashboardFilters(props: DashboardFiltersProps) {
               <InviteLinkPicker {...props.dashboardFiltersLogic.inviteLinkPickerLogic} />
             </ModalWrapper>
             <ModalWrapper label="Каналы">
-              <TgChannelsPicker {...props.dashboardFiltersLogic.tgChannelsPickerLogic} />
-              <PhoneNumberList {...props.dashboardFiltersLogic.phoneNumberListLogic} />
+              <TgChannelsAndPhoneNumbersPicker
+                phoneNumberListLogic={props.dashboardFiltersLogic.phoneNumberListLogic}
+                tgChannelsPickerLogic={props.dashboardFiltersLogic.tgChannelsPickerLogic}
+              />
             </ModalWrapper>
           </ButtonGroup>
         </WidgetWrapper>

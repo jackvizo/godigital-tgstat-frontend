@@ -20,15 +20,15 @@ const documents = {
     "\n  mutation CreateInviteLink($tg_invite_link: String!, $label: String!, $group_id: bigint!, $user_id: uuid!) {\n    insert_user_tg_invite_link_one(\n      object: { tg_invite_link: $tg_invite_link, label: $label, group_id: $group_id, user_id: $user_id }\n    ) {\n      pk\n      tg_invite_link\n      label\n    }\n  }\n": types.CreateInviteLinkDocument,
     "\n  mutation UpdateInviteLink($pk: bigint!, $tg_invite_link: String!, $label: String!) {\n    update_user_tg_invite_link_by_pk(\n      pk_columns: { pk: $pk }\n      _set: { tg_invite_link: $tg_invite_link, label: $label }\n    ) {\n      pk\n      tg_invite_link\n      label\n    }\n  }\n": types.UpdateInviteLinkDocument,
     "\n  mutation DeleteInviteLink($pk: bigint!) {\n    delete_user_tg_invite_link_by_pk(pk: $pk) {\n      pk\n    }\n  }\n": types.DeleteInviteLinkDocument,
-    "\n  query TgChannels($title_search: String!) {\n    tg_channels(arg1: { title_search: $title_search }) {\n      channels {\n        channel_id\n        title\n        phone_numbers\n      }\n    }\n  }\n": types.TgChannelsDocument,
-    "\n  query TrackedTgChannels($user_id: uuid!) {\n    user_tg_channel(where: { user_id: { _eq: $user_id } }) {\n      tg_channel_id\n      user_id\n    }\n  }\n": types.TrackedTgChannelsDocument,
-    "\n  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!) {\n    track_tg_channel(arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id }) {\n      success\n    }\n  }\n": types.TrackTgChannelDocument,
-    "\n  mutation UntrackTgChannel($user_id: uuid!, $tg_channel_id: bigint!) {\n    delete_user_tg_channel(where: { user_id: { _eq: $user_id }, tg_channel_id: { _eq: $tg_channel_id } }) {\n      affected_rows\n    }\n  }\n": types.UntrackTgChannelDocument,
     "\n  query GetUserPhoneNumbers($user_id: uuid!) {\n    config__tg_bot_session_pool(where: { user_id: { _eq: $user_id } }) {\n      pk\n      phone_number\n      status\n    }\n    get_tg_auth_deployment_id {\n      deployment_id\n    }\n  }\n": types.GetUserPhoneNumbersDocument,
     "\n  query FlowRunState($flow_run_id: String!) {\n    flow_run(arg1: { flow_run_id: $flow_run_id }) {\n      state\n    }\n  }\n": types.FlowRunStateDocument,
     "\n  mutation Request2FA($deployment_id: String!, $phone_number: String!, $api_hash: String!, $api_id: String!) {\n    request_2fa(\n      arg1: { deployment_id: $deployment_id, phone_number: $phone_number, api_hash: $api_hash, api_id: $api_id }\n    ) {\n      error_text\n      flow_run_id\n      status\n    }\n  }\n": types.Request2FaDocument,
     "\n  mutation Confirm2FA($flow_run_id: String!, $code_2fa: String!, $cloud_password: String) {\n    confirm_2fa(arg1: { code_2fa: $code_2fa, flow_run_id: $flow_run_id, cloud_password: $cloud_password }) {\n      status\n      error_text\n    }\n  }\n": types.Confirm2FaDocument,
     "\n  mutation DeletePhoneNumber($phone_number: String!) {\n    delete_config__tg_bot_session_pool(where: { phone_number: { _eq: $phone_number } }) {\n      affected_rows\n    }\n  }\n": types.DeletePhoneNumberDocument,
+    "\n  query TgChannels($title_search: String!) {\n    tg_channels(arg1: { title_search: $title_search }) {\n      channels {\n        tg_channel_id: channel_id\n        tg_channel_title: title\n        phone_numbers\n      }\n    }\n  }\n": types.TgChannelsDocument,
+    "\n  query TrackedTgChannels($user_id: uuid!) {\n    user_tg_channel(where: { user_id: { _eq: $user_id } }) {\n      tg_channel_id\n      tg_channel_title\n    }\n  }\n": types.TrackedTgChannelsDocument,
+    "\n  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!, $tg_channel_title: String!) {\n    track_tg_channel(\n      arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id, tg_channel_title: $tg_channel_title }\n    ) {\n      success\n    }\n  }\n": types.TrackTgChannelDocument,
+    "\n  mutation UntrackTgChannel($user_id: uuid!, $tg_channel_id: bigint!) {\n    delete_user_tg_channel(where: { user_id: { _eq: $user_id }, tg_channel_id: { _eq: $tg_channel_id } }) {\n      affected_rows\n    }\n  }\n": types.UntrackTgChannelDocument,
     "\n  query ERAvg($from_date: timestamp!, $to_date: timestamp!, $tg_channel_ids: [bigint!]) {\n    stat_user_aggregate(\n      where: { joined_at: { _gte: $from_date, _lte: $to_date }, tg_channel_id: { _in: $tg_channel_ids } }\n    ) {\n      aggregate {\n        count(columns: pk)\n      }\n    }\n    stat_post_aggregate(where: { timestamp: { _gte: $from_date, _lte: $to_date } }) {\n      aggregate {\n        sum {\n          views\n        }\n      }\n    }\n  }\n": types.ErAvgDocument,
     "\n  query AvgUserLifecycle($tg_channel_ids: _int8!) {\n    get_avg_user_lifecycle(args: { tg_channel_ids: $tg_channel_ids }) {\n      avg_lifecycle_days\n    }\n  }\n": types.AvgUserLifecycleDocument,
     "\n  query CohortAnalysis($end_date: date!, $start_date: date!, $tg_channel_ids: _int8!, $time_bucket: String!) {\n    cohort_analysis(args: { start_date: $start_date, end_date: $end_date, tg_channel_ids: $tg_channel_ids, time_bucket: $time_bucket }) {\n      join_date\n      left_date\n      joined_count\n      left_count\n    }\n  }\n": types.CohortAnalysisDocument,
@@ -90,22 +90,6 @@ export function graphql(source: "\n  mutation DeleteInviteLink($pk: bigint!) {\n
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query TgChannels($title_search: String!) {\n    tg_channels(arg1: { title_search: $title_search }) {\n      channels {\n        channel_id\n        title\n        phone_numbers\n      }\n    }\n  }\n"): (typeof documents)["\n  query TgChannels($title_search: String!) {\n    tg_channels(arg1: { title_search: $title_search }) {\n      channels {\n        channel_id\n        title\n        phone_numbers\n      }\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  query TrackedTgChannels($user_id: uuid!) {\n    user_tg_channel(where: { user_id: { _eq: $user_id } }) {\n      tg_channel_id\n      user_id\n    }\n  }\n"): (typeof documents)["\n  query TrackedTgChannels($user_id: uuid!) {\n    user_tg_channel(where: { user_id: { _eq: $user_id } }) {\n      tg_channel_id\n      user_id\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!) {\n    track_tg_channel(arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id }) {\n      success\n    }\n  }\n"): (typeof documents)["\n  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!) {\n    track_tg_channel(arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id }) {\n      success\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  mutation UntrackTgChannel($user_id: uuid!, $tg_channel_id: bigint!) {\n    delete_user_tg_channel(where: { user_id: { _eq: $user_id }, tg_channel_id: { _eq: $tg_channel_id } }) {\n      affected_rows\n    }\n  }\n"): (typeof documents)["\n  mutation UntrackTgChannel($user_id: uuid!, $tg_channel_id: bigint!) {\n    delete_user_tg_channel(where: { user_id: { _eq: $user_id }, tg_channel_id: { _eq: $tg_channel_id } }) {\n      affected_rows\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
 export function graphql(source: "\n  query GetUserPhoneNumbers($user_id: uuid!) {\n    config__tg_bot_session_pool(where: { user_id: { _eq: $user_id } }) {\n      pk\n      phone_number\n      status\n    }\n    get_tg_auth_deployment_id {\n      deployment_id\n    }\n  }\n"): (typeof documents)["\n  query GetUserPhoneNumbers($user_id: uuid!) {\n    config__tg_bot_session_pool(where: { user_id: { _eq: $user_id } }) {\n      pk\n      phone_number\n      status\n    }\n    get_tg_auth_deployment_id {\n      deployment_id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -123,6 +107,22 @@ export function graphql(source: "\n  mutation Confirm2FA($flow_run_id: String!, 
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation DeletePhoneNumber($phone_number: String!) {\n    delete_config__tg_bot_session_pool(where: { phone_number: { _eq: $phone_number } }) {\n      affected_rows\n    }\n  }\n"): (typeof documents)["\n  mutation DeletePhoneNumber($phone_number: String!) {\n    delete_config__tg_bot_session_pool(where: { phone_number: { _eq: $phone_number } }) {\n      affected_rows\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query TgChannels($title_search: String!) {\n    tg_channels(arg1: { title_search: $title_search }) {\n      channels {\n        tg_channel_id: channel_id\n        tg_channel_title: title\n        phone_numbers\n      }\n    }\n  }\n"): (typeof documents)["\n  query TgChannels($title_search: String!) {\n    tg_channels(arg1: { title_search: $title_search }) {\n      channels {\n        tg_channel_id: channel_id\n        tg_channel_title: title\n        phone_numbers\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query TrackedTgChannels($user_id: uuid!) {\n    user_tg_channel(where: { user_id: { _eq: $user_id } }) {\n      tg_channel_id\n      tg_channel_title\n    }\n  }\n"): (typeof documents)["\n  query TrackedTgChannels($user_id: uuid!) {\n    user_tg_channel(where: { user_id: { _eq: $user_id } }) {\n      tg_channel_id\n      tg_channel_title\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!, $tg_channel_title: String!) {\n    track_tg_channel(\n      arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id, tg_channel_title: $tg_channel_title }\n    ) {\n      success\n    }\n  }\n"): (typeof documents)["\n  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!, $tg_channel_title: String!) {\n    track_tg_channel(\n      arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id, tg_channel_title: $tg_channel_title }\n    ) {\n      success\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UntrackTgChannel($user_id: uuid!, $tg_channel_id: bigint!) {\n    delete_user_tg_channel(where: { user_id: { _eq: $user_id }, tg_channel_id: { _eq: $tg_channel_id } }) {\n      affected_rows\n    }\n  }\n"): (typeof documents)["\n  mutation UntrackTgChannel($user_id: uuid!, $tg_channel_id: bigint!) {\n    delete_user_tg_channel(where: { user_id: { _eq: $user_id }, tg_channel_id: { _eq: $tg_channel_id } }) {\n      affected_rows\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

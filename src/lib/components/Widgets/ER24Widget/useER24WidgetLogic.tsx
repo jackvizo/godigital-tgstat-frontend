@@ -5,7 +5,7 @@ import { useAuth } from '@/lib/auth/use-auth';
 
 export const ER24_QUERY = graphql(`
   query ER24($tg_channel_ids: [bigint!]!) {
-    stat_post_aggregate(where: { tg_channel_id: { _in: $tg_channel_ids } }) {
+    stat_post_info_aggregate(where: { tg_channel_id: { _in: $tg_channel_ids } }) {
       aggregate {
         sum {
           view_24h

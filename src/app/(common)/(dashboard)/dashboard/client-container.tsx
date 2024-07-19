@@ -92,69 +92,74 @@ export function ClientContainer(props: ClientContainerProps) {
 
   const unsubscribesPieWidgetLogic = useUnsubscribesPieWidgetLogic(dashboardFiltersLogic.filters);
 
-
   return (
     <Box>
       <Box sx={{ my: 2 }}>
         <DashboardFilters dashboardFiltersLogic={dashboardFiltersLogic} />
       </Box>
 
-      <Typography variant="subtitle1" gutterBottom>За всё время</Typography>
-      <Divider />
+      {dashboardFiltersLogic.isNoTrackedChannels ? (
+        <Typography variant="subtitle1" gutterBottom>Выберите каналы для отслеживания через кнопку "Каналы"</Typography>
+      ) : (
+        <>
+          <Typography variant="subtitle1" gutterBottom>За всё время</Typography>
+          <Divider />
 
-      <Row>
-        <WidgetWrapper query={totalSubscribersWidgetLogic.totalSubscribersQuery} height={rowHeight1} width={167}>
-          <TotalSubscribersWidget {...totalSubscribersWidgetLogic} />
-        </WidgetWrapper>
-        <WidgetWrapper query={avgUserLifecycleWidgetLogic.avgUserLifecycleQuery} height={rowHeight1} width={200}>
-          <AvgUserLifecycleWidget {...avgUserLifecycleWidgetLogic} />
-        </WidgetWrapper>
-        <WidgetWrapper query={er24WidgetLogic.er24Query} height={rowHeight1} width={70}>
-          <ER24Widget {...er24WidgetLogic} />
-        </WidgetWrapper>
-      </Row>
+          <Row>
+            <WidgetWrapper query={totalSubscribersWidgetLogic.totalSubscribersQuery} height={rowHeight1} width={167}>
+              <TotalSubscribersWidget {...totalSubscribersWidgetLogic} />
+            </WidgetWrapper>
+            <WidgetWrapper query={avgUserLifecycleWidgetLogic.avgUserLifecycleQuery} height={rowHeight1} width={200}>
+              <AvgUserLifecycleWidget {...avgUserLifecycleWidgetLogic} />
+            </WidgetWrapper>
+            <WidgetWrapper query={er24WidgetLogic.er24Query} height={rowHeight1} width={70}>
+              <ER24Widget {...er24WidgetLogic} />
+            </WidgetWrapper>
+          </Row>
 
-      <Typography variant="subtitle1" gutterBottom>За выбранный период</Typography>
-      <Divider />
+          <Typography variant="subtitle1" gutterBottom>За выбранный период</Typography>
+          <Divider />
 
-      <Row>
-        <WidgetWrapper query={subscribersAmountWidgetLogic.subscribersAmountByDateRangeQuery} height={rowHeight1} width={125}>
-          <SubscribersAmountByDateRangeWidget {...subscribersAmountWidgetLogic} />
-        </WidgetWrapper>
-        <WidgetWrapper query={unsubscribersAmountWidgetLogic.unsubscribersAmountByDateRangeQuery} height={rowHeight1} width={115}>
-          <UnsubscribersAmountByDateRangeWidget {...unsubscribersAmountWidgetLogic} />
-        </WidgetWrapper>
-        <WidgetWrapper queries={[subscribersAmountWidgetLogic.subscribersAmountByDateRangeQuery, unsubscribersAmountWidgetLogic.unsubscribersAmountByDateRangeQuery]} height={rowHeight1} width={109}>
-          <UnsubscribersPercentByDateRangeWidget {...unsubscribersPercentWidgetLogic} />
-        </WidgetWrapper>
-        <WidgetWrapper query={avgErLogic.avgErQuery} height={rowHeight1} width={112}>
-          <AvgERWidget {...avgErLogic} />
-        </WidgetWrapper>
-      </Row>
+          <Row>
+            <WidgetWrapper query={subscribersAmountWidgetLogic.subscribersAmountByDateRangeQuery} height={rowHeight1} width={125}>
+              <SubscribersAmountByDateRangeWidget {...subscribersAmountWidgetLogic} />
+            </WidgetWrapper>
+            <WidgetWrapper query={unsubscribersAmountWidgetLogic.unsubscribersAmountByDateRangeQuery} height={rowHeight1} width={115}>
+              <UnsubscribersAmountByDateRangeWidget {...unsubscribersAmountWidgetLogic} />
+            </WidgetWrapper>
+            <WidgetWrapper queries={[subscribersAmountWidgetLogic.subscribersAmountByDateRangeQuery, unsubscribersAmountWidgetLogic.unsubscribersAmountByDateRangeQuery]} height={rowHeight1} width={109}>
+              <UnsubscribersPercentByDateRangeWidget {...unsubscribersPercentWidgetLogic} />
+            </WidgetWrapper>
+            <WidgetWrapper query={avgErLogic.avgErQuery} height={rowHeight1} width={112}>
+              <AvgERWidget {...avgErLogic} />
+            </WidgetWrapper>
+          </Row>
 
-      <Row>
-        <WidgetWrapper queries={[subscribesUnsubscribesChartWidgetLogic.subscribesQuery, subscribesUnsubscribesChartWidgetLogic.unsubscribesQuery]} height={rowHeight2} width={500}>
-          <SubscribesUnsubscribesChart {...subscribesUnsubscribesChartWidgetLogic} title="Подписки и отписки" />
-        </WidgetWrapper>
-        <WidgetWrapper query={subscribesByInviteLinksWidgetLogic.subscribesByInviteLinksQuery} height={rowHeight2} width={332}>
-          <SubscribesByInviteLinksWidget {...subscribesByInviteLinksWidgetLogic} />
-        </WidgetWrapper>
-        <WidgetWrapper query={unsubscribesByInviteLinksWidgetLogic.unsubscribesByInviteLinksQuery} height={rowHeight2} width={332}>
-          <UnsubscribesByInviteLinksWidget {...unsubscribesByInviteLinksWidgetLogic} />
-        </WidgetWrapper>
-        <WidgetWrapper
-          query={unsubscribesPieWidgetLogic.subscribesUnsubscribesPieAggregatesQuery}
-          height={rowHeight2}
-          width={332}
-        >
-          <UnsubscribesPieWidget {...unsubscribesPieWidgetLogic} />
-        </WidgetWrapper>
-      </Row>
+          <Row>
+            <WidgetWrapper queries={[subscribesUnsubscribesChartWidgetLogic.subscribesQuery, subscribesUnsubscribesChartWidgetLogic.unsubscribesQuery]} height={rowHeight2} width={500}>
+              <SubscribesUnsubscribesChart {...subscribesUnsubscribesChartWidgetLogic} title="Подписки и отписки" />
+            </WidgetWrapper>
+            <WidgetWrapper query={subscribesByInviteLinksWidgetLogic.subscribesByInviteLinksQuery} height={rowHeight2} width={332}>
+              <SubscribesByInviteLinksWidget {...subscribesByInviteLinksWidgetLogic} />
+            </WidgetWrapper>
+            <WidgetWrapper query={unsubscribesByInviteLinksWidgetLogic.unsubscribesByInviteLinksQuery} height={rowHeight2} width={332}>
+              <UnsubscribesByInviteLinksWidget {...unsubscribesByInviteLinksWidgetLogic} />
+            </WidgetWrapper>
+            <WidgetWrapper
+              query={unsubscribesPieWidgetLogic.subscribesUnsubscribesPieAggregatesQuery}
+              height={rowHeight2}
+              width={332}
+            >
+              <UnsubscribesPieWidget {...unsubscribesPieWidgetLogic} />
+            </WidgetWrapper>
+          </Row>
 
-      <Divider />
+          <Divider />
 
+          <CohortWidget dashboardFiltersLogic={dashboardFiltersLogic} />
+        </>
+      )}
 
-      <CohortWidget dashboardFiltersLogic={dashboardFiltersLogic} />
     </Box>
   )
 }

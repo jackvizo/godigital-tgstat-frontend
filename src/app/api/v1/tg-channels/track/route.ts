@@ -13,9 +13,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const userId = body.user_id;
     const tgChannelId = body.tg_channel_id;
+    const tgChannelTitle = body.tg_channel_title;
     const phoneNumbers = body.phone_numbers;
 
-    await trackChannel({ userId, tgChannelId, phoneNumbers });
+    await trackChannel({ userId, tgChannelId, tgChannelTitle, phoneNumbers });
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     return errorHandler(error);

@@ -2,11 +2,12 @@ import { Api, TelegramClient } from "telegram";
 import { StringSession } from "telegram/sessions";
 import prismaClient from "@/lib/prisma-client";
 import _uniq from "lodash/uniq";
+import _uniqBy from "lodash/uniqBy";
 
 interface Channel {
   channel_id: string;
   title: string;
-  phoneNumbers: string[];
+  phone_numbers: string[];
 }
 
 interface PhoneNumberChannels {
@@ -35,17 +36,30 @@ export async function getChannels(args: { userId: string; titleSearch: string })
         });
         await client.connect();
 
+        console.log("session pn", session.phone_number);
+
         try {
           const searchResult = await client.invoke(new Api.contacts.Search({ q: args.titleSearch, limit: 10 }));
+          const adminedPublicChannels = await client.invoke(new Api.channels.GetAdminedPublicChannels({}));
           const channels = searchResult.chats
-            .filter((chat) => chat instanceof Api.Channel && chat.broadcast)
+            .filter((chat) => chat instanceof Api.Channel && chat.broadcast && chat.creator)
             .map((item) => ({
               channel_id: (item as Api.Channel).id?.toString() || "",
               title: (item as Api.Channel).title || "",
-              phoneNumbers: [],
+              phone_numbers: [],
+            }));
+          const adminedChannels = adminedPublicChannels.chats
+            .filter((chat) => chat instanceof Api.Channel && chat.broadcast && chat.creator)
+            .map((item) => ({
+              channel_id: (item as Api.Channel).id?.toString() || "",
+              title: (item as Api.Channel).title || "",
+              phone_numbers: [],
             }));
 
-          return { channels, phoneNumber: session.phone_number };
+          return {
+            channels: _uniqBy([...adminedChannels, ...channels], "channel_id"),
+            phoneNumber: session.phone_number,
+          };
         } finally {
           await client.disconnect();
           await client.destroy();
@@ -54,15 +68,17 @@ export async function getChannels(args: { userId: string; titleSearch: string })
     )
   ).flat();
 
+  console.log("unacc numbers", channelsByPhoneNumber);
   const uniqueChannels = channelsByPhoneNumber.reduce<{ [key: string]: Channel }>((acc, { channels, phoneNumber }) => {
     channels.forEach(({ channel_id, title }) => {
       if (!acc[channel_id]) {
-        acc[channel_id] = { channel_id, title, phoneNumbers: [] };
+        acc[channel_id] = { channel_id, title, phone_numbers: [] };
       }
-      acc[channel_id].phoneNumbers.push(phoneNumber);
+      acc[channel_id].phone_numbers.push(phoneNumber);
     });
     return acc;
   }, {});
+  console.log("acc channels", uniqueChannels);
 
   return Object.values(uniqueChannels);
 }

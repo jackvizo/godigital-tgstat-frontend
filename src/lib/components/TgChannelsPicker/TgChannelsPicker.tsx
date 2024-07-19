@@ -1,11 +1,19 @@
-import { Box, List, ListItem, ListItemText, Switch, FormControlLabel, Typography, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
+import { Box, List, ListItem, ListItemText, Typography, CircularProgress, TextField, IconButton, Tooltip } from '@mui/material';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { TgChannelListItem } from './useTgChannelsPickerLogic';
+import { LoadingButton } from '@/lib/components/LoadingButton/LoadingButton';
 
 export interface TgChannelsPickerProps {
-  channels: TgChannelListItem[];
-  loadings: { isSomeChannelToggling: boolean };
+  foundChannels: TgChannelListItem[];
+  trackedChannels: TgChannelListItem[]
+  loadings: { isSomeChannelToggling: boolean; isSearching: boolean };
+  isNoChannelsFound: boolean;
+  titleSearch: string | undefined;
   onTrackToggle: (channel: TgChannelListItem) => Promise<void>;
+  onSearchClick: (searchTerm: string) => void;
 }
 
 interface TgChannelPickerListItemProps extends TgChannelsPickerProps {
@@ -19,58 +27,104 @@ function TgChannelPickerListItem(props: TgChannelPickerListItemProps) {
     <ListItem
       sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingRight: 4 }}
     >
-      <ListItemText primary={props.channel.title} />
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        {isToggling ? <CircularProgress size={24} sx={{ marginRight: 2 }} /> : null}
-        <FormControlLabel
-          control={
-            <Switch
-              disabled={props.loadings.isSomeChannelToggling || isToggling}
-              checked={!!props.channel.is_tracked}
-              onChange={async () => {
-                try {
-                  setIsToggling(true);
-                  await props.onTrackToggle(props.channel);
-                } finally {
-                  setIsToggling(false);
-                }
-              }}
-              color="primary"
-            />
-          }
-          label="отслеживать"
-          labelPlacement="start"
-        />
+        <Tooltip title={props.channel.is_tracked ? "Прекратить отслеживание" : "Отслеживать канал"}>
+          <IconButton
+            disabled={props.loadings.isSomeChannelToggling || isToggling}
+            onClick={async () => {
+              try {
+                setIsToggling(true);
+                await props.onTrackToggle(props.channel);
+              } finally {
+                setIsToggling(false);
+              }
+            }}
+          >
+            {props.channel.is_tracked ? (
+              <RemoveCircleOutlineIcon color="disabled" />
+            ) : (
+              <AddCircleOutlineIcon color="primary" />
+            )}
+          </IconButton>
+        </Tooltip>
       </Box>
+      <ListItemText primary={props.channel.tg_channel_title} />
+      {isToggling ? <CircularProgress size={24} sx={{ marginRight: 2 }} /> : null}
+
     </ListItem>
   );
 }
 
 export const TgChannelsPicker: React.FC<TgChannelsPickerProps> = (props) => {
-  const trackedItems = props.channels.filter(item => item.is_tracked);
-  const availableItems = props.channels.filter(item => !item.is_tracked);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    props.onSearchClick(searchTerm);
+  };
 
   return (
     <Box sx={{ padding: 2 }}>
+      <form onSubmit={handleSearchSubmit}>
+        <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2, gap: 1 }}>
+          <TextField
+            fullWidth
+            placeholder="Название канала в telegram"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            variant="outlined"
+            size="small"
+            InputProps={{
+              endAdornment: (
+                <Tooltip title="Поиск только среди каналов, к которым есть права администратора">
+                  <IconButton>
+                    <HelpOutlineIcon />
+                  </IconButton>
+                </Tooltip>
+              )
+            }}
+          />
+          <LoadingButton
+            variant="contained"
+            color="primary"
+            sx={{ minWidth: 130 }}
+            onClick={() => props.onSearchClick(searchTerm)}
+            loading={props.loadings.isSearching}
+            disabled={props.loadings.isSearching}
+            type="submit"
+          >
+            Поиск
+          </LoadingButton>
+        </Box>
+      </form>
+      <Typography variant="h6">Результаты поиска</Typography>
+      {!props.loadings.isSearching && props.foundChannels.length > 0 ? (
+        <List sx={{ maxHeight: 300, overflow: 'auto' }}>
+          {props.foundChannels.map(channel => (
+            <TgChannelPickerListItem key={channel.tg_channel_id} channel={channel} {...props} />
+          ))}
+        </List>
+      ) : null}
+      {props.foundChannels.length < 1 && !props.titleSearch && !props.isNoChannelsFound ?
+        (
+          <Box sx={{ marginY: 2 }}><Typography>Введите название канала в поиск</Typography></Box>
+        ) : null}
+      {props.isNoChannelsFound ?
+        (
+          <Box sx={{ marginY: 2 }}><Typography>Каналы не найдены</Typography></Box>
+        ) : null}
+      {props.loadings.isSearching ? (
+        <Box sx={{ marginY: 2 }}><Typography>Идет поиск...</Typography></Box>
+      ) : null}
       <Typography variant="h6">Отслеживаемые каналы</Typography>
-      {trackedItems.length > 0 ? (
-        <List>
-          {trackedItems.map(channel => (
-            <TgChannelPickerListItem key={channel.channel_id} channel={channel} {...props} />
+      {props.trackedChannels.length > 0 ? (
+        <List sx={{ maxHeight: 300, overflow: 'auto' }}>
+          {props.trackedChannels.map(channel => (
+            <TgChannelPickerListItem key={channel.tg_channel_id} channel={channel} {...props} />
           ))}
         </List>
       ) : (
-        <Box sx={{ marginY: 2 }}><Typography>Отслеживаемые каналы не выбраны</Typography></Box>
-      )}
-      <Typography variant="h6">Доступные каналы</Typography>
-      {availableItems.length > 0 ? (
-        <List>
-          {availableItems.map(channel => (
-            <TgChannelPickerListItem key={channel.channel_id} channel={channel} {...props} />
-          ))}
-        </List>
-      ) : (
-        <Box sx={{ marginY: 2 }}><Typography>Доступные каналы не найдены</Typography></Box>
+        <Box sx={{ marginY: 2 }}><Typography>Пока ни один канал не отслеживается</Typography></Box>
       )}
     </Box>
   );

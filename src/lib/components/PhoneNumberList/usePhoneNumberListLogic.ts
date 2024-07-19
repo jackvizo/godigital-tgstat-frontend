@@ -4,43 +4,6 @@ import errorHandler from "@/lib/error-handler";
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 
-const _crotch_AVALIABLE_TG_CHANNELS = graphql(`
-  query TgChannels($title_search: String!) {
-    tg_channels(arg1: { title_search: $title_search }) {
-      channels {
-        channel_id
-        title
-        phone_numbers
-      }
-    }
-  }
-`);
-
-const _crotch_TRACKED_TG_CHANNELS = graphql(`
-  query TrackedTgChannels($user_id: uuid!) {
-    user_tg_channel(where: { user_id: { _eq: $user_id } }) {
-      tg_channel_id
-      user_id
-    }
-  }
-`);
-
-const _crotch_TRACK_TG_CHANNEL = graphql(`
-  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!) {
-    track_tg_channel(arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id }) {
-      success
-    }
-  }
-`);
-
-const _crotch_UNTRACK_TG_CHANNEL = graphql(`
-  mutation UntrackTgChannel($user_id: uuid!, $tg_channel_id: bigint!) {
-    delete_user_tg_channel(where: { user_id: { _eq: $user_id }, tg_channel_id: { _eq: $tg_channel_id } }) {
-      affected_rows
-    }
-  }
-`);
-
 const GET_PHONE_NUMBERS = graphql(`
   query GetUserPhoneNumbers($user_id: uuid!) {
     config__tg_bot_session_pool(where: { user_id: { _eq: $user_id } }) {
@@ -137,6 +100,10 @@ export const usePhoneNumberListLogic = () => {
     pollInterval: 1000,
     skip: !flowRunId || !isFlowRunPolling,
     variables: { flow_run_id: flowRunId! },
+    onError: (error) => {
+      errorHandler(error);
+      setIsFlowRunPolling(false);
+    },
   });
 
   useEffect(() => {
@@ -215,6 +182,13 @@ export const usePhoneNumberListLogic = () => {
       setIsFlowRunPolling(false);
     }
   }, [request2faError, confirm2faError]);
+
+  useEffect(() => {
+    if (["FAILED", "CRUSHED"].includes(flowRunStateQuery.data?.flow_run?.state!) && isFlowRunPolling) {
+      errorHandler("Не удалось добавить номер телефона");
+      setIsFlowRunPolling(false);
+    }
+  }, [flowRunStateQuery.data?.flow_run?.state, isFlowRunPolling]);
 
   return {
     loadings: {

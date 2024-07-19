@@ -12,7 +12,7 @@ export const AVG_ER_QUERY = graphql(`
         count(columns: pk)
       }
     }
-    stat_post_aggregate(where: { timestamp: { _gte: $from_date, _lte: $to_date } }) {
+    stat_post_info_aggregate(where: { date_of_post: { _gte: $from_date, _lte: $to_date, tg_channel_id: { _in: $tg_channel_ids } } }) {
       aggregate {
         sum {
           views

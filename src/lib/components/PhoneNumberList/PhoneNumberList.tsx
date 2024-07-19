@@ -14,6 +14,7 @@ export interface PhoneNumberListProps {
     confirm2fa: boolean;
   }
   addingStep: 'idle' | 'request2fa' | 'confirm2fa' | 'done'
+  isInitiallyExpanded?: boolean;
   resetAdd: () => void;
   onRequest2FA: (args: { phoneNumber: string, apiHash: string, apiId: string }) => Promise<void>;
   onConfirm2FA: (args: { code2fa: string, cloudPassword?: string }) => Promise<void>
@@ -84,7 +85,7 @@ const PhoneNumberList: React.FC<PhoneNumberListProps> = (props) => {
 
   return (
     <Box>
-      <Accordion sx={{ mb: 2 }}>
+      <Accordion sx={{ mb: 2 }} defaultExpanded={props.isInitiallyExpanded}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>Привязанные номера</Typography>
         </AccordionSummary>
@@ -150,7 +151,7 @@ const PhoneNumberList: React.FC<PhoneNumberListProps> = (props) => {
                       disabled={props.loadings.is2FASubmitting}
                     />
                     <TextField
-                      label="Облачный пароль (необязательно)"
+                      label="Облачный пароль (если установлен)"
                       size="small"
                       value={cloudPassword}
                       onChange={(e) => setCloudPassword(e.target.value)}

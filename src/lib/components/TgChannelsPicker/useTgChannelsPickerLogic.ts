@@ -3,14 +3,14 @@ import { useAuth } from "@/lib/auth/use-auth";
 import { usePhoneNumberListLogic } from "@/lib/components/PhoneNumberList/usePhoneNumberListLogic";
 import errorHandler from "@/lib/error-handler";
 import { useMutation, useQuery } from "@apollo/client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const AVALIABLE_TG_CHANNELS = graphql(`
   query TgChannels($title_search: String!) {
     tg_channels(arg1: { title_search: $title_search }) {
       channels {
-        channel_id
-        title
+        tg_channel_id: channel_id
+        tg_channel_title: title
         phone_numbers
       }
     }
@@ -21,14 +21,16 @@ const TRACKED_TG_CHANNELS = graphql(`
   query TrackedTgChannels($user_id: uuid!) {
     user_tg_channel(where: { user_id: { _eq: $user_id } }) {
       tg_channel_id
-      user_id
+      tg_channel_title
     }
   }
 `);
 
 const TRACK_TG_CHANNEL = graphql(`
-  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!) {
-    track_tg_channel(arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id }) {
+  mutation TrackTgChannel($phone_numbers: [String!]!, $tg_channel_id: String!, $tg_channel_title: String!) {
+    track_tg_channel(
+      arg1: { phone_numbers: $phone_numbers, tg_channel_id: $tg_channel_id, tg_channel_title: $tg_channel_title }
+    ) {
       success
     }
   }
@@ -42,40 +44,59 @@ const UNTRACK_TG_CHANNEL = graphql(`
   }
 `);
 
-export type TgChannelListItem = NonNullable<
-  DocumentType<typeof AVALIABLE_TG_CHANNELS>["tg_channels"]
->["channels"][number] & { is_tracked: boolean };
+export type TgChannelListItem = Omit<
+  NonNullable<DocumentType<typeof AVALIABLE_TG_CHANNELS>["tg_channels"]>["channels"][number],
+  "__typename"
+> & { is_tracked: boolean };
 
 export const useTgChannelsPickerLogic = (props: {
   phoneNumberListLogic: ReturnType<typeof usePhoneNumberListLogic>;
 }) => {
   const auth = useAuth();
+  const [titleSearch, setTitleSearch] = useState<string | undefined>();
   const userId = auth.session?.data?.userId!;
   const trackedTgChannelsQuery = useQuery(TRACKED_TG_CHANNELS, {
     skip: !auth.session?.data?.accessToken,
+    variables: {
+      user_id: auth.session?.data?.userId!,
+    },
   });
   const getTelegramChannelsQuery = useQuery(AVALIABLE_TG_CHANNELS, {
-    skip: !auth.session?.data?.accessToken || trackedTgChannelsQuery.loading,
+    skip: !auth.session?.data?.accessToken || trackedTgChannelsQuery.loading || !titleSearch,
+    variables: {
+      title_search: titleSearch!,
+    },
     fetchPolicy: "cache-first",
   });
-  const trackedTgChannels = trackedTgChannelsQuery.data?.user_tg_channel || [];
+
   const trackTgChannelMutation = useMutation(TRACK_TG_CHANNEL, { onError: errorHandler });
   const untrackTgChannelMutation = useMutation(UNTRACK_TG_CHANNEL, { onError: errorHandler });
-  const channels: TgChannelListItem[] = (getTelegramChannelsQuery.data?.tg_channels?.channels || []).map((item) => ({
+  const trackedChannels: TgChannelListItem[] = (trackedTgChannelsQuery.data?.user_tg_channel || []).map((item) => ({
     ...item,
-    is_tracked: !!trackedTgChannels.find(
-      (trackedTgChannel) => trackedTgChannel.tg_channel_id.toString() === item.channel_id.toString()
-    ),
+    phone_numbers: [],
+    is_tracked: true,
   }));
+  const foundChannels: TgChannelListItem[] = (getTelegramChannelsQuery.data?.tg_channels?.channels || []).map(
+    (item) => ({
+      ...item,
+      is_tracked: !!trackedChannels.find(
+        (trackedTgChannel) => trackedTgChannel.tg_channel_id.toString() === item.tg_channel_id.toString()
+      ),
+    })
+  );
 
   const onTrackToggle = async (channel: TgChannelListItem) => {
     if (channel.is_tracked) {
       await untrackTgChannelMutation[0]({
-        variables: { tg_channel_id: channel.channel_id, user_id: userId },
+        variables: { tg_channel_id: channel.tg_channel_id, user_id: userId },
       });
     } else {
       await trackTgChannelMutation[0]({
-        variables: { phone_numbers: channel.phone_numbers, tg_channel_id: channel.channel_id },
+        variables: {
+          phone_numbers: channel.phone_numbers,
+          tg_channel_id: channel.tg_channel_id,
+          tg_channel_title: channel.tg_channel_title,
+        },
       });
     }
     await trackedTgChannelsQuery.refetch();
@@ -92,13 +113,26 @@ export const useTgChannelsPickerLogic = (props: {
     }
   }, [prevPhoneList, newPhoneList, trackedTgChannelsQuery]);
 
+  const onSearchClick = (searchTerm: string) => {
+    setTitleSearch(searchTerm);
+  };
+
+  const isNoChannelsFound = Boolean(!getTelegramChannelsQuery.loading && !!titleSearch && foundChannels.length < 1);
+
   return {
-    channels,
+    foundChannels,
+    trackedChannels,
     trackedTgChannelsQuery,
     getTelegramChannelsQuery,
     trackTgChannelMutation,
     untrackTgChannelMutation,
-    loadings: { isSomeChannelToggling: trackTgChannelMutation[1].loading || untrackTgChannelMutation[1].loading },
+    loadings: {
+      isSomeChannelToggling: trackTgChannelMutation[1].loading || untrackTgChannelMutation[1].loading,
+      isSearching: getTelegramChannelsQuery.loading,
+    },
+    isNoChannelsFound,
+    titleSearch,
     onTrackToggle,
+    onSearchClick,
   };
 };

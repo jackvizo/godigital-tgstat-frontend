@@ -1,6 +1,11 @@
 import prismaClient from "@/lib/prisma-client";
 
-export async function trackChannel(args: { userId: string; tgChannelId: string; phoneNumbers: string[] }) {
+export async function trackChannel(args: {
+  userId: string;
+  tgChannelId: string;
+  tgChannelTitle: string;
+  phoneNumbers: string[];
+}) {
   const sessionPool = await prismaClient.config__tg_bot_session_pool.findMany({
     where: {
       user_id: args.userId,
@@ -19,6 +24,7 @@ export async function trackChannel(args: { userId: string; tgChannelId: string; 
     data: {
       tg_channel_id: BigInt(args.tgChannelId),
       user_id: args.userId,
+      tg_channel_title: args.tgChannelTitle,
       tg_channel__session: {
         createMany: {
           data: sessionPool.map((session) => ({

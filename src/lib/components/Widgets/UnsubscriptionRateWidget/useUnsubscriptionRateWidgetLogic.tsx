@@ -13,7 +13,7 @@ export const UNSUBSCRIPTION_RATE_QUERY = graphql(`
         count(columns: pk)
       }
     }
-    stat_post_aggregate(where: { timestamp: { _gte: $from_date, _lte: $to_date } }) {
+    stat_post_info_aggregate(where: { date_of_post: { _gte: $from_date, _lte: $to_date } }) {
       aggregate {
         sum {
           views

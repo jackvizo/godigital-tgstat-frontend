@@ -4532,6 +4532,7 @@ input timestamp_comparison_exp {
 input track_tg_channel_input {
   phone_numbers: [String!]!
   tg_channel_id: String!
+  tg_channel_title: String!
 }
 
 type track_tg_channel_output {
@@ -4752,6 +4753,7 @@ type user_tg_channel {
     where: tg_channel__session_bool_exp
   ): [tg_channel__session!]!
   tg_channel_id: bigint!
+  tg_channel_title: String!
 
   """An object relationship"""
   user: user!
@@ -4793,6 +4795,7 @@ input user_tg_channel_bool_exp {
   pk: bigint_comparison_exp
   tg_channel__sessions: tg_channel__session_bool_exp
   tg_channel_id: bigint_comparison_exp
+  tg_channel_title: String_comparison_exp
   user: user_bool_exp
   user_id: uuid_comparison_exp
 }
@@ -4803,6 +4806,7 @@ order by max() on columns of table "user_tg_channel"
 input user_tg_channel_max_order_by {
   pk: order_by
   tg_channel_id: order_by
+  tg_channel_title: order_by
   user_id: order_by
 }
 
@@ -4812,6 +4816,7 @@ order by min() on columns of table "user_tg_channel"
 input user_tg_channel_min_order_by {
   pk: order_by
   tg_channel_id: order_by
+  tg_channel_title: order_by
   user_id: order_by
 }
 
@@ -4831,6 +4836,7 @@ input user_tg_channel_order_by {
   pk: order_by
   tg_channel__sessions_aggregate: tg_channel__session_aggregate_order_by
   tg_channel_id: order_by
+  tg_channel_title: order_by
   user: user_order_by
   user_id: order_by
 }
@@ -4844,6 +4850,9 @@ enum user_tg_channel_select_column {
 
   """column name"""
   tg_channel_id
+
+  """column name"""
+  tg_channel_title
 
   """column name"""
   user_id
@@ -4888,6 +4897,7 @@ input user_tg_channel_stream_cursor_input {
 input user_tg_channel_stream_cursor_value_input {
   pk: bigint
   tg_channel_id: bigint
+  tg_channel_title: String
   user_id: uuid
 }
 
