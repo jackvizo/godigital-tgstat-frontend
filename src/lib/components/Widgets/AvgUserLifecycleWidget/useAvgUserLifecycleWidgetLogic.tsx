@@ -26,6 +26,6 @@ export function useAvgUserLifecycleWidgetLogic({ tgChannelIds }: UseAvgUserLifec
 
   return {
     avgUserLifecycleQuery,
-    days: (avgUserLifecycleQuery?.data?.get_avg_user_lifecycle?.[0]?.avg_lifecycle_days ?? 0).toFixed(2)
+    days: Math.abs(avgUserLifecycleQuery?.data?.get_avg_user_lifecycle?.[0]?.avg_lifecycle_days ?? 0).toFixed(2)
   };
 }
