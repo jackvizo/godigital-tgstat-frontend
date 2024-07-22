@@ -6,7 +6,7 @@ export interface UnsubscribesByPeriodWidgetProps {
 
 export function UnsubscribesByPeriodWidget(props: UnsubscribesByPeriodWidgetProps) {
   return (
-    <Card>
+    <Card sx={{ minWidth: 400 }}>
       <CardContent>
         <Typography variant="subtitle2">Отписки по периодам</Typography>
         <List>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Accordion,
   AccordionSummary,
@@ -12,6 +12,7 @@ import {
   Stack,
   Grid,
   CircularProgress,
+  Checkbox,
 } from '@mui/material';
 import { ExpandMore, Edit, Add, Delete, Check } from '@mui/icons-material';
 
@@ -19,6 +20,7 @@ export interface Item {
   id: number;
   name: string;
   link: string;
+  enabled: boolean;
 }
 
 export interface Group {
@@ -33,12 +35,13 @@ export interface InviteLinkPickerProps {
   handleUpdateGroupName: (groupId: number, groupName: string) => Promise<void>;
   handleDeleteGroup: (groupId: number) => Promise<void>;
   handleCreateInviteLink: (inviteLink: string, label: string, groupId: number) => Promise<void>;
-  handleUpdateInviteLink: (linkId: number, inviteLink: string, label: string) => Promise<void>;
+  handleUpdateInviteLink: (linkId: number, inviteLink: string, label: string, enabled: boolean) => Promise<void>;
   handleDeleteInviteLink: (linkId: number) => Promise<void>;
+  handleToggleInviteLinkGroup: (inviteLinkGroupPk: number, enabled: boolean) => Promise<void>;
 }
 
 export function InviteLinkPicker(props: InviteLinkPickerProps) {
-  const { handleAddInviteLink, handleSearchTextChange, searchText, filteredGroups } = useInviteLinkPickerLogic(props);
+  const { handleSearchTextChange, searchText, filteredGroups } = useInviteLinkPickerLogic(props);
 
   return (
     <Box>
@@ -54,7 +57,7 @@ export function InviteLinkPicker(props: InviteLinkPickerProps) {
       </Stack>
       <Button
         variant="contained"
-        sx={{ mb: 2 }} // Add margin bottom to button
+        sx={{ mb: 2 }}
         onClick={() => props.handleCreateGroup('Новая группа ссылок')}
       >
         Добавить группу ссылок
@@ -64,12 +67,12 @@ export function InviteLinkPicker(props: InviteLinkPickerProps) {
         <GroupComponent
           key={group.id}
           group={group}
-          groupIndex={groupIndex}
           handleUpdateGroupName={props.handleUpdateGroupName}
           handleDeleteGroup={props.handleDeleteGroup}
-          handleAddInviteLink={handleAddInviteLink}
+          handleCreateInviteLink={props.handleCreateInviteLink}
           handleUpdateInviteLink={props.handleUpdateInviteLink}
           handleDeleteInviteLink={props.handleDeleteInviteLink}
+          handleToggleInviteLinkGroup={props.handleToggleInviteLinkGroup}
         />
       ))}
     </Box>
@@ -78,16 +81,43 @@ export function InviteLinkPicker(props: InviteLinkPickerProps) {
 
 interface GroupComponentProps {
   group: Group;
-  groupIndex: number;
   handleUpdateGroupName: (groupId: number, groupName: string) => Promise<void>;
   handleDeleteGroup: (groupId: number) => Promise<void>;
-  handleAddInviteLink: (groupId: number) => Promise<void>;
-  handleUpdateInviteLink: (linkId: number, inviteLink: string, label: string) => Promise<void>;
+  handleCreateInviteLink: (inviteLink: string, label: string, groupId: number) => Promise<void>;
+  handleUpdateInviteLink: (linkId: number, inviteLink: string, label: string, enabled: boolean) => Promise<void>;
   handleDeleteInviteLink: (linkId: number) => Promise<void>;
+  handleToggleInviteLinkGroup: (inviteLinkGroupPk: number, enabled: boolean) => Promise<void>;
 }
 
 function GroupComponent(props: GroupComponentProps) {
-  const { groupEditMode, groupName, handleGroupNameChange, setGroupEditMode, itemEditIndex, setItemEditIndex, newItemData, handleUpdateNewItemData, handleSaveItem, expanded, handleAccordionChange, saving, handleSaveGroupName, handleAddInviteLink } = useGroupComponentLogic(props);
+  const { group } = props;
+  const [groupEditMode, setGroupEditMode] = useState<boolean>(false);
+  const [groupName, setGroupName] = useState<string>(group.name);
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  const handleGroupNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGroupName(e.target.value);
+  };
+
+  const handleSaveGroupName = async () => {
+    await props.handleUpdateGroupName(group.id, groupName);
+    setGroupEditMode(false);
+  };
+
+  const handleAccordionChange = (event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpanded(isExpanded);
+  };
+
+  const handleGroupCheckChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const enabled = event.target.checked;
+    await props.handleToggleInviteLinkGroup(group.id, enabled);
+  };
+
+  const groupCheckState = group.items.every(item => item.enabled)
+    ? 'checked'
+    : group.items.some(item => item.enabled)
+      ? 'indeterminate'
+      : 'unchecked';
 
   return (
     <Accordion expanded={expanded} onChange={handleAccordionChange}>
@@ -100,55 +130,63 @@ function GroupComponent(props: GroupComponentProps) {
         }}
       >
         <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
-          {groupEditMode ? (
-            <Box display="flex" alignItems="center" onClick={(event) => event.stopPropagation()}>
-              <TextField
-                size="small"
-                value={groupName}
-                onChange={handleGroupNameChange}
-                autoFocus
-                sx={{ mr: 1 }} // Add margin right
-              />
-              {saving ? (
-                <CircularProgress size={24} sx={{ ml: 1 }} />
-              ) : (
-                <IconButton onClick={handleSaveGroupName} disabled={saving}>
+          <Box sx={{ alignItems: 'center', flexDirection: 'row', display: 'flex', gap: 2 }}>
+            <Checkbox
+              checked={groupCheckState === 'checked'}
+              indeterminate={groupCheckState === 'indeterminate'}
+              onChange={event => {
+                event.stopPropagation();
+                handleGroupCheckChange(event);
+              }}
+              onClick={(event) => event.stopPropagation()}
+            />
+            {groupEditMode ? (
+              <Box display="flex" alignItems="center" onClick={(event) => event.stopPropagation()}>
+                <TextField
+                  size="small"
+                  value={groupName}
+                  onChange={handleGroupNameChange}
+                  autoFocus
+                  sx={{ mr: 1 }}
+                />
+                <IconButton onClick={handleSaveGroupName}>
                   <Check />
                 </IconButton>
-              )}
-            </Box>
-          ) : (
-            <Typography>{props.group.name}</Typography>
-          )}
+              </Box>
+            ) : (
+              <Typography>{group.name}</Typography>
+            )}
+          </Box>
+
           {!groupEditMode && (
-            <IconButton size="small" onClick={(event) => { event.stopPropagation(); setGroupEditMode(true); }}>
+            <IconButton
+              size="small"
+              onClick={(event) => {
+                event.stopPropagation();
+                setGroupEditMode(true);
+              }}
+            >
               <Edit />
             </IconButton>
           )}
         </Box>
       </AccordionSummary>
       <AccordionDetails>
-        {props.group.items.map((item, itemIndex) => (
+        {group.items.map((item, itemIndex) => (
           <ItemComponent
             key={item.id}
             item={item}
-            groupId={props.group.id}
-            itemIndex={itemIndex}
-            itemEditIndex={itemEditIndex}
-            setItemEditIndex={setItemEditIndex}
-            newItemData={newItemData}
-            handleUpdateNewItemData={handleUpdateNewItemData}
-            handleSaveItem={handleSaveItem}
-            handleDeleteInviteLink={props.handleDeleteInviteLink}
+            groupId={group.id}
             handleUpdateInviteLink={props.handleUpdateInviteLink}
+            handleDeleteInviteLink={props.handleDeleteInviteLink}
           />
         ))}
         <Divider />
         <Box display="flex" justifyContent="space-between" mt={2}>
-          <IconButton size="small" onClick={handleAddInviteLink}>
+          <IconButton size="small" onClick={() => props.handleCreateInviteLink('https://', 'Новая ссылка', group.id)}>
             <Add />
           </IconButton>
-          <IconButton size="small" onClick={() => props.handleDeleteGroup(props.group.id)}>
+          <IconButton size="small" onClick={() => props.handleDeleteGroup(group.id)}>
             <Delete />
           </IconButton>
         </Box>
@@ -160,29 +198,50 @@ function GroupComponent(props: GroupComponentProps) {
 interface ItemComponentProps {
   item: Item;
   groupId: number;
-  itemIndex: number;
-  itemEditIndex: number | null;
-  setItemEditIndex: (index: number | null) => void;
-  newItemData: { name: string; link: string };
-  handleUpdateNewItemData: (field: 'name' | 'link', value: string) => void;
-  handleSaveItem: (groupId: number, itemId: number) => void;
+  handleUpdateInviteLink: (linkId: number, inviteLink: string, label: string, enabled: boolean) => Promise<void>;
   handleDeleteInviteLink: (linkId: number) => void;
-  handleUpdateInviteLink: (linkId: number, inviteLink: string, label: string) => Promise<void>;
 }
 
 function ItemComponent(props: ItemComponentProps) {
-  const { handleItemEdit, handleDeleteInviteLink, saving, handleSaveItem } = useItemComponentLogic(props);
+  const { item, groupId, handleUpdateInviteLink, handleDeleteInviteLink } = props;
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [newItemData, setNewItemData] = useState<{ name: string; link: string }>({ name: item.name, link: item.link });
+  const [saving, setSaving] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (editMode) {
+      setNewItemData({ name: item.name, link: item.link });
+    }
+  }, [editMode, item.name, item.link]);
+
+  const handleSaveItem = async () => {
+    setSaving(true);
+    await handleUpdateInviteLink(item.id, newItemData.link, newItemData.name, item.enabled);
+    setSaving(false);
+    setEditMode(false);
+  };
+
+  const handleCheckChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const enabled = event.target.checked;
+    await handleUpdateInviteLink(item.id, item.link, item.name, enabled);
+  };
 
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
       <Grid container spacing={1} alignItems="center">
-        {props.itemEditIndex === props.itemIndex ? (
+        {editMode ? (
           <>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={1}>
+              <Checkbox
+                checked={item.enabled}
+                onChange={handleCheckChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={5}>
               <TextField
                 size="small"
-                value={props.newItemData.name || props.item.name}
-                onChange={(e) => props.handleUpdateNewItemData('name', e.target.value)}
+                value={newItemData.name}
+                onChange={(e) => setNewItemData({ ...newItemData, name: e.target.value })}
                 autoFocus
                 fullWidth
               />
@@ -190,8 +249,8 @@ function ItemComponent(props: ItemComponentProps) {
             <Grid item xs={12} md={5}>
               <TextField
                 size="small"
-                value={props.newItemData.link || props.item.link}
-                onChange={(e) => props.handleUpdateNewItemData('link', e.target.value)}
+                value={newItemData.link}
+                onChange={(e) => setNewItemData({ ...newItemData, link: e.target.value })}
                 fullWidth
               />
             </Grid>
@@ -199,7 +258,7 @@ function ItemComponent(props: ItemComponentProps) {
               {saving ? (
                 <CircularProgress size={24} />
               ) : (
-                <IconButton onClick={() => handleSaveItem(props.groupId, props.item.id)} disabled={saving}>
+                <IconButton onClick={handleSaveItem} disabled={saving}>
                   <Check />
                 </IconButton>
               )}
@@ -207,17 +266,23 @@ function ItemComponent(props: ItemComponentProps) {
           </>
         ) : (
           <>
-            <Grid item xs={12} md={6}>
-              <Typography>{props.item.name}</Typography>
+            <Grid item xs={1}>
+              <Checkbox
+                checked={item.enabled}
+                onChange={handleCheckChange}
+              />
             </Grid>
             <Grid item xs={12} md={5}>
-              <Typography>{props.item.link}</Typography>
+              <Typography>{item.name}</Typography>
+            </Grid>
+            <Grid item xs={12} md={5}>
+              <Typography>{item.link}</Typography>
             </Grid>
             <Grid item xs={12} md={1}>
-              <IconButton size="small" onClick={() => handleItemEdit(props.itemIndex)}>
+              <IconButton size="small" onClick={() => setEditMode(true)}>
                 <Edit />
               </IconButton>
-              <IconButton size="small" onClick={() => handleDeleteInviteLink(props.item.id)}>
+              <IconButton size="small" onClick={() => handleDeleteInviteLink(item.id)}>
                 <Delete />
               </IconButton>
             </Grid>
@@ -240,108 +305,13 @@ function useInviteLinkPickerLogic(props: InviteLinkPickerProps) {
     return groupMatches || itemMatches;
   });
 
-  const handleAddInviteLink = async (groupId: number) => {
-    await props.handleCreateInviteLink('https://', 'Название ссылки', groupId);
-  };
-
   const handleSearchTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
   return {
-    handleAddInviteLink,
     handleSearchTextChange,
     searchText,
     filteredGroups
-  };
-}
-
-function useGroupComponentLogic(props: GroupComponentProps) {
-  const [expanded, setExpanded] = useState<boolean>(false);
-  const [groupEditMode, setGroupEditMode] = useState<boolean>(false);
-  const [groupName, setGroupName] = useState<string>(props.group.name);
-  const [itemEditIndex, setItemEditIndex] = useState<number | null>(null);
-  const [newItemData, setNewItemData] = useState<{ name: string; link: string }>({ name: '', link: '' });
-  const [saving, setSaving] = useState<boolean>(false);
-
-  const handleGroupNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGroupName(e.target.value);
-  };
-
-  const handleUpdateNewItemData = (field: 'name' | 'link', value: string) => {
-    setNewItemData({ ...newItemData, [field]: value });
-  };
-
-  const handleSaveItem = async (groupId: number, itemId: number) => {
-    const name = newItemData.name || props.group.items.find(item => item.id === itemId)?.name || '';
-    const link = newItemData.link || props.group.items.find(item => item.id === itemId)?.link || '';
-    setSaving(true);
-    await props.handleUpdateInviteLink(itemId, link, name);
-    setSaving(false);
-    setItemEditIndex(null);
-  };
-
-  const handleAccordionChange = (event: React.SyntheticEvent, isExpanded: boolean) => {
-    setExpanded(isExpanded);
-  };
-
-  const handleSaveGroupName = async () => {
-    setSaving(true);
-    await props.handleUpdateGroupName(props.group.id, groupName);
-    setSaving(false);
-    setGroupEditMode(false);
-  };
-
-  const handleAddInviteLink = async () => {
-    await props.handleAddInviteLink(props.group.id);
-    setItemEditIndex(props.group.items.length); // Activate edit mode for the new link
-    setNewItemData({ name: 'Новая ссылка', link: 'https://' });
-  };
-
-  return {
-    groupEditMode,
-    groupName,
-    handleGroupNameChange,
-    setGroupEditMode,
-    itemEditIndex,
-    setItemEditIndex,
-    newItemData,
-    handleUpdateNewItemData,
-    handleSaveItem,
-    expanded,
-    handleAccordionChange,
-    saving,
-    handleSaveGroupName,
-    handleAddInviteLink
-  };
-}
-
-function useItemComponentLogic(props: ItemComponentProps) {
-  const [saving, setSaving] = useState<boolean>(false);
-
-  const handleItemEdit = (itemIndex: number) => {
-    props.setItemEditIndex(itemIndex);
-    props.handleUpdateNewItemData('name', props.item.name);
-    props.handleUpdateNewItemData('link', props.item.link);
-  };
-
-  const handleDeleteInviteLink = async (linkId: number) => {
-    await props.handleDeleteInviteLink(linkId);
-  };
-
-  const handleSaveItem = async (groupId: number, itemId: number) => {
-    const name = props.newItemData.name || props.item.name;
-    const link = props.newItemData.link || props.item.link;
-    setSaving(true);
-    await props.handleUpdateInviteLink(itemId, link, name);
-    setSaving(false);
-    props.setItemEditIndex(null);
-  };
-
-  return {
-    handleItemEdit,
-    handleDeleteInviteLink,
-    handleSaveItem,
-    saving
   };
 }

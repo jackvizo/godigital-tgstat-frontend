@@ -1,16 +1,17 @@
-import { useQuery, useMutation } from "@apollo/client";
 import { graphql } from "@/generated/gql";
 import { useAuth } from "@/lib/auth/use-auth";
+import { useMutation, useQuery } from "@apollo/client";
 
 const GET_GROUPS = graphql(`
   query GetGroups($user_id: uuid!) {
-    tg_invite_link_group(where: { user_id: { _eq: $user_id } }) {
+    tg_invite_link_group(where: { user_id: { _eq: $user_id } }, order_by: { group_name: asc }) {
       pk
       group_name
-      user_tg_invite_links {
+      user_tg_invite_links(order_by: { label: asc }) {
         pk
         tg_invite_link
         label
+        enabled
       }
     }
   }
@@ -55,14 +56,32 @@ const CREATE_INVITE_LINK = graphql(`
 `);
 
 const UPDATE_INVITE_LINK = graphql(`
-  mutation UpdateInviteLink($pk: bigint!, $tg_invite_link: String!, $label: String!) {
+  mutation UpdateInviteLink($pk: bigint!, $tg_invite_link: String!, $label: String!, $enabled: Boolean = false) {
     update_user_tg_invite_link_by_pk(
       pk_columns: { pk: $pk }
-      _set: { tg_invite_link: $tg_invite_link, label: $label }
+      _set: { tg_invite_link: $tg_invite_link, label: $label, enabled: $enabled }
     ) {
       pk
       tg_invite_link
       label
+      enabled
+    }
+  }
+`);
+
+const TOGGLE_INVITE_LINK_GROUP = graphql(`
+  mutation ToggleInviteLinkGroup($inviteLinkGroupPk: bigint!, $enabled: Boolean = false) {
+    update_user_tg_invite_link(
+      where: { tg_invite_link_group: { pk: { _eq: $inviteLinkGroupPk } } }
+      _set: { enabled: $enabled }
+    ) {
+      returning {
+        enabled
+        group_id
+        label
+        pk
+        tg_invite_link
+      }
     }
   }
 `);
@@ -74,6 +93,17 @@ const DELETE_INVITE_LINK = graphql(`
     }
   }
 `);
+
+export type InviteLinkGroups = {
+  id: number;
+  name: string;
+  items: {
+    id: number;
+    enabled: boolean;
+    name: string;
+    link: string;
+  }[];
+}[];
 
 export const useInviteLinkPickerLogic = () => {
   const auth = useAuth();
@@ -89,6 +119,7 @@ export const useInviteLinkPickerLogic = () => {
   const [deleteGroup] = useMutation(DELETE_GROUP);
   const [createInviteLink] = useMutation(CREATE_INVITE_LINK);
   const [updateInviteLink] = useMutation(UPDATE_INVITE_LINK);
+  const [toggleInviteLinkGroup] = useMutation(TOGGLE_INVITE_LINK_GROUP);
   const [deleteInviteLink] = useMutation(DELETE_INVITE_LINK);
 
   const handleCreateGroup = async (groupName: string) => {
@@ -111,8 +142,13 @@ export const useInviteLinkPickerLogic = () => {
     getGroupsQuery.refetch();
   };
 
-  const handleUpdateInviteLink = async (linkId: number, inviteLink: string, label: string) => {
-    await updateInviteLink({ variables: { pk: linkId, tg_invite_link: inviteLink, label } });
+  const handleUpdateInviteLink = async (linkId: number, inviteLink: string, label: string, enabled: boolean) => {
+    await updateInviteLink({ variables: { pk: linkId, tg_invite_link: inviteLink, label, enabled } });
+    getGroupsQuery.refetch();
+  };
+
+  const handleToggleInviteLinkGroup = async (inviteLinkGroupPk: number, enabled: boolean) => {
+    await toggleInviteLinkGroup({ variables: { enabled, inviteLinkGroupPk } });
     getGroupsQuery.refetch();
   };
 
@@ -121,20 +157,32 @@ export const useInviteLinkPickerLogic = () => {
     getGroupsQuery.refetch();
   };
 
-  const groups =
+  const groups: InviteLinkGroups =
     getGroupsQuery.data?.tg_invite_link_group.map((group) => ({
       id: Number(group.pk),
       name: group.group_name,
       items: group.user_tg_invite_links.map((link) => ({
         id: Number(link.pk),
+        enabled: !!link.enabled,
         name: link.label || "",
         link: link.tg_invite_link,
       })),
     })) || [];
 
+  const checkedTgInviteLinks = (getGroupsQuery.data?.tg_invite_link_group?.[0]?.user_tg_invite_links || [])
+    .filter((item) => item.enabled)
+    .map((item) => item.tg_invite_link);
+
+  const allTgInviteLinks = (getGroupsQuery.data?.tg_invite_link_group?.[0]?.user_tg_invite_links || []).map(
+    (item) => item.tg_invite_link
+  );
+
   return {
     groups,
     getGroupsQuery,
+    checkedTgInviteLinks,
+    allTgInviteLinks,
+    handleToggleInviteLinkGroup,
     handleCreateGroup,
     handleUpdateGroupName,
     handleDeleteGroup,

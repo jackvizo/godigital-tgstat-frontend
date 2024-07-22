@@ -8,6 +8,8 @@ import { TimeUnit } from "chart.js";
 
 export interface DashboardFilters {
   tgChannelIds: number[];
+  checkedTgInviteLinks: string[];
+  allTgInviteLinks: string[];
   startDate: Date | undefined;
   endDate: Date | undefined;
   timePeriod: TimeUnit | undefined;
@@ -20,6 +22,8 @@ export function useDashboardFiltersLogic() {
   const filterDatePickerLogic = useDashboardDatePicker();
 
   const filters: DashboardFilters = {
+    checkedTgInviteLinks: inviteLinkPickerLogic.checkedTgInviteLinks,
+    allTgInviteLinks: inviteLinkPickerLogic.allTgInviteLinks,
     tgChannelIds: tgChannelsPickerLogic.trackedChannels
       ?.filter((item) => item.is_tracked)
       ?.map((item) => Number(item.tg_channel_id)),

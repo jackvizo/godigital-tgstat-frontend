@@ -25,8 +25,12 @@ import { UnsubscribersAmountByDateRangeWidget } from "@/lib/components/Widgets/U
 import { useUnsubscribersAmountWidgetLogic } from "@/lib/components/Widgets/UnsubscribersAmountByDateRange/useUnsubscribersAmountByDateRangeWidgetLogic";
 import { UnsubscribersPercentByDateRangeWidget } from "@/lib/components/Widgets/UnsubscribersPercentByDateRange/UnsubscribersPercentByDateRangeWidget";
 import { useUnsubscribersPercentWidgetLogic } from "@/lib/components/Widgets/UnsubscribersPercentByDateRange/useUnsubscribersPercenttByDateRangeWidgetLogic";
+import { UnsubscribesByAdCompanyWidget } from "@/lib/components/Widgets/UnsubscribesByAdCompany/UnsubscribesByAdCompanyWidget";
+import { useUnsubscribesByAdCompanyWidgetLogic } from "@/lib/components/Widgets/UnsubscribesByAdCompany/useUnsubscribesByAdCompanyWidgetLogic";
 import { UnsubscribesByInviteLinksWidget } from "@/lib/components/Widgets/UnsubscribesByInviteLinksWidget/UnsubscribesByInviteLinksWidget";
 import { useUnsubscribesByInviteLinksWidgetLogic } from "@/lib/components/Widgets/UnsubscribesByInviteLinksWidget/useUnsubscribesByInviteLinksWidgetLogic";
+import { UnsubscribesByPeriodWidget } from "@/lib/components/Widgets/UnsubscribesByPeriodWidget/UnsubscribesByPeriodWidget";
+import { useUnsubscribesByPeriodWidgetLogic } from "@/lib/components/Widgets/UnsubscribesByPeriodWidget/useUnsubscribesByPeriodWidgetLogic";
 import { UnsubscribesPieWidget } from "@/lib/components/Widgets/UnsubscribesPieWidget/UnsubscribesPieWidget";
 import { useUnsubscribesPieWidgetLogic } from "@/lib/components/Widgets/UnsubscribesPieWidget/useUnsubscribesPieWidgetLogic";
 import { Box, Divider, Typography } from '@mui/material';
@@ -88,6 +92,8 @@ export function ClientContainer(props: ClientContainerProps) {
   const subscribesUnsubscribesChartWidgetLogic = useSubscribesUnsubscribesChartWidgetLogic(dashboardFiltersLogic.filters)
   const subscribesByInviteLinksWidgetLogic = useSubscribesByInviteLinksWidgetLogic(dashboardFiltersLogic.filters)
   const unsubscribesByInviteLinksWidgetLogic = useUnsubscribesByInviteLinksWidgetLogic(dashboardFiltersLogic.filters)
+  const unsubscribesByPeriodWidgetLogic = useUnsubscribesByPeriodWidgetLogic(dashboardFiltersLogic.filters);
+  const unsubscribesByAdCompany = useUnsubscribesByAdCompanyWidgetLogic({ ...dashboardFiltersLogic.filters, groups: dashboardFiltersLogic.inviteLinkPickerLogic.groups })
 
   const unsubscribesPieWidgetLogic = useUnsubscribesPieWidgetLogic(dashboardFiltersLogic.filters);
   const initiallyLoading = dashboardFiltersLogic.isTgChannelsInitiallyLoading
@@ -152,6 +158,18 @@ export function ClientContainer(props: ClientContainerProps) {
               width={332}
             >
               <UnsubscribesPieWidget {...unsubscribesPieWidgetLogic} />
+            </WidgetWrapper>
+          </Row>
+          <Row>
+            <WidgetWrapper query={unsubscribesByPeriodWidgetLogic.unsubscribesByPeriodsQuery} height={686} width={400}>
+              <Box sx={{ maxWidth: 600 }}>
+                <UnsubscribesByPeriodWidget {...unsubscribesByPeriodWidgetLogic} />
+              </Box>
+            </WidgetWrapper>
+            <WidgetWrapper query={unsubscribesByAdCompany.unsubscribesByAdCompanyQuery} height={686} width={400}>
+              <Box sx={{ overflow: 'scroll' }}>
+                <UnsubscribesByAdCompanyWidget {...unsubscribesByAdCompany} />
+              </Box>
             </WidgetWrapper>
           </Row>
 

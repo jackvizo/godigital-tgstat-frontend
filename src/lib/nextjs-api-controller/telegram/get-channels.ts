@@ -36,8 +36,6 @@ export async function getChannels(args: { userId: string; titleSearch: string })
         });
         await client.connect();
 
-        console.log("session pn", session.phone_number);
-
         try {
           const searchResult = await client.invoke(new Api.contacts.Search({ q: args.titleSearch, limit: 10 }));
           const adminedPublicChannels = await client.invoke(new Api.channels.GetAdminedPublicChannels({}));
@@ -68,7 +66,6 @@ export async function getChannels(args: { userId: string; titleSearch: string })
     )
   ).flat();
 
-  console.log("unacc numbers", channelsByPhoneNumber);
   const uniqueChannels = channelsByPhoneNumber.reduce<{ [key: string]: Channel }>((acc, { channels, phoneNumber }) => {
     channels.forEach(({ channel_id, title }) => {
       if (!acc[channel_id]) {
@@ -78,7 +75,6 @@ export async function getChannels(args: { userId: string; titleSearch: string })
     });
     return acc;
   }, {});
-  console.log("acc channels", uniqueChannels);
 
   return Object.values(uniqueChannels);
 }

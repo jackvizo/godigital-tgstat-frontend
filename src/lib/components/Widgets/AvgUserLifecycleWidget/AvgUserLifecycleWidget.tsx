@@ -7,6 +7,6 @@ export interface AvgUserLifecycleWidgetProps {
 
 export function AvgUserLifecycleWidget(props: AvgUserLifecycleWidgetProps) {
   return (
-    <TextWidget label='Цикл жизни подписчика' value={`${props.days ?? 0} Дней`} />
+    <TextWidget label='Цикл жизни подписчика' value={`${props.days?.toFixed(2)} Дней`} />
   );
 }

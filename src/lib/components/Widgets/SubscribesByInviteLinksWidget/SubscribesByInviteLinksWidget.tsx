@@ -42,8 +42,6 @@ export function SubscribesByInviteLinksWidget(props: SubscribesByInviteLinksWidg
     <Card>
       <CardContent>
         <Typography variant="subtitle2" gutterBottom>Подписалось (с/без ссылки)</Typography>
-
-
         <Doughnut data={chartData} options={{
           plugins: {
             legend: {

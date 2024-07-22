@@ -1146,6 +1146,19 @@ type mutation_root {
   delete_config__tg_bot_session_pool_by_pk(pk: bigint!): config__tg_bot_session_pool
 
   """
+  delete data from the table: "tg_invite_link_group"
+  """
+  delete_tg_invite_link_group(
+    """filter the rows which have to be deleted"""
+    where: tg_invite_link_group_bool_exp!
+  ): tg_invite_link_group_mutation_response
+
+  """
+  delete single row from the table: "tg_invite_link_group"
+  """
+  delete_tg_invite_link_group_by_pk(pk: bigint!): tg_invite_link_group
+
+  """
   delete data from the table: "user_tg_channel"
   """
   delete_user_tg_channel(
@@ -5443,6 +5456,7 @@ input user_tg_channel_variance_order_by {
 columns and relationships of "user_tg_invite_link"
 """
 type user_tg_invite_link {
+  enabled: Boolean
   group_id: bigint!
   label: String
   pk: bigint!
@@ -5465,7 +5479,23 @@ type user_tg_invite_link_aggregate {
 }
 
 input user_tg_invite_link_aggregate_bool_exp {
+  bool_and: user_tg_invite_link_aggregate_bool_exp_bool_and
+  bool_or: user_tg_invite_link_aggregate_bool_exp_bool_or
   count: user_tg_invite_link_aggregate_bool_exp_count
+}
+
+input user_tg_invite_link_aggregate_bool_exp_bool_and {
+  arguments: user_tg_invite_link_select_column_user_tg_invite_link_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: user_tg_invite_link_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input user_tg_invite_link_aggregate_bool_exp_bool_or {
+  arguments: user_tg_invite_link_select_column_user_tg_invite_link_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: user_tg_invite_link_bool_exp
+  predicate: Boolean_comparison_exp!
 }
 
 input user_tg_invite_link_aggregate_bool_exp_count {
@@ -5540,6 +5570,7 @@ input user_tg_invite_link_bool_exp {
   _and: [user_tg_invite_link_bool_exp!]
   _not: user_tg_invite_link_bool_exp
   _or: [user_tg_invite_link_bool_exp!]
+  enabled: Boolean_comparison_exp
   group_id: bigint_comparison_exp
   label: String_comparison_exp
   pk: bigint_comparison_exp
@@ -5564,6 +5595,7 @@ input type for incrementing numeric columns in table "user_tg_invite_link"
 """
 input user_tg_invite_link_inc_input {
   group_id: bigint
+  pk: bigint
 }
 
 """
@@ -5639,6 +5671,7 @@ input user_tg_invite_link_on_conflict {
 
 """Ordering options when selecting data from "user_tg_invite_link"."""
 input user_tg_invite_link_order_by {
+  enabled: order_by
   group_id: order_by
   label: order_by
   pk: order_by
@@ -5658,6 +5691,9 @@ select columns of table "user_tg_invite_link"
 """
 enum user_tg_invite_link_select_column {
   """column name"""
+  enabled
+
+  """column name"""
   group_id
 
   """column name"""
@@ -5674,11 +5710,29 @@ enum user_tg_invite_link_select_column {
 }
 
 """
+select "user_tg_invite_link_aggregate_bool_exp_bool_and_arguments_columns" columns of table "user_tg_invite_link"
+"""
+enum user_tg_invite_link_select_column_user_tg_invite_link_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  enabled
+}
+
+"""
+select "user_tg_invite_link_aggregate_bool_exp_bool_or_arguments_columns" columns of table "user_tg_invite_link"
+"""
+enum user_tg_invite_link_select_column_user_tg_invite_link_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  enabled
+}
+
+"""
 input type for updating data in table "user_tg_invite_link"
 """
 input user_tg_invite_link_set_input {
+  enabled: Boolean
   group_id: bigint
   label: String
+  pk: bigint
   tg_invite_link: String
   user_id: uuid
 }
@@ -5738,6 +5792,7 @@ input user_tg_invite_link_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input user_tg_invite_link_stream_cursor_value_input {
+  enabled: Boolean
   group_id: bigint
   label: String
   pk: bigint
@@ -5764,10 +5819,16 @@ update columns of table "user_tg_invite_link"
 """
 enum user_tg_invite_link_update_column {
   """column name"""
+  enabled
+
+  """column name"""
   group_id
 
   """column name"""
   label
+
+  """column name"""
+  pk
 
   """column name"""
   tg_invite_link
