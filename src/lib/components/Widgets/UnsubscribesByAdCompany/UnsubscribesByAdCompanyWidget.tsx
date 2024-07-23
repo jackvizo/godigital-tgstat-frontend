@@ -69,7 +69,7 @@ function Row(props: RowProps) {
 
                     return (
                       <TableRow key={item.id} >
-                        <TableCell sx={{ width: '220px', pl: 4 }}>{item.name}</TableCell>
+                        <TableCell sx={{ width: '220px', pl: 4 }}>{item.name || item.invite_link}</TableCell>
                         <TableCell sx={{ width: '120px' }}>{item.joined_count}</TableCell>
                         <TableCell sx={{ width: '120px' }}>{item.left_count}</TableCell>
                         <TableCell sx={{ width: '120px' }}>{remaining}</TableCell>
@@ -91,7 +91,7 @@ export function UnsubscribesByAdCompanyWidget(props: UnsubscribesByAdCompanyWidg
   const { list } = props;
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ overflow: 'scroll', maxWidth: '700px', maxHeight: '500px' }}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>

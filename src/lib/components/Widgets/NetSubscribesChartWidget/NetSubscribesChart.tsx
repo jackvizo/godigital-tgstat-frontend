@@ -4,45 +4,31 @@ import 'chartjs-adapter-moment';
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 
-export interface SubscribesUnsubscribesChartProps {
-  title: string;
-  subscribesChart?: number[]
-  unsubscribesChart?: number[]
-  labels: (string | Date)[]
+export interface NetSubscribesChartProps {
+  netChart?: number[]
+  labels: (string | Date)[],
+  maxAbsValue: number;
 }
-export function SubscribesUnsubscribesChart(props: SubscribesUnsubscribesChartProps) {
+export function NetSubscribesChart(props: NetSubscribesChartProps) {
   const theme = useTheme();
 
   const data: React.ComponentProps<typeof Line>['data'] = {
     labels: props.labels,
-    datasets: []
-  };
-
-  if (props.subscribesChart !== undefined) {
-    data.datasets.push({
-      label: 'Подписки',
-      data: props.subscribesChart,
+    datasets: [{
+      label: 'Прирост канала',
+      data: props.netChart,
       borderColor: theme.palette.primary.main,
       fill: false,
       cubicInterpolationMode: 'monotone',
       tension: 0.4
-    })
-  }
-  if (props.unsubscribesChart !== undefined) {
-    data.datasets.push({
-      label: 'Отписки',
-      data: props.unsubscribesChart,
-      borderColor: theme.palette.error.main,
-      fill: false,
-      cubicInterpolationMode: 'monotone',
-      tension: 0.4
-    })
-  }
+    }]
+  };
+
 
   return (
     <Card>
       <CardContent sx={{ minWidth: { md: '500px' }, display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <Typography gutterBottom variant="subtitle2">{props.title}</Typography>
+        <Typography gutterBottom variant="subtitle2">Прирост канала</Typography>
         <Box sx={{ flex: 1, minHeight: '300px' }} >
           <Box sx={{ position: 'relative', height: '100%' }} >
             <Line data={data}
@@ -50,7 +36,7 @@ export function SubscribesUnsubscribesChart(props: SubscribesUnsubscribesChartPr
                 plugins: {
                   legend: {
                     position: 'bottom',
-                    display: true,
+                    display: false,
                     align: 'start',
                     labels: {
                       usePointStyle: true,
@@ -65,12 +51,21 @@ export function SubscribesUnsubscribesChart(props: SubscribesUnsubscribesChartPr
                     offset: true,
                     min: 0,
                     ticks: {
-                      autoSkip: true,
-                      maxTicksLimit: 5
-                    }
+                      display: false,
+                      autoSkip: true
+                    },
+                    grid: {
+                      drawOnChartArea: false,
+                      drawTicks: true,
+                      offset: true,
+                    },
+                    alignToPixels: true,
+                    position: 'center',
                   },
                   y: {
                     beginAtZero: true,
+                    min: -props.maxAbsValue,
+                    max: props.maxAbsValue
                   },
                 }
               }}

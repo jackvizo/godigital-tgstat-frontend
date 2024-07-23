@@ -87,10 +87,13 @@ export function useSubscribesUnsubscribesChartWidgetLogic(props: UseSubscribesUn
 
   const labels = fillMissingDates([], props.startDate, props.endDate, period).map(item => item.x);
   return {
+    subscribesSeries,
+    unsubscribesSeries,
     subscribesQuery,
     unsubscribesQuery,
     subscribesChart,
     unsubscribesChart,
-    labels
+    labels,
+    period
   };
 }

@@ -1,3 +1,4 @@
+import { runTgCollectFlowRun } from "@/lib/api/prefect/scheduler";
 import prismaClient from "@/lib/prisma-client";
 
 export async function trackChannel(args: {
@@ -34,4 +35,10 @@ export async function trackChannel(args: {
       },
     },
   });
+
+  try {
+    await runTgCollectFlowRun({ channelId: args.tgChannelId, phoneNumber: sessionPool?.[0]?.phone_number! });
+  } catch (error) {
+    console.error("[track-channel] error: ", error);
+  }
 }

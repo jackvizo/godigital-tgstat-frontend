@@ -1,4 +1,4 @@
-const envalid = require('envalid')
+const envalid = require("envalid");
 
 envalid.cleanEnv(process.env, {
   DATABASE_URL: envalid.str(),
@@ -14,12 +14,13 @@ envalid.cleanEnv(process.env, {
   KEYCLOAK_ADMIN_USER: envalid.str(),
   KEYCLOAK_ADMIN_PASSWORD: envalid.str(),
   KEYCLOAK_ADMIN_CLI_URL: envalid.str(),
-})
+  PREFECT_URL: envalid.str(),
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compress: true,
   output: "standalone",
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

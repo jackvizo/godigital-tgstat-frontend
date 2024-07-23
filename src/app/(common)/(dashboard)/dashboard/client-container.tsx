@@ -13,8 +13,10 @@ import { CohortAnalysisWidget } from "@/lib/components/Widgets/CohortAnalysisWid
 import { useCohortAnalysisWidgetLogic } from "@/lib/components/Widgets/CohortAnalysisWidget/useCohortAnalysisWidgetLogic";
 import { ER24Widget } from "@/lib/components/Widgets/ER24Widget/ER24Widget";
 import { useER24WidgetLogic } from "@/lib/components/Widgets/ER24Widget/useER24WidgetLogic";
+import { NetSubscribesChart } from "@/lib/components/Widgets/NetSubscribesChartWidget/NetSubscribesChart";
+import { useNetSubscribesChartWidgetLogic } from "@/lib/components/Widgets/NetSubscribesChartWidget/useNetSubscribesChartWidgetLogic";
 import { SubscribersAmountByDateRangeWidget } from "@/lib/components/Widgets/SubscribersAmountByDateRange/SubscribersAmountByDateRangeWidget";
-import { useSubscribersAmountWidgetLogic } from "@/lib/components/Widgets/SubscribersAmountByDateRange/useSubscribersAmountByDateRangeWidgetLogic";
+import { useSubscribersAmountByDateRangeWidgetLogic } from "@/lib/components/Widgets/SubscribersAmountByDateRange/useSubscribersAmountByDateRangeWidgetLogic";
 import { SubscribesByInviteLinksWidget } from "@/lib/components/Widgets/SubscribesByInviteLinksWidget/SubscribesByInviteLinksWidget";
 import { useSubscribesByInviteLinksWidgetLogic } from "@/lib/components/Widgets/SubscribesByInviteLinksWidget/useSubscribesByInviteLinksWidgetLogic";
 import { SubscribesUnsubscribesChart } from "@/lib/components/Widgets/SubscribesUnsubscribesChart/SubscribesUnsubscribesChart";
@@ -84,12 +86,14 @@ export function ClientContainer(props: ClientContainerProps) {
   const avgUserLifecycleWidgetLogic = useAvgUserLifecycleWidgetLogic(dashboardFiltersLogic.filters)
   const er24WidgetLogic = useER24WidgetLogic(dashboardFiltersLogic.filters);
 
-  const subscribersAmountWidgetLogic = useSubscribersAmountWidgetLogic(dashboardFiltersLogic.filters)
+  const subscribersAmountWidgetLogic = useSubscribersAmountByDateRangeWidgetLogic(dashboardFiltersLogic.filters)
   const unsubscribersAmountWidgetLogic = useUnsubscribersAmountWidgetLogic(dashboardFiltersLogic.filters)
   const avgErLogic = useAvgERWidgetLogic(dashboardFiltersLogic.filters)
 
   const unsubscribersPercentWidgetLogic = useUnsubscribersPercentWidgetLogic({ subscribersAmountWidgetLogic, unsubscribersAmountWidgetLogic })
   const subscribesUnsubscribesChartWidgetLogic = useSubscribesUnsubscribesChartWidgetLogic(dashboardFiltersLogic.filters)
+  const netSubscribesChartWidgetLogic = useNetSubscribesChartWidgetLogic({ ...dashboardFiltersLogic.filters, subscribesUnsubscribesChartWidgetLogic })
+
   const subscribesByInviteLinksWidgetLogic = useSubscribesByInviteLinksWidgetLogic(dashboardFiltersLogic.filters)
   const unsubscribesByInviteLinksWidgetLogic = useUnsubscribesByInviteLinksWidgetLogic(dashboardFiltersLogic.filters)
   const unsubscribesByPeriodWidgetLogic = useUnsubscribesByPeriodWidgetLogic(dashboardFiltersLogic.filters);
@@ -145,6 +149,10 @@ export function ClientContainer(props: ClientContainerProps) {
             <WidgetWrapper queries={[subscribesUnsubscribesChartWidgetLogic.subscribesQuery, subscribesUnsubscribesChartWidgetLogic.unsubscribesQuery]} loading={initiallyLoading} height={rowHeight2} width={500}>
               <SubscribesUnsubscribesChart {...subscribesUnsubscribesChartWidgetLogic} title="Подписки и отписки" />
             </WidgetWrapper>
+            <WidgetWrapper queries={[subscribesUnsubscribesChartWidgetLogic.subscribesQuery, subscribesUnsubscribesChartWidgetLogic.unsubscribesQuery]} loading={initiallyLoading} height={rowHeight2} width={500}>
+              <NetSubscribesChart {...netSubscribesChartWidgetLogic} />
+            </WidgetWrapper>
+
             <WidgetWrapper query={subscribesByInviteLinksWidgetLogic.subscribesByInviteLinksQuery} loading={initiallyLoading} height={rowHeight2} width={332}>
               <SubscribesByInviteLinksWidget {...subscribesByInviteLinksWidgetLogic} />
             </WidgetWrapper>
@@ -167,9 +175,9 @@ export function ClientContainer(props: ClientContainerProps) {
               </Box>
             </WidgetWrapper>
             <WidgetWrapper query={unsubscribesByAdCompany.unsubscribesByAdCompanyQuery} height={686} width={400}>
-              <Box sx={{ overflow: 'scroll' }}>
-                <UnsubscribesByAdCompanyWidget {...unsubscribesByAdCompany} />
-              </Box>
+              {/* <Box sx={{ overflow: 'scroll' }}> */}
+              <UnsubscribesByAdCompanyWidget {...unsubscribesByAdCompany} />
+              {/* </Box> */}
             </WidgetWrapper>
           </Row>
 

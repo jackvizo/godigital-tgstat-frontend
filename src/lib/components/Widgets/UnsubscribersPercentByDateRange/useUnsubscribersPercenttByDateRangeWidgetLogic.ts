@@ -1,8 +1,8 @@
-import { useSubscribersAmountWidgetLogic } from "@/lib/components/Widgets/SubscribersAmountByDateRange/useSubscribersAmountByDateRangeWidgetLogic";
+import { useSubscribersAmountByDateRangeWidgetLogic } from "@/lib/components/Widgets/SubscribersAmountByDateRange/useSubscribersAmountByDateRangeWidgetLogic";
 import { useUnsubscribersAmountWidgetLogic } from "@/lib/components/Widgets/UnsubscribersAmountByDateRange/useUnsubscribersAmountByDateRangeWidgetLogic";
 
 export interface UseUnsubscribersPercentWidgetLogicProps {
-  subscribersAmountWidgetLogic: ReturnType<typeof useSubscribersAmountWidgetLogic>;
+  subscribersAmountWidgetLogic: ReturnType<typeof useSubscribersAmountByDateRangeWidgetLogic>;
   unsubscribersAmountWidgetLogic: ReturnType<typeof useUnsubscribersAmountWidgetLogic>;
 }
 

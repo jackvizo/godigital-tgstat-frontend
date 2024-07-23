@@ -15,9 +15,9 @@ export const SUBSCRIBERS_BY_DATE_RANGE_QUERY = graphql(`
   }
 `);
 
-export interface UseSubscribersAmountWidgetLogicProps extends DashboardFilters {}
+export interface UseSubscribersAmountByDateRangeWidgetLogicProps extends DashboardFilters {}
 
-export function useSubscribersAmountWidgetLogic(props: UseSubscribersAmountWidgetLogicProps) {
+export function useSubscribersAmountByDateRangeWidgetLogic(props: UseSubscribersAmountByDateRangeWidgetLogicProps) {
   const auth = useAuth();
 
   const subscribersAmountByDateRangeQuery = useQuery(SUBSCRIBERS_BY_DATE_RANGE_QUERY, {
