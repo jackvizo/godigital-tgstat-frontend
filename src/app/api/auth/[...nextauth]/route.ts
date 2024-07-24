@@ -63,6 +63,9 @@ const handler = NextAuth({
   },
 
   providers: [keycloakProvider],
+  pages: {
+    signIn: "/auth",
+  },
 });
 
 export { handler as GET, handler as POST };
