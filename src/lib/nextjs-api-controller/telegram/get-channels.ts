@@ -38,7 +38,6 @@ export async function getChannels(args: { userId: string; titleSearch: string })
 
         try {
           const searchResult = await client.invoke(new Api.contacts.Search({ q: args.titleSearch, limit: 10 }));
-          console.log();
           const adminedPublicChannels = await client.invoke(new Api.channels.GetAdminedPublicChannels({}));
           const channels = searchResult.chats
             .filter(

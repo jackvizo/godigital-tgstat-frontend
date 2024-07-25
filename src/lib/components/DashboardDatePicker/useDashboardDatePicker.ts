@@ -26,34 +26,62 @@ const calculateEndDate = (startDate: Date | undefined, period: TimeUnit | undefi
 };
 
 export function useDashboardDatePicker(props?: { startDate?: Date | undefined; initialPeriod?: TimeUnit }) {
-  const [startDateState, setStartDateState] = useState<Date | undefined>(() => {
+  const [timePeriod, setTimePeriod] = useState<TimeUnit | undefined>(props?.initialPeriod ?? "day");
+
+  const [nextStartDate, setNextStartDate] = useState<Date | undefined>(() => {
     if (props?.startDate) {
       return removeTime(dayjs(props.startDate)).toDate();
     }
-
     return removeTime(dayjs()).toDate();
   });
-  const [timePeriod, setTimePeriod] = useState<TimeUnit | undefined>(props?.initialPeriod ?? "day");
-  const [endDateState, setEndDateState] = useState<Date | undefined>(undefined);
 
-  useEffect(() => {
-    if (timePeriod) {
-      setEndDateState(calculateEndDate(props?.startDate || startDateState, timePeriod));
-    }
-  }, [timePeriod, startDateState]);
+  const [nextEndDate, setNextEndDate] = useState<Date | undefined>(() =>
+    calculateEndDate(props?.startDate ?? nextStartDate, timePeriod)
+  );
+  const [startDateState, setStartDateState] = useState<Date | undefined>(nextStartDate);
+  const [endDateState, setEndDateState] = useState<Date | undefined>(nextEndDate);
+
+  const doSetStartDate = (date: Date) => {
+    const calculatedEndDate = calculateEndDate(date, timePeriod ?? "day");
+    setNextStartDate(date);
+    setNextEndDate(calculatedEndDate);
+  };
+
+  const doSetEndDate = (date: Date) => {
+    setTimePeriod(undefined);
+    setNextStartDate(startDateState);
+    setNextEndDate(date);
+  };
+
+  const doSetTimePeriod = (period: TimeUnit | undefined) => {
+    const startDate = props?.startDate ?? startDateState;
+    const calculatedEndDate = calculateEndDate(startDate, period);
+    setTimePeriod(period);
+    setNextStartDate(startDate);
+    setNextEndDate(calculatedEndDate);
+  };
 
   useEffect(() => {
     if (props?.startDate) {
-      setStartDateState(props.startDate);
+      doSetStartDate(props.startDate);
     }
   }, [props?.startDate]);
 
+  useEffect(() => {
+    if (nextEndDate && nextStartDate) {
+      setStartDateState(nextStartDate);
+      setEndDateState(nextEndDate);
+      setNextStartDate(undefined);
+      setNextEndDate(undefined);
+    }
+  }, [nextEndDate, nextStartDate]);
+
   return {
     startDateState,
-    timePeriod,
     endDateState,
-    setStartDateState,
-    setTimePeriod,
-    setEndDateState,
+    timePeriod,
+    setStartDateState: doSetStartDate,
+    setEndDateState: doSetEndDate,
+    setTimePeriod: doSetTimePeriod,
   };
 }

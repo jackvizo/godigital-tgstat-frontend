@@ -42,7 +42,6 @@ export function DashboardDatePicker(props: DashboardDatePickerProps) {
             onChange={(newValue) => {
               if (newValue) {
                 props.setEndDateState(removeTime(newValue).toDate())
-                props.setTimePeriod(undefined)
               }
             }}
             label="Дата до"
