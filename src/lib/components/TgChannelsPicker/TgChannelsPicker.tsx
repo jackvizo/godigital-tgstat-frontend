@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, List, ListItem, ListItemText, Typography, CircularProgress, TextField, IconButton, Tooltip } from '@mui/material';
+import { Box, List, ListItem, ListItemText, Typography, CircularProgress, TextField, IconButton, Tooltip, Checkbox } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
@@ -13,6 +13,7 @@ export interface TgChannelsPickerProps {
   isNoChannelsFound: boolean;
   titleSearch: string | undefined;
   onTrackToggle: (channel: TgChannelListItem) => Promise<void>;
+  onCheckToggle: (channel: TgChannelListItem, isChecked: boolean) => void;
   onSearchClick: (searchTerm: string) => void;
 }
 
@@ -28,7 +29,19 @@ function TgChannelPickerListItem(props: TgChannelPickerListItemProps) {
       sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingRight: 4 }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Tooltip title={props.channel.is_tracked ? "Прекратить отслеживание" : "Отслеживать канал"}>
+        {props.channel.is_checked !== undefined ? (
+          <Tooltip title={props.channel.is_checked ? "Убрать из учета в статистике" : "Учитывать в статистике"}>
+            <Checkbox
+              checked={!!props.channel.is_checked}
+              onChange={() => props.onCheckToggle(props.channel, !props.channel.is_checked)}
+            />
+          </Tooltip>
+        ) : null}
+        <ListItemText primary={props.channel.tg_channel_title} />
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        {isToggling ? <CircularProgress size={24} sx={{ marginRight: 2 }} /> : null}
+        <Tooltip title={props.channel.is_tracked ? "Прекратить отслеживание. Статистика не будет собираться." : "Отслеживать канал. Статистика будет обновляться каждый час."}>
           <IconButton
             disabled={props.loadings.isSomeChannelToggling || isToggling}
             onClick={async () => {
@@ -48,9 +61,6 @@ function TgChannelPickerListItem(props: TgChannelPickerListItemProps) {
           </IconButton>
         </Tooltip>
       </Box>
-      <ListItemText primary={props.channel.tg_channel_title} />
-      {isToggling ? <CircularProgress size={24} sx={{ marginRight: 2 }} /> : null}
-
     </ListItem>
   );
 }

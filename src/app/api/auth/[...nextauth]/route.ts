@@ -1,3 +1,4 @@
+import { LS_KEY_CHECKED_TG_CHANNELS } from "@/lib/consts";
 import { createUserIfNotExist } from "@/lib/nextjs-api-controller/user";
 import axios, { AxiosError } from "axios";
 import jwt, { JwtPayload } from "jsonwebtoken";
@@ -32,6 +33,12 @@ async function doFinalSignoutHandshake(token: JWT) {
   }
 }
 
+function clearLocalStorage() {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem(LS_KEY_CHECKED_TG_CHANNELS);
+  }
+}
+
 const handler = NextAuth({
   callbacks: {
     jwt: async ({ token, account, user }) => {
@@ -59,7 +66,13 @@ const handler = NextAuth({
     },
   },
   events: {
-    signOut: ({ token }) => doFinalSignoutHandshake(token),
+    async signOut({ token }) {
+      clearLocalStorage();
+      return doFinalSignoutHandshake(token);
+    },
+    async signIn() {
+      clearLocalStorage();
+    },
   },
 
   providers: [keycloakProvider],

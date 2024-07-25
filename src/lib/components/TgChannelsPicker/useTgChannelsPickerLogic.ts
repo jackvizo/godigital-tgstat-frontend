@@ -1,6 +1,7 @@
 import { DocumentType, graphql } from "@/generated/gql";
 import { useAuth } from "@/lib/auth/use-auth";
 import { usePhoneNumberListLogic } from "@/lib/components/PhoneNumberList/usePhoneNumberListLogic";
+import { LS_KEY_CHECKED_TG_CHANNELS } from "@/lib/consts";
 import errorHandler from "@/lib/error-handler";
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
@@ -19,7 +20,7 @@ const AVALIABLE_TG_CHANNELS = graphql(`
 
 const TRACKED_TG_CHANNELS = graphql(`
   query TrackedTgChannels($user_id: uuid!) {
-    user_tg_channel(where: { user_id: { _eq: $user_id } }) {
+    user_tg_channel(where: { user_id: { _eq: $user_id } }, order_by: { tg_channel_title: asc }) {
       tg_channel_id
       tg_channel_title
     }
@@ -47,12 +48,19 @@ const UNTRACK_TG_CHANNEL = graphql(`
 export type TgChannelListItem = Omit<
   NonNullable<DocumentType<typeof AVALIABLE_TG_CHANNELS>["tg_channels"]>["channels"][number],
   "__typename"
-> & { is_tracked: boolean };
+> & { is_tracked: boolean; is_checked?: boolean };
 
 export const useTgChannelsPickerLogic = (props: {
   phoneNumberListLogic: ReturnType<typeof usePhoneNumberListLogic>;
 }) => {
   const auth = useAuth();
+  const [checkedTgChannelIds, setCheckedTgChannelIds] = useState<string[]>(() =>
+    typeof localStorage !== "undefined"
+      ? (localStorage.getItem(LS_KEY_CHECKED_TG_CHANNELS) &&
+          JSON.parse(localStorage.getItem(LS_KEY_CHECKED_TG_CHANNELS) || "")) ||
+        []
+      : []
+  );
   const [titleSearch, setTitleSearch] = useState<string | undefined>();
   const userId = auth.session?.data?.userId!;
   const trackedTgChannelsQuery = useQuery(TRACKED_TG_CHANNELS, {
@@ -75,6 +83,7 @@ export const useTgChannelsPickerLogic = (props: {
     ...item,
     phone_numbers: [],
     is_tracked: true,
+    is_checked: checkedTgChannelIds.includes(`${item.tg_channel_id}`),
   }));
   const foundChannels: TgChannelListItem[] = (getTelegramChannelsQuery.data?.tg_channels?.channels || []).map(
     (item) => ({
@@ -100,6 +109,22 @@ export const useTgChannelsPickerLogic = (props: {
       });
     }
     await trackedTgChannelsQuery.refetch();
+    onCheckToggle(channel, !channel.is_tracked);
+  };
+
+  const onCheckToggle = (channel: TgChannelListItem, isChecked: boolean) => {
+    if (typeof localStorage !== "undefined") {
+      const newChannelsIdsSet = new Set(checkedTgChannelIds);
+      if (isChecked) {
+        newChannelsIdsSet.add(`${channel.tg_channel_id}`);
+      } else {
+        newChannelsIdsSet.delete(`${channel.tg_channel_id}`);
+      }
+      const newChannelsIds = Array.from(newChannelsIdsSet);
+      localStorage.setItem(LS_KEY_CHECKED_TG_CHANNELS, JSON.stringify(newChannelsIds));
+      console.log("LS SET ITEM WTF", LS_KEY_CHECKED_TG_CHANNELS, JSON.stringify(newChannelsIds));
+      setCheckedTgChannelIds(newChannelsIds);
+    }
   };
 
   const prevPhoneList = props.phoneNumberListLogic.getUserPhoneNumbersQuery.previousData?.config__tg_bot_session_pool;
@@ -134,5 +159,6 @@ export const useTgChannelsPickerLogic = (props: {
     titleSearch,
     onTrackToggle,
     onSearchClick,
+    onCheckToggle,
   };
 };

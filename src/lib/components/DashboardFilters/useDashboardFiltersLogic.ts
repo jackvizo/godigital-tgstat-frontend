@@ -25,7 +25,7 @@ export function useDashboardFiltersLogic() {
     checkedTgInviteLinks: inviteLinkPickerLogic.checkedTgInviteLinks,
     allTgInviteLinks: inviteLinkPickerLogic.allTgInviteLinks,
     tgChannelIds: tgChannelsPickerLogic.trackedChannels
-      ?.filter((item) => item.is_tracked)
+      ?.filter((item) => item.is_checked)
       ?.map((item) => Number(item.tg_channel_id)),
     startDate: filterDatePickerLogic.startDateState,
     endDate: filterDatePickerLogic.endDateState,
