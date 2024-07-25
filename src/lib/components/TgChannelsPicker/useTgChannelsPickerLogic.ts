@@ -122,7 +122,6 @@ export const useTgChannelsPickerLogic = (props: {
       }
       const newChannelsIds = Array.from(newChannelsIdsSet);
       localStorage.setItem(LS_KEY_CHECKED_TG_CHANNELS, JSON.stringify(newChannelsIds));
-      console.log("LS SET ITEM WTF", LS_KEY_CHECKED_TG_CHANNELS, JSON.stringify(newChannelsIds));
       setCheckedTgChannelIds(newChannelsIds);
     }
   };
