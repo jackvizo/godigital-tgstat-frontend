@@ -109,7 +109,7 @@ export function ClientContainer(props: ClientContainerProps) {
       </Box>
 
       {dashboardFiltersLogic.isNoTrackedChannels ? (
-        <Typography variant="subtitle1" gutterBottom>Выберите каналы для отслеживания через кнопку "Каналы"</Typography>
+        <Typography variant="subtitle1" gutterBottom>Выберите каналы для отслеживания через кнопку Каналы</Typography>
       ) : (
         <>
           <Typography variant="subtitle1" gutterBottom>За всё время</Typography>
