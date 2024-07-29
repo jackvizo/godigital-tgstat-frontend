@@ -5,6 +5,7 @@ import { useInviteLinkPickerLogic } from "@/lib/components/InviteLinkPicker/useI
 import { usePhoneNumberListLogic } from "@/lib/components/PhoneNumberList/usePhoneNumberListLogic";
 import { useTgChannelsPickerLogic } from "@/lib/components/TgChannelsPicker/useTgChannelsPickerLogic";
 import { TimeUnit } from "chart.js";
+import dayjs from "dayjs";
 
 export interface DashboardFilters {
   tgChannelIds: number[];
@@ -12,6 +13,8 @@ export interface DashboardFilters {
   allTgInviteLinks: string[];
   startDate: Date | undefined;
   endDate: Date | undefined;
+  utcStartDate: string | undefined;
+  utcEndDate: string | undefined;
   timePeriod: TimeUnit | undefined;
 }
 
@@ -29,6 +32,12 @@ export function useDashboardFiltersLogic() {
       ?.map((item) => Number(item.tg_channel_id)),
     startDate: filterDatePickerLogic.startDateState,
     endDate: filterDatePickerLogic.endDateState,
+    utcStartDate: filterDatePickerLogic.startDateState
+      ? dayjs(filterDatePickerLogic.startDateState).format("YYYY-MM-DD")
+      : undefined,
+    utcEndDate: filterDatePickerLogic.endDateState
+      ? dayjs(filterDatePickerLogic.endDateState).format("YYYY-MM-DD")
+      : undefined,
     timePeriod: filterDatePickerLogic.timePeriod,
   };
 

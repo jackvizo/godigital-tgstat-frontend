@@ -4,11 +4,9 @@ import { useQuery } from "@apollo/client";
 import { DashboardFilters } from "@/lib/components/DashboardFilters/useDashboardFiltersLogic";
 
 export const TOTAL_SUBSCRIBERS_QUERY = graphql(`
-  query TotalSubscribers($tg_channel_id: [bigint!]) {
-    stat_user_aggregate(where: { left_at: { _is_null: true }, tg_channel_id: { _in: $tg_channel_id } }) {
-      aggregate {
-        count(columns: pk)
-      }
+  query TotalParticipants($tg_channel_ids: [bigint!]) {
+    stat_channel(where: { tg_channel_id: { _in: $tg_channel_ids } }) {
+      total_participants
     }
   }
 `);
@@ -20,12 +18,12 @@ export function useTotalSubscribersWidgetLogic(props: UseTotalSubscribersWidgetL
   const totalSubscribersQuery = useQuery(TOTAL_SUBSCRIBERS_QUERY, {
     skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1,
     variables: {
-      tg_channel_id: props.tgChannelIds,
+      tg_channel_ids: props.tgChannelIds,
     },
   });
 
   return {
     totalSubscribersQuery,
-    totalSubscribersAmount: totalSubscribersQuery?.data?.stat_user_aggregate?.aggregate?.count ?? 0,
+    totalSubscribersAmount: totalSubscribersQuery?.data?.stat_channel?.[0]?.total_participants ?? 0,
   };
 }

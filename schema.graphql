@@ -1643,6 +1643,49 @@ type query_root {
   get_tg_auth_deployment_id: GetTgAuthDeploymentIdOutput
 
   """
+  fetch data from the table: "stat_channel"
+  """
+  stat_channel(
+    """distinct select on columns"""
+    distinct_on: [stat_channel_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stat_channel_order_by!]
+
+    """filter the rows returned"""
+    where: stat_channel_bool_exp
+  ): [stat_channel!]!
+
+  """
+  fetch aggregated fields from the table: "stat_channel"
+  """
+  stat_channel_aggregate(
+    """distinct select on columns"""
+    distinct_on: [stat_channel_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stat_channel_order_by!]
+
+    """filter the rows returned"""
+    where: stat_channel_bool_exp
+  ): stat_channel_aggregate!
+
+  """fetch data from the table: "stat_channel" using primary key columns"""
+  stat_channel_by_pk(pk: bigint!): stat_channel
+
+  """
   fetch data from the table: "stat_post"
   """
   stat_post(
@@ -2175,6 +2218,175 @@ type query_root {
     """filter the rows returned"""
     where: fn_users_by_period_bool_exp
   ): fn_users_by_period_aggregate!
+}
+
+"""
+columns and relationships of "stat_channel"
+"""
+type stat_channel {
+  pk: bigint!
+  tg_channel_id: bigint!
+  timestamp: timestamp!
+  total_participants: bigint!
+
+  """An object relationship"""
+  user_tg_channel: user_tg_channel
+}
+
+"""
+aggregated selection of "stat_channel"
+"""
+type stat_channel_aggregate {
+  aggregate: stat_channel_aggregate_fields
+  nodes: [stat_channel!]!
+}
+
+"""
+aggregate fields of "stat_channel"
+"""
+type stat_channel_aggregate_fields {
+  avg: stat_channel_avg_fields
+  count(columns: [stat_channel_select_column!], distinct: Boolean): Int!
+  max: stat_channel_max_fields
+  min: stat_channel_min_fields
+  stddev: stat_channel_stddev_fields
+  stddev_pop: stat_channel_stddev_pop_fields
+  stddev_samp: stat_channel_stddev_samp_fields
+  sum: stat_channel_sum_fields
+  var_pop: stat_channel_var_pop_fields
+  var_samp: stat_channel_var_samp_fields
+  variance: stat_channel_variance_fields
+}
+
+"""aggregate avg on columns"""
+type stat_channel_avg_fields {
+  pk: Float
+  tg_channel_id: Float
+  total_participants: Float
+}
+
+"""
+Boolean expression to filter rows from the table "stat_channel". All fields are combined with a logical 'AND'.
+"""
+input stat_channel_bool_exp {
+  _and: [stat_channel_bool_exp!]
+  _not: stat_channel_bool_exp
+  _or: [stat_channel_bool_exp!]
+  pk: bigint_comparison_exp
+  tg_channel_id: bigint_comparison_exp
+  timestamp: timestamp_comparison_exp
+  total_participants: bigint_comparison_exp
+  user_tg_channel: user_tg_channel_bool_exp
+}
+
+"""aggregate max on columns"""
+type stat_channel_max_fields {
+  pk: bigint
+  tg_channel_id: bigint
+  timestamp: timestamp
+  total_participants: bigint
+}
+
+"""aggregate min on columns"""
+type stat_channel_min_fields {
+  pk: bigint
+  tg_channel_id: bigint
+  timestamp: timestamp
+  total_participants: bigint
+}
+
+"""Ordering options when selecting data from "stat_channel"."""
+input stat_channel_order_by {
+  pk: order_by
+  tg_channel_id: order_by
+  timestamp: order_by
+  total_participants: order_by
+  user_tg_channel: user_tg_channel_order_by
+}
+
+"""
+select columns of table "stat_channel"
+"""
+enum stat_channel_select_column {
+  """column name"""
+  pk
+
+  """column name"""
+  tg_channel_id
+
+  """column name"""
+  timestamp
+
+  """column name"""
+  total_participants
+}
+
+"""aggregate stddev on columns"""
+type stat_channel_stddev_fields {
+  pk: Float
+  tg_channel_id: Float
+  total_participants: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type stat_channel_stddev_pop_fields {
+  pk: Float
+  tg_channel_id: Float
+  total_participants: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type stat_channel_stddev_samp_fields {
+  pk: Float
+  tg_channel_id: Float
+  total_participants: Float
+}
+
+"""
+Streaming cursor of the table "stat_channel"
+"""
+input stat_channel_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: stat_channel_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input stat_channel_stream_cursor_value_input {
+  pk: bigint
+  tg_channel_id: bigint
+  timestamp: timestamp
+  total_participants: bigint
+}
+
+"""aggregate sum on columns"""
+type stat_channel_sum_fields {
+  pk: bigint
+  tg_channel_id: bigint
+  total_participants: bigint
+}
+
+"""aggregate var_pop on columns"""
+type stat_channel_var_pop_fields {
+  pk: Float
+  tg_channel_id: Float
+  total_participants: Float
+}
+
+"""aggregate var_samp on columns"""
+type stat_channel_var_samp_fields {
+  pk: Float
+  tg_channel_id: Float
+  total_participants: Float
+}
+
+"""aggregate variance on columns"""
+type stat_channel_variance_fields {
+  pk: Float
+  tg_channel_id: Float
+  total_participants: Float
 }
 
 """
@@ -3849,6 +4061,63 @@ type subscription_root {
     """filter the rows returned"""
     where: fn_get_avg_user_lifecycle_bool_exp
   ): fn_get_avg_user_lifecycle_aggregate!
+
+  """
+  fetch data from the table: "stat_channel"
+  """
+  stat_channel(
+    """distinct select on columns"""
+    distinct_on: [stat_channel_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stat_channel_order_by!]
+
+    """filter the rows returned"""
+    where: stat_channel_bool_exp
+  ): [stat_channel!]!
+
+  """
+  fetch aggregated fields from the table: "stat_channel"
+  """
+  stat_channel_aggregate(
+    """distinct select on columns"""
+    distinct_on: [stat_channel_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stat_channel_order_by!]
+
+    """filter the rows returned"""
+    where: stat_channel_bool_exp
+  ): stat_channel_aggregate!
+
+  """fetch data from the table: "stat_channel" using primary key columns"""
+  stat_channel_by_pk(pk: bigint!): stat_channel
+
+  """
+  fetch data from the table in a streaming manner: "stat_channel"
+  """
+  stat_channel_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [stat_channel_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: stat_channel_bool_exp
+  ): [stat_channel!]!
 
   """
   fetch data from the table: "stat_post"

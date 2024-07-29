@@ -32,7 +32,7 @@ export interface UseSubscribesUnsubscribesChartWidgetLogicProps extends Dashboar
   displayedCharts?: ('subscribes' | 'unsubscribes')[]
 }
 
-const remapTimePriod = (period: TimeUnit | undefined, startDate: Date | undefined, endDate: Date | undefined): TimeUnit => {
+const remapTimePriod = (period: TimeUnit | undefined, utcStartDate: string | undefined, utcEndDate: string | undefined): TimeUnit => {
   if (period !== undefined) {
     if (period === 'day') return 'hour';
     if (period === 'week') return 'day';
@@ -41,8 +41,8 @@ const remapTimePriod = (period: TimeUnit | undefined, startDate: Date | undefine
     return period;
   }
 
-  const start = dayjs(startDate);
-  const end = dayjs(endDate);
+  const start = dayjs(utcStartDate);
+  const end = dayjs(utcEndDate);
   const diffInDays = end.diff(start, 'day');
 
   if (diffInDays <= 1) {
@@ -62,10 +62,10 @@ export function useSubscribesUnsubscribesChartWidgetLogic(props: UseSubscribesUn
   const auth = useAuth();
   const skip = !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1
 
-  const period = remapTimePriod(props.timePeriod, props.startDate, props.endDate);
+  const period = remapTimePriod(props.timePeriod, props.utcStartDate, props.utcEndDate);
   const variables = {
-    start_date: props.startDate,
-    end_date: props.endDate,
+    start_date: props.utcStartDate,
+    end_date: props.utcEndDate,
     time_period: period,
     tg_channel_ids: `{${props.tgChannelIds.join(',')}}`
   };
@@ -82,10 +82,10 @@ export function useSubscribesUnsubscribesChartWidgetLogic(props: UseSubscribesUn
   });
   const unsubscribesSeries = (unsubscribesQuery?.data?.user_unsubscribes_by_period ?? []).map(item => ({ x: item.time_bucket, y: item.count }))
 
-  const subscribesChart = fillMissingDates(subscribesSeries, props.startDate, props.endDate, period).map(item => item.y);
-  const unsubscribesChart = fillMissingDates(unsubscribesSeries, props.startDate, props.endDate, period).map(item => item.y);
+  const subscribesChart = fillMissingDates(subscribesSeries, props.utcStartDate, props.utcEndDate, period).map(item => item.y);
+  const unsubscribesChart = fillMissingDates(unsubscribesSeries, props.utcStartDate, props.utcEndDate, period).map(item => item.y);
 
-  const labels = fillMissingDates([], props.startDate, props.endDate, period).map(item => item.x);
+  const labels = fillMissingDates([], props.utcStartDate, props.utcEndDate, period).map(item => item.x);
   return {
     subscribesSeries,
     unsubscribesSeries,

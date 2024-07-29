@@ -1531,6 +1531,10 @@ export type Mutation_Root = {
   delete_fn_unsubscribes_by_periods?: Maybe<Fn_Unsubscribes_By_Periods_Mutation_Response>;
   /** delete data from the table: "fn_users_by_period" */
   delete_fn_users_by_period?: Maybe<Fn_Users_By_Period_Mutation_Response>;
+  /** delete data from the table: "stat_channel" */
+  delete_stat_channel?: Maybe<Stat_Channel_Mutation_Response>;
+  /** delete single row from the table: "stat_channel" */
+  delete_stat_channel_by_pk?: Maybe<Stat_Channel>;
   /** delete data from the table: "stat_post" */
   delete_stat_post?: Maybe<Stat_Post_Mutation_Response>;
   /** delete single row from the table: "stat_post" */
@@ -1591,6 +1595,10 @@ export type Mutation_Root = {
   insert_fn_users_by_period?: Maybe<Fn_Users_By_Period_Mutation_Response>;
   /** insert a single row into the table: "fn_users_by_period" */
   insert_fn_users_by_period_one?: Maybe<Fn_Users_By_Period>;
+  /** insert data into the table: "stat_channel" */
+  insert_stat_channel?: Maybe<Stat_Channel_Mutation_Response>;
+  /** insert a single row into the table: "stat_channel" */
+  insert_stat_channel_one?: Maybe<Stat_Channel>;
   /** insert data into the table: "stat_post" */
   insert_stat_post?: Maybe<Stat_Post_Mutation_Response>;
   /** insert data into the table: "stat_post_info" */
@@ -1655,6 +1663,12 @@ export type Mutation_Root = {
   update_fn_users_by_period?: Maybe<Fn_Users_By_Period_Mutation_Response>;
   /** update multiples rows of table: "fn_users_by_period" */
   update_fn_users_by_period_many?: Maybe<Array<Maybe<Fn_Users_By_Period_Mutation_Response>>>;
+  /** update data of the table: "stat_channel" */
+  update_stat_channel?: Maybe<Stat_Channel_Mutation_Response>;
+  /** update single row of the table: "stat_channel" */
+  update_stat_channel_by_pk?: Maybe<Stat_Channel>;
+  /** update multiples rows of table: "stat_channel" */
+  update_stat_channel_many?: Maybe<Array<Maybe<Stat_Channel_Mutation_Response>>>;
   /** update data of the table: "stat_post" */
   update_stat_post?: Maybe<Stat_Post_Mutation_Response>;
   /** update single row of the table: "stat_post" */
@@ -1757,6 +1771,18 @@ export type Mutation_RootDelete_Fn_Unsubscribes_By_PeriodsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Fn_Users_By_PeriodArgs = {
   where: Fn_Users_By_Period_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Stat_ChannelArgs = {
+  where: Stat_Channel_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Stat_Channel_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
 };
 
 
@@ -1940,6 +1966,20 @@ export type Mutation_RootInsert_Fn_Users_By_PeriodArgs = {
 /** mutation root */
 export type Mutation_RootInsert_Fn_Users_By_Period_OneArgs = {
   object: Fn_Users_By_Period_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Stat_ChannelArgs = {
+  objects: Array<Stat_Channel_Insert_Input>;
+  on_conflict?: InputMaybe<Stat_Channel_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Stat_Channel_OneArgs = {
+  object: Stat_Channel_Insert_Input;
+  on_conflict?: InputMaybe<Stat_Channel_On_Conflict>;
 };
 
 
@@ -2170,6 +2210,28 @@ export type Mutation_RootUpdate_Fn_Users_By_PeriodArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Fn_Users_By_Period_ManyArgs = {
   updates: Array<Fn_Users_By_Period_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Stat_ChannelArgs = {
+  _inc?: InputMaybe<Stat_Channel_Inc_Input>;
+  _set?: InputMaybe<Stat_Channel_Set_Input>;
+  where: Stat_Channel_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Stat_Channel_By_PkArgs = {
+  _inc?: InputMaybe<Stat_Channel_Inc_Input>;
+  _set?: InputMaybe<Stat_Channel_Set_Input>;
+  pk_columns: Stat_Channel_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Stat_Channel_ManyArgs = {
+  updates: Array<Stat_Channel_Updates>;
 };
 
 
@@ -2422,6 +2484,12 @@ export type Query_Root = {
   /** execute function "get_avg_user_lifecycle" and query aggregates on result of table type "fn_get_avg_user_lifecycle" */
   get_avg_user_lifecycle_aggregate: Fn_Get_Avg_User_Lifecycle_Aggregate;
   get_tg_auth_deployment_id?: Maybe<GetTgAuthDeploymentIdOutput>;
+  /** fetch data from the table: "stat_channel" */
+  stat_channel: Array<Stat_Channel>;
+  /** fetch aggregated fields from the table: "stat_channel" */
+  stat_channel_aggregate: Stat_Channel_Aggregate;
+  /** fetch data from the table: "stat_channel" using primary key columns */
+  stat_channel_by_pk?: Maybe<Stat_Channel>;
   /** fetch data from the table: "stat_post" */
   stat_post: Array<Stat_Post>;
   /** fetch aggregated fields from the table: "stat_post" */
@@ -2651,6 +2719,29 @@ export type Query_RootGet_Avg_User_Lifecycle_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Order_By>>;
   where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
+};
+
+
+export type Query_RootStat_ChannelArgs = {
+  distinct_on?: InputMaybe<Array<Stat_Channel_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Stat_Channel_Order_By>>;
+  where?: InputMaybe<Stat_Channel_Bool_Exp>;
+};
+
+
+export type Query_RootStat_Channel_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Stat_Channel_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Stat_Channel_Order_By>>;
+  where?: InputMaybe<Stat_Channel_Bool_Exp>;
+};
+
+
+export type Query_RootStat_Channel_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
 };
 
 
@@ -2944,6 +3035,271 @@ export type Query_RootUser_Unsubscribes_By_Period_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Fn_Users_By_Period_Order_By>>;
   where?: InputMaybe<Fn_Users_By_Period_Bool_Exp>;
+};
+
+/** columns and relationships of "stat_channel" */
+export type Stat_Channel = {
+  __typename?: 'stat_channel';
+  pk: Scalars['bigint']['output'];
+  tg_channel_id: Scalars['bigint']['output'];
+  tg_last_admin_log_event_id: Scalars['bigint']['output'];
+  timestamp: Scalars['timestamp']['output'];
+  total_participants: Scalars['bigint']['output'];
+  /** An object relationship */
+  user_tg_channel?: Maybe<User_Tg_Channel>;
+};
+
+/** aggregated selection of "stat_channel" */
+export type Stat_Channel_Aggregate = {
+  __typename?: 'stat_channel_aggregate';
+  aggregate?: Maybe<Stat_Channel_Aggregate_Fields>;
+  nodes: Array<Stat_Channel>;
+};
+
+/** aggregate fields of "stat_channel" */
+export type Stat_Channel_Aggregate_Fields = {
+  __typename?: 'stat_channel_aggregate_fields';
+  avg?: Maybe<Stat_Channel_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Stat_Channel_Max_Fields>;
+  min?: Maybe<Stat_Channel_Min_Fields>;
+  stddev?: Maybe<Stat_Channel_Stddev_Fields>;
+  stddev_pop?: Maybe<Stat_Channel_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Stat_Channel_Stddev_Samp_Fields>;
+  sum?: Maybe<Stat_Channel_Sum_Fields>;
+  var_pop?: Maybe<Stat_Channel_Var_Pop_Fields>;
+  var_samp?: Maybe<Stat_Channel_Var_Samp_Fields>;
+  variance?: Maybe<Stat_Channel_Variance_Fields>;
+};
+
+
+/** aggregate fields of "stat_channel" */
+export type Stat_Channel_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Stat_Channel_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Stat_Channel_Avg_Fields = {
+  __typename?: 'stat_channel_avg_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_last_admin_log_event_id?: Maybe<Scalars['Float']['output']>;
+  total_participants?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "stat_channel". All fields are combined with a logical 'AND'. */
+export type Stat_Channel_Bool_Exp = {
+  _and?: InputMaybe<Array<Stat_Channel_Bool_Exp>>;
+  _not?: InputMaybe<Stat_Channel_Bool_Exp>;
+  _or?: InputMaybe<Array<Stat_Channel_Bool_Exp>>;
+  pk?: InputMaybe<Bigint_Comparison_Exp>;
+  tg_channel_id?: InputMaybe<Bigint_Comparison_Exp>;
+  tg_last_admin_log_event_id?: InputMaybe<Bigint_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamp_Comparison_Exp>;
+  total_participants?: InputMaybe<Bigint_Comparison_Exp>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "stat_channel" */
+export enum Stat_Channel_Constraint {
+  /** unique or primary key constraint on columns "pk" */
+  stat_channel_pkey = 'stat_channel_pkey'
+}
+
+/** input type for incrementing numeric columns in table "stat_channel" */
+export type Stat_Channel_Inc_Input = {
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
+  tg_last_admin_log_event_id?: InputMaybe<Scalars['bigint']['input']>;
+  total_participants?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** input type for inserting data into table "stat_channel" */
+export type Stat_Channel_Insert_Input = {
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
+  tg_last_admin_log_event_id?: InputMaybe<Scalars['bigint']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamp']['input']>;
+  total_participants?: InputMaybe<Scalars['bigint']['input']>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Obj_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Stat_Channel_Max_Fields = {
+  __typename?: 'stat_channel_max_fields';
+  pk?: Maybe<Scalars['bigint']['output']>;
+  tg_channel_id?: Maybe<Scalars['bigint']['output']>;
+  tg_last_admin_log_event_id?: Maybe<Scalars['bigint']['output']>;
+  timestamp?: Maybe<Scalars['timestamp']['output']>;
+  total_participants?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** aggregate min on columns */
+export type Stat_Channel_Min_Fields = {
+  __typename?: 'stat_channel_min_fields';
+  pk?: Maybe<Scalars['bigint']['output']>;
+  tg_channel_id?: Maybe<Scalars['bigint']['output']>;
+  tg_last_admin_log_event_id?: Maybe<Scalars['bigint']['output']>;
+  timestamp?: Maybe<Scalars['timestamp']['output']>;
+  total_participants?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** response of any mutation on the table "stat_channel" */
+export type Stat_Channel_Mutation_Response = {
+  __typename?: 'stat_channel_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Stat_Channel>;
+};
+
+/** on_conflict condition type for table "stat_channel" */
+export type Stat_Channel_On_Conflict = {
+  constraint: Stat_Channel_Constraint;
+  update_columns?: Array<Stat_Channel_Update_Column>;
+  where?: InputMaybe<Stat_Channel_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "stat_channel". */
+export type Stat_Channel_Order_By = {
+  pk?: InputMaybe<Order_By>;
+  tg_channel_id?: InputMaybe<Order_By>;
+  tg_last_admin_log_event_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  total_participants?: InputMaybe<Order_By>;
+  user_tg_channel?: InputMaybe<User_Tg_Channel_Order_By>;
+};
+
+/** primary key columns input for table: stat_channel */
+export type Stat_Channel_Pk_Columns_Input = {
+  pk: Scalars['bigint']['input'];
+};
+
+/** select columns of table "stat_channel" */
+export enum Stat_Channel_Select_Column {
+  /** column name */
+  pk = 'pk',
+  /** column name */
+  tg_channel_id = 'tg_channel_id',
+  /** column name */
+  tg_last_admin_log_event_id = 'tg_last_admin_log_event_id',
+  /** column name */
+  timestamp = 'timestamp',
+  /** column name */
+  total_participants = 'total_participants'
+}
+
+/** input type for updating data in table "stat_channel" */
+export type Stat_Channel_Set_Input = {
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
+  tg_last_admin_log_event_id?: InputMaybe<Scalars['bigint']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamp']['input']>;
+  total_participants?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Stat_Channel_Stddev_Fields = {
+  __typename?: 'stat_channel_stddev_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_last_admin_log_event_id?: Maybe<Scalars['Float']['output']>;
+  total_participants?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Stat_Channel_Stddev_Pop_Fields = {
+  __typename?: 'stat_channel_stddev_pop_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_last_admin_log_event_id?: Maybe<Scalars['Float']['output']>;
+  total_participants?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Stat_Channel_Stddev_Samp_Fields = {
+  __typename?: 'stat_channel_stddev_samp_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_last_admin_log_event_id?: Maybe<Scalars['Float']['output']>;
+  total_participants?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "stat_channel" */
+export type Stat_Channel_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Stat_Channel_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Stat_Channel_Stream_Cursor_Value_Input = {
+  pk?: InputMaybe<Scalars['bigint']['input']>;
+  tg_channel_id?: InputMaybe<Scalars['bigint']['input']>;
+  tg_last_admin_log_event_id?: InputMaybe<Scalars['bigint']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamp']['input']>;
+  total_participants?: InputMaybe<Scalars['bigint']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Stat_Channel_Sum_Fields = {
+  __typename?: 'stat_channel_sum_fields';
+  pk?: Maybe<Scalars['bigint']['output']>;
+  tg_channel_id?: Maybe<Scalars['bigint']['output']>;
+  tg_last_admin_log_event_id?: Maybe<Scalars['bigint']['output']>;
+  total_participants?: Maybe<Scalars['bigint']['output']>;
+};
+
+/** update columns of table "stat_channel" */
+export enum Stat_Channel_Update_Column {
+  /** column name */
+  pk = 'pk',
+  /** column name */
+  tg_channel_id = 'tg_channel_id',
+  /** column name */
+  tg_last_admin_log_event_id = 'tg_last_admin_log_event_id',
+  /** column name */
+  timestamp = 'timestamp',
+  /** column name */
+  total_participants = 'total_participants'
+}
+
+export type Stat_Channel_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Stat_Channel_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Stat_Channel_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Stat_Channel_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Stat_Channel_Var_Pop_Fields = {
+  __typename?: 'stat_channel_var_pop_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_last_admin_log_event_id?: Maybe<Scalars['Float']['output']>;
+  total_participants?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Stat_Channel_Var_Samp_Fields = {
+  __typename?: 'stat_channel_var_samp_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_last_admin_log_event_id?: Maybe<Scalars['Float']['output']>;
+  total_participants?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Stat_Channel_Variance_Fields = {
+  __typename?: 'stat_channel_variance_fields';
+  pk?: Maybe<Scalars['Float']['output']>;
+  tg_channel_id?: Maybe<Scalars['Float']['output']>;
+  tg_last_admin_log_event_id?: Maybe<Scalars['Float']['output']>;
+  total_participants?: Maybe<Scalars['Float']['output']>;
 };
 
 /** columns and relationships of "stat_post" */
@@ -4718,6 +5074,14 @@ export type Subscription_Root = {
   get_avg_user_lifecycle: Array<Fn_Get_Avg_User_Lifecycle>;
   /** execute function "get_avg_user_lifecycle" and query aggregates on result of table type "fn_get_avg_user_lifecycle" */
   get_avg_user_lifecycle_aggregate: Fn_Get_Avg_User_Lifecycle_Aggregate;
+  /** fetch data from the table: "stat_channel" */
+  stat_channel: Array<Stat_Channel>;
+  /** fetch aggregated fields from the table: "stat_channel" */
+  stat_channel_aggregate: Stat_Channel_Aggregate;
+  /** fetch data from the table: "stat_channel" using primary key columns */
+  stat_channel_by_pk?: Maybe<Stat_Channel>;
+  /** fetch data from the table in a streaming manner: "stat_channel" */
+  stat_channel_stream: Array<Stat_Channel>;
   /** fetch data from the table: "stat_post" */
   stat_post: Array<Stat_Post>;
   /** fetch aggregated fields from the table: "stat_post" */
@@ -5001,6 +5365,36 @@ export type Subscription_RootGet_Avg_User_Lifecycle_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Fn_Get_Avg_User_Lifecycle_Order_By>>;
   where?: InputMaybe<Fn_Get_Avg_User_Lifecycle_Bool_Exp>;
+};
+
+
+export type Subscription_RootStat_ChannelArgs = {
+  distinct_on?: InputMaybe<Array<Stat_Channel_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Stat_Channel_Order_By>>;
+  where?: InputMaybe<Stat_Channel_Bool_Exp>;
+};
+
+
+export type Subscription_RootStat_Channel_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Stat_Channel_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Stat_Channel_Order_By>>;
+  where?: InputMaybe<Stat_Channel_Bool_Exp>;
+};
+
+
+export type Subscription_RootStat_Channel_By_PkArgs = {
+  pk: Scalars['bigint']['input'];
+};
+
+
+export type Subscription_RootStat_Channel_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Stat_Channel_Stream_Cursor_Input>>;
+  where?: InputMaybe<Stat_Channel_Bool_Exp>;
 };
 
 
@@ -7218,7 +7612,7 @@ export type ErAvgQueryVariables = Exact<{
 }>;
 
 
-export type ErAvgQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null }, stat_post_info_aggregate: { __typename?: 'stat_post_info_aggregate', aggregate?: { __typename?: 'stat_post_info_aggregate_fields', sum?: { __typename?: 'stat_post_info_sum_fields', views?: number | null } | null } | null } };
+export type ErAvgQuery = { __typename?: 'query_root', stat_channel_aggregate: { __typename?: 'stat_channel_aggregate', aggregate?: { __typename?: 'stat_channel_aggregate_fields', sum?: { __typename?: 'stat_channel_sum_fields', total_participants?: any | null } | null } | null }, stat_post_aggregate: { __typename?: 'stat_post_aggregate', aggregate?: { __typename?: 'stat_post_aggregate_fields', avg?: { __typename?: 'stat_post_avg_fields', views?: number | null } | null } | null } };
 
 export type AvgUserLifecycleQueryVariables = Exact<{
   tg_channel_ids: Scalars['_int8']['input'];
@@ -7239,10 +7633,11 @@ export type CohortAnalysisQuery = { __typename?: 'query_root', cohort_analysis: 
 
 export type Er24QueryVariables = Exact<{
   tg_channel_ids: Array<Scalars['bigint']['input']> | Scalars['bigint']['input'];
+  date: Scalars['timestamp']['input'];
 }>;
 
 
-export type Er24Query = { __typename?: 'query_root', stat_post_info_aggregate: { __typename?: 'stat_post_info_aggregate', aggregate?: { __typename?: 'stat_post_info_aggregate_fields', sum?: { __typename?: 'stat_post_info_sum_fields', view_24h?: number | null, views?: number | null } | null } | null } };
+export type Er24Query = { __typename?: 'query_root', stat_post_info: Array<{ __typename?: 'stat_post_info', views?: number | null, view_24h?: number | null }> };
 
 export type SubscribersAmountByDateRageQueryVariables = Exact<{
   end_date: Scalars['timestamp']['input'];
@@ -7282,12 +7677,12 @@ export type UnsubscribesChartQueryVariables = Exact<{
 
 export type UnsubscribesChartQuery = { __typename?: 'query_root', user_unsubscribes_by_period: Array<{ __typename?: 'fn_users_by_period', count?: any | null, time_bucket?: any | null }> };
 
-export type TotalSubscribersQueryVariables = Exact<{
-  tg_channel_id?: InputMaybe<Array<Scalars['bigint']['input']> | Scalars['bigint']['input']>;
+export type TotalParticipantsQueryVariables = Exact<{
+  tg_channel_ids?: InputMaybe<Array<Scalars['bigint']['input']> | Scalars['bigint']['input']>;
 }>;
 
 
-export type TotalSubscribersQuery = { __typename?: 'query_root', stat_user_aggregate: { __typename?: 'stat_user_aggregate', aggregate?: { __typename?: 'stat_user_aggregate_fields', count: number } | null } };
+export type TotalParticipantsQuery = { __typename?: 'query_root', stat_channel: Array<{ __typename?: 'stat_channel', total_participants: any }> };
 
 export type UnsubscribersAmountByDateRageQueryVariables = Exact<{
   end_date: Scalars['timestamp']['input'];
@@ -7362,15 +7757,15 @@ export const TgChannelsDocument = {"kind":"Document","definitions":[{"kind":"Ope
 export const TrackedTgChannelsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TrackedTgChannels"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_title"},"value":{"kind":"EnumValue","value":"asc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tg_channel_id"}},{"kind":"Field","name":{"kind":"Name","value":"tg_channel_title"}}]}}]}}]} as unknown as DocumentNode<TrackedTgChannelsQuery, TrackedTgChannelsQueryVariables>;
 export const TrackTgChannelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TrackTgChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_numbers"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"track_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"arg1"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_numbers"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_numbers"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_title"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}}]}}]}}]} as unknown as DocumentNode<TrackTgChannelMutation, TrackTgChannelMutationVariables>;
 export const UntrackTgChannelDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UntrackTgChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_user_tg_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<UntrackTgChannelMutation, UntrackTgChannelMutationVariables>;
-export const ErAvgDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ERAvg"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_info_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date_of_post"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ErAvgQuery, ErAvgQueryVariables>;
+export const ErAvgDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ERAvg"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_channel_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total_participants"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stat_post_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"from_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avg"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ErAvgQuery, ErAvgQueryVariables>;
 export const AvgUserLifecycleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AvgUserLifecycle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"get_avg_user_lifecycle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avg_lifecycle_days"}}]}}]}}]} as unknown as DocumentNode<AvgUserLifecycleQuery, AvgUserLifecycleQueryVariables>;
 export const CohortAnalysisDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CohortAnalysis"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_bucket"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cohort_analysis"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"time_bucket"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_bucket"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"join_date"}},{"kind":"Field","name":{"kind":"Name","value":"left_date"}},{"kind":"Field","name":{"kind":"Name","value":"joined_count"}},{"kind":"Field","name":{"kind":"Name","value":"left_count"}}]}}]}}]} as unknown as DocumentNode<CohortAnalysisQuery, CohortAnalysisQueryVariables>;
-export const Er24Document = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ER24"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_post_info_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"view_24h"}},{"kind":"Field","name":{"kind":"Name","value":"views"}}]}}]}}]}}]}}]} as unknown as DocumentNode<Er24Query, Er24QueryVariables>;
+export const Er24Document = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ER24"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_post_info"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"date_of_post"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date_of_post"},"value":{"kind":"EnumValue","value":"desc"}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"views"}},{"kind":"Field","name":{"kind":"Name","value":"view_24h"}}]}}]}}]} as unknown as DocumentNode<Er24Query, Er24QueryVariables>;
 export const SubscribersAmountByDateRageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubscribersAmountByDateRage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}}]}}]} as unknown as DocumentNode<SubscribersAmountByDateRageQuery, SubscribersAmountByDateRageQueryVariables>;
 export const SubscribesByInviteLinksAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubscribesByInviteLinksAggregates"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"without_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"with_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"joined_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<SubscribesByInviteLinksAggregatesQuery, SubscribesByInviteLinksAggregatesQueryVariables>;
 export const SubscribesChartDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubscribesChart"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_signups_by_period"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"time_period"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"time_bucket"}}]}}]}}]} as unknown as DocumentNode<SubscribesChartQuery, SubscribesChartQueryVariables>;
 export const UnsubscribesChartDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscribesChart"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_unsubscribes_by_period"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"time_period"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_period"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"time_bucket"}}]}}]}}]} as unknown as DocumentNode<UnsubscribesChartQuery, UnsubscribesChartQueryVariables>;
-export const TotalSubscribersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TotalSubscribers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}}]}}]} as unknown as DocumentNode<TotalSubscribersQuery, TotalSubscribersQueryVariables>;
+export const TotalParticipantsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TotalParticipants"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_channel"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total_participants"}}]}}]}}]} as unknown as DocumentNode<TotalParticipantsQuery, TotalParticipantsQueryVariables>;
 export const UnsubscribersAmountByDateRageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscribersAmountByDateRage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"columns"},"value":{"kind":"EnumValue","value":"pk"}}]}]}}]}}]}}]} as unknown as DocumentNode<UnsubscribersAmountByDateRageQuery, UnsubscribersAmountByDateRageQueryVariables>;
 export const UnsubscribesByLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscribesByLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"link_array"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_text"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"_int8"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unsubscribes_by_links"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"end_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"link_array"},"value":{"kind":"Variable","name":{"kind":"Name","value":"link_array"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"start_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_ids"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"invite_link"}},{"kind":"Field","name":{"kind":"Name","value":"joined_count"}},{"kind":"Field","name":{"kind":"Name","value":"left_count"}}]}}]}}]} as unknown as DocumentNode<UnsubscribesByLinksQuery, UnsubscribesByLinksQueryVariables>;
 export const UnsubscribesUsersByLinksAggregatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UnsubscribesUsersByLinksAggregates"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"bigint"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"without_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"with_link"},"name":{"kind":"Name","value":"stat_user_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tg_channel_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tg_channel_ids"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"left_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"start_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"_lte"},"value":{"kind":"Variable","name":{"kind":"Name","value":"end_date"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"is_joined_by_link"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<UnsubscribesUsersByLinksAggregatesQuery, UnsubscribesUsersByLinksAggregatesQueryVariables>;

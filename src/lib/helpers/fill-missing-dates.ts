@@ -8,11 +8,11 @@ interface DataItem {
 
 export function fillMissingDates(
   data: DataItem[],
-  fromDate: Date | undefined,
-  toDate: Date | undefined,
+  utcFromDate: string | undefined,
+  utcToDate: string | undefined,
   timePeriod: TimeUnit | undefined
 ): DataItem[] {
-  if (!fromDate || !toDate || !timePeriod) {
+  if (!utcFromDate || !utcToDate || !timePeriod) {
     return data;
   }
 
@@ -30,8 +30,8 @@ export function fillMissingDates(
     timePeriod === "hour" ? "hour" : timePeriod === "day" ? "day" : timePeriod === "week" ? "week" : "month";
 
   // Create a map of dates and initialize with zeros
-  let currentDate = dayjs(fromDate);
-  const endDate = dayjs(toDate);
+  let currentDate = dayjs(utcFromDate);
+  const endDate = dayjs(utcToDate);
   while (currentDate.isBefore(endDate) || currentDate.isSame(endDate)) {
     dateMap.set(currentDate.format(format), 0);
     currentDate = currentDate.add(1, periodType);

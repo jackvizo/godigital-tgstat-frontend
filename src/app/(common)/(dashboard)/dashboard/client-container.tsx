@@ -36,6 +36,7 @@ import { useUnsubscribesByPeriodWidgetLogic } from "@/lib/components/Widgets/Uns
 import { UnsubscribesPieWidget } from "@/lib/components/Widgets/UnsubscribesPieWidget/UnsubscribesPieWidget";
 import { useUnsubscribesPieWidgetLogic } from "@/lib/components/Widgets/UnsubscribesPieWidget/useUnsubscribesPieWidgetLogic";
 import { Box, Divider, Typography } from '@mui/material';
+import dayjs from "dayjs";
 import React from "react";
 
 export interface ClientContainerProps { };
@@ -56,6 +57,12 @@ function CohortWidget(props: CohortWidgetProps) {
     ...props.dashboardFiltersLogic.filters,
     startDate: cohortAnalysisDatePicker.startDateState,
     endDate: cohortAnalysisDatePicker.endDateState,
+    utcStartDate: cohortAnalysisDatePicker.startDateState
+      ? dayjs(cohortAnalysisDatePicker.startDateState).format("YYYY-MM-DD")
+      : undefined,
+    utcEndDate: cohortAnalysisDatePicker.endDateState
+      ? dayjs(cohortAnalysisDatePicker.endDateState).format("YYYY-MM-DD")
+      : undefined,
     timePeriod: cohortAnalysisDatePicker.timePeriod!,
   });
 
