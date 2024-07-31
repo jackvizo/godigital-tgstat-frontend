@@ -53,7 +53,7 @@ export function AppBar(props: AppBarProps) {
     >
       <Toolbar>
         <Box display="flex" alignItems="center" flexDirection="row">
-          <Link href="/">
+          <Link href="/dashboard">
             {typeof window === "undefined" ? (
               <Image
                 src={{
