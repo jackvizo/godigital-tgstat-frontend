@@ -30,10 +30,10 @@ const formatDate = (date: string | Date | dayjs.Dayjs | undefined) => dayjs(date
 
 const formatMonth = (date: string | Date | dayjs.Dayjs | undefined) => dayjs(date).format('MMM YYYY');
 
-function getDatesArray(startDate: Date | undefined, endDate: Date | undefined, timePeriod: TimeUnit | undefined): string[] {
+function getDatesArray(utcStartDate: string | undefined, utcEndDate: string | undefined, timePeriod: TimeUnit | undefined): string[] {
   const dates = [];
-  let currentDate = dayjs(startDate);
-  const lastDate = dayjs(endDate);
+  let currentDate = dayjs(utcStartDate);
+  const lastDate = dayjs(utcEndDate);
 
   while (currentDate.isBefore(lastDate)) {
     if (timePeriod === 'year') {
@@ -86,6 +86,7 @@ export function useCohortAnalysisWidgetLogic(props: UseCohortAnalysisWidgetLogic
   const auth = useAuth();
   const timeBucket = props.timePeriod === 'year' ? 'month' : 'day';
 
+
   const cohortAnalysisQuery = useQuery(COHORT_ANALYSIS_QUERY, {
     skip: !auth.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcEndDate || !props.utcStartDate,
     variables: {
@@ -97,7 +98,7 @@ export function useCohortAnalysisWidgetLogic(props: UseCohortAnalysisWidgetLogic
   });
 
   const data = cohortAnalysisQuery?.data?.cohort_analysis ?? [];
-  const dates = getDatesArray(props?.startDate, props?.endDate, props?.timePeriod);
+  const dates = getDatesArray(props?.utcStartDate, props?.utcEndDate, props?.timePeriod);
 
   const maxLeftCount = Math.max(...data.map(cell => cell.left_count ?? 0));
 

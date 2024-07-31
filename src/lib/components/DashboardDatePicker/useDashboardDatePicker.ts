@@ -26,7 +26,10 @@ const calculateEndDate = (startDate: Date | undefined, period: TimeUnit | undefi
 };
 
 export function useDashboardDatePicker(props?: { startDate?: Date | undefined; initialPeriod?: TimeUnit }) {
-  const [timePeriod, setTimePeriod] = useState<TimeUnit | undefined>(props?.initialPeriod ?? "day");
+  const [nextTimePeriod, setNextTimePeriod] = useState<TimeUnit | null | undefined>(props?.initialPeriod ?? "day");
+  const [timePeriod, setTimePeriod] = useState<TimeUnit | undefined>(
+    nextTimePeriod === null ? undefined : nextTimePeriod
+  );
 
   const [nextStartDate, setNextStartDate] = useState<Date | undefined>(() => {
     if (props?.startDate) {
@@ -48,7 +51,7 @@ export function useDashboardDatePicker(props?: { startDate?: Date | undefined; i
   };
 
   const doSetEndDate = (date: Date) => {
-    setTimePeriod(undefined);
+    setNextTimePeriod(undefined);
     setNextStartDate(startDateState);
     setNextEndDate(date);
   };
@@ -56,7 +59,7 @@ export function useDashboardDatePicker(props?: { startDate?: Date | undefined; i
   const doSetTimePeriod = (period: TimeUnit | undefined) => {
     const startDate = props?.startDate ?? startDateState;
     const calculatedEndDate = calculateEndDate(startDate, period);
-    setTimePeriod(period);
+    setNextTimePeriod(period);
     setNextStartDate(startDate);
     setNextEndDate(calculatedEndDate);
   };
@@ -74,7 +77,12 @@ export function useDashboardDatePicker(props?: { startDate?: Date | undefined; i
       setNextStartDate(undefined);
       setNextEndDate(undefined);
     }
-  }, [nextEndDate, nextStartDate]);
+
+    if (nextTimePeriod !== null) {
+      setTimePeriod(nextTimePeriod);
+      setNextTimePeriod(null);
+    }
+  }, [nextEndDate, nextStartDate, nextTimePeriod]);
 
   return {
     startDateState,
