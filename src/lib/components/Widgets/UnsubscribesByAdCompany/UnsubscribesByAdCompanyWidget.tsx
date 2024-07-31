@@ -11,7 +11,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  Typography
 } from '@mui/material';
 import {
   KeyboardArrowDown as KeyboardArrowDownIcon,
@@ -91,23 +92,28 @@ export function UnsubscribesByAdCompanyWidget(props: UnsubscribesByAdCompanyWidg
   const { list } = props;
 
   return (
-    <TableContainer component={Paper} sx={{ overflow: 'scroll', maxWidth: '700px', maxHeight: '500px' }}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell sx={{ width: '220px' }} />
-            <TableCell sx={{ width: '120px' }}>Подписки</TableCell>
-            <TableCell sx={{ width: '120px' }}>Отписки</TableCell>
-            <TableCell sx={{ width: '120px' }}>Осталось</TableCell>
-            <TableCell sx={{ width: '120px' }}>Осталось, %</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {list.map(group => (
-            <Row key={group.id} group={group} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Box>
+      <Paper>
+        <Typography sx={{ m: 2 }}>Отписки по рекламным кампаниям</Typography>
+        <TableContainer sx={{ overflow: 'scroll', maxWidth: '700px', maxHeight: '500px' }}>
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ width: '220px' }} />
+                <TableCell sx={{ width: '120px' }}>Подписки</TableCell>
+                <TableCell sx={{ width: '120px' }}>Отписки</TableCell>
+                <TableCell sx={{ width: '120px' }}>Осталось</TableCell>
+                <TableCell sx={{ width: '120px' }}>Осталось, %</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {list.map(group => (
+                <Row key={group.id} group={group} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </Box>
   );
 }
