@@ -42,7 +42,7 @@ export function useDashboardDatePicker(props?: { startDate?: Date | undefined; i
   const [endDateState, setEndDateState] = useState<Date | undefined>(nextEndDate);
 
   const doSetStartDate = (date: Date) => {
-    const calculatedEndDate = calculateEndDate(date, timePeriod ?? "day");
+    let calculatedEndDate = timePeriod === undefined ? endDateState : calculateEndDate(date, timePeriod);
     setNextStartDate(date);
     setNextEndDate(calculatedEndDate);
   };
