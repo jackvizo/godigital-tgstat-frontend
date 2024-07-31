@@ -21,6 +21,7 @@ envalid.cleanEnv(process.env, {
 const nextConfig = {
   compress: true,
   output: "standalone",
+  redirects: async () => [{ source: "/", destination: "/dashboard", statusCode: 301 }],
 };
 
 module.exports = nextConfig;
