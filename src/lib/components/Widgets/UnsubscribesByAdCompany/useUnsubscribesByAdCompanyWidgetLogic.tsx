@@ -46,7 +46,7 @@ export function useUnsubscribesByAdCompanyWidgetLogic(props: UseUnsubscribesByAd
     ...group,
     items: group.items.map(item => {
       const unsubscribeData = unsubscribesByAdCompanyQuery?.data?.unsubscribes_by_links.find(
-        u => u.invite_link === item.link
+        u => u.invite_link?.substring(0, 22) === item.link?.substring(0, 22)
       );
       return {
         ...item,

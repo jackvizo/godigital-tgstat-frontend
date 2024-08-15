@@ -94,7 +94,7 @@ export function UnsubscribesByAdCompanyWidget(props: UnsubscribesByAdCompanyWidg
   return (
     <Box>
       <Paper>
-        <Typography sx={{ m: 2 }}>Отписки по рекламным кампаниям</Typography>
+        <Typography sx={{ p: 2 }}>Отписки по рекламным кампаниям</Typography>
         <TableContainer sx={{ overflow: 'scroll', maxWidth: '700px', maxHeight: '500px' }}>
           <Table aria-label="collapsible table">
             <TableHead>
