@@ -37,10 +37,10 @@ export function useSubscribesByInviteLinksWidgetLogic(props: UseSubscribesByInvi
   const auth = useAuth();
 
   const subscribesByInviteLinksQuery = useQuery(SUBSCRIBES_BY_INVITE_LINKS_QUERY, {
-    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcStartDate || !props.utcEndDate,
+    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcStartDatetime || !props.utcEndDatetime,
     variables: {
-      end_date: props.utcEndDate,
-      start_date: props.utcStartDate,
+      end_date: props.utcEndDatetime,
+      start_date: props.utcStartDatetime,
       tg_channel_ids: props.tgChannelIds
     },
   });

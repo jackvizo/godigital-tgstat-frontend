@@ -33,10 +33,10 @@ export function useUnsubscribesByAdCompanyWidgetLogic(props: UseUnsubscribesByAd
   const auth = useAuth();
 
   const unsubscribesByAdCompanyQuery = useQuery(UNSUBSCRIBES_BY_AD_COMPANY, {
-    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcEndDate || !props.utcStartDate,
+    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcEndDatetime || !props.utcStartDatetime,
     variables: {
-      end_date: props.utcEndDate,
-      start_date: props.utcStartDate,
+      end_date: props.utcEndDatetime,
+      start_date: props.utcStartDatetime,
       tg_channel_ids: `{${props.tgChannelIds.join(',')}}`,
       link_array: `{${(props.checkedTgInviteLinks.length < 1 ? props.allTgInviteLinks : props.checkedTgInviteLinks).join(',')}}`
     },

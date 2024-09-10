@@ -28,10 +28,10 @@ export interface UseAvgERWidgetLogicProps extends DashboardFilters {
 export function useAvgERWidgetLogic(props: UseAvgERWidgetLogicProps) {
   const auth = useAuth();
   const avgErQuery = useQuery(AVG_ER_QUERY, {
-    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcStartDate || !props.utcEndDate,
+    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcStartDatetime || !props.utcEndDatetime,
     variables: {
-      from_date: props.utcStartDate,
-      to_date: props.utcEndDate,
+      from_date: props.utcStartDatetime,
+      to_date: props.utcEndDatetime,
       tg_channel_ids: props.tgChannelIds
     },
   });

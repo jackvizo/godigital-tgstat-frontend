@@ -15,6 +15,8 @@ export interface DashboardFilters {
   endDate: Date | undefined;
   utcStartDate: string | undefined;
   utcEndDate: string | undefined;
+  utcStartDatetime: string | undefined;
+  utcEndDatetime: string | undefined;
   timePeriod: TimeUnit | undefined;
 }
 
@@ -24,6 +26,16 @@ export function useDashboardFiltersLogic() {
   const tgChannelsPickerLogic = useTgChannelsPickerLogic({ phoneNumberListLogic });
   const filterDatePickerLogic = useDashboardDatePicker();
 
+  const utcStartDate = filterDatePickerLogic.startDateState
+    ? dayjs(filterDatePickerLogic.startDateState).format("YYYY-MM-DD")
+    : undefined;
+  const utcEndDate = filterDatePickerLogic.endDateState
+    ? dayjs(filterDatePickerLogic.endDateState).format("YYYY-MM-DD")
+    : undefined;
+
+  const utcStartDatetime = utcStartDate ? `${utcStartDate} 00:00:00` : undefined;
+  const utcEndDatetime = utcStartDate ? `${utcEndDate} 23:59:59` : undefined;
+
   const filters: DashboardFilters = {
     checkedTgInviteLinks: inviteLinkPickerLogic.checkedTgInviteLinks,
     allTgInviteLinks: inviteLinkPickerLogic.allTgInviteLinks,
@@ -32,12 +44,10 @@ export function useDashboardFiltersLogic() {
       ?.map((item) => Number(item.tg_channel_id)),
     startDate: filterDatePickerLogic.startDateState,
     endDate: filterDatePickerLogic.endDateState,
-    utcStartDate: filterDatePickerLogic.startDateState
-      ? dayjs(filterDatePickerLogic.startDateState).format("YYYY-MM-DD")
-      : undefined,
-    utcEndDate: filterDatePickerLogic.endDateState
-      ? dayjs(filterDatePickerLogic.endDateState).format("YYYY-MM-DD")
-      : undefined,
+    utcStartDate,
+    utcEndDate,
+    utcStartDatetime,
+    utcEndDatetime,
     timePeriod: filterDatePickerLogic.timePeriod,
   };
 

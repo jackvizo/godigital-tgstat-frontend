@@ -23,10 +23,14 @@ export interface UseUnsubscribersAmountWidgetLogicProps extends DashboardFilters
 export function useUnsubscribersAmountWidgetLogic(props: UseUnsubscribersAmountWidgetLogicProps) {
   const auth = useAuth();
   const unsubscribersAmountByDateRangeQuery = useQuery(UNSUBSCRIBERS_BY_DATE_RANGE_QUERY, {
-    skip: !auth.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcStartDate || !props.utcEndDate,
+    skip:
+      !auth.session?.data?.accessToken ||
+      props.tgChannelIds.length < 1 ||
+      !props.utcStartDatetime ||
+      !props.utcEndDatetime,
     variables: {
-      end_date: props.utcEndDate,
-      start_date: props.utcStartDate,
+      end_date: props.utcEndDatetime,
+      start_date: props.utcStartDatetime,
       tg_channel_ids: props.tgChannelIds,
     },
   });

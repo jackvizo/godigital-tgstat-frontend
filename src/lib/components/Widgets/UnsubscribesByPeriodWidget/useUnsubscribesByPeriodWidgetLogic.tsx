@@ -29,10 +29,10 @@ const intervalLabels: Record<string, string> = {
 export function useUnsubscribesByPeriodWidgetLogic(props: UseUnsubscribesByPeriodWidgetLogicProps) {
   const auth = useAuth();
   const unsubscribesByPeriodsQuery = useQuery(UNSUBSCRIBES_BY_PERIODS_QUERY, {
-    skip: !auth.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcEndDate || !props.utcStartDate,
+    skip: !auth.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcEndDatetime || !props.utcStartDatetime,
     variables: {
-      start_date: props.utcStartDate,
-      end_date: props.utcEndDate,
+      start_date: props.utcStartDatetime,
+      end_date: props.utcEndDatetime,
       tg_channel_ids: `{${props.tgChannelIds.join(",")}}`,
     },
   });

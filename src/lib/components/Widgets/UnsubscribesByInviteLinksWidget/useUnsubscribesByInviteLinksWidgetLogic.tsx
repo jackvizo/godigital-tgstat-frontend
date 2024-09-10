@@ -38,10 +38,10 @@ export function useUnsubscribesByInviteLinksWidgetLogic(props: UseUnsubscribesBy
   const auth = useAuth();
 
   const unsubscribesByInviteLinksQuery = useQuery(UNSUBSCRIBES_BY_INVITE_LINKS_QUERY, {
-    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcEndDate || !props.utcStartDate,
+    skip: !auth?.session?.data?.accessToken || props.tgChannelIds.length < 1 || !props.utcEndDatetime || !props.utcStartDatetime,
     variables: {
-      end_date: props.utcEndDate,
-      start_date: props.utcStartDate,
+      end_date: props.utcEndDatetime,
+      start_date: props.utcStartDatetime,
       tg_channel_ids: props.tgChannelIds
     },
   });

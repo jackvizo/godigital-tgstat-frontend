@@ -64,8 +64,8 @@ export function useSubscribesUnsubscribesChartWidgetLogic(props: UseSubscribesUn
 
   const period = remapTimePriod(props.timePeriod, props.utcStartDate, props.utcEndDate);
   const variables = {
-    start_date: props.utcStartDate,
-    end_date: props.utcEndDate,
+    start_date: props.utcStartDatetime,
+    end_date: props.utcEndDatetime,
     time_period: period,
     tg_channel_ids: `{${props.tgChannelIds.join(',')}}`
   };
