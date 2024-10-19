@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Accordion,
   AccordionSummary,
@@ -13,8 +13,20 @@ import {
   Grid,
   CircularProgress,
   Checkbox,
-} from '@mui/material';
-import { ExpandMore, Edit, Add, Delete, Check } from '@mui/icons-material';
+  Tooltip,
+} from "@mui/material";
+import {
+  ExpandMore,
+  Edit,
+  Add,
+  Delete,
+  Check,
+  PlaylistAdd,
+} from "@mui/icons-material";
+
+import { ModalTextarea } from "../ModalTextarea/ModalTextarea";
+import { createPortal } from "react-dom";
+import { ModalWrapper } from "@/lib/components/ModalWrapper/ModalWrapper";
 
 export interface Item {
   id: number;
@@ -34,18 +46,39 @@ export interface InviteLinkPickerProps {
   handleCreateGroup: (groupName: string) => Promise<void>;
   handleUpdateGroupName: (groupId: number, groupName: string) => Promise<void>;
   handleDeleteGroup: (groupId: number) => Promise<void>;
-  handleCreateInviteLink: (inviteLink: string, label: string, groupId: number) => Promise<void>;
-  handleUpdateInviteLink: (linkId: number, inviteLink: string, label: string, enabled: boolean) => Promise<void>;
+  handleCreateInviteLink: (
+    inviteLink: string,
+    label: string,
+    groupId: number
+  ) => Promise<void>;
+
+  // handleModalTextarea: (inviteLinkList: string[], label: string, groupId: number) => Promise<void>;
+  // handleCreateInviteLinkByList: (inviteLinkList: string[], label: string, groupId: number) => Promise<void>;        // links list
+  handleUpdateInviteLink: (
+    linkId: number,
+    inviteLink: string,
+    label: string,
+    enabled: boolean
+  ) => Promise<void>;
   handleDeleteInviteLink: (linkId: number) => Promise<void>;
-  handleToggleInviteLinkGroup: (inviteLinkGroupPk: number, enabled: boolean) => Promise<void>;
+  handleToggleInviteLinkGroup: (
+    inviteLinkGroupPk: number,
+    enabled: boolean
+  ) => Promise<void>;
 }
 
 export function InviteLinkPicker(props: InviteLinkPickerProps) {
-  const { handleSearchTextChange, searchText, filteredGroups } = useInviteLinkPickerLogic(props);
+  const { handleSearchTextChange, searchText, filteredGroups } =
+    useInviteLinkPickerLogic(props);
 
   return (
     <Box>
-      <Stack spacing={2} direction="row" justifyContent="space-between" sx={{ mb: 2 }}>
+      <Stack
+        spacing={2}
+        direction="row"
+        justifyContent="space-between"
+        sx={{ mb: 2 }}
+      >
         <TextField
           fullWidth
           placeholder="Поиск"
@@ -58,7 +91,7 @@ export function InviteLinkPicker(props: InviteLinkPickerProps) {
       <Button
         variant="contained"
         sx={{ mb: 2 }}
-        onClick={() => props.handleCreateGroup('Новая группа ссылок')}
+        onClick={() => props.handleCreateGroup("Новая группа ссылок")}
       >
         Добавить группу ссылок
       </Button>
@@ -83,10 +116,23 @@ interface GroupComponentProps {
   group: Group;
   handleUpdateGroupName: (groupId: number, groupName: string) => Promise<void>;
   handleDeleteGroup: (groupId: number) => Promise<void>;
-  handleCreateInviteLink: (inviteLink: string, label: string, groupId: number) => Promise<void>;
-  handleUpdateInviteLink: (linkId: number, inviteLink: string, label: string, enabled: boolean) => Promise<void>;
+  handleCreateInviteLink: (
+    inviteLink: string,
+    label: string,
+    groupId: number
+  ) => Promise<void>;
+  // handleCreateInviteLinkByList: (inviteLinkList: string[], label: string, groupId: number) => Promise<void>;        // links list
+  handleUpdateInviteLink: (
+    linkId: number,
+    inviteLink: string,
+    label: string,
+    enabled: boolean
+  ) => Promise<void>;
   handleDeleteInviteLink: (linkId: number) => Promise<void>;
-  handleToggleInviteLinkGroup: (inviteLinkGroupPk: number, enabled: boolean) => Promise<void>;
+  handleToggleInviteLinkGroup: (
+    inviteLinkGroupPk: number,
+    enabled: boolean
+  ) => Promise<void>;
 }
 
 function GroupComponent(props: GroupComponentProps) {
@@ -104,20 +150,25 @@ function GroupComponent(props: GroupComponentProps) {
     setGroupEditMode(false);
   };
 
-  const handleAccordionChange = (event: React.SyntheticEvent, isExpanded: boolean) => {
+  const handleAccordionChange = (
+    event: React.SyntheticEvent,
+    isExpanded: boolean
+  ) => {
     setExpanded(isExpanded);
   };
 
-  const handleGroupCheckChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleGroupCheckChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const enabled = event.target.checked;
     await props.handleToggleInviteLinkGroup(group.id, enabled);
   };
 
-  const groupCheckState = group.items.every(item => item.enabled)
-    ? 'checked'
-    : group.items.some(item => item.enabled)
-      ? 'indeterminate'
-      : 'unchecked';
+  const groupCheckState = group.items.every((item) => item.enabled)
+    ? "checked"
+    : group.items.some((item) => item.enabled)
+    ? "indeterminate"
+    : "unchecked";
 
   return (
     <Accordion expanded={expanded} onChange={handleAccordionChange}>
@@ -129,19 +180,35 @@ function GroupComponent(props: GroupComponentProps) {
           }
         }}
       >
-        <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
-          <Box sx={{ alignItems: 'center', flexDirection: 'row', display: 'flex', gap: 2 }}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          width="100%"
+        >
+          <Box
+            sx={{
+              alignItems: "center",
+              flexDirection: "row",
+              display: "flex",
+              gap: 2,
+            }}
+          >
             <Checkbox
-              checked={groupCheckState === 'checked'}
-              indeterminate={groupCheckState === 'indeterminate'}
-              onChange={event => {
+              checked={groupCheckState === "checked"}
+              indeterminate={groupCheckState === "indeterminate"}
+              onChange={(event) => {
                 event.stopPropagation();
                 handleGroupCheckChange(event);
               }}
               onClick={(event) => event.stopPropagation()}
             />
             {groupEditMode ? (
-              <Box display="flex" alignItems="center" onClick={(event) => event.stopPropagation()}>
+              <Box
+                display="flex"
+                alignItems="center"
+                onClick={(event) => event.stopPropagation()}
+              >
                 <TextField
                   size="small"
                   value={groupName}
@@ -183,10 +250,72 @@ function GroupComponent(props: GroupComponentProps) {
         ))}
         <Divider />
         <Box display="flex" justifyContent="space-between" mt={2}>
-          <IconButton size="small" onClick={() => props.handleCreateInviteLink('https://', 'Новая ссылка', group.id)}>
-            <Add />
-          </IconButton>
-          <IconButton size="small" onClick={() => props.handleDeleteGroup(group.id)}>
+          <Stack
+            spacing={2}
+            direction="row"
+            justifyContent="space-between"
+            sx={{ mb: 2 }}
+          >
+            <IconButton
+              size="small"
+              onClick={() =>
+                props.handleCreateInviteLink(
+                  "https://",
+                  "Новая ссылка",
+                  group.id
+                )
+              }
+            >
+              <Add />
+            </IconButton>
+
+            <Tooltip title="Добавить ссылки списком">
+              <IconButton
+                  onClick={() => {
+                      /* Окно с группой ссылок */
+                      console.log("---> Add group clicked");
+                      return (
+                          createPortal(
+                            <ModalWrapper label="Список ссылок">
+                              <ModalTextarea
+                                title="Введите ссылки и их описание в формате:"
+                                info={[
+                                  {
+                                    num: 1,
+                                    text: "Название ссылки: https://t.me/+z6MHzt9YkNRmNDIy",
+                                  },
+                                  { num: 2, text: "Ссылку можно вводить без названия." },
+                                  {
+                                    num: 3,
+                                    text: "Каждая ссылка должна начинаться с новой строки",
+                                  },
+                                  { num: 4, text: "Пример:" },
+                                  {
+                                    num: 5,
+                                    text:
+                                      "Название ссылки 1: https://t.me/+111111" +
+                                      "\n" +
+                                      "Название ссылки 2: https://t.me/+22222" +
+                                      "\n" +
+                                      "https://t.me/+333333" +
+                                      "\n" +
+                                      "https://t.me/+444444",
+                                  },
+                                ]}
+                              />
+                            </ModalWrapper>, document.body)
+                          );
+                  }}
+              >
+                <PlaylistAdd />
+              </IconButton>
+            </Tooltip>
+
+          </Stack>
+          <IconButton
+            size="small"
+            onClick={() => props.handleDeleteGroup(group.id)}
+          >
             <Delete />
           </IconButton>
         </Box>
@@ -198,14 +327,23 @@ function GroupComponent(props: GroupComponentProps) {
 interface ItemComponentProps {
   item: Item;
   groupId: number;
-  handleUpdateInviteLink: (linkId: number, inviteLink: string, label: string, enabled: boolean) => Promise<void>;
+  handleUpdateInviteLink: (
+    linkId: number,
+    inviteLink: string,
+    label: string,
+    enabled: boolean
+  ) => Promise<void>;
   handleDeleteInviteLink: (linkId: number) => void;
 }
 
 function ItemComponent(props: ItemComponentProps) {
-  const { item, groupId, handleUpdateInviteLink, handleDeleteInviteLink } = props;
+  const { item, groupId, handleUpdateInviteLink, handleDeleteInviteLink } =
+    props;
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [newItemData, setNewItemData] = useState<{ name: string; link: string }>({ name: item.name, link: item.link });
+  const [newItemData, setNewItemData] = useState<{
+    name: string;
+    link: string;
+  }>({ name: item.name, link: item.link });
   const [saving, setSaving] = useState<boolean>(false);
 
   useEffect(() => {
@@ -216,32 +354,43 @@ function ItemComponent(props: ItemComponentProps) {
 
   const handleSaveItem = async () => {
     setSaving(true);
-    await handleUpdateInviteLink(item.id, newItemData.link, newItemData.name, item.enabled);
+    await handleUpdateInviteLink(
+      item.id,
+      newItemData.link,
+      newItemData.name,
+      item.enabled
+    );
     setSaving(false);
     setEditMode(false);
   };
 
-  const handleCheckChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const enabled = event.target.checked;
     await handleUpdateInviteLink(item.id, item.link, item.name, enabled);
   };
 
   return (
-    <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      mb={1}
+    >
       <Grid container spacing={1} alignItems="center">
         {editMode ? (
           <>
             <Grid item xs={1}>
-              <Checkbox
-                checked={item.enabled}
-                onChange={handleCheckChange}
-              />
+              <Checkbox checked={item.enabled} onChange={handleCheckChange} />
             </Grid>
             <Grid item xs={12} md={5}>
               <TextField
                 size="small"
                 value={newItemData.name}
-                onChange={(e) => setNewItemData({ ...newItemData, name: e.target.value })}
+                onChange={(e) =>
+                  setNewItemData({ ...newItemData, name: e.target.value })
+                }
                 autoFocus
                 fullWidth
               />
@@ -250,7 +399,9 @@ function ItemComponent(props: ItemComponentProps) {
               <TextField
                 size="small"
                 value={newItemData.link}
-                onChange={(e) => setNewItemData({ ...newItemData, link: e.target.value })}
+                onChange={(e) =>
+                  setNewItemData({ ...newItemData, link: e.target.value })
+                }
                 fullWidth
               />
             </Grid>
@@ -267,10 +418,7 @@ function ItemComponent(props: ItemComponentProps) {
         ) : (
           <>
             <Grid item xs={1}>
-              <Checkbox
-                checked={item.enabled}
-                onChange={handleCheckChange}
-              />
+              <Checkbox checked={item.enabled} onChange={handleCheckChange} />
             </Grid>
             <Grid item xs={12} md={5}>
               <Typography>{item.name}</Typography>
@@ -282,7 +430,10 @@ function ItemComponent(props: ItemComponentProps) {
               <IconButton size="small" onClick={() => setEditMode(true)}>
                 <Edit />
               </IconButton>
-              <IconButton size="small" onClick={() => handleDeleteInviteLink(item.id)}>
+              <IconButton
+                size="small"
+                onClick={() => handleDeleteInviteLink(item.id)}
+              >
                 <Delete />
               </IconButton>
             </Grid>
@@ -294,13 +445,16 @@ function ItemComponent(props: ItemComponentProps) {
 }
 
 function useInviteLinkPickerLogic(props: InviteLinkPickerProps) {
-  const [searchText, setSearchText] = useState<string>('');
+  const [searchText, setSearchText] = useState<string>("");
 
-  const filteredGroups = props.groups.filter(group => {
-    const groupMatches = group.name.toLowerCase().includes(searchText.toLowerCase());
-    const itemMatches = group.items.some(item =>
-      item.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.link.toLowerCase().includes(searchText.toLowerCase())
+  const filteredGroups = props.groups.filter((group) => {
+    const groupMatches = group.name
+      .toLowerCase()
+      .includes(searchText.toLowerCase());
+    const itemMatches = group.items.some(
+      (item) =>
+        item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        item.link.toLowerCase().includes(searchText.toLowerCase())
     );
     return groupMatches || itemMatches;
   });
@@ -312,6 +466,6 @@ function useInviteLinkPickerLogic(props: InviteLinkPickerProps) {
   return {
     handleSearchTextChange,
     searchText,
-    filteredGroups
+    filteredGroups,
   };
 }
