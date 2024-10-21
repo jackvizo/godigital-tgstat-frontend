@@ -1929,13 +1929,14 @@ type query_root {
   tg_invite_link_group_by_pk(pk: bigint!): tg_invite_link_group
 
   """
-  execute function "unsubscribes_by_links" which returns "fn_unsubscribes_by_links"
+  execute function "unsubscribes_by_links_in_strict_period" which returns "fn_unsubscribes_by_links"
   """
-  unsubscribes_by_links(
+  unsubscribes_by_links_in_strict_period(
     """
-    input parameters for function "unsubscribes_by_links"
+    input parameters for function "unsubscribes_by_links_in_strict_period"
     """
     args: unsubscribes_by_links_args!
+
 
     """distinct select on columns"""
     distinct_on: [fn_unsubscribes_by_links_select_column!]
@@ -1954,7 +1955,7 @@ type query_root {
   ): [fn_unsubscribes_by_links!]!
 
   """
-  execute function "unsubscribes_by_links" and query aggregates on result of table type "fn_unsubscribes_by_links"
+  execute function "unsubscribes_by_links_in_strict_period" and query aggregates on result of table type "fn_unsubscribes_by_links"
   """
   unsubscribes_by_links_aggregate(
     """
@@ -4446,11 +4447,11 @@ type subscription_root {
   ): [tg_invite_link_group!]!
 
   """
-  execute function "unsubscribes_by_links" which returns "fn_unsubscribes_by_links"
+  execute function "unsubscribes_by_links_in_strict_period" which returns "fn_unsubscribes_by_links"
   """
-  unsubscribes_by_links(
+  unsubscribes_by_links_in_strict_period(
     """
-    input parameters for function "unsubscribes_by_links"
+    input parameters for function "unsubscribes_by_links_in_strict_period"
     """
     args: unsubscribes_by_links_args!
 
@@ -4471,7 +4472,7 @@ type subscription_root {
   ): [fn_unsubscribes_by_links!]!
 
   """
-  execute function "unsubscribes_by_links" and query aggregates on result of table type "fn_unsubscribes_by_links"
+  execute function "unsubscribes_by_links_in_strict_period" and query aggregates on result of table type "fn_unsubscribes_by_links"
   """
   unsubscribes_by_links_aggregate(
     """

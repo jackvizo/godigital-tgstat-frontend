@@ -13,7 +13,7 @@ export const UNSUBSCRIBES_BY_AD_COMPANY = graphql(`
   $start_date: timestamp!
   $tg_channel_ids: _int8!
 ) {
-  unsubscribes_by_links(
+  unsubscribes_by_links_in_strict_period(
     args: { end_date: $end_date, link_array: $link_array, start_date: $start_date, tg_channel_ids: $tg_channel_ids }
   ) {
     invite_link
@@ -23,7 +23,7 @@ export const UNSUBSCRIBES_BY_AD_COMPANY = graphql(`
 }
 `);
 
-export type UnsubscribesByAdCompany = Omit<DocumentType<typeof UNSUBSCRIBES_BY_AD_COMPANY>['unsubscribes_by_links'][number], '__typename'>
+export type UnsubscribesByAdCompany = Omit<DocumentType<typeof UNSUBSCRIBES_BY_AD_COMPANY>['unsubscribes_by_links_in_strict_period'][number], '__typename'>
 
 export interface UseUnsubscribesByAdCompanyWidgetLogicProps extends DashboardFilters {
   groups: InviteLinkGroups
@@ -45,7 +45,7 @@ export function useUnsubscribesByAdCompanyWidgetLogic(props: UseUnsubscribesByAd
   const list = props.groups.map(group => ({
     ...group,
     items: group.items.map(item => {
-      const unsubscribeData = unsubscribesByAdCompanyQuery?.data?.unsubscribes_by_links.find(
+      const unsubscribeData = unsubscribesByAdCompanyQuery?.data?.unsubscribes_by_links_in_strict_period.find(
         u => u.invite_link?.substring(0, 22) === item.link?.substring(0, 22)
       );
       return {

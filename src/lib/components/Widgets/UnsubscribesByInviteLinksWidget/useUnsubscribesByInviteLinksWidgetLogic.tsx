@@ -4,11 +4,13 @@ import { useQuery } from '@apollo/client';
 import { DashboardFilters } from '@/lib/components/DashboardFilters/useDashboardFiltersLogic';
 import { useAuth } from '@/lib/auth/use-auth';
 
+
 export const UNSUBSCRIBES_BY_INVITE_LINKS_QUERY = graphql(`
   query UnsubscribesUsersByLinksAggregates($tg_channel_ids: [bigint!], $start_date: timestamp!, $end_date: timestamp!) {
     without_link: stat_user_aggregate(
       where: {
         tg_channel_id: { _in: $tg_channel_ids }
+        joined_at: { _gte: $start_date, _lte: $end_date }
         left_at: { _gte: $start_date, _lte: $end_date }
         _or: [{ is_joined_by_link: { _eq: false } }, { is_joined_by_link: { _is_null: true } }]
       }
@@ -20,6 +22,7 @@ export const UNSUBSCRIBES_BY_INVITE_LINKS_QUERY = graphql(`
     with_link: stat_user_aggregate(
       where: {
         tg_channel_id: { _in: $tg_channel_ids }
+        joined_at: { _gte: $start_date, _lte: $end_date }
         left_at: { _gte: $start_date, _lte: $end_date }
         is_joined_by_link: { _eq: true }
       }
