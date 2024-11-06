@@ -10,7 +10,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * 2. It is not minifiable, so the string of a GraphQL query will be multiple times inside the bundle.
  * 3. It does not support dead code elimination, so it will add unused operations.
  *
- * Therefore, it is highly recommended to use the babel or swc plugin for production.
+ * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
     "\n  query GetGroups($user_id: uuid!) {\n    tg_invite_link_group(where: { user_id: { _eq: $user_id } }, order_by: { group_name: asc }) {\n      pk\n      group_name\n      user_tg_invite_links(order_by: { label: asc }) {\n        pk\n        tg_invite_link\n        label\n        enabled\n      }\n    }\n  }\n": types.GetGroupsDocument,
