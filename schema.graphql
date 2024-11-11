@@ -1128,6 +1128,8 @@ input get_avg_user_lifecycle_args {
   tg_channel_ids: _int8
 }
 
+scalar json
+
 """mutation root"""
 type mutation_root {
   confirm_2fa(arg1: Confirm2FAInput!): Confirm2FAOutput
@@ -1961,6 +1963,56 @@ type query_root {
     input parameters for function "unsubscribes_by_links_aggregate"
     """
     args: unsubscribes_by_links_args!
+
+    """distinct select on columns"""
+    distinct_on: [fn_unsubscribes_by_links_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [fn_unsubscribes_by_links_order_by!]
+
+    """filter the rows returned"""
+    where: fn_unsubscribes_by_links_bool_exp
+  ): fn_unsubscribes_by_links_aggregate!
+
+  """
+  execute function "unsubscribes_by_links_in_strict_period" which returns "fn_unsubscribes_by_links"
+  """
+  unsubscribes_by_links_in_strict_period(
+    """
+    input parameters for function "unsubscribes_by_links_in_strict_period"
+    """
+    args: unsubscribes_by_links_in_strict_period_args!
+
+    """distinct select on columns"""
+    distinct_on: [fn_unsubscribes_by_links_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [fn_unsubscribes_by_links_order_by!]
+
+    """filter the rows returned"""
+    where: fn_unsubscribes_by_links_bool_exp
+  ): [fn_unsubscribes_by_links!]!
+
+  """
+  execute function "unsubscribes_by_links_in_strict_period" and query aggregates on result of table type "fn_unsubscribes_by_links"
+  """
+  unsubscribes_by_links_in_strict_period_aggregate(
+    """
+    input parameters for function "unsubscribes_by_links_in_strict_period_aggregate"
+    """
+    args: unsubscribes_by_links_in_strict_period_args!
 
     """distinct select on columns"""
     distinct_on: [fn_unsubscribes_by_links_select_column!]
@@ -4496,6 +4548,56 @@ type subscription_root {
   ): fn_unsubscribes_by_links_aggregate!
 
   """
+  execute function "unsubscribes_by_links_in_strict_period" which returns "fn_unsubscribes_by_links"
+  """
+  unsubscribes_by_links_in_strict_period(
+    """
+    input parameters for function "unsubscribes_by_links_in_strict_period"
+    """
+    args: unsubscribes_by_links_in_strict_period_args!
+
+    """distinct select on columns"""
+    distinct_on: [fn_unsubscribes_by_links_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [fn_unsubscribes_by_links_order_by!]
+
+    """filter the rows returned"""
+    where: fn_unsubscribes_by_links_bool_exp
+  ): [fn_unsubscribes_by_links!]!
+
+  """
+  execute function "unsubscribes_by_links_in_strict_period" and query aggregates on result of table type "fn_unsubscribes_by_links"
+  """
+  unsubscribes_by_links_in_strict_period_aggregate(
+    """
+    input parameters for function "unsubscribes_by_links_in_strict_period_aggregate"
+    """
+    args: unsubscribes_by_links_in_strict_period_args!
+
+    """distinct select on columns"""
+    distinct_on: [fn_unsubscribes_by_links_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [fn_unsubscribes_by_links_order_by!]
+
+    """filter the rows returned"""
+    where: fn_unsubscribes_by_links_bool_exp
+  ): fn_unsubscribes_by_links_aggregate!
+
+  """
   execute function "unsubscribes_by_periods" which returns "fn_unsubscribes_by_periods"
   """
   unsubscribes_by_periods(
@@ -5334,6 +5436,14 @@ input unsubscribes_by_links_args {
   tg_channel_ids: _int8
 }
 
+input unsubscribes_by_links_in_strict_period_args {
+  end_date: timestamp
+  hasura_session: json
+  link_array: _text
+  start_date: timestamp
+  tg_channel_ids: _int8
+}
+
 input unsubscribes_by_periods_args {
   end_date: timestamp
   start_date: timestamp
@@ -5497,6 +5607,7 @@ input user_signups_by_period_args {
   end_date: timestamp
   start_date: timestamp
   tg_channel_ids: _int8
+  tg_invite_links: _text
   time_period: String
 }
 
@@ -6163,6 +6274,7 @@ input user_unsubscribes_by_period_args {
   end_date: timestamp
   start_date: timestamp
   tg_channel_ids: _int8
+  tg_invite_links: _text
   time_period: String
 }
 

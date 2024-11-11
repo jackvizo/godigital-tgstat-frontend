@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export interface ErrorLayoutProps {
   error: Error & { digest?: string };
-  reset: () => void;
+  reset(): void;
 }
 
 export function ErrorLayout({ error, reset }: ErrorLayoutProps) {
