@@ -18,7 +18,7 @@ export function UnsubscribesPieWidget(props: UnsubscribesPieWidgetProps) {
     labels: [labelSubscribesPercent, labelUnsubscribesPercent],
     datasets: [
       {
-        data: [props.subscribesPercent, props.unsubscribesPercent],
+        data: [props.subscribesCount, props.unsubscribesCount],
         backgroundColor: [theme.palette.primary.main, theme.palette.secondary.main],
       },
     ],
