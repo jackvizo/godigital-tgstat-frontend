@@ -152,8 +152,8 @@ function GroupComponent(props: GroupComponentProps) {
   const handleTextarea = async (value: string) => {
     const linkList = value
       .split("\n")
-      .filter((link) => link.trim().length > 0) // фильтр пустых строк
-      .map(linkToObject); // преобразование строки в ссылку и её название
+      .filter((link) => link.trim().length > 0)
+      .map(linkToObject);
 
     //console.log(linksList);
     await props.handleCreateInviteLinksByList(linkList, props.group.id);
