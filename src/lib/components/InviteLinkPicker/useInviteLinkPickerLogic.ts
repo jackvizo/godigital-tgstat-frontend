@@ -142,11 +142,10 @@ export const useInviteLinkPickerLogic = () => {
     getGroupsQuery.refetch();
   };
 
-  const handleCreateInviteLinkByList = async (inviteLinkList: string[], label: string, groupId: number) => {
-    /*
-    for (let inviteLink in inviteLinkList) {
-      await createInviteLink({ variables: { tg_invite_link: inviteLink, label, group_id: groupId, user_id: userId } });
-    };*/
+  const handleCreateInviteLinksByList = async (inviteLinkList: {inviteLink: string, label: string}[], groupId: number) => {
+    for (let item of inviteLinkList) {
+      await createInviteLink({ variables: { tg_invite_link: item.inviteLink, label:item.label, group_id: groupId, user_id: userId } });
+    }
     getGroupsQuery.refetch();
   };
 
@@ -195,7 +194,7 @@ export const useInviteLinkPickerLogic = () => {
     handleUpdateGroupName,
     handleDeleteGroup,
     handleCreateInviteLink,
-    handleCreateInviteLinkByList,
+    handleCreateInviteLinksByList,
     handleUpdateInviteLink,
     handleDeleteInviteLink,
   };
